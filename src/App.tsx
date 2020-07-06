@@ -1,11 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Button } from 'antd';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { Button } from "antd";
 import {
   ExampleComponent,
   ExampleComponentWithType
-} from './components/ExampleComponent';
+} from "./components/ExampleComponent";
 
 function App() {
   /**
@@ -17,8 +17,8 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
-          <ExampleComponent who={'me'} />
-          <ExampleComponentWithType who={'me2'} />
+          <ExampleComponent who={"me"} />
+          <ExampleComponentWithType who={"me2"} />
         </p>
         <Button type="primary">Learn React</Button>
       </header>

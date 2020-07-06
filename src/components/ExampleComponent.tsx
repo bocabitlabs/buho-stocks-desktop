@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  *
@@ -25,7 +25,7 @@ interface ExampleProps {
 
 export const ExampleComponentWithType = ({
   who,
-  optionalParam
+  optionalParam = ""
 }: ExampleProps) => {
   return <div>Hello this is {who}</div>;
 };
