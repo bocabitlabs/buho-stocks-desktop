@@ -15,11 +15,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
+        <div>
           Edit <code>src/App.tsx</code> and save to reload.
           <ExampleComponent who={"me"} />
           <ExampleComponentWithType who={"me2"} />
-        </p>
+        </div>
         <Button type="primary">Learn React</Button>
       </header>
     </div>
