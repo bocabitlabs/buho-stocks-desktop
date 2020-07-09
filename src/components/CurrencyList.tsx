@@ -1,7 +1,20 @@
 import React, { ReactElement } from "react";
+import { getCurrencies } from "../selectors/currency";
+import { useSelector } from "react-redux";
+import { CurrencyFields } from "../types/currency";
 
-interface Props {}
+export default function CurrencyList(): ReactElement {
+  const currencies = useSelector(getCurrencies);
 
-export default function CurrencyList({}: Props): ReactElement {
+  if (currencies && currencies.length > 0) {
+    return (
+      <ul>
+        {currencies.map((currency: CurrencyFields) => (
+          <li>{currency.name}</li>
+        ))}
+      </ul>
+    );
+  }
+
   return <div></div>;
 }
