@@ -1,7 +1,7 @@
 import { ADD_CURRENCY } from "../actions/currency";
-import { CurrencyActionProps } from "../types/currency";
+import { CurrencyActionProps, CurrencyFields } from "../types/currency";
 
-const INITIAL_STATE: any[] = [];
+const INITIAL_STATE: CurrencyFields[] = [];
 /**
  * Currencies reducer
  * @param state The current state of the reducer

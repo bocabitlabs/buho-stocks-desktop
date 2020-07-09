@@ -1,8 +1,8 @@
-// export interface CurrencyFields {
-//   id: number;
-//   name: string;
-//   abreviation: string;
-// }
+export interface CurrencyFields {
+  id: number;
+  name: string;
+  abreviation: string;
+}
 
 export interface CurrencyActionProps {
   /**

@@ -6,6 +6,7 @@ import {
   ExampleComponent,
   ExampleComponentWithType
 } from "./components/ExampleComponent";
+import AddCurrencyButton from "./components/AddCurrencyButton";
 
 function App() {
   /**
@@ -21,6 +22,7 @@ function App() {
           <ExampleComponentWithType who={"me2"} />
         </div>
         <Button type="primary">Learn React</Button>
+        <AddCurrencyButton />
       </header>
     </div>
   );
