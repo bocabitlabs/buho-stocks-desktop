@@ -1,10 +1,13 @@
 export interface CurrencyFields {
-  id: number;
+  id: string;
+  userId: string;
   name: string;
   abreviation: string;
 }
 
 export interface CurrencyActionProps {
+  id: string;
+  userId: string;
   /**
    *The type of the action
    */

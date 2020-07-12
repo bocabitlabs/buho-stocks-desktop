@@ -13,20 +13,20 @@ export const currencies = (
   state = INITIAL_STATE,
   action: CurrencyActionProps
 ) => {
-  switch (action.type) {
-    case ADD_CURRENCY:
-      const id: number =
-        state.length !== 0 ? state[state.length - 1].id + 1 : 0;
-      return [
-        ...state,
-        {
-          id: id,
-          name: action.name,
-          abbreviation: action.abbreviation
-        }
-      ];
-
-    default:
-      return state;
-  }
+  // switch (action.type) {
+  //   case ADD_CURRENCY:
+  //     const id: number =
+  //       state.length !== 0 ? state[state.length - 1].id + 1 : 0;
+  //     return [
+  //       ...state,
+  //       {
+  //         id: id,
+  //         name: action.name,
+  //         abbreviation: action.abbreviation
+  //       }
+  //     ];
+  //   default:
+  //     return state;
+  // }
+  return state;
 };

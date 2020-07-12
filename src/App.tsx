@@ -1,13 +1,11 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { Button } from "antd";
-import {
-  ExampleComponent,
-  ExampleComponentWithType
-} from "./components/ExampleComponent";
-import AddCurrencyButton from "./components/AddCurrencyButton";
-import CurrencyList from "./components/CurrencyList";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import PrivateRoute from "./routes/PrivateRoute";
+import LoginRoute from "./routes/LoginRoute";
+import RegisterRoute from "./routes/RegisterRoute";
+import HomeRoute from "./routes/HomeRoute";
 
 function App() {
   /**
@@ -16,15 +14,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>
-          Edit <code>src/App.tsx</code> and save to reload.
-          <ExampleComponent who={"me"} />
-          <ExampleComponentWithType who={"me2"} />
-        </div>
-        <Button type="primary">Learn React</Button>
-        <AddCurrencyButton />
-        <CurrencyList />
+        <Router>
+          <div>
+            <PrivateRoute exact path="/" component={HomeRoute} />
+            <Route exact path="/login" component={LoginRoute} />
+            <Route exact path="/Register" component={RegisterRoute} />
+          </div>
+        </Router>
       </header>
     </div>
   );

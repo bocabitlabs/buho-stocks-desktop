@@ -1,4 +1,4 @@
-import { CurrencyActionProps } from "../types/currency";
+// import { CurrencyActionProps } from "../types/currency";
 
 export const ADD_CURRENCY = "Add a new currency";
 
@@ -7,9 +7,9 @@ export const ADD_CURRENCY = "Add a new currency";
  * @param name The name of the currency
  * @param abbreviation The abbreviation of the currency used to exchange it
  */
-export function addCurrency(
-  name: string,
-  abbreviation: string
-): CurrencyActionProps {
-  return { type: ADD_CURRENCY, name, abbreviation };
-}
+// export function addCurrency(
+//   name: string,
+//   abbreviation: string
+// ): CurrencyActionProps {
+//   return { type: ADD_CURRENCY, name, abbreviation };
+// }
