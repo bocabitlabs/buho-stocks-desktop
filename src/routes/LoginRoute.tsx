@@ -1,17 +1,21 @@
-import React, { useCallback } from "react";
-import { withRouter, Redirect, RouteComponentProps } from "react-router";
-import { Form, Input, Button, Row, Col } from "antd";
+import React, { useCallback, useState } from "react";
+import { Redirect, useHistory } from "react-router";
+import { Form, Input, Button, Row, Col, Spin } from "antd";
 import { useFirebase } from "react-redux-firebase";
 import { getFirebaseAuth } from "../selectors/profile";
 import { useSelector } from "react-redux";
 
-const Login = ({ history }: RouteComponentProps) => {
+const LoginRoute = () => {
   const [form] = Form.useForm();
   const firebase = useFirebase();
-  const { uid }: any = useSelector(getFirebaseAuth);
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { uid, isLoaded }: any = useSelector(getFirebaseAuth);
 
   const handleLogin = useCallback(
     async (values) => {
+      setIsLoading(true);
       console.log("Call handleLogin");
       console.log(values);
       try {
@@ -25,6 +29,7 @@ const Login = ({ history }: RouteComponentProps) => {
         history.push("/");
       } catch (error) {
         alert(error);
+        setIsLoading(false);
       }
     },
     [history, firebase]
@@ -33,6 +38,16 @@ const Login = ({ history }: RouteComponentProps) => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+
+  if (!isLoaded || isLoading) {
+    return (
+      <Row>
+        <Col span={12} offset={6}>
+          <Spin />
+        </Col>
+      </Row>
+    );
+  }
 
   if (uid) {
     return <Redirect to="/" />;
@@ -73,4 +88,4 @@ const Login = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(Login);
+export default LoginRoute;

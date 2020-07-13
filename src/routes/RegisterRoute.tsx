@@ -1,9 +1,10 @@
 import React, { useCallback } from "react";
-import { withRouter, RouteComponentProps } from "react-router";
+import { useHistory } from "react-router";
 import { useFirebase } from "react-redux-firebase";
 import { Row, Col } from "antd";
 
-const SignUp = ({ history }: RouteComponentProps) => {
+const RegisterRoute = () => {
+  const history = useHistory();
   const firebase = useFirebase();
   const handleSignUp = useCallback(
     async (event) => {
@@ -41,4 +42,4 @@ const SignUp = ({ history }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(SignUp);
+export default RegisterRoute;
