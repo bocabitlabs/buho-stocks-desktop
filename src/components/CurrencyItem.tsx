@@ -7,6 +7,10 @@ interface CurrencyItemProps {
   id: string;
 }
 
+/**
+ *
+ * @param id: The identifier of the the Currency
+ */
 function CurrencyItem({ id }: CurrencyItemProps) {
   const currency = useSelector(getCurrencyById)(id);
   const firestore = useFirestore();
@@ -18,7 +22,6 @@ function CurrencyItem({ id }: CurrencyItemProps) {
   function deleteCurrency() {
     return firestore.delete(`currencies/${id}`);
   }
-  console.log(currency);
   return (
     <li className="Todo">
       {currency.name}
