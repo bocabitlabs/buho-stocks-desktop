@@ -1,4 +1,4 @@
-# LiStock
+# Buho Stocks
 
 Application to manage personal stocks.
 
