@@ -1,0 +1,14 @@
+name: Continuous Integration
+on: [push, pull_request]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Install  🔧
+        run: yarn
+
+      - name: Test 🧨
+        run: yarn test
