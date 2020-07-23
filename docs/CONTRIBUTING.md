@@ -1,6 +1,15 @@
 # Contributing to Buho Stocks
 
-When contributing to these repositories, please first discuss the change you wish to make via issue with the owners of this repository before making a change.
+When contributing to this repository, please first discuss the change you wish to
+make via issue with the owners of this repository before making a change.
+
+## Branching
+
+If you would like to contribute to this project, you will need to use
+[git flow](https://github.com/nvie/gitflow). This way, any and all changes
+happen on the development branch and not on the master branch. As such, after
+you have git-flow-ified your `zoomus` git repo, create a pull request for your
+branch, and we'll take it from there.
 
 ## Git Commit guidelines
 
