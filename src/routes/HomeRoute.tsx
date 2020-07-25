@@ -4,7 +4,7 @@ import {
   ExampleComponent,
   ExampleComponentWithType
 } from "../components/ExampleComponent";
-import AddCurrencyButton from "../components/AddCurrencyButton";
+import AddCurrencyForm from "../components/AddCurrencyForm/AddCurrencyForm";
 import CurrencyList from "../components/CurrencyList";
 import { useSelector } from "react-redux";
 import { getFirebaseAuth } from "../selectors/profile";
@@ -81,7 +81,7 @@ const Home = () => {
               Edit <code>src/App.tsx</code> and save to reload.
               <ExampleComponent who={"me"} />
               <ExampleComponentWithType who={"me2"} />
-              <AddCurrencyButton />
+              <AddCurrencyForm />
               <CurrencyList uid={uid} />
             </div>
             <LogoutButton />
