@@ -9,13 +9,14 @@ import CurrencyList from "../components/CurrencyList";
 import { useSelector } from "react-redux";
 import { getFirebaseAuth } from "../selectors/profile";
 import LogoutButton from "../components/LogoutButton";
-import { Menu, Layout, Breadcrumb } from "antd";
+import { Menu, Layout, Breadcrumb, PageHeader } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined
 } from "@ant-design/icons";
+import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
 
 const Home = () => {
   const { uid }: any = useSelector(getFirebaseAuth);
@@ -78,10 +79,21 @@ const Home = () => {
           >
             <h1>Home</h1>
             <div>
-              Edit <code>src/App.tsx</code> and save to reload.
+              <PageHeader
+                className="site-page-header"
+                title="Currencies"
+              />
               <ExampleComponent who={"me"} />
               <ExampleComponentWithType who={"me2"} />
               <AddCurrencyForm />
+              <CurrencyList uid={uid} />
+            </div>
+            <div>
+              <PageHeader
+                className="site-page-header"
+                title="Companies"
+              />
+              <AddCompanyForm />
               <CurrencyList uid={uid} />
             </div>
             <LogoutButton />
