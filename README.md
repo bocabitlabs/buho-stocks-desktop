@@ -35,7 +35,13 @@ brew install node && brew install yarn
 2. Create a new "Web application"
 3. Copy the values of the `firebaseConfig` variable.
 
-### 3. Configure the application settings
+### 3. Install the dependencies
+
+```bash
+yarn
+```
+
+### 4. Configure the application settings
 
 ```bash
 cp utils/config.sample.tsx utils/config.tsx
