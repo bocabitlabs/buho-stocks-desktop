@@ -10,6 +10,9 @@ describe("CurrencyItem compnent tests", () => {
   });
 
   const initialState = {
+    firebase: {
+      auth: {}
+    },
     firestore: {
       data: {
         currencies: {
