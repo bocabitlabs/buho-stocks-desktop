@@ -21,7 +21,6 @@ function AddCurrencyForm(): ReactElement {
         symbol: symbol,
         userId: uid
       };
-      console.log(uid);
       firestore
         .collection("users")
         .doc(uid)
