@@ -45,17 +45,4 @@ describe("CurrencyItem compnent tests", () => {
     const deleteElement = getByText(/Delete/i);
     expect(deleteElement).toBeInTheDocument();
   });
-
-  // it("clicks the delete button", () => {
-  //   store = mockStore(initialState);
-
-  //   const { getByText } = render(
-  //     <Provider store={store}>
-  //       <CurrencyItem id={"TxRUecEyl2xEpmPXbY9j"} />
-  //     </Provider>
-  //   );
-
-  //   // fireEvent.click(getByText(/Delete/i));
-  //   // expect(spy).toHaveBeenCalled();
-  // });
 });
