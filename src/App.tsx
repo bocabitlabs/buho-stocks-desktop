@@ -6,6 +6,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import LoginRoute from "./routes/LoginRoute";
 import RegisterRoute from "./routes/RegisterRoute";
 import HomeRoute from "./routes/HomeRoute";
+import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
 
 function App() {
   /**
@@ -18,7 +19,8 @@ function App() {
           <div>
             <PrivateRoute exact path="/" component={HomeRoute} />
             <Route exact path="/login" component={LoginRoute} />
-            <Route exact path="/Register" component={RegisterRoute} />
+            <Route exact path="/register" component={RegisterRoute} />
+            <Route exact path="/company/:companyId" component={CompanyDetailsRoute} />
           </div>
         </Router>
       </header>

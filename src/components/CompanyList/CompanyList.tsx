@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Spin } from "antd";
 import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
 import { getCompanies } from "../../selectors/company";
-import CompanyItem from "../CompanyItem";
+import CompanyItem from "../CompanyListItem/CompanyListItem";
 // import CurrencyItem from "./CurrencyItem";
 // import { getCurrencies } from "../selectors/currency";
 

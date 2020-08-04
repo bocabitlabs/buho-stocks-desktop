@@ -3,6 +3,7 @@ export interface CurrencyFields {
   userId: string;
   name: string;
   abreviation: string;
+  symbol: string;
 }
 
 export interface CurrencyActionProps {

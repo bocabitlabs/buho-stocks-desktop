@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { getFirebaseAuth } from "../selectors/profile";
-import { getCompanyById } from "../selectors/company";
+import { getFirebaseAuth } from "../../selectors/profile";
+import { getCompanyById } from "../../selectors/company";
+import { Link } from "react-router-dom";
 
-interface CompanyItemProps {
+interface CompanyListItemProps {
   id: string;
 }
 
@@ -12,7 +13,7 @@ interface CompanyItemProps {
  *
  * @param id: The identifier of the the Currency
  */
-function CompanyItem({ id }: CompanyItemProps) {
+function CompanyListItem({ id }: CompanyListItemProps) {
   const company = useSelector(getCompanyById)(id);
   const firestore = useFirestore();
   const { uid }: any = useSelector(getFirebaseAuth);
@@ -26,7 +27,7 @@ function CompanyItem({ id }: CompanyItemProps) {
   }
   return (
     <li className="Todo">
-      {company.name}
+      <Link to={`/company/${id}`}>{company.name}</Link>
       <button className="Todo-Button" onClick={deleteCompany}>
         Delete
       </button>
@@ -34,4 +35,4 @@ function CompanyItem({ id }: CompanyItemProps) {
   );
 }
 
-export default CompanyItem;
+export default CompanyListItem;

@@ -9,3 +9,7 @@ export const getCompanyById = (state: {
   firestore: { data: { companies: Dictionary<CompanyFields> } };
 }) => (id: string) =>
   state.firestore.data.companies && state.firestore.data.companies[id];
+
+export const getCompany = (state: {
+  firestore: { data: Dictionary<CompanyFields> };
+}) => (id: string) => state.firestore.data && state.firestore.data[id];
