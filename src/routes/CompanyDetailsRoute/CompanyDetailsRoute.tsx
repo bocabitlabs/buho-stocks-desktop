@@ -1,7 +1,5 @@
 import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
-import { getCompanyById } from "../../selectors/company";
-import { useFirestore, useFirestoreConnect } from "react-redux-firebase";
 import { getFirebaseAuth } from "../../selectors/profile";
 import { PageHeader } from "antd";
 import { useParams } from "react-router";
