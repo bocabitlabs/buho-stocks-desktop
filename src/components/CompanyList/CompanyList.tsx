@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
-import { Spin } from "antd";
+import { Spin, PageHeader } from "antd";
 import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
 import { getCompanies } from "../../selectors/company";
 import CompanyItem from "../CompanyListItem/CompanyListItem";
@@ -39,7 +39,7 @@ export default function CompanyList({
 
   // // Show a message while todos are loading
   if (!isLoaded(companies)) {
-    return <Spin />;
+    return <div data-testid="company-spinner"><Spin /></div>;
   }
 
   // // Show a message if there are no todos
@@ -48,11 +48,10 @@ export default function CompanyList({
   }
 
   return (
-    <>
+    <div data-testid="company-list">
       {companies.map(({ id, ...company }, index) => (
         <CompanyItem key={`${id}-${index}`} id={id} {...company} />
       ))}
-    </>
+    </div>
   );
-
 }
