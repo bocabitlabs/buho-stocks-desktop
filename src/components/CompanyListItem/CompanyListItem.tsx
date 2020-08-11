@@ -27,7 +27,7 @@ function CompanyListItem({ id }: CompanyListItemProps) {
   }
   return (
     <li className="Todo">
-      <Link to={`/company/${id}`}>{company.name}</Link>
+      <Link to={`/company/${id}`}>{company.name}</Link> ({company.ticker})
       <button className="Todo-Button" onClick={deleteCompany}>
         Delete
       </button>

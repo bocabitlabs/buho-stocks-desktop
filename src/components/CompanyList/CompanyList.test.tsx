@@ -114,7 +114,7 @@ describe("CompanyList compnent tests", () => {
         </Router>
       </Provider>
     );
-    const element = getByTestId(/company-list/i);
+    let element = getByTestId(/company-list/i);
     expect(element).toBeInTheDocument();
   });
 });

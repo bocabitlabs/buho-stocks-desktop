@@ -46,7 +46,9 @@ describe("CompanyListItem component tests", () => {
         </Router>
       </Provider>
     );
-    const element = getByText(/Test Company/i);
+    let element = getByText(/Test Company/i);
+    expect(element).toBeInTheDocument();
+    element = getByText(/TEST:TC/i);
     expect(element).toBeInTheDocument();
   });
 });

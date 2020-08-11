@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
-import { Spin, PageHeader } from "antd";
+import { Spin } from "antd";
 import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
 import { getCompanies } from "../../selectors/company";
 import CompanyItem from "../CompanyListItem/CompanyListItem";
@@ -48,10 +48,10 @@ export default function CompanyList({
   }
 
   return (
-    <div data-testid="company-list">
+    <ul data-testid="company-list">
       {companies.map(({ id, ...company }, index) => (
         <CompanyItem key={`${id}-${index}`} id={id} {...company} />
       ))}
-    </div>
+    </ul>
   );
 }
