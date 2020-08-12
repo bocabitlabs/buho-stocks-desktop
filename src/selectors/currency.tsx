@@ -18,3 +18,8 @@ export const getCurrencyById = (state: {
   firestore: { data: { currencies: Dictionary<CurrencyFields> } };
 }) => (id: string) =>
   state.firestore.data.currencies && state.firestore.data.currencies[id];
+
+
+  export const getCurrency = (state: {
+    firestore: { data: Dictionary<CurrencyFields> };
+  }) => (id: string) => state.firestore.data && state.firestore.data[id];

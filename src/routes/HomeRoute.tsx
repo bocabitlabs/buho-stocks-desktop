@@ -17,6 +17,7 @@ import {
   NotificationOutlined
 } from "@ant-design/icons";
 import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
+import CompanyList from "../components/CompanyList/CompanyList";
 
 const Home = () => {
   const { uid }: any = useSelector(getFirebaseAuth);
@@ -94,7 +95,7 @@ const Home = () => {
                 title="Companies"
               />
               <AddCompanyForm />
-              <CurrencyList uid={uid} />
+              <CompanyList uid={uid} />
             </div>
             <LogoutButton />
           </Layout.Content>

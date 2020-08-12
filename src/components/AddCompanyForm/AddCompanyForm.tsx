@@ -9,7 +9,7 @@ import { getCurrencies } from "../../selectors/currency";
 /**
  * Add a new Currency
  */
-function AddCompanyForm(): ReactElement | null {
+function AddCompanyForm(): ReactElement {
   const firestore = useFirestore();
   const [form] = Form.useForm();
   const { uid }: any = useSelector(getFirebaseAuth);
@@ -57,6 +57,22 @@ function AddCompanyForm(): ReactElement | null {
       >
         <Input type="text" placeholder="NASDQ:MSFT, NYSE:T..." />
       </Form.Item>
+      <Form.Item name="currency" label="Currency" rules={[{ required: true }]}>
+        <Select
+          placeholder="Select a option and change input text above"
+          allowClear
+        >
+          {currencies &&
+            currencies.map((currency, index) => (
+              <Select.Option
+                value={currency.id}
+                key={`currency-${currency.id}-${index}`}
+              >
+                {currency.name} ({currency.abreviation})
+              </Select.Option>
+            ))}
+        </Select>
+      </Form.Item>
       <Form.Item
         name="market"
         label="Market Name"
@@ -77,22 +93,6 @@ function AddCompanyForm(): ReactElement | null {
         ]}
       >
         <TextArea placeholder="EEUU, Spain, UK..." />
-      </Form.Item>
-      <Form.Item name="currency" label="Currency" rules={[{ required: true }]}>
-        <Select
-          placeholder="Select a option and change input text above"
-          allowClear
-        >
-          {currencies &&
-            currencies.map((currency, index) => (
-              <Select.Option
-                value={currency.id}
-                key={`currency-${currency.id}-${index}`}
-              >
-                {currency.name} ({currency.abreviation})
-              </Select.Option>
-            ))}
-        </Select>
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
