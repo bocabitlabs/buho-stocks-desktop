@@ -1,16 +1,9 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import CompanyListItem from "./CompanyListItem";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { Router } from "react-router";
-import { createMemoryHistory } from "history";
+import { renderWithRouterAndRedux } from "../../utils/test-utils";
 
 describe("CompanyListItem component tests", () => {
-  const mockStore = configureStore();
-  const history = createMemoryHistory();
 
-  let store;
   let initialState;
 
   afterEach(() => {
@@ -36,15 +29,10 @@ describe("CompanyListItem component tests", () => {
         }
       }
     };
-    store = mockStore(initialState);
 
-    const { getByText } = render(
-      <Provider store={store}>
-        <Router history={history}>
-        <CompanyListItem id={"abcdefg"} />
-
-        </Router>
-      </Provider>
+    const { getByText } = renderWithRouterAndRedux(
+      <CompanyListItem id={"abcdefg"} />,
+      { initialState }
     );
     let element = getByText(/Test Company/i);
     expect(element).toBeInTheDocument();

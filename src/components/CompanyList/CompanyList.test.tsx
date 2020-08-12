@@ -1,14 +1,8 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import CompanyList from "./CompanyList";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { Router } from "react-router";
-import { createMemoryHistory } from "history";
+import { render, renderWithRouterAndRedux } from "../../utils/test-utils";
 
 describe("CompanyList compnent tests", () => {
-  const mockStore = configureStore();
-  let store;
   let initialState;
 
   afterEach(() => {
@@ -31,20 +25,15 @@ describe("CompanyList compnent tests", () => {
         }
       }
     };
-    store = mockStore(initialState);
 
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <CompanyList uid={"123"} />
-      </Provider>
-    );
+    const { getByTestId } = render(<CompanyList uid={"123"} />, {
+      initialState
+    });
     const element = getByTestId(/company-spinner/i);
     expect(element).toBeInTheDocument();
   });
 
   test("renders empty company list", () => {
-    const history = createMemoryHistory();
-
     const initialState = {
       firebase: {
         auth: {}
@@ -64,22 +53,12 @@ describe("CompanyList compnent tests", () => {
       }
     };
 
-    store = mockStore(initialState);
-
-    const { getByText } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <CompanyList uid={"123"} />
-        </Router>
-      </Provider>
-    );
+    const { getByText } = render(<CompanyList uid={"123"} />, { initialState });
     const element = getByText(/Company list is empty/i);
     expect(element).toBeInTheDocument();
   });
 
   test("renders company list", () => {
-    const history = createMemoryHistory();
-
     const initialState = {
       firebase: {
         auth: {}
@@ -105,14 +84,9 @@ describe("CompanyList compnent tests", () => {
       }
     };
 
-    store = mockStore(initialState);
-
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <CompanyList uid={"123"} />
-        </Router>
-      </Provider>
+    const { getByTestId } = renderWithRouterAndRedux(
+      <CompanyList uid={"123"} />,
+      { initialState }
     );
     let element = getByTestId(/company-list/i);
     expect(element).toBeInTheDocument();

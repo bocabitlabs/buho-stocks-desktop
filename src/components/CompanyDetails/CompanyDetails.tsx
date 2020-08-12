@@ -50,7 +50,6 @@ export default function CompanyDetails({
               {company.notes}
             </Descriptions.Item>
           </Descriptions>
-          {JSON.stringify(company)}
         </PageHeader>
       </div>
     );
