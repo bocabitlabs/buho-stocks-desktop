@@ -1,12 +1,6 @@
 import { CurrencyFields } from "../types/currency";
 import { Dictionary } from "react-redux-firebase";
 
-// export const getCurrencies = (state: { currencies: CurrencyFields[] }) =>
-//   state.currencies;
-
-// export const getCurrency = (state: { firestore: { data: { currencies } } }) =>
-//   data.currencies && data.currencies[id];
-
 export const getFirebaseAuth = (state: { firebase: { auth: any } }) =>
   state.firebase.auth;
 
@@ -19,7 +13,6 @@ export const getCurrencyById = (state: {
 }) => (id: string) =>
   state.firestore.data.currencies && state.firestore.data.currencies[id];
 
-
-  export const getCurrency = (state: {
-    firestore: { data: Dictionary<CurrencyFields> };
-  }) => (id: string) => state.firestore.data && state.firestore.data[id];
+export const getCurrency = (state: {
+  firestore: { data: Dictionary<CurrencyFields> };
+}) => (id: string) => state.firestore.data && state.firestore.data[id];
