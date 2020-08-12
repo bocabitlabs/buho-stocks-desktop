@@ -3,9 +3,9 @@ import React from "react";
 import {
   ExampleComponent,
   ExampleComponentWithType
-} from "../components/ExampleComponent";
+} from "../components/ExampleComponent/ExampleComponent";
 import AddCurrencyForm from "../components/AddCurrencyForm/AddCurrencyForm";
-import CurrencyList from "../components/CurrencyList";
+import CurrencyList from "../components/CurrencyList/CurrencyList";
 import { useSelector } from "react-redux";
 import { getFirebaseAuth } from "../selectors/profile";
 import LogoutButton from "../components/LogoutButton";

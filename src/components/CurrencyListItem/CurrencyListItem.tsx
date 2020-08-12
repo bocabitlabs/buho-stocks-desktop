@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { getCurrencyById } from "../selectors/currency";
-import { getFirebaseAuth } from "../selectors/profile";
+import { getCurrencyById } from "../../selectors/currency";
+import { getFirebaseAuth } from "../../selectors/profile";
 
 interface CurrencyItemProps {
   id: string;
@@ -12,14 +12,10 @@ interface CurrencyItemProps {
  *
  * @param id: The identifier of the the Currency
  */
-function CurrencyItem({ id }: CurrencyItemProps) {
+function CurrencyListItem({ id }: CurrencyItemProps) {
   const currency = useSelector(getCurrencyById)(id);
   const firestore = useFirestore();
   const { uid }: any = useSelector(getFirebaseAuth);
-
-  // function toggleDone() {
-  //   firestore.update(`currencies/${id}`, { done: !currencies.done });
-  // }
 
   function deleteCurrency() {
     return firestore.delete(`users/${uid}/currencies/${id}`);
@@ -34,4 +30,4 @@ function CurrencyItem({ id }: CurrencyItemProps) {
   );
 }
 
-export default CurrencyItem;
+export default CurrencyListItem;

@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Spin } from "antd";
 import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
-import CurrencyItem from "./CurrencyItem";
-import { getCurrencies } from "../selectors/currency";
+import CurrencyListItem from "../CurrencyListItem/CurrencyListItem";
+import { getCurrencies } from "../../selectors/currency";
 
 interface CurrencyListProps {
   uid: string;
@@ -37,7 +37,7 @@ export default function CurrencyList({
 
   // // Show a message while todos are loading
   if (!isLoaded(currencies)) {
-    return <Spin />;
+    return <div data-testid="currency-spinner"><Spin /></div>;
   }
 
   // Show a message if there are no todos
@@ -46,11 +46,11 @@ export default function CurrencyList({
   }
 
   return (
-    <>
+    <ul data-testid="currency-list">
       {currencies.map(({ id, ...currency }, index) => (
-        <CurrencyItem key={`${id}-${index}`} id={id} {...currency} />
+        <CurrencyListItem key={`${id}-${index}`} id={id} {...currency} />
       ))}
-    </>
+    </ul>
   );
 
   // return null;

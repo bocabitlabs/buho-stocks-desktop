@@ -15,8 +15,8 @@ describe("CompanyList compnent tests", () => {
         data: {
           currencies: {
             abcdefg: {
-              name: "Test Company",
-              ticker: "TEST:TC"
+              name: "Euro",
+              abbreviation: "EUR"
             }
           }
         },
