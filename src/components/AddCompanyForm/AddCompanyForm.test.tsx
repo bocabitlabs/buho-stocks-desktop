@@ -1,12 +1,8 @@
 import React from "react";
 import AddCompanyForm from "./AddCompanyForm";
-import configureStore from "redux-mock-store";
 import { render } from "../../utils/test-utils";
 
 describe("AddCompanyForm compnent tests", () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
 
   const initialState = {
     firebase: {
@@ -29,11 +25,8 @@ describe("AddCompanyForm compnent tests", () => {
       }
     }
   };
-  const mockStore = configureStore();
-  let store;
 
   test("renders Company Name field", () => {
-    store = mockStore(initialState);
 
     const { getByText } = render(<AddCompanyForm />, { initialState });
     const element = getByText(/Company Name/i);
@@ -41,7 +34,6 @@ describe("AddCompanyForm compnent tests", () => {
   });
 
   test("renders Ticker field", () => {
-    store = mockStore(initialState);
 
     const { getByText } = render(<AddCompanyForm />, { initialState });
     const element = getByText(/Ticker/i);
@@ -49,7 +41,6 @@ describe("AddCompanyForm compnent tests", () => {
   });
 
   test("renders Market Name field", () => {
-    store = mockStore(initialState);
 
     const { getByText } = render(<AddCompanyForm />, { initialState });
     const element = getByText(/Market name/i);
@@ -57,7 +48,6 @@ describe("AddCompanyForm compnent tests", () => {
   });
 
   test("renders Ticker field", () => {
-    store = mockStore(initialState);
 
     const { getByText } = render(<AddCompanyForm />);
     const element = getByText(/Ticker/i);
@@ -65,7 +55,6 @@ describe("AddCompanyForm compnent tests", () => {
   });
 
   test("renders Notes field", () => {
-    store = mockStore(initialState);
 
     const { getByText } = render(<AddCompanyForm />, { initialState });
     const element = getByText(/Notes/i);
@@ -73,7 +62,6 @@ describe("AddCompanyForm compnent tests", () => {
   });
 
   test("renders Link field", () => {
-    store = mockStore(initialState);
 
     const { getByText } = render(<AddCompanyForm />, { initialState });
     const element = getByText(/Link/i);
@@ -81,7 +69,6 @@ describe("AddCompanyForm compnent tests", () => {
   });
 
   test("renders Currency field", () => {
-    store = mockStore(initialState);
 
     const { getByText } = render(<AddCompanyForm />, { initialState });
     const element = getByText(/Currency/i);
@@ -89,7 +76,6 @@ describe("AddCompanyForm compnent tests", () => {
   });
 
   test("renders Add Company button", () => {
-    store = mockStore(initialState);
 
     const { getByText } = render(<AddCompanyForm />, { initialState });
     const element = getByText(/Add Company/i);
