@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Redirect, useHistory } from "react-router";
 import { Form, Input, Button, Row, Col, Spin } from "antd";
 import { useFirebase } from "react-redux-firebase";
-import { getFirebaseAuth } from "../selectors/profile";
+import { getFirebaseAuth } from "../../selectors/profile";
 import { useSelector } from "react-redux";
 
 const LoginRoute = () => {
@@ -41,7 +41,7 @@ const LoginRoute = () => {
 
   if (!isLoaded || isLoading) {
     return (
-      <Row>
+      <Row data-testid="login-spinner">
         <Col span={12} offset={6}>
           <Spin />
         </Col>

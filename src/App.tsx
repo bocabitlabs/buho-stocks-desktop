@@ -3,9 +3,9 @@ import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import PrivateRoute from "./routes/PrivateRoute";
-import LoginRoute from "./routes/LoginRoute";
-import RegisterRoute from "./routes/RegisterRoute";
-import HomeRoute from "./routes/HomeRoute";
+import LoginRoute from "./routes/LoginRoute/LoginRoute";
+import RegisterRoute from "./routes/RegisterRoute/RegisterRoute";
+import HomeRoute from "./routes/HomeRoute/HomeRoute";
 import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
 
 function App() {

@@ -28,60 +28,60 @@ describe("CurrencyList compnent tests", () => {
     expect(element).toBeInTheDocument();
   });
 
-  // test("renders empty currency list", () => {
-  //   const initialState = {
-  //     firebase: {
-  //       auth: {}
-  //     },
-  //     firestore: {
-  //       data: {
-  //         currencies: {
-  //           abcdefg: {
-  //             name: "Currency",
-  //           }
-  //         }
-  //       },
-  //       ordered: {
-  //         currencies: []
-  //       }
-  //     }
-  //   };
+  test("renders empty currency list", () => {
+    const initialState = {
+      firebase: {
+        auth: {}
+      },
+      firestore: {
+        data: {
+          currencies: {
+            abcdefg: {
+              name: "Currency",
+            }
+          }
+        },
+        ordered: {
+          currencies: []
+        }
+      }
+    };
 
-  //   const { getByText } = render(<CurrencyList uid={"123"} />, { initialState });
-  //   const element = getByText(/Currency list is empty/i);
-  //   expect(element).toBeInTheDocument();
-  // });
+    const { getByText } = render(<CurrencyList uid={"123"} />, { initialState });
+    const element = getByText(/Currency list is empty/i);
+    expect(element).toBeInTheDocument();
+  });
 
-  // test("renders company list", () => {
-  //   const initialState = {
-  //     firebase: {
-  //       auth: {}
-  //     },
-  //     firestore: {
-  //       data: {
-  //         currencies: {
-  //           abcdefg: {
-  //             name: "Euro",
-  //           }
-  //         }
-  //       },
-  //       ordered: {
-  //         currencies: [
-  //           {
-  //             name: "EURO",
-  //             abreviation: "EUR",
-  //             id: "abcdefg"
-  //           }
-  //         ]
-  //       }
-  //     }
-  //   };
+  test("renders company list", () => {
+    const initialState = {
+      firebase: {
+        auth: {}
+      },
+      firestore: {
+        data: {
+          currencies: {
+            abcdefg: {
+              name: "Euro",
+            }
+          }
+        },
+        ordered: {
+          currencies: [
+            {
+              name: "EURO",
+              abreviation: "EUR",
+              id: "abcdefg"
+            }
+          ]
+        }
+      }
+    };
 
-  //   const { getByTestId } = renderWithRouterAndRedux(
-  //     <CurrencyList uid={"123"} />,
-  //     { initialState }
-  //   );
-  //   let element = getByTestId(/currency-list/i);
-  //   expect(element).toBeInTheDocument();
-  // });
+    const { getByTestId } = renderWithRouterAndRedux(
+      <CurrencyList uid={"123"} />,
+      { initialState }
+    );
+    let element = getByTestId(/currency-list/i);
+    expect(element).toBeInTheDocument();
+  });
 });

@@ -3,12 +3,12 @@ import React from "react";
 import {
   ExampleComponent,
   ExampleComponentWithType
-} from "../components/ExampleComponent/ExampleComponent";
-import AddCurrencyForm from "../components/AddCurrencyForm/AddCurrencyForm";
-import CurrencyList from "../components/CurrencyList/CurrencyList";
+} from "../../components/ExampleComponent/ExampleComponent";
+import AddCurrencyForm from "../../components/AddCurrencyForm/AddCurrencyForm";
+import CurrencyList from "../../components/CurrencyList/CurrencyList";
 import { useSelector } from "react-redux";
-import { getFirebaseAuth } from "../selectors/profile";
-import LogoutButton from "../components/LogoutButton";
+import { getFirebaseAuth } from "../../selectors/profile";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import { Menu, Layout, Breadcrumb, PageHeader } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import {
@@ -16,14 +16,14 @@ import {
   LaptopOutlined,
   NotificationOutlined
 } from "@ant-design/icons";
-import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
-import CompanyList from "../components/CompanyList/CompanyList";
+import AddCompanyForm from "../../components/AddCompanyForm/AddCompanyForm";
+import CompanyList from "../../components/CompanyList/CompanyList";
 
 const Home = () => {
   const { uid }: any = useSelector(getFirebaseAuth);
 
   return (
-    <Layout>
+    <Layout data-testid="home-route">
       <Layout.Header className="header">
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
