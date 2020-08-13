@@ -2,8 +2,6 @@ import { combineReducers } from "redux";
 import { firebaseReducer } from "react-redux-firebase";
 import { firestoreReducer } from "redux-firestore";
 
-// import { currencies } from "./currency";
-
 import { ADD_ERROR, REMOVE_ERROR, CLEAR_ERRORS } from "../actions/errors";
 
 interface ActionProps {
@@ -13,10 +11,8 @@ interface ActionProps {
 }
 
 export default combineReducers({
-  //   auth,
   firebase: firebaseReducer,
   firestore: firestoreReducer,
-  // currencies,
   errors: (state: any[] = [], action: ActionProps) => {
     switch (action.type) {
       case ADD_ERROR: {
