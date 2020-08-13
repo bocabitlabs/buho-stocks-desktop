@@ -50,7 +50,7 @@ const LoginRoute = () => {
   }
 
   if (uid) {
-    return <Redirect to="/" />;
+    return <div data-testid="redirect-id"><Redirect to="/" /></div>;
   }
 
   return (

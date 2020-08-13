@@ -25,4 +25,18 @@ describe("LoginRoute compnent tests", () => {
     element = getByText(/Password/i);
     expect(element).toBeInTheDocument();
   });
+
+  test("redirects to home", () => {
+    const initialState = {
+      firebase: {
+        auth: {
+          isLoaded: true,
+          uid: "12345"
+        }
+      },
+    }
+    const { getByTestId } = renderWithRouterAndRedux(<LoginRoute />, {initialState});
+    const element = getByTestId(/redirect-id/i);
+    expect(element).toBeInTheDocument();
+  });
 });
