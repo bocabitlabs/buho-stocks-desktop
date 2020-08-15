@@ -12,12 +12,10 @@ describe("RegisterRoute compnent tests", () => {
         }
       },
     }
-    const { getByText, getAllByText } = renderWithRouterAndRedux(<RegisterRoute />, {initialState});
-    const elements = getAllByText(/Sign up/i);
+    const { getAllByText } = renderWithRouterAndRedux(<RegisterRoute />, {initialState});
+    let elements = getAllByText(/Email/i);
     expect(elements.length).toBe(2);
-    let element = getByText(/Email/i);
-    expect(element).toBeInTheDocument();
-    element = getByText(/Password/i);
-    expect(element).toBeInTheDocument();
+    elements = getAllByText(/Password/i);
+    expect(elements.length).toBe(3);
   });
 });

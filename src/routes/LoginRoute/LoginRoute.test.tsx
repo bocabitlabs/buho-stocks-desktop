@@ -17,13 +17,14 @@ describe("LoginRoute compnent tests", () => {
         }
       },
     }
-    const { getByText, getAllByText } = renderWithRouterAndRedux(<LoginRoute />, {initialState});
-    const elements = getAllByText(/Log in/i);
+    const { getAllByText } = renderWithRouterAndRedux(<LoginRoute />, {initialState});
+    let elements = getAllByText(/Log in/i);
+    expect(elements.length).toBe(1);
+    elements = getAllByText(/Email/i);
     expect(elements.length).toBe(2);
-    let element = getByText(/Email/i);
-    expect(element).toBeInTheDocument();
-    element = getByText(/Password/i);
-    expect(element).toBeInTheDocument();
+
+    elements = getAllByText(/Password/i);
+    expect(elements.length).toBe(2);
   });
 
   test("redirects to home", () => {
