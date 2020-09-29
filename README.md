@@ -64,3 +64,7 @@ yarn test
 ## Links
 
 - UI docs: https://ant.design/components/overview/
+
+## Attributions
+
+- Icons by [lavarmsg](https://www.vecteezy.com/members/lavarmsg)
