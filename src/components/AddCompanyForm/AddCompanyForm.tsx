@@ -1,5 +1,4 @@
 import React, { ReactElement, useCallback } from "react";
-import { useFirestore } from "react-redux-firebase";
 import { Form, Input, Button, Select } from "antd";
 import { useSelector } from "react-redux";
 import { getFirebaseAuth } from "../../selectors/profile";
@@ -10,7 +9,6 @@ import { getCurrencies } from "../../selectors/currency";
  * Add a new Currency
  */
 function AddCompanyForm(): ReactElement {
-  const firestore = useFirestore();
   const [form] = Form.useForm();
   const { uid }: any = useSelector(getFirebaseAuth);
   const currencies = useSelector(getCurrencies);
@@ -28,13 +26,9 @@ function AddCompanyForm(): ReactElement {
         currency: currency
       };
       console.log(values);
-      firestore
-        .collection("users")
-        .doc(uid)
-        .collection("companies")
-        .add(company);
+      // Add company
     },
-    [firestore, uid]
+    [uid]
   );
 
   return (

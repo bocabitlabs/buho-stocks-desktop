@@ -1,8 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { useFirestore } from "react-redux-firebase";
-import { getCurrencyById } from "../selectors/currency";
-import { getFirebaseAuth } from "../selectors/profile";
+// import { useSelector } from "react-redux";
+// import { getCurrencyById } from "../selectors/currency";
+// import { getFirebaseAuth } from "../selectors/profile";
 
 interface CurrencyItemProps {
   id: string;
@@ -13,20 +12,20 @@ interface CurrencyItemProps {
  * @param id: The identifier of the the Currency
  */
 function CurrencyItem({ id }: CurrencyItemProps) {
-  const currency = useSelector(getCurrencyById)(id);
-  const firestore = useFirestore();
-  const { uid }: any = useSelector(getFirebaseAuth);
+  // const currency = useSelector(getCurrencyById)(id);
+  // const { uid }: any = useSelector(getFirebaseAuth);
 
   // function toggleDone() {
   //   firestore.update(`currencies/${id}`, { done: !currencies.done });
   // }
 
   function deleteCurrency() {
-    return firestore.delete(`users/${uid}/currencies/${id}`);
+    // Delete
+    // return firestore.delete(`users/${uid}/currencies/${id}`);
   }
   return (
     <li className="Todo">
-      {currency.name}
+      {/* {currency.name} */}
       <button className="Todo-Button" onClick={deleteCurrency}>
         Delete
       </button>

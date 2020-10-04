@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import sendAsync from "../message-control/renderer";
 
-import {
-  ExampleComponent,
-  ExampleComponentWithType
-} from "../components/ExampleComponent";
-import AddCurrencyForm from "../components/AddCurrencyForm/AddCurrencyForm";
-import CurrencyList from "../components/CurrencyList";
-import { useSelector } from "react-redux";
-import { getFirebaseAuth } from "../selectors/profile";
-import LogoutButton from "../components/LogoutButton";
+// import {
+//   ExampleComponent,
+//   ExampleComponentWithType
+// } from "../components/ExampleComponent";
+// import AddCurrencyForm from "../components/AddCurrencyForm/AddCurrencyForm";
+// import CurrencyList from "../components/CurrencyList";
+// import { useSelector } from "react-redux";
+// import { getFirebaseAuth } from "../selectors/profile";
+// import LogoutButton from "../components/LogoutButton";
 import { Menu, Layout, Breadcrumb, PageHeader } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import {
@@ -16,15 +17,44 @@ import {
   LaptopOutlined,
   NotificationOutlined
 } from "@ant-design/icons";
-import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
-import CompanyList from "../components/CompanyList/CompanyList";
+// import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
+// import CompanyList from "../components/CompanyList/CompanyList";
 
 const Home = () => {
-  const { uid }: any = useSelector(getFirebaseAuth);
+  const [message, setMessage] = useState("SELECT * FROM currencies");
+  const [response, setResponse] = useState();
+
+  function send(sql: any) {
+    sendAsync(sql).then((result: React.SetStateAction<undefined>) =>
+      setResponse(result)
+    );
+  }
 
   return (
     <Layout>
-      <Layout.Header className="header">
+      <div>Hello world</div>
+      <article>
+        <p>
+          Say <i>ping</i> to the main process.
+        </p>
+        <input
+          type="text"
+          value={message}
+          onChange={({ target: { value } }) => setMessage(value)}
+        />
+        <button type="button" onClick={() => send(message)}>
+          Send
+        </button>
+        <br />
+        <p>Main process responses:</p>
+        <br />
+        <pre>
+          {JSON.stringify(response)}
+          {/* {(response && (response || []).join("\n")) ||
+            "the main process seems quiet!"} */}
+        </pre>
+      </article>
+      {/* <Layout.Header className="header">
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
           <Menu.Item key="1">nav 1</Menu.Item>
@@ -100,7 +130,7 @@ const Home = () => {
             <LogoutButton />
           </Layout.Content>
         </Layout>
-      </Layout>
+      </Layout> */}
     </Layout>
   );
 };

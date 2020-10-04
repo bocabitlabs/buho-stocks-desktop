@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Spin } from "antd";
-import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
 import { getCompanies } from "../../selectors/company";
 import CompanyItem from "../CompanyItem";
 // import CurrencyItem from "./CurrencyItem";
@@ -22,15 +21,6 @@ export default function CompanyList({
   //   equalTo: uid
   // };
 
-  useFirestoreConnect([
-    {
-      collection: "users",
-      doc: uid,
-      subcollections: [{ collection: "companies" }],
-      storeAs: `companies`
-    } // or 'todos'
-  ]);
-
   // Attach todos listener
   // useFirestoreConnect(() => [currenciesQuery]);
 
@@ -38,14 +28,14 @@ export default function CompanyList({
   const companies = useSelector(getCompanies);
 
   // // Show a message while todos are loading
-  if (!isLoaded(companies)) {
-    return <Spin />;
-  }
+  // if (!isLoaded(companies)) {
+  //   return <Spin />;
+  // }
 
-  // // Show a message if there are no todos
-  if (isEmpty(companies)) {
-    return <div>Company list is empty</div>;
-  }
+  // // // Show a message if there are no todos
+  // if (isEmpty(companies)) {
+  //   return <div>Company list is empty</div>;
+  // }
 
   return (
     <>
@@ -54,5 +44,4 @@ export default function CompanyList({
       ))}
     </>
   );
-
 }
