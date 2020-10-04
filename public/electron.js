@@ -3,8 +3,12 @@ const path = require("path");
 const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
 
+require("../src/message-control/main");
+const { createDBSchema } = require("../src/database/create-schema");
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
+
+createDBSchema();
 
 if (isDev) {
   const devTools = require("electron-devtools-installer");
