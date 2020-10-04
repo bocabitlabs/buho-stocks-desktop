@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "buho stocks",
+            "database": "${workspaceFolder:buho-stocks}/public/db.sqlite3",
+            "group": "projects"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
