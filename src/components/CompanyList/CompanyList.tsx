@@ -31,9 +31,6 @@ export default function CompanyList({
     } // or 'todos'
   ]);
 
-  // Attach todos listener
-  // useFirestoreConnect(() => [currenciesQuery]);
-
   // // Get todos from redux state
   const companies = useSelector(getCompanies);
 

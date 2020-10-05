@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { useFirebase } from "react-redux-firebase";
 import { Row, Col, Layout, Card, Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const RegisterRoute = () => {
   const history = useHistory();
@@ -94,7 +95,12 @@ const RegisterRoute = () => {
                 </Button>
               </Form.Item>
             </Form>
-            <form onSubmit={handleSignUp}></form>
+            <p>
+              Already have an account?{" "}
+              <Link to="/login" title="Login">
+                Sign in here
+              </Link>
+            </p>
           </Card>
         </Col>
       </Row>

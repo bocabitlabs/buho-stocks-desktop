@@ -65,3 +65,4 @@ yarn test
 
 - UI docs: https://ant.design/components/overview/
 - React Testing Library: https://testing-library.com/docs/example-react-redux
+- Firebase Console: https://console.firebase.google.com/

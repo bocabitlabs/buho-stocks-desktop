@@ -14,6 +14,7 @@ import "./index.css";
 import App from "./App";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { firebaseConfig } from "./utils/config";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const fbConfig = firebaseConfig;
 
@@ -47,7 +48,9 @@ const rrfProps = {
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById("root")

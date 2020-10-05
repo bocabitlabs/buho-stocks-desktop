@@ -57,7 +57,7 @@ const LoginRoute = () => {
   if (uid) {
     return (
       <div data-testid="redirect-id">
-        <Redirect to="/" />
+        <Redirect to="/home" />
       </div>
     );
   }
