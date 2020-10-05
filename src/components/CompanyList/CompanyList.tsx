@@ -1,8 +1,6 @@
 import React, { ReactElement } from "react";
-import { useSelector } from "react-redux";
-import { Spin } from "antd";
-import { getCompanies } from "../../selectors/company";
-import CompanyItem from "../CompanyItem";
+// import { Spin } from "antd";
+// import CompanyItem from "../CompanyItem";
 // import CurrencyItem from "./CurrencyItem";
 // import { getCurrencies } from "../selectors/currency";
 
@@ -25,7 +23,7 @@ export default function CompanyList({
   // useFirestoreConnect(() => [currenciesQuery]);
 
   // // Get todos from redux state
-  const companies = useSelector(getCompanies);
+  // const companies = useSelector(getCompanies);
 
   // // Show a message while todos are loading
   // if (!isLoaded(companies)) {
@@ -39,9 +37,9 @@ export default function CompanyList({
 
   return (
     <>
-      {companies.map(({ id, ...company }, index) => (
+      {/* {companies.map(({ id, ...company }, index) => (
         <CompanyItem key={`${id}-${index}`} id={id} {...company} />
-      ))}
+      ))} */}
     </>
   );
 }

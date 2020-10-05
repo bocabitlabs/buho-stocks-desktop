@@ -1,7 +1,4 @@
 import React from "react";
-// import { useSelector } from "react-redux";
-// import { getCurrencyById } from "../selectors/currency";
-// import { getFirebaseAuth } from "../selectors/profile";
 
 interface CurrencyItemProps {
   id: string;

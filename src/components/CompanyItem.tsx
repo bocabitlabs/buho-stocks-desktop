@@ -1,6 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { getCompanyById } from "../selectors/company";
 
 interface CompanyItemProps {
   id: string;
@@ -11,7 +9,6 @@ interface CompanyItemProps {
  * @param id: The identifier of the the Currency
  */
 function CompanyItem({ id }: CompanyItemProps) {
-  const company = useSelector(getCompanyById)(id);
 
   // function toggleDone() {
   //   firestore.update(`currencies/${id}`, { done: !currencies.done });

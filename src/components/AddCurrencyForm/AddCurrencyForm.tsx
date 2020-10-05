@@ -1,14 +1,11 @@
 import React, { ReactElement, useCallback } from "react";
 import { Button, Form, Input } from "antd";
-import { getFirebaseAuth } from "../../selectors/profile";
-import { useSelector } from "react-redux";
 
 /**
  * Add a new Currency
  */
 function AddCurrencyForm(): ReactElement {
   const [form] = Form.useForm();
-  const { uid }: any = useSelector(getFirebaseAuth);
 
   const handleAddCurrency = useCallback(
     async (values) => {
@@ -17,11 +14,10 @@ function AddCurrencyForm(): ReactElement {
         name: currencyName,
         abreviation: abbreviation,
         symbol: symbol,
-        userId: uid
       };
       //Add the currency
     },
-    [uid]
+    []
   );
 
   return (

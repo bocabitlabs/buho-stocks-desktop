@@ -1,17 +1,14 @@
 import React, { ReactElement, useCallback } from "react";
 import { Form, Input, Button, Select } from "antd";
-import { useSelector } from "react-redux";
-import { getFirebaseAuth } from "../../selectors/profile";
 import TextArea from "antd/lib/input/TextArea";
-import { getCurrencies } from "../../selectors/currency";
+// import { getCurrencies } from "../../selectors/currency";
 
 /**
  * Add a new Currency
  */
 function AddCompanyForm(): ReactElement {
   const [form] = Form.useForm();
-  const { uid }: any = useSelector(getFirebaseAuth);
-  const currencies = useSelector(getCurrencies);
+  // const currencies = useSelector(getCurrencies);
 
   const handleAddCompany = useCallback(
     async (values) => {
@@ -22,13 +19,12 @@ function AddCompanyForm(): ReactElement {
         ticker: ticker,
         market: market,
         notes: notes,
-        userId: uid,
         currency: currency
       };
       console.log(values);
       // Add company
     },
-    [uid]
+    []
   );
 
   return (
@@ -56,7 +52,7 @@ function AddCompanyForm(): ReactElement {
           placeholder="Select a option and change input text above"
           allowClear
         >
-          {currencies &&
+          {/* {currencies &&
             currencies.map((currency, index) => (
               <Select.Option
                 value={currency.id}
@@ -64,7 +60,7 @@ function AddCompanyForm(): ReactElement {
               >
                 {currency.name} ({currency.abreviation})
               </Select.Option>
-            ))}
+            ))} */}
         </Select>
       </Form.Item>
       <Form.Item

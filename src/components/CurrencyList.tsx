@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Spin } from "antd";
 import CurrencyItem from "./CurrencyItem";
-import { getCurrencies } from "../selectors/currency";
 
 interface CurrencyListProps {
   uid: string;
@@ -23,7 +22,7 @@ export default function CurrencyList({
   // useFirestoreConnect(() => [currenciesQuery]);
 
   // // Get todos from redux state
-  const currencies = useSelector(getCurrencies);
+  // const currencies = useSelector(getCurrencies);
 
   // // // Show a message while todos are loading
   // if (!isLoaded(currencies)) {
@@ -37,9 +36,9 @@ export default function CurrencyList({
 
   return (
     <>
-      {currencies.map(({ id, ...currency }, index) => (
+      {/* {currencies.map(({ id, ...currency }, index) => (
         <CurrencyItem key={`${id}-${index}`} id={id} {...currency} />
-      ))}
+      ))} */}
     </>
   );
 
