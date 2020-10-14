@@ -1,6 +1,6 @@
 @import "~antd/dist/antd.css";
 
-#components-layout-demo-top-side-2 .logo {
+.logo {
   width: 120px;
   height: 31px;
   background: rgba(255, 255, 255, 0.2);
@@ -9,5 +9,27 @@
 }
 
 .site-layout-background {
+  background: #fff;
+}
+
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+
+.site-layout .site-layout-background {
   background: #fff;
 }

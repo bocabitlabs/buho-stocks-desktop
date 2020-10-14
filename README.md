@@ -7,6 +7,7 @@ Application to manage a stocks portfolio for Buy & Hold investment.
 ## Technologies used
 
 - React
+- Electron
 - Typescript
 - Ant Design
 
@@ -14,7 +15,6 @@ Application to manage a stocks portfolio for Buy & Hold investment.
 
 - Node 13
 - Yarn 1.22
-- Firebase project
 
 ## Development
 
@@ -29,12 +29,6 @@ the [CONTRIBUTING file](/docs/CONTRIBUTING.md) as it includes information about 
 brew install node && brew install yarn
 ```
 
-### 2. Create a Firebase project
-
-1. Go to https://console.firebase.google.com/ and create a new project there.
-2. Create a new "Web application"
-3. Copy the values of the `firebaseConfig` variable.
-
 ### 3. Install the dependencies
 
 ```bash
@@ -46,8 +40,6 @@ yarn
 ```bash
 cp utils/config.sample.tsx utils/config.tsx
 ```
-
-Update the values of the `firebaseConfig` variable from the previous section.
 
 ### 3. Start the application
 

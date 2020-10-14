@@ -4,7 +4,10 @@ import sendAsync from "../message-control/renderer";
 import { Layout, PageHeader } from "antd";
 
 import RouteContent from "./RouteContent";
-import { ExampleComponent, ExampleComponentWithType } from "../components/ExampleComponent";
+import {
+  ExampleComponent,
+  ExampleComponentWithType
+} from "../components/ExampleComponent";
 // import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
 // import CompanyList from "../components/CompanyList/CompanyList";
 
@@ -19,16 +22,8 @@ const Home = () => {
   }
 
   return (
-      <RouteContent>
-      <Layout.Content
-        className="site-layout-background"
-        style={{
-          padding: 24,
-          margin: 0,
-          minHeight: 280
-        }}
-      >
-              {/* <div>Hello world</div>
+    <>
+      {/* <div>Hello world</div>
       <article>
         <p>
           Say <i>ping</i> to the main process.
@@ -48,21 +43,20 @@ const Home = () => {
           {JSON.stringify(response)}
         </pre>
       </article> */}
-        <h1>Home</h1>
-        <div>
-          <PageHeader className="site-page-header" title="Currencies" />
-          <ExampleComponent who={"me"} />
-          <ExampleComponentWithType who={"me2"} />
-          {/* <AddCurrencyForm />
+      <h1>Home</h1>
+      <div>
+        <PageHeader className="site-page-header" title="Currencies" />
+        <ExampleComponent who={"me"} />
+        <ExampleComponentWithType who={"me2"} />
+        {/* <AddCurrencyForm />
           <CurrencyList uid={uid} /> */}
-        </div>
-        <div>
-          <PageHeader className="site-page-header" title="Companies" />
-          {/* <AddCompanyForm />
+      </div>
+      <div>
+        <PageHeader className="site-page-header" title="Companies" />
+        {/* <AddCompanyForm />
           <CompanyList uid={uid} /> */}
-        </div>
-      </Layout.Content>
-    </RouteContent>
+      </div>
+    </>
   );
 };
 

@@ -5,6 +5,14 @@ import { Route, useHistory, useLocation } from "react-router-dom";
 import HomeRoute from "./routes/HomeRoute";
 import { Layout, Menu } from "antd";
 
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
+
 interface RoutePathProps {
   key: string;
   path: string;
@@ -26,6 +34,7 @@ function App() {
   const [selectedKey, setSelectedKey] = useState(
     navLinks.find((item) => location.pathname.startsWith(item.path))?.key || ""
   );
+  const [collapsed, setCollapsed] = useState(false);
 
   const onClickMenu = (item: any) => {
     console.log(item);
@@ -42,42 +51,36 @@ function App() {
   }, [location, navLinks]);
 
   return (
-    <Layout data-testid="home-route">
-      <Layout.Header className="header">
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          onClick={onClickMenu}
-          selectedKeys={[selectedKey]}
-        >
+    <Layout data-testid="home-route" style={{height: '100vh'}}>
+      <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
+          <div className="logo" />
+          <Menu theme="dark" mode="inline" onClick={onClickMenu}
+          selectedKeys={[selectedKey]}>
+                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+              className: 'trigger',
+              onClick: () => setCollapsed(!collapsed),
+            })}
           {navLinks.map((item) => (
-            <Menu.Item key={item.key}>{item.text}</Menu.Item>
-          ))}
-        </Menu>
-      </Layout.Header>
-      <Layout>
-        <Layout.Sider width={200} className="site-layout-background">
-          <Menu
-            mode="inline"
-            onClick={onClickMenu}
-            selectedKeys={[selectedKey]}
-            style={{ height: "100%", borderRight: 0 }}
-          >
-            {navLinks.map((item) => (
             <Menu.Item key={item.key}>{item.text}</Menu.Item>
           ))}
           </Menu>
         </Layout.Sider>
+        <Layout className="site-layout">
+          <Layout.Header className="site-layout-background" style={{ padding: 0 }}>
 
-        <Route exact path="/home" component={HomeRoute} />
-        {/* <Route
-          exact
-          path="/company/:companyId"
-          component={CompanyDetailsRoute}
-        /> */}
+          </Layout.Header>
+          <Layout.Content
+            className="site-layout-background"
+            style={{
+              margin: '24px 16px',
+              padding: 24,
+              minHeight: 280,
+            }}
+          >
+            <Route exact path="/home" component={HomeRoute} />
+          </Layout.Content>
+        </Layout>
       </Layout>
-    </Layout>
   );
 }
 
