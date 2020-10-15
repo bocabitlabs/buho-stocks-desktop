@@ -1,5 +1,8 @@
-import React, { ReactElement, useCallback } from "react";
-import { Button, Form, Input } from "antd";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { Button, Form, Input, Select } from "antd";
+import { getCurrencies } from "../../daos/currency-dao";
+import { addPortfolio } from "../../daos/portfolio-dao";
+import { CurrencyFields } from "../../types/currency";
 
 /**
  * Add a new Currency
@@ -7,14 +10,21 @@ import { Button, Form, Input } from "antd";
 function AddPortfolioForm(): ReactElement {
   const [form] = Form.useForm();
 
+  const [currencies, setCurrencies] = useState([]);
+  const [result, setResult] = useState('');
+
   const handleAddCurrency = useCallback(async (values) => {
-    const { name, description, currencyId } = values;
+    const { name, description, currency } = values;
     const portfolio = {
       name,
       description,
-      currencyId
+      currencyId: currency
     };
-    //Add the currency
+    addPortfolio(portfolio, setResult)
+  }, []);
+
+  useEffect(() => {
+    getCurrencies(setCurrencies);
   }, []);
 
   return (
@@ -26,7 +36,7 @@ function AddPortfolioForm(): ReactElement {
           { required: true, message: "Please input the name of the portfolio" }
         ]}
       >
-        <Input type="text" placeholder="EURO, Dolar, Pound..." />
+        <Input type="text" />
       </Form.Item>
       <Form.Item
         name="description"
@@ -35,24 +45,33 @@ function AddPortfolioForm(): ReactElement {
           { required: true, message: "Please input the portfolio description" }
         ]}
       >
-        <Input type="text" placeholder="EUR, USD, GBP..." />
+        <Input type="text" />
       </Form.Item>
-      <Form.Item
-        name="symbol"
-        label="Symbol"
-        rules={[
-          { required: true, message: "Please input the currency symbol" }
-        ]}
-      >
-        <Input type="text" placeholder="€, $, £..." />
+      <Form.Item name="currency" label="Currency" rules={[{ required: true }]}>
+        <Select
+          placeholder="Select a option and change input text above"
+          allowClear
+        >
+          {currencies &&
+            currencies.map((currency: CurrencyFields, index: number) => (
+              <Select.Option
+                value={currency.id}
+                key={`currency-${currency.id}-${index}`}
+              >
+                {currency.name} ({currency.abbreviation})
+              </Select.Option>
+            ))}
+        </Select>
       </Form.Item>
+      {JSON.stringify(result)}
+
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Add Currency
+          Add Portfolio
         </Button>
       </Form.Item>
     </Form>
   );
 }
 
-export default AddCurrencyForm;
+export default AddPortfolioForm;

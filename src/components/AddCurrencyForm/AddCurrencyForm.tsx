@@ -1,21 +1,25 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form, Input } from "antd";
+import { addCurrency } from "../../daos/currency-dao";
 
 /**
  * Add a new Currency
  */
 function AddCurrencyForm(): ReactElement {
   const [form] = Form.useForm();
+  const [result, setResult] = useState('');
 
   const handleAddCurrency = useCallback(
     async (values) => {
-      const { currencyName, abbreviation, symbol } = values;
+      const { currencyName, abbreviation, symbol, country } = values;
       const currency = {
         name: currencyName,
-        abreviation: abbreviation,
+        abbreviation: abbreviation,
         symbol: symbol,
+        country
       };
       //Add the currency
+      addCurrency(currency, setResult)
     },
     []
   );
@@ -49,6 +53,16 @@ function AddCurrencyForm(): ReactElement {
       >
         <Input type="text" placeholder="€, $, £..." />
       </Form.Item>
+      <Form.Item
+        name="country"
+        label="Country"
+        rules={[
+          { required: true, message: "Please input the currency  country" }
+        ]}
+      >
+        <Input type="text" placeholder="USA, EU, Japan..." />
+      </Form.Item>
+      {JSON.stringify(result)}
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Add Currency

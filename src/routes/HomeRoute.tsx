@@ -8,6 +8,8 @@ import {
   ExampleComponent,
   ExampleComponentWithType
 } from "../components/ExampleComponent";
+import AddPortfolioForm from "../components/AddPortfolioForm/AddPortfolioForm";
+import AddCurrencyForm from "../components/AddCurrencyForm/AddCurrencyForm";
 // import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
 // import CompanyList from "../components/CompanyList/CompanyList";
 
@@ -15,47 +17,21 @@ const Home = () => {
   const [message, setMessage] = useState("SELECT * FROM currencies");
   const [response, setResponse] = useState();
 
-  function send(sql: any) {
+  function send(sql: string, callback: Function) {
     sendAsync(sql).then((result: React.SetStateAction<undefined>) =>
-      setResponse(result)
+      callback(result)
     );
   }
 
   return (
     <>
-      {/* <div>Hello world</div>
-      <article>
-        <p>
-          Say <i>ping</i> to the main process.
-        </p>
-        <input
-          type="text"
-          value={message}
-          onChange={({ target: { value } }) => setMessage(value)}
-        />
-        <button type="button" onClick={() => send(message)}>
-          Send
-        </button>
-        <br />
-        <p>Main process responses:</p>
-        <br />
-        <pre>
-          {JSON.stringify(response)}
-        </pre>
-      </article> */}
-      <h1>Home</h1>
-      <div>
-        <PageHeader className="site-page-header" title="Currencies" />
-        <ExampleComponent who={"me"} />
-        <ExampleComponentWithType who={"me2"} />
-        {/* <AddCurrencyForm />
-          <CurrencyList uid={uid} /> */}
-      </div>
-      <div>
-        <PageHeader className="site-page-header" title="Companies" />
-        {/* <AddCompanyForm />
-          <CompanyList uid={uid} /> */}
-      </div>
+      <PageHeader className="site-page-header" title="Currencies" />
+      <AddCurrencyForm />
+      <PageHeader className="site-page-header" title="Portfolios" />
+      <AddPortfolioForm />
+      <ExampleComponent who={"me"} />
+      <ExampleComponentWithType who={"me2"} />
+      {/* <CurrencyList uid={uid} /> */}
     </>
   );
 };

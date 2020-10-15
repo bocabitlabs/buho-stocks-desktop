@@ -32,13 +32,6 @@ const createDBSchema = () => {
     });
     database.run("COMMIT;");
   });
-  // Close the DB connection
-  database.close((err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log("Closed the database connection.");
-  });
 };
 
 module.exports = { createDBSchema };

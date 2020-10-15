@@ -3,12 +3,14 @@ const path = require("path");
 const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
 
-// require("../src/message-control/main");
-// const { createDBSchema } = require("../src/database/create-schema");
+require("../src/message-control/main");
+const { createDBSchema } = require("../src/database/create-schema");
+const { closeDB } = require("../src/database/close-database");
+
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
-// createDBSchema();
+createDBSchema();
 
 if (isDev) {
   const devTools = require("electron-devtools-installer");
@@ -24,8 +26,8 @@ if (require("electron-squirrel-startup")) {
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1100,
+    height: 700,
     webPreferences: {
       nodeIntegration: true
     }
@@ -63,6 +65,7 @@ app.whenReady().then(() => {
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
+    closeDB();
     app.quit();
   }
 });

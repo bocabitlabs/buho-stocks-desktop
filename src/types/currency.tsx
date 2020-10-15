@@ -1,8 +1,17 @@
 export interface CurrencyFields {
   id: string;
-  userId: string;
   name: string;
-  abreviation: string;
+  abbreviation: string;
+  symbol: number;
+  country: string;
+}
+
+export interface CurrencyItemProps {
+  id?: string;
+  name: string;
+  abbreviation: string;
+  symbol: number;
+  country: string;
 }
 
 export interface CurrencyActionProps {

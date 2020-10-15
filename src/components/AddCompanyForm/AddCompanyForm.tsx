@@ -1,6 +1,7 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Form, Input, Button, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { getCurrencies } from "../../daos/currency-dao";
 // import { getCurrencies } from "../../selectors/currency";
 
 /**
@@ -8,7 +9,7 @@ import TextArea from "antd/lib/input/TextArea";
  */
 function AddCompanyForm(): ReactElement {
   const [form] = Form.useForm();
-  // const currencies = useSelector(getCurrencies);
+  // const currencies = useSelector(getCurrencies)
 
   const handleAddCompany = useCallback(
     async (values) => {

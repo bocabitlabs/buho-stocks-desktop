@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { Route, useHistory, useLocation } from "react-router-dom";
+import { Redirect, Route, useHistory, useLocation } from "react-router-dom";
 
 import HomeRoute from "./routes/HomeRoute";
 import { Layout, Menu } from "antd";
@@ -8,10 +8,11 @@ import { Layout, Menu } from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from '@ant-design/icons';
+  MailOutlined
+} from "@ant-design/icons";
+import { getPortfolios } from "./daos/portfolio-dao";
+import { PortfolioFields } from "./types/portfolio";
+import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute";
 
 interface RoutePathProps {
   key: string;
@@ -27,60 +28,129 @@ function App() {
   const history = useHistory();
 
   const navLinks: RoutePathProps[] = [
-    { key: "1", path: "/home", text: "Home" },
-    { key: "2", path: "/settings", text: "Settings" }
+    { key: "0", path: "/home", text: "Home" },
+    { key: "-1", path: "/settings", text: "Settings" }
   ];
+
+  let portfolioRoutes: RoutePathProps[] = [];
 
   const [selectedKey, setSelectedKey] = useState(
     navLinks.find((item) => location.pathname.startsWith(item.path))?.key || ""
   );
   const [collapsed, setCollapsed] = useState(false);
+  const [portfolios, setPortfolios] = useState([]);
 
   const onClickMenu = (item: any) => {
     console.log(item);
-    const clicked = navLinks.find((_item) => _item.key === item.key);
+    let clicked = navLinks.find((_item) => _item.key === item.key);
     console.log(clicked);
+    console.log("click");
+    if (!clicked) {
+      clicked = portfolioRoutes.find((_item) => _item.key === item.key);
+    }
     history.push(clicked?.path || "");
   };
 
   useEffect(() => {
-    setSelectedKey(
+    console.log(location.pathname);
+    let selected =
       navLinks.find((item) => location.pathname.startsWith(item.path))?.key ||
-        ""
-    );
-  }, [location, navLinks]);
+      "";
+    if (!selected) {
+      selected =
+        portfolioRoutes.find((item) => location.pathname.startsWith(item.path))
+          ?.key || "";
+    }
+    setSelectedKey(selected);
+  }, [location, navLinks, portfolioRoutes]);
+
+  useEffect(() => {
+    getPortfolios(setPortfolios);
+  }, []);
+
+  if (portfolios) {
+    let portfoliosArray: RoutePathProps[] = [];
+    portfolios.forEach((portfolio: PortfolioFields) => {
+      // console.log(portfolio)
+      portfoliosArray.push({
+        key: portfolio.id.toString(),
+        path: `/portfolios/${portfolio.id}`,
+        text: portfolio.name
+      });
+    });
+    portfolioRoutes = portfoliosArray;
+  }
 
   return (
-    <Layout data-testid="home-route" style={{height: '100vh'}}>
-      <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" onClick={onClickMenu}
-          selectedKeys={[selectedKey]}>
-                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-              className: 'trigger',
-              onClick: () => setCollapsed(!collapsed),
-            })}
+    <Layout data-testid="home-route">
+      <Layout.Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="logo" />
+        <Menu
+          theme="dark"
+          mode="inline"
+          onClick={onClickMenu}
+          selectedKeys={[selectedKey]}
+        >
+          <Menu.Item
+            className="trigger"
+            onClick={() => setCollapsed(!collapsed)}
+          >
+            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          </Menu.Item>
           {navLinks.map((item) => (
             <Menu.Item key={item.key}>{item.text}</Menu.Item>
           ))}
-          </Menu>
-        </Layout.Sider>
-        <Layout className="site-layout">
-          <Layout.Header className="site-layout-background" style={{ padding: 0 }}>
-
-          </Layout.Header>
-          <Layout.Content
-            className="site-layout-background"
-            style={{
-              margin: '24px 16px',
-              padding: 24,
-              minHeight: 280,
-            }}
-          >
-            <Route exact path="/home" component={HomeRoute} />
-          </Layout.Content>
-        </Layout>
+          <Menu.SubMenu key="sub1" icon={<MailOutlined />} title="Portfolios">
+            {portfolioRoutes.map((item) => (
+              <Menu.Item key={item.key}>{item.text}</Menu.Item>
+            ))}
+            {/* {portfolios &&
+              portfolios.map((portfolio: PortfolioFields, index: number) => (
+                <Menu.Item key={`portfolio-${index}`}>
+                  {portfolio.name}
+                </Menu.Item>
+              ))} */}
+          </Menu.SubMenu>
+        </Menu>
+      </Layout.Sider>
+      <Layout
+        className="site-layout"
+        style={{ minHeight: "100%", height: "100%" }}
+      >
+        {/* <Layout.Header
+          className="site-layout-background"
+          style={{ padding: 0 }}
+        ></Layout.Header> */}
+        <Layout.Content
+          className="site-layout-background"
+          style={{
+            margin: "24px 16px",
+            padding: 24
+          }}
+        >
+          <Route
+                exact
+                path="/"
+                render={() => {
+                    return (
+                      <Redirect to="/home" />
+                    )
+                }}
+              />
+          <Route exact path="/home" component={HomeRoute} />
+          <Route
+            exact
+            path="/portfolios/:id"
+            component={PortfolioDetailsRoute}
+          />
+        </Layout.Content>
       </Layout>
+    </Layout>
   );
 }
 
