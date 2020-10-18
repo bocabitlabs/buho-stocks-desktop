@@ -35,18 +35,25 @@ CREATE TABLE IF NOT EXISTS "dividends" (
 );
 CREATE TABLE IF NOT EXISTS "companies" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"name" INTEGER,
+	"name" TEXT,
 	"ticker" INTEGER,
 	"description" INTEGER,
 	"url" INTEGER,
+	"sector_id" INTEGER NOT NULL,
 	"market_id" INTEGER NOT NULL,
 	"currency_id" INTEGER NOT NULL,
 	"portfolio_id" INTEGER NOT NULL,
 	"sector" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
+	FOREIGN KEY ("sector_id") REFERENCES "sectors" ("id"),
 	FOREIGN KEY ("portfolio_id") REFERENCES "portfolios" ("id"),
 	FOREIGN KEY ("currency_id") REFERENCES "currencies" ("id"),
 	FOREIGN KEY ("market_id") REFERENCES "markets" ("id")
+);
+CREATE TABLE IF NOT EXISTS "sectors" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"name" TEXT,
+	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "inflation" (
 	"id" INTEGER NOT NULL UNIQUE,

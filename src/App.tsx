@@ -13,6 +13,12 @@ import {
 import { getPortfolios } from "./daos/portfolio-dao";
 import { PortfolioFields } from "./types/portfolio";
 import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute";
+import AddPortfolioRoute from "./routes/AddPortfolioRoute";
+import AddCurrencyRoute from "./routes/AddCurrencyRoute";
+import AddCompanyForm from "./components/AddCompanyForm/AddCompanyForm";
+import AddCompanyRoute from "./routes/AddCompanyRoute";
+import AddMarketRoute from "./routes/AddMarketRoute";
+import MarketListRoute from "./routes/MarketListRoute";
 
 interface RoutePathProps {
   key: string;
@@ -29,16 +35,25 @@ function App() {
 
   const navLinks: RoutePathProps[] = [
     { key: "0", path: "/home", text: "Home" },
-    { key: "-1", path: "/settings", text: "Settings" }
+    { key: "-1", path: "/markets", text: "Markets" },
+    { key: "-2", path: "/currencies", text: "Currencies" },
+    { key: "-3", path: "/settings", text: "Settings" }
   ];
 
-  let portfolioRoutes: RoutePathProps[] = [];
+  let portfolioRoutes: RoutePathProps[] = [
+    { key: "00", path: "/add/portfolio", text: "Add portfolio" },
+  ];
 
   const [selectedKey, setSelectedKey] = useState(
     navLinks.find((item) => location.pathname.startsWith(item.path))?.key || ""
   );
   const [collapsed, setCollapsed] = useState(false);
   const [portfolios, setPortfolios] = useState([]);
+
+  useEffect(() => {
+    getPortfolios(setPortfolios);
+  }, []);
+
 
   const onClickMenu = (item: any) => {
     console.log(item);
@@ -63,10 +78,6 @@ function App() {
     }
     setSelectedKey(selected);
   }, [location, navLinks, portfolioRoutes]);
-
-  useEffect(() => {
-    getPortfolios(setPortfolios);
-  }, []);
 
   if (portfolios) {
     let portfoliosArray: RoutePathProps[] = [];
@@ -122,15 +133,11 @@ function App() {
         className="site-layout"
         style={{ minHeight: "100%", height: "100%" }}
       >
-        {/* <Layout.Header
-          className="site-layout-background"
-          style={{ padding: 0 }}
-        ></Layout.Header> */}
         <Layout.Content
           className="site-layout-background"
           style={{
             margin: "24px 16px",
-            padding: 24
+            padding: 10
           }}
         >
           <Route
@@ -143,10 +150,20 @@ function App() {
                 }}
               />
           <Route exact path="/home" component={HomeRoute} />
+          <Route exact path="/add/portfolio" component={AddPortfolioRoute} />
+          <Route exact path="/add/currency" component={AddCurrencyRoute} />
+          <Route exact path="/add/market" component={AddMarketRoute} />
+          <Route exact path="/markets" component={MarketListRoute} />
+
           <Route
             exact
             path="/portfolios/:id"
             component={PortfolioDetailsRoute}
+          />
+          <Route
+            exact
+            path="/portfolios/:id/add-company"
+            component={AddCompanyRoute}
           />
         </Layout.Content>
       </Layout>

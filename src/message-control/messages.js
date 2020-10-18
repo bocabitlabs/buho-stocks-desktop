@@ -1,22 +1,20 @@
-const getPortfoliosMessage = "getPortfoliosMessage";
+// Portfolios
 const getPortfoliosMessageReply = "getPortfoliosMessageReply";
-
-const addPortfoliosMessage = "addPortfoliosMessage";
+const getPortfolioDetailsMessageReply = "getPortfolioDetailsMessageReply";
 const addPortfoliosMessageReply = "addPortfoliosMessageReply";
-
-const getCurrenciesMessage = "getCurrenciesMessage";
+// Currencies
 const getCurrenciesMessageReply = "getCurrenciesMessageReply";
-
-const addCurrenciesMessage = "add-currencies-message";
 const addCurrenciesMessageReply = "addCurrenciesMessageReply";
+// Markets
+const getMarketsMessageReply = "getMarketsMessageReply";
+const addMarketsMessageReply = "addMarketsMessageReply";
 
 module.exports = {
-  getPortfoliosMessage,
+  getPortfolioDetailsMessageReply,
   getPortfoliosMessageReply,
-  addPortfoliosMessage,
   addPortfoliosMessageReply,
-  getCurrenciesMessage,
   getCurrenciesMessageReply,
-  addCurrenciesMessage,
-  addCurrenciesMessageReply
+  addCurrenciesMessageReply,
+  getMarketsMessageReply,
+  addMarketsMessageReply
 };

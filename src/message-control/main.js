@@ -1,19 +1,25 @@
 const { ipcMain } = require("electron");
 const { database } = require("../database/load-database");
 const {
+  getPortfolioDetailsMessageReply,
   getPortfoliosMessageReply,
   addPortfoliosMessageReply,
   getCurrenciesMessageReply,
-  addCurrenciesMessageReply
+  addCurrenciesMessageReply,
+  getMarketsMessageReply,
+  addMarketsMessageReply
 } = require("./messages");
 
 function handleMessageResponse(event, messageType, err, rows){
 
   const handler = {
+    getPortfolioDetailsMessageReply,
     getPortfoliosMessageReply,
     addPortfoliosMessageReply,
     getCurrenciesMessageReply,
-    addCurrenciesMessageReply
+    addCurrenciesMessageReply,
+    getMarketsMessageReply,
+    addMarketsMessageReply
   }[messageType];
 
   if (handler) {

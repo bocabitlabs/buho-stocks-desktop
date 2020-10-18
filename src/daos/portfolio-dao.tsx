@@ -1,5 +1,6 @@
 import {
   addPortfoliosMessageReply,
+  getPortfolioDetailsMessageReply,
   getPortfoliosMessageReply
 } from "../message-control/messages";
 import sendSqlWithCallback from "./send-sql";
@@ -39,6 +40,21 @@ export const getPortfolios = async (callback: Function) => {
   sendSqlWithCallback(
     sql,
     getPortfoliosMessageReply,
+    callback,
+    (error: string) => console.log(error)
+  );
+};
+
+export const getPortfolioById = async (
+  portfolioId: string,
+  callback: Function
+) => {
+  //Call the DB
+  console.log("Get portfolio by ID");
+  const sql = `SELECT * FROM portfolios WHERE "id" = '${portfolioId}'`;
+  sendSqlWithCallback(
+    sql,
+    getPortfolioDetailsMessageReply,
     callback,
     (error: string) => console.log(error)
   );
