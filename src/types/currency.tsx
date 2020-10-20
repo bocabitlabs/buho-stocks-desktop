@@ -2,7 +2,7 @@ export interface CurrencyFields {
   id: string;
   name: string;
   abbreviation: string;
-  symbol: number;
+  symbol: string;
   country: string;
 }
 
@@ -10,7 +10,7 @@ export interface CurrencyItemProps {
   id?: string;
   name: string;
   abbreviation: string;
-  symbol: number;
+  symbol: string;
   country: string;
 }
 

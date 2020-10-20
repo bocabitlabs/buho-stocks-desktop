@@ -15,10 +15,10 @@ import { PortfolioFields } from "./types/portfolio";
 import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute";
 import AddPortfolioRoute from "./routes/AddPortfolioRoute";
 import AddCurrencyRoute from "./routes/AddCurrencyRoute";
-import AddCompanyForm from "./components/AddCompanyForm/AddCompanyForm";
 import AddCompanyRoute from "./routes/AddCompanyRoute";
 import AddMarketRoute from "./routes/AddMarketRoute";
 import MarketListRoute from "./routes/MarketListRoute";
+import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
 
 interface RoutePathProps {
   key: string;
@@ -41,7 +41,7 @@ function App() {
   ];
 
   let portfolioRoutes: RoutePathProps[] = [
-    { key: "00", path: "/add/portfolio", text: "Add portfolio" },
+    { key: "00", path: "/add/portfolio", text: "Add portfolio" }
   ];
 
   const [selectedKey, setSelectedKey] = useState(
@@ -53,7 +53,6 @@ function App() {
   useEffect(() => {
     getPortfolios(setPortfolios);
   }, []);
-
 
   const onClickMenu = (item: any) => {
     console.log(item);
@@ -141,15 +140,14 @@ function App() {
           }}
         >
           <Route
-                exact
-                path="/"
-                render={() => {
-                    return (
-                      <Redirect to="/home" />
-                    )
-                }}
-              />
+            exact
+            path="/"
+            render={() => {
+              return <Redirect to="/home" />;
+            }}
+          />
           <Route exact path="/home" component={HomeRoute} />
+          <Route exact path="/settings" component={SettingsRoute} />
           <Route exact path="/add/portfolio" component={AddPortfolioRoute} />
           <Route exact path="/add/currency" component={AddCurrencyRoute} />
           <Route exact path="/add/market" component={AddMarketRoute} />

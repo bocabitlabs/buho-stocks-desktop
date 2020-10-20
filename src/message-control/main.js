@@ -7,11 +7,11 @@ const {
   getCurrenciesMessageReply,
   addCurrenciesMessageReply,
   getMarketsMessageReply,
-  addMarketsMessageReply
+  addMarketsMessageReply,
+  addSampleCurrenciesMessageReply
 } = require("./messages");
 
-function handleMessageResponse(event, messageType, err, rows){
-
+function handleMessageResponse(event, messageType, err, rows) {
   const handler = {
     getPortfolioDetailsMessageReply,
     getPortfoliosMessageReply,
@@ -19,12 +19,13 @@ function handleMessageResponse(event, messageType, err, rows){
     getCurrenciesMessageReply,
     addCurrenciesMessageReply,
     getMarketsMessageReply,
-    addMarketsMessageReply
+    addMarketsMessageReply,
+    addSampleCurrenciesMessageReply
   }[messageType];
 
   if (handler) {
     try {
-      console.log(`Handler is ${handler}`)
+      console.log(`Handler is ${handler}`);
       event.reply(handler, (err && err.message) || rows);
     } catch (error) {
       console.error(`Error on event-handler: ${messageType}`);
@@ -37,7 +38,7 @@ function handleMessageResponse(event, messageType, err, rows){
 
 ipcMain.on("asynchronous-message", (event, arg, messageType) => {
   const sql = arg;
-  console.log(messageType)
+  console.log(messageType);
   database.all(sql, (err, rows) => {
     console.log("Sending get portfolios reply back");
     console.log(sql);

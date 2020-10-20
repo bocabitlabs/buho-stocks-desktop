@@ -5,6 +5,8 @@ const addPortfoliosMessageReply = "addPortfoliosMessageReply";
 // Currencies
 const getCurrenciesMessageReply = "getCurrenciesMessageReply";
 const addCurrenciesMessageReply = "addCurrenciesMessageReply";
+const addSampleCurrenciesMessageReply = "addSampleCurrenciesMessageReply";
+
 // Markets
 const getMarketsMessageReply = "getMarketsMessageReply";
 const addMarketsMessageReply = "addMarketsMessageReply";
@@ -16,5 +18,6 @@ module.exports = {
   getCurrenciesMessageReply,
   addCurrenciesMessageReply,
   getMarketsMessageReply,
-  addMarketsMessageReply
+  addMarketsMessageReply,
+  addSampleCurrenciesMessageReply
 };

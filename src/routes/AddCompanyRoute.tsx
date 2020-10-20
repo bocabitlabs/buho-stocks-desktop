@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Layout, PageHeader } from "antd";
 
-import AddCurrencyForm from "../components/AddCurrencyForm/AddCurrencyForm";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { PortfolioFields } from "../types/portfolio";
 import { getPortfolioById } from "../daos/portfolio-dao";
 import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
@@ -19,7 +18,6 @@ interface IState {
 const AddCompanyRoute = () => {
   const [portfolios, setPortfolios] = useState<PortfolioFields[]>([]);
   const { id } = useParams<IAddCompanyRouteParams>();
-  const location = useLocation();
 
   const routes = [
     {
