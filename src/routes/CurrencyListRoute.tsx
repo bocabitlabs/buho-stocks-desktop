@@ -3,9 +3,9 @@ import React from "react";
 import { Button, Layout, PageHeader } from "antd";
 
 import { Link, useHistory } from "react-router-dom";
-import MarketListTable from "../components/MarketListTable/MarketListTable";
+import CurrencyListTable from "../components/CurrencyListTable/CurrencyListTable";
 
-const MarketListRoute = () => {
+const CurrencyListRoute = () => {
   const history = useHistory();
 
   const routes = [
@@ -15,9 +15,9 @@ const MarketListRoute = () => {
       breadcrumbName: "Home"
     },
     {
-      path: "/markets",
-      name: "market",
-      breadcrumbName: "Markets"
+      path: "/currencies",
+      name: "currencies",
+      breadcrumbName: "Currencies"
     }
   ];
   function itemRender(route: any) {
@@ -36,18 +36,18 @@ const MarketListRoute = () => {
         extra={[
           <Button
             onClick={() => {
-              history.push("/add/market");
+              history.push("/add/currency");
             }}
           >
-            Add market
+            Add Currency
           </Button>
         ]}
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: '#fff' }}>
-        <MarketListTable />
+        <CurrencyListTable />
       </Layout>
     </>
   );
 };
 
-export default MarketListRoute;
+export default CurrencyListRoute;

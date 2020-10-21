@@ -19,6 +19,7 @@ import AddCompanyRoute from "./routes/AddCompanyRoute";
 import AddMarketRoute from "./routes/AddMarketRoute";
 import MarketListRoute from "./routes/MarketListRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
+import CurrencyListRoute from "./routes/CurrencyListRoute";
 
 interface RoutePathProps {
   key: string;
@@ -152,6 +153,7 @@ function App() {
           <Route exact path="/add/currency" component={AddCurrencyRoute} />
           <Route exact path="/add/market" component={AddMarketRoute} />
           <Route exact path="/markets" component={MarketListRoute} />
+          <Route exact path="/currencies" component={CurrencyListRoute} />
 
           <Route
             exact
