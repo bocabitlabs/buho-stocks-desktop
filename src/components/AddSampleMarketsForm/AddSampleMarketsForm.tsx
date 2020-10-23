@@ -1,24 +1,24 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form } from "antd";
-import { addCurrency } from "../../daos/currency-dao";
-import sampleCurrencies from "./sample-currencies";
-import { CurrencyItemProps } from "../../types/currency";
+import { addMarket } from "../../daos/market-dao";
+import sampleMarkets from "./sample-markets";
+import { MarketItemProps } from "../../types/market";
 /**
  * Add a new Currency
  */
 function AddSampleMarketsForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const [currencies, setCurrencies] = useState(sampleCurrencies);
+  const [markets, setMarkets] = useState(sampleMarkets);
 
-  const handleAddCurrencies = useCallback(async () => {
-    currencies.forEach((currency: CurrencyItemProps) => {
-      addCurrency(currency, setCurrencies);
+  const handleAddMarkets = useCallback(async () => {
+    markets.forEach((market: MarketItemProps) => {
+      addMarket(market, setMarkets);
     });
-  }, [currencies]);
+  }, [markets]);
 
   return (
-    <Form form={form} name="basic" onFinish={handleAddCurrencies}>
+    <Form form={form} name="basic" onFinish={handleAddMarkets}>
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Add Sample Markets
