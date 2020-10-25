@@ -8,7 +8,12 @@ const {
   addCurrenciesMessageReply,
   getMarketsMessageReply,
   addMarketsMessageReply,
-  addSampleCurrenciesMessageReply
+  addSampleCurrenciesMessageReply,
+  getCompaniesMessageReply,
+  addCompaniesMessageReply,
+  getSectorsMessageReply,
+  addSectorsMessageReply,
+  getSectorDetailsMessageReply
 } = require("./messages");
 
 function handleMessageResponse(event, messageType, err, rows) {
@@ -20,7 +25,12 @@ function handleMessageResponse(event, messageType, err, rows) {
     addCurrenciesMessageReply,
     getMarketsMessageReply,
     addMarketsMessageReply,
-    addSampleCurrenciesMessageReply
+    addSampleCurrenciesMessageReply,
+    getCompaniesMessageReply,
+    addCompaniesMessageReply,
+    getSectorsMessageReply,
+    addSectorsMessageReply,
+    getSectorDetailsMessageReply
   }[messageType];
 
   if (handler) {

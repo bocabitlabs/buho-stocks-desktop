@@ -37,12 +37,12 @@ const Home = () => {
             Add Currency
           </Button>,
           <Button
-          onClick={() => {
-            history.push("/add/market");
-          }}
-        >
-          Add market
-        </Button>
+            onClick={() => {
+              history.push("/add/market");
+            }}
+          >
+            Add market
+          </Button>
         ]}
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
@@ -50,13 +50,18 @@ const Home = () => {
         <ExampleComponentWithType who={"me2"} />
         {portfolios &&
           portfolios.map((portfolio: PortfolioFields, index) => (
-            <Link to={`/portfolios/${portfolio.id}`}>
+            <Link
+              to={`/portfolios/${portfolio.id}`}
+              key={`portfolio-card-${index}`}
+            >
               <Card
                 title={portfolio.name}
                 style={{ width: 300 }}
                 hoverable
                 key={`portfolio-card-${index}`}
-              />
+              >
+                {portfolio.description}
+              </Card>
             </Link>
           ))}
       </Layout>

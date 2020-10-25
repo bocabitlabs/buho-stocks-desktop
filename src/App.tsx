@@ -20,6 +20,8 @@ import AddMarketRoute from "./routes/AddMarketRoute";
 import MarketListRoute from "./routes/MarketListRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
 import CurrencyListRoute from "./routes/CurrencyListRoute";
+import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
+import AddSectorRoute from "./routes/AddSectorRoute/AddSectorRoute";
 
 interface RoutePathProps {
   key: string;
@@ -38,7 +40,8 @@ function App() {
     { key: "0", path: "/home", text: "Home" },
     { key: "-1", path: "/markets", text: "Markets" },
     { key: "-2", path: "/currencies", text: "Currencies" },
-    { key: "-3", path: "/settings", text: "Settings" }
+    { key: "-3", path: "/sectors", text: "Sectors" },
+    { key: "-4", path: "/settings", text: "Settings" }
   ];
 
   let portfolioRoutes: RoutePathProps[] = [
@@ -120,12 +123,6 @@ function App() {
             {portfolioRoutes.map((item) => (
               <Menu.Item key={item.key}>{item.text}</Menu.Item>
             ))}
-            {/* {portfolios &&
-              portfolios.map((portfolio: PortfolioFields, index: number) => (
-                <Menu.Item key={`portfolio-${index}`}>
-                  {portfolio.name}
-                </Menu.Item>
-              ))} */}
           </Menu.SubMenu>
         </Menu>
       </Layout.Sider>
@@ -154,6 +151,8 @@ function App() {
           <Route exact path="/add/market" component={AddMarketRoute} />
           <Route exact path="/markets" component={MarketListRoute} />
           <Route exact path="/currencies" component={CurrencyListRoute} />
+          <Route exact path="/sectors" component={SectorListRoute} />
+          <Route exact path="/add/sector" component={AddSectorRoute} />
 
           <Route
             exact

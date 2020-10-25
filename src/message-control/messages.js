@@ -11,13 +11,33 @@ const addSampleCurrenciesMessageReply = "addSampleCurrenciesMessageReply";
 const getMarketsMessageReply = "getMarketsMessageReply";
 const addMarketsMessageReply = "addMarketsMessageReply";
 
+// Companies
+const getCompaniesMessageReply = "getCompaniesMessageReply";
+const addCompaniesMessageReply = "addCompaniesMessageReply";
+
+// Sectors
+const getSectorsMessageReply = "getSectorsMessageReply";
+const addSectorsMessageReply = "addSectorsMessageReply";
+const getSectorDetailsMessageReply = "getSectorDetailsMessageReply";
+
 module.exports = {
+  // portfolios
   getPortfolioDetailsMessageReply,
   getPortfoliosMessageReply,
+  // currencies
   addPortfoliosMessageReply,
   getCurrenciesMessageReply,
+  // markets
   addCurrenciesMessageReply,
   getMarketsMessageReply,
+  // markets
   addMarketsMessageReply,
-  addSampleCurrenciesMessageReply
+  addSampleCurrenciesMessageReply,
+  // companies
+  getCompaniesMessageReply,
+  addCompaniesMessageReply,
+  // sectors
+  getSectorsMessageReply,
+  addSectorsMessageReply,
+  getSectorDetailsMessageReply
 };

@@ -58,7 +58,7 @@ const AddCompanyRoute = () => {
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
         {JSON.stringify(portfolios[0])}
-        <AddCompanyForm />
+        <AddCompanyForm portfolioID={id} />
       </Layout>
     </>
   );

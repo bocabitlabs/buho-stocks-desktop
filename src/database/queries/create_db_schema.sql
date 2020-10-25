@@ -43,7 +43,6 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	"market_id" INTEGER NOT NULL,
 	"currency_id" INTEGER NOT NULL,
 	"portfolio_id" INTEGER NOT NULL,
-	"sector" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("sector_id") REFERENCES "sectors" ("id"),
 	FOREIGN KEY ("portfolio_id") REFERENCES "portfolios" ("id"),
