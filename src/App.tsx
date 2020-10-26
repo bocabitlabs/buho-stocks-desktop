@@ -96,77 +96,87 @@ function App() {
   }
 
   return (
-    <Layout data-testid="home-route">
-      <Layout.Sider
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-        style={{ minHeight: "100vh" }}
+    <>
+      <Layout.Header
+        className="header"
+        style={{ width: "100%", position: "fixed", zIndex: 999 }}
       >
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          onClick={onClickMenu}
-          selectedKeys={[selectedKey]}
-        >
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
           <Menu.Item
             className="trigger"
             onClick={() => setCollapsed(!collapsed)}
           >
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </Menu.Item>
-          {navLinks.map((item) => (
-            <Menu.Item key={item.key}>{item.text}</Menu.Item>
-          ))}
           <Menu.SubMenu key="sub1" icon={<MailOutlined />} title="Portfolios">
-            {portfolioRoutes.map((item) => (
+              {portfolioRoutes.map((item) => (
+                <Menu.Item key={item.key}>{item.text}</Menu.Item>
+              ))}
+            </Menu.SubMenu>
+          <Menu.Item key="1">nav 1</Menu.Item>
+        </Menu>
+      </Layout.Header>
+      <Layout data-testid="home-route">
+        <Layout.Sider
+          theme="light"
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          style={{ minHeight: "100vh", marginTop: "64px" }}
+        >
+          <Menu
+            theme="light"
+            mode="inline"
+            onClick={onClickMenu}
+            selectedKeys={[selectedKey]}
+          >
+            {navLinks.map((item) => (
               <Menu.Item key={item.key}>{item.text}</Menu.Item>
             ))}
-          </Menu.SubMenu>
-        </Menu>
-      </Layout.Sider>
-      <Layout
-        className="site-layout"
-        style={{ minHeight: "100%", height: "100%" }}
-      >
-        <Layout.Content
-          className="site-layout-background"
-          style={{
-            margin: "24px 16px",
-            padding: 10
-          }}
+          </Menu>
+        </Layout.Sider>
+        <Layout
+          className="site-layout"
+          style={{ minHeight: "100%", height: "100%", marginTop: "55px" }}
         >
-          <Route
-            exact
-            path="/"
-            render={() => {
-              return <Redirect to="/home" />;
+          <Layout.Content
+            className="site-layout-background"
+            style={{
+              margin: "24px 16px",
+              padding: 10
             }}
-          />
-          <Route exact path="/home" component={HomeRoute} />
-          <Route exact path="/settings" component={SettingsRoute} />
-          <Route exact path="/add/portfolio" component={AddPortfolioRoute} />
-          <Route exact path="/add/currency" component={AddCurrencyRoute} />
-          <Route exact path="/add/market" component={AddMarketRoute} />
-          <Route exact path="/markets" component={MarketListRoute} />
-          <Route exact path="/currencies" component={CurrencyListRoute} />
-          <Route exact path="/sectors" component={SectorListRoute} />
-          <Route exact path="/add/sector" component={AddSectorRoute} />
+          >
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return <Redirect to="/home" />;
+              }}
+            />
+            <Route exact path="/home" component={HomeRoute} />
+            <Route exact path="/settings" component={SettingsRoute} />
+            <Route exact path="/add/portfolio" component={AddPortfolioRoute} />
+            <Route exact path="/add/currency" component={AddCurrencyRoute} />
+            <Route exact path="/add/market" component={AddMarketRoute} />
+            <Route exact path="/markets" component={MarketListRoute} />
+            <Route exact path="/currencies" component={CurrencyListRoute} />
+            <Route exact path="/sectors" component={SectorListRoute} />
+            <Route exact path="/add/sector" component={AddSectorRoute} />
 
-          <Route
-            exact
-            path="/portfolios/:id"
-            component={PortfolioDetailsRoute}
-          />
-          <Route
-            exact
-            path="/portfolios/:id/add-company"
-            component={AddCompanyRoute}
-          />
-        </Layout.Content>
+            <Route
+              exact
+              path="/portfolios/:id"
+              component={PortfolioDetailsRoute}
+            />
+            <Route
+              exact
+              path="/portfolios/:id/add-company"
+              component={AddCompanyRoute}
+            />
+          </Layout.Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </>
   );
 }
 
