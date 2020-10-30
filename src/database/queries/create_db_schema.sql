@@ -10,28 +10,28 @@ CREATE TABLE IF NOT EXISTS "portfolios" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"name" TEXT,
 	"description" TEXT,
-	"currency_id" INTEGER NOT NULL,
+	"currencyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("currency_id") REFERENCES "currencies" ("id")
+	FOREIGN KEY ("currencyId") REFERENCES "currencies" ("id")
 );
 CREATE TABLE IF NOT EXISTS "markets" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"name" TEXT,
 	"description" TEXT,
 	"region" TEXT,
-	"open_time" TEXT,
-	"close_time" TEXT,
+	"openTime" TEXT,
+	"closeTime" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "dividends" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"date" TEXT,
-	"exchange_rate" NUMERIC,
-	"number_shares" INTEGER,
+	"exchangeRate" NUMERIC,
+	"numberShares" INTEGER,
 	"comission" NUMERIC,
-	"company_id" INTEGER NOT NULL,
+	"companyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("company_id") REFERENCES "companies"
+	FOREIGN KEY ("companyId") REFERENCES "companies"
 );
 CREATE TABLE IF NOT EXISTS "companies" (
 	"id" INTEGER NOT NULL UNIQUE,
@@ -39,15 +39,15 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	"ticker" INTEGER,
 	"description" INTEGER,
 	"url" INTEGER,
-	"sector_id" INTEGER NOT NULL,
-	"market_id" INTEGER NOT NULL,
-	"currency_id" INTEGER NOT NULL,
-	"portfolio_id" INTEGER NOT NULL,
+	"sectorId" INTEGER NOT NULL,
+	"marketId" INTEGER NOT NULL,
+	"currencyId" INTEGER NOT NULL,
+	"portfolioId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("sector_id") REFERENCES "sectors" ("id"),
-	FOREIGN KEY ("portfolio_id") REFERENCES "portfolios" ("id"),
-	FOREIGN KEY ("currency_id") REFERENCES "currencies" ("id"),
-	FOREIGN KEY ("market_id") REFERENCES "markets" ("id")
+	FOREIGN KEY ("sectorId") REFERENCES "sectors" ("id"),
+	FOREIGN KEY ("portfolioId") REFERENCES "portfolios" ("id"),
+	FOREIGN KEY ("currencyId") REFERENCES "currencies" ("id"),
+	FOREIGN KEY ("marketId") REFERENCES "markets" ("id")
 );
 CREATE TABLE IF NOT EXISTS "sectors" (
 	"id" INTEGER NOT NULL UNIQUE,
@@ -62,27 +62,33 @@ CREATE TABLE IF NOT EXISTS "inflation" (
 );
 CREATE TABLE IF NOT EXISTS "rights" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"rights_number" INTEGER,
-	"price_right" NUMERIC,
+	"rightsNumber" INTEGER,
+	"priceRight" NUMERIC,
 	"comission" NUMERIC,
 	"type" TEXT,
 	"date" TEXT,
-	"exchange_rate" INTEGER,
+	"exchangeRate" INTEGER,
 	"notes" TEXT,
-	"company_id" INTEGER NOT NULL,
+	"companyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("company_id") REFERENCES "companies" ("id")
+	FOREIGN KEY ("companyId") REFERENCES "companies" ("id")
 );
 CREATE TABLE IF NOT EXISTS "shares" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"shares_number" INTEGER,
-	"price_share" NUMERIC,
+	"sharesNumber" INTEGER,
+	"priceShare" NUMERIC,
 	"comission" NUMERIC,
 	"type" TEXT,
 	"date" TEXT,
-	"exchange_rate" NUMERIC,
-	"company_id" INTEGER NOT NULL,
+	"exchangeRate" NUMERIC,
+	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("company_id") REFERENCES "companies" ("id")
+	FOREIGN KEY ("companyId") REFERENCES "companies" ("id")
+);
+
+CREATE TABLE IF NOT EXISTS "settings" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"selectedPortfolio" TEXT,
+	PRIMARY KEY ("id" AUTOINCREMENT)
 );

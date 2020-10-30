@@ -54,8 +54,8 @@ export default function MarketListTable() {
       name: market.name,
       description: market.description,
       region: market.region,
-      openingTime: market.open_time,
-      closingTime: market.close_time
+      openingTime: market.openTime,
+      closingTime: market.closeTime
     }));
   };
 

@@ -16,8 +16,8 @@ function AddMarketForm(): ReactElement {
       name,
       description,
       region,
-      open_time: openTime.format("HH:mm"),
-      close_time: closeTime.format("HH:mm")
+      openTime: openTime.format("HH:mm"),
+      closeTime: closeTime.format("HH:mm")
     };
     console.log(market);
     //Add the currency

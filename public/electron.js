@@ -5,12 +5,16 @@ const isDev = require("electron-is-dev");
 
 require("../src/message-control/main");
 const { createDBSchema } = require("../src/database/create-schema");
+const { insertSettings } = require("../src/database/insert-settings");
+
 const { closeDB } = require("../src/database/close-database");
 
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
 createDBSchema();
+insertSettings();
+
 
 if (isDev) {
   const devTools = require("electron-devtools-installer");

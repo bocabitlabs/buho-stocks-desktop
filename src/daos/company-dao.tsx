@@ -8,7 +8,7 @@ import sendSqlWithCallback from "./send-sql";
 export function addCompany(company: CompanyItemProps, callback: Function) {
   //Call the DB
   const sql = `INSERT INTO "companies"
-  ("name", "ticker", "description", "sector_id", "market_id", "currency_id", "portfolio_id", "url")
+  ("name", "ticker", "description", "sectorId", "marketId", "currencyId", "portfolioId", "url")
   VALUES ('${company.name}', '${company.ticker}', '${company.description}', '${company.sector}', '${company.market}', '${company.currency}', '${company.portfolio}', '${company.url}');`;
 
   sendSqlWithCallback(
@@ -27,9 +27,9 @@ export const getCompanies = async (callback: Function) => {
   const sql = `SELECT companies.id as id, companies.name as name, sectors.name as sector, currencies.name as currency, ticker
   FROM  "companies"
   LEFT JOIN "sectors"
-  ON companies.sector_id = sectors.id
+  ON companies.sectorId = sectors.id
   LEFT JOIN "currencies"
-  ON companies.currency_id = currencies.id;`;
+  ON companies.currencyId = currencies.id;`;
   sendSqlWithCallback(
     sql,
     getCompaniesMessageReply,

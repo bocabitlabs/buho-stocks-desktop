@@ -22,7 +22,7 @@ export function addPortfolio(
   //Call the DB
 
   const sql = `INSERT INTO "portfolios"
-  ("name", "description", "currency_id")
+  ("name", "description", "currencyId")
   VALUES ('${portfolio.name}', '${portfolio.description}', '${portfolio.currencyId}');`;
 
   sendSqlWithCallback(

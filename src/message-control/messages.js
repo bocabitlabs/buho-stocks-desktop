@@ -20,6 +20,11 @@ const getSectorsMessageReply = "getSectorsMessageReply";
 const addSectorsMessageReply = "addSectorsMessageReply";
 const getSectorDetailsMessageReply = "getSectorDetailsMessageReply";
 
+// Settings
+const getSettingsMessageReply = "getSettingsMessageReply";
+const addSettingsMessageReply = "uaddSettingsMessageReply";
+const updateSettingsMessageReply = "updateSettingsMessageReply";
+
 module.exports = {
   // portfolios
   getPortfolioDetailsMessageReply,
@@ -39,5 +44,9 @@ module.exports = {
   // sectors
   getSectorsMessageReply,
   addSectorsMessageReply,
-  getSectorDetailsMessageReply
+  getSectorDetailsMessageReply,
+  // Settings
+  getSettingsMessageReply,
+  addSettingsMessageReply,
+  updateSettingsMessageReply
 };

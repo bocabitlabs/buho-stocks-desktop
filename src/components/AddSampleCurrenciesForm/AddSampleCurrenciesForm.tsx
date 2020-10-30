@@ -19,7 +19,7 @@ function AddSampleCurrenciesForm(): ReactElement {
 
   return (
     <Form form={form} name="basic" onFinish={handleAddCurrencies}>
-      <Form.Item>
+      <Form.Item label="Add sample currencies">
         <Button type="primary" htmlType="submit">
           Add Sample Currencies
         </Button>

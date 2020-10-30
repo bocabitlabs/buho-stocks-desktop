@@ -7,8 +7,8 @@ import sendSqlWithCallback from "./send-sql";
 export function addMarket(market: MarketItemProps, callback: Function) {
   //Call the DB
   const sql = `INSERT INTO "markets"
-  ("name", "description", "region", "open_time", "close_time")
-  VALUES ('${market.name}', '${market.description}', '${market.region}', '${market.open_time}', '${market.close_time}');`;
+  ("name", "description", "region", "openTime", "closeTime")
+  VALUES ('${market.name}', '${market.description}', '${market.region}', '${market.openTime}', '${market.closeTime}');`;
 
   sendSqlWithCallback(sql, addMarketsMessageReply, callback, (error:string)=> console.log(error))
 
