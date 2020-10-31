@@ -1,6 +1,6 @@
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback, useContext } from "react";
 import { Button, Form, Input } from "antd";
-import { addSector } from "../../daos/sector-dao";
+import { SectorsContext } from "../../contexts/sectors";
 
 /**
  * Add a new Currency
@@ -8,15 +8,16 @@ import { addSector } from "../../daos/sector-dao";
 function AddSectorForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const [result, setResult] = useState('');
+  const { addSector } = useContext(SectorsContext);
+
 
   const handleAdd = useCallback(async (values) => {
     const { name } = values;
     const sector = {
       name
     };
-    addSector(sector, setResult)
-  }, []);
+    addSector(sector,)
+  }, [addSector]);
 
   return (
     <Form form={form} name="basic" onFinish={handleAdd}>

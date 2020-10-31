@@ -1,14 +1,14 @@
 import { Space, Table } from "antd";
-import React, { useEffect, useState } from "react";
-import { getCurrencies } from "../../daos/currency-dao";
+import React, { useContext, useEffect } from "react";
+import { CurrenciesContext } from "../../contexts/currencies";
 import { CurrencyItemProps } from "../../types/currency";
 
 export default function CurrencyListTable() {
-  const [currencies, setCurrencies] = useState([]);
+  const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
 
   useEffect(() => {
-    getCurrencies(setCurrencies);
-  }, []);
+    fetchCurrencies();
+  }, [fetchCurrencies]);
 
   const columns = [
     {
@@ -47,7 +47,7 @@ export default function CurrencyListTable() {
     return currencies.map((currency: CurrencyItemProps) => ({
       key: currency.id,
       name: currency.name,
-      abbreviation:  currency.abbreviation,
+      abbreviation: currency.abbreviation,
       symbol: currency.symbol,
       country: currency.country
     }));

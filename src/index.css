@@ -1,1 +1,59 @@
+html {
+  height: 100%;
+  font-family: sans-serif;
+}
+body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0px;
+  display: flex;
+}
 
+#root {
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
+  margin: 0px;
+  display: flex;
+}
+.column {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#left {
+  flex-shrink: 0;
+  background-color: white;
+}
+#right {
+  background-color: #f3f3f3;
+  width: 100vw;
+}
+.top-left {
+  flex-shrink: 0;
+  /* background-color: #333;
+  color: white;
+  padding: 20px; */
+}
+.top-right {
+  display: inline-flex;
+  flex-shrink: 0;
+  /* background-color: #333;
+  color: white;
+  padding: 20px; */
+}
+.bottom {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+@import "~antd/dist/antd.css";
+/* ul {
+  display: inline-flex;
+  list-style: none;
+  margin: 0;
+}
+li {
+  margin-right: 20px;
+} */

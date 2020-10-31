@@ -3,13 +3,9 @@ import {
   getPortfolioDetailsMessageReply,
   getPortfoliosMessageReply
 } from "../message-control/messages";
+import { PortfolioItemProps } from "../types/portfolio";
 import sendSqlWithCallback from "./send-sql";
 
-interface PortfolioItemProps {
-  name: string;
-  description: string;
-  currencyId: number;
-}
 
 /**
  * Add a new portfolio

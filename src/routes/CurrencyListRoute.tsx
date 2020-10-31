@@ -27,7 +27,7 @@ const CurrencyListRoute = () => {
     <>
       <PageHeader
         className="site-page-header"
-        title="Markets"
+        title="Currencies"
         breadcrumb={{
           routes,
           itemRender

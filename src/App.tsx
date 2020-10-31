@@ -1,20 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Redirect, Route, useHistory, useLocation } from "react-router-dom";
 
 import HomeRoute from "./routes/HomeRoute";
-import { Layout, Menu, Select } from "antd";
+import { Layout, Menu } from "antd";
 
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  MailOutlined,
-  SettingOutlined,
-  AppstoreOutlined,
   FolderOpenOutlined
 } from "@ant-design/icons";
-import { getPortfolios } from "./daos/portfolio-dao";
-import { PortfolioFields } from "./types/portfolio";
 import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute";
 import AddPortfolioRoute from "./routes/AddPortfolioRoute";
 import AddCurrencyRoute from "./routes/AddCurrencyRoute";
@@ -26,8 +21,14 @@ import CurrencyListRoute from "./routes/CurrencyListRoute";
 import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
 import AddSectorRoute from "./routes/AddSectorRoute/AddSectorRoute";
 import { SettingsContext } from "./contexts/settings";
-import { SettingsItemProps } from "./types/settings";
-import { getSettings, updateSettings } from "./daos/settings-dao";
+import { useSettingsContext } from "./hooks/settings";
+import PortfolioSelector from "./components/PortfolioSelector/PortfolioSelector";
+import { PortfoliosContext } from "./contexts/portfolios";
+import { usePortfoliosContext } from "./hooks/portfolios";
+import { useCurrenciesContext } from "./hooks/currencies";
+import { CurrenciesContext } from "./contexts/currencies";
+import { useSectorsContext } from "./hooks/sectors";
+import { SectorsContext } from "./contexts/sectors";
 
 interface RoutePathProps {
   key: string;
@@ -58,12 +59,10 @@ function App() {
     navLinks.find((item) => location.pathname.startsWith(item.path))?.key || ""
   );
   const [collapsed, setCollapsed] = useState(false);
-  const [portfolios, setPortfolios] = useState([]);
-  const [settings, setSettings] = useState<SettingsItemProps[]>([]);
-
-  useEffect(() => {
-    getPortfolios(setPortfolios);
-  }, []);
+  const settingsContext = useSettingsContext();
+  const portfoliosContext = usePortfoliosContext();
+  const currenciesContext = useCurrenciesContext();
+  const sectorsContext = useSectorsContext();
 
   const onClickMenu = (item: any) => {
     console.log(item);
@@ -73,10 +72,6 @@ function App() {
     }
     history.push(clicked?.path || "");
   };
-
-  useEffect(() => {
-    getSettings(setSettings);
-  }, []);
 
   useEffect(() => {
     console.log(location.pathname);
@@ -91,36 +86,133 @@ function App() {
     setSelectedKey(selected);
   }, [location, navLinks, portfolioRoutes]);
 
-  if (portfolios) {
-    let portfoliosArray: RoutePathProps[] = [];
-    portfolios.forEach((portfolio: PortfolioFields) => {
-      // console.log(portfolio)
-      portfoliosArray.push({
-        key: portfolio.id.toString(),
-        path: `/portfolios/${portfolio.id}`,
-        text: portfolio.name
-      });
-    });
-    portfolioRoutes = portfoliosArray;
-  }
-
-  function handleChange(value: string) {
-    console.log(`selected ${value}`);
-    const settings: SettingsItemProps = {
-      selectedPortfolio: value
-    };
-    console.log(settings);
-    updateSettings(settings, customSetSettings);
-  }
-
-  const customSetSettings = (result: SettingsItemProps[]) => {
-    getSettings(setSettings);
-    console.log(result);
-  };
-
   return (
     <>
-      <Layout data-testid="home-route">
+      <div id="left" className="column">
+        <div className="top-left">
+
+        </div>
+        <div className="bottom">
+        <Layout.Sider
+            theme="light"
+            trigger={null}
+            collapsible
+            collapsed={collapsed}
+            style={{ minHeight: "100vh" }}
+          >
+            <Menu
+              theme="light"
+              mode="inline"
+              onClick={onClickMenu}
+              selectedKeys={[selectedKey]}
+            >
+              {navLinks.map((item) => (
+                <Menu.Item key={item.key}>{item.text}</Menu.Item>
+              ))}
+            </Menu>
+          </Layout.Sider>
+        </div>
+      </div>
+      <div id="right" className="column">
+        <div className="top-right">
+        <Layout.Header
+            className="site-layout-background"
+            // className="header"
+            style={{
+              padding: 0,
+              width: "100%",
+              // position: "fixed",
+              // zIndex: 999
+            }}
+          >
+            <Menu theme="light" mode="horizontal" defaultSelectedKeys={["2"]}>
+              <Menu.Item
+                className="trigger"
+                onClick={() => setCollapsed(!collapsed)}
+              >
+                {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              </Menu.Item>
+              <SettingsContext.Provider value={settingsContext}>
+                <PortfoliosContext.Provider value={portfoliosContext}>
+                  <PortfolioSelector />
+                </PortfoliosContext.Provider>
+              </SettingsContext.Provider>
+
+              <Menu.Item key="app" icon={<FolderOpenOutlined />}>
+                Open portfolio
+              </Menu.Item>
+            </Menu>
+          </Layout.Header>
+        </div>
+        <div className="bottom">
+        <Layout.Content
+            className="site-layout-background"
+            style={{
+              margin: "16px",
+              padding: 10,
+            }}
+          >
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return <Redirect to="/home" />;
+              }}
+            />
+            <Route exact path="/home">
+              <PortfoliosContext.Provider value={portfoliosContext}>
+                <HomeRoute />
+              </PortfoliosContext.Provider>
+            </Route>
+            <Route exact path="/settings">
+              <SettingsContext.Provider value={settingsContext}>
+                <SettingsRoute />
+              </SettingsContext.Provider>
+            </Route>
+            <Route exact path="/add/portfolio">
+              <PortfoliosContext.Provider value={portfoliosContext}>
+                <CurrenciesContext.Provider value={currenciesContext}>
+                  <AddPortfolioRoute />
+                </CurrenciesContext.Provider>
+              </PortfoliosContext.Provider>
+            </Route>
+            <Route exact path="/add/currency">
+              <CurrenciesContext.Provider value={currenciesContext}>
+                <AddCurrencyRoute />
+              </CurrenciesContext.Provider>
+            </Route>
+            <Route exact path="/add/market" component={AddMarketRoute} />
+            <Route exact path="/markets" component={MarketListRoute} />
+            <Route exact path="/currencies">
+              <CurrenciesContext.Provider value={currenciesContext}>
+                <CurrencyListRoute />
+              </CurrenciesContext.Provider>
+            </Route>
+            <Route exact path="/sectors">
+              <SectorsContext.Provider value={sectorsContext}>
+                <SectorListRoute />
+              </SectorsContext.Provider>
+            </Route>
+            <Route exact path="/add/sector">
+              <SectorsContext.Provider value={sectorsContext}>
+                <AddSectorRoute />
+              </SectorsContext.Provider>
+            </Route>
+
+            <Route
+              exact
+              path="/portfolios/:id"
+              component={PortfolioDetailsRoute}
+            />
+            <Route
+              exact
+              path="/portfolios/:id/add-company"
+              component={AddCompanyRoute}
+            />
+          </Layout.Content>
+        </div>
+      </div>
+      {/* <Layout data-testid="home-route">
         <Layout.Sider
           theme="light"
           trigger={null}
@@ -160,19 +252,10 @@ function App() {
               >
                 {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               </Menu.Item>
-              <SettingsContext.Provider value={{ settings, setSettings }}>
-                <Select
-                  placeholder="Portfolios"
-                  style={{ width: 120 }}
-                  onChange={handleChange}
-                  value={settings[0]?.selectedPortfolio.toString()}
-                >
-                  {portfolios.map((item: PortfolioFields) => (
-                    <Select.Option key={item.id} value={item.id.toString()}>
-                      {item.name}
-                    </Select.Option>
-                  ))}
-                </Select>
+              <SettingsContext.Provider value={settingsContext}>
+                <PortfoliosContext.Provider value={portfoliosContext}>
+                  <PortfolioSelector />
+                </PortfoliosContext.Provider>
               </SettingsContext.Provider>
 
               <Menu.Item key="app" icon={<FolderOpenOutlined />}>
@@ -194,15 +277,45 @@ function App() {
                 return <Redirect to="/home" />;
               }}
             />
-            <Route exact path="/home" component={HomeRoute} />
-            <Route exact path="/settings" component={SettingsRoute} />
-            <Route exact path="/add/portfolio" component={AddPortfolioRoute} />
-            <Route exact path="/add/currency" component={AddCurrencyRoute} />
+            <Route exact path="/home">
+              <PortfoliosContext.Provider value={portfoliosContext}>
+                <HomeRoute />
+              </PortfoliosContext.Provider>
+            </Route>
+            <Route exact path="/settings">
+              <SettingsContext.Provider value={settingsContext}>
+                <SettingsRoute />
+              </SettingsContext.Provider>
+            </Route>
+            <Route exact path="/add/portfolio">
+              <PortfoliosContext.Provider value={portfoliosContext}>
+                <CurrenciesContext.Provider value={currenciesContext}>
+                  <AddPortfolioRoute />
+                </CurrenciesContext.Provider>
+              </PortfoliosContext.Provider>
+            </Route>
+            <Route exact path="/add/currency">
+              <CurrenciesContext.Provider value={currenciesContext}>
+                <AddCurrencyRoute />
+              </CurrenciesContext.Provider>
+            </Route>
             <Route exact path="/add/market" component={AddMarketRoute} />
             <Route exact path="/markets" component={MarketListRoute} />
-            <Route exact path="/currencies" component={CurrencyListRoute} />
-            <Route exact path="/sectors" component={SectorListRoute} />
-            <Route exact path="/add/sector" component={AddSectorRoute} />
+            <Route exact path="/currencies">
+              <CurrenciesContext.Provider value={currenciesContext}>
+                <CurrencyListRoute />
+              </CurrenciesContext.Provider>
+            </Route>
+            <Route exact path="/sectors">
+              <SectorsContext.Provider value={sectorsContext}>
+                <SectorListRoute />
+              </SectorsContext.Provider>
+            </Route>
+            <Route exact path="/add/sector">
+              <SectorsContext.Provider value={sectorsContext}>
+                <AddSectorRoute />
+              </SectorsContext.Provider>
+            </Route>
 
             <Route
               exact
@@ -216,7 +329,7 @@ function App() {
             />
           </Layout.Content>
         </Layout>
-      </Layout>
+      </Layout> */}
     </>
   );
 }

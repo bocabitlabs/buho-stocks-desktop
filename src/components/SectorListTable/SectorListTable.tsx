@@ -1,14 +1,14 @@
 import { Space, Table } from "antd";
-import React, { useEffect, useState } from "react";
-import { getSectors } from "../../daos/sector-dao";
+import React, { useContext, useEffect } from "react";
+import { SectorsContext } from "../../contexts/sectors";
 import { SectorItemProps } from "../../types/sector";
 
 export default function SectorListTable() {
-  const [sectors, setSectors] = useState([]);
+  const { sectors, fetchSectors } = useContext(SectorsContext);
 
   useEffect(() => {
-    getSectors(setSectors);
-  }, []);
+    fetchSectors();
+  }, [fetchSectors]);
 
   const columns = [
     {
@@ -29,9 +29,9 @@ export default function SectorListTable() {
   ];
 
   const getData = () => {
-    return sectors.map((currency: SectorItemProps) => ({
-      key: currency.id,
-      name: currency.name
+    return sectors.map((sector: SectorItemProps) => ({
+      key: sector.id,
+      name: sector.name
     }));
   };
 

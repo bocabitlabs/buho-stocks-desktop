@@ -1,8 +1,8 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useContext, useEffect } from "react";
 import { Button, Form, Input, Select } from "antd";
-import { getCurrencies } from "../../daos/currency-dao";
-import { addPortfolio } from "../../daos/portfolio-dao";
 import { CurrencyFields } from "../../types/currency";
+import { PortfoliosContext } from "../../contexts/portfolios";
+import { CurrenciesContext } from "../../contexts/currencies";
 
 /**
  * Add a new Currency
@@ -10,22 +10,23 @@ import { CurrencyFields } from "../../types/currency";
 function AddPortfolioForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const [currencies, setCurrencies] = useState([]);
-  const [result, setResult] = useState('');
+  const { addPortfolio } = useContext(PortfoliosContext);
+  const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
+
 
   const handleAddCurrency = useCallback(async (values) => {
-    const { name, description, currency } = values;
+    const { name, description, currencyId } = values;
     const portfolio = {
       name,
       description,
-      currencyId: currency
+      currencyId
     };
-    addPortfolio(portfolio, setResult)
-  }, []);
+    addPortfolio(portfolio)
+  }, [addPortfolio]);
 
   useEffect(() => {
-    getCurrencies(setCurrencies);
-  }, []);
+    fetchCurrencies();
+  }, [fetchCurrencies]);
 
   return (
     <Form form={form} name="basic" onFinish={handleAddCurrency}>
@@ -47,7 +48,7 @@ function AddPortfolioForm(): ReactElement {
       >
         <Input type="text" />
       </Form.Item>
-      <Form.Item name="currency" label="Currency" rules={[{ required: true }]}>
+      <Form.Item name="currencyId" label="Currency" rules={[{ required: true }]}>
         <Select
           placeholder="Select a option and change input text above"
           allowClear
@@ -63,7 +64,7 @@ function AddPortfolioForm(): ReactElement {
             ))}
         </Select>
       </Form.Item>
-      {JSON.stringify(result)}
+      {/* {JSON.stringify(result)} */}
 
       <Form.Item>
         <Button type="primary" htmlType="submit">

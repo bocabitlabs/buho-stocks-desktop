@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
-import { Button, Card, Layout, PageHeader } from "antd";
+import { Button, Card, Col, Layout, PageHeader, Row } from "antd";
 
 import {
   ExampleComponent,
   ExampleComponentWithType
 } from "../components/ExampleComponent";
 import { Link, useHistory } from "react-router-dom";
-import { getPortfolios } from "../daos/portfolio-dao";
 import { PortfolioFields } from "../types/portfolio";
+import { PortfoliosContext } from "../contexts/portfolios";
 
 const Home = () => {
   const history = useHistory();
-  const [portfolios, setPortfolios] = useState([]);
+  const { portfolios, fetchPortfolios } = useContext(PortfoliosContext);
 
   useEffect(() => {
-    getPortfolios(setPortfolios);
-  }, []);
+    fetchPortfolios();
+  }, [fetchPortfolios]);
+
   return (
     <>
       <PageHeader
@@ -48,22 +49,25 @@ const Home = () => {
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
         <ExampleComponent who={"me"} />
         <ExampleComponentWithType who={"me2"} />
-        {portfolios &&
-          portfolios.map((portfolio: PortfolioFields, index) => (
-            <Link
-              to={`/portfolios/${portfolio.id}`}
-              key={`portfolio-card-${index}`}
-            >
-              <Card
-                title={portfolio.name}
-                style={{ width: 300 }}
-                hoverable
-                key={`portfolio-card-${index}`}
-              >
-                {portfolio.description}
-              </Card>
-            </Link>
-          ))}
+        <Row gutter={16}>
+          {portfolios &&
+            portfolios.map((portfolio: PortfolioFields, index) => (
+              <Col span={8}>
+                <Link
+                  to={`/portfolios/${portfolio.id}`}
+                  key={`portfolio-card-${index}`}
+                >
+                  <Card
+                    title={portfolio.name}
+                    hoverable
+                    key={`portfolio-card-${index}`}
+                  >
+                    {portfolio.description}
+                  </Card>
+                </Link>
+              </Col>
+            ))}
+        </Row>
       </Layout>
 
       {/* <CurrencyList uid={uid} /> */}
