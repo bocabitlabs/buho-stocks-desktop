@@ -15,17 +15,17 @@ let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 createDBSchema();
 insertSettings();
 
-
 if (isDev) {
+  console.log("Installing devtools")
   const devTools = require("electron-devtools-installer");
   installExtension = devTools.default;
   REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
-} // NEW!
+}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling
 if (require("electron-squirrel-startup")) {
   app.quit();
-} // NEW!
+}
 
 function createWindow() {
   // Create the browser window.
@@ -59,8 +59,8 @@ app.whenReady().then(() => {
 
   if (isDev) {
     installExtension(REACT_DEVELOPER_TOOLS)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((error) => console.log(`An error occurred: , ${error}`));
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log('An error occurred: ', err));
   }
 }); // UPDATED!
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Button, Layout, PageHeader } from "antd";
 
@@ -7,6 +7,9 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { getPortfolioById } from "../daos/portfolio-dao";
 import { PortfolioFields } from "../types/portfolio";
 import CompanyListTable from "../components/CompanyListTable/CompanyListTable";
+import { useCompaniesContext } from "../hooks/companies";
+import { CompaniesContext } from "../contexts/companies";
+import { PortfoliosContext } from "../contexts/portfolios";
 
 export interface IPortfolioRouteParams {
   id: string;
@@ -14,13 +17,15 @@ export interface IPortfolioRouteParams {
 
 const PortfolioDetailsRoute = () => {
   const history = useHistory();
-  const [portfolios, setPortfolios] = useState<PortfolioFields[]>([]);
+  const { portfolio, fetchPortfolio } = useContext(PortfoliosContext);
+
+  const companiesContext = useCompaniesContext();
 
   const { id } = useParams<IPortfolioRouteParams>();
 
   useEffect(() => {
-    getPortfolioById(id, setPortfolios);
-  }, [id]);
+    fetchPortfolio(id);
+  }, [id, fetchPortfolio]);
 
   const routes = [
     {
@@ -32,7 +37,7 @@ const PortfolioDetailsRoute = () => {
       path: `/portfolios/${id}`,
       name: "portfolio-details",
       breadcrumbName:
-        portfolios.length > 0 && portfolios[0] ? portfolios[0].name : ""
+      portfolio.length > 0 && portfolio[0] ? portfolio[0].name : ""
     }
   ];
   function itemRender(route: any) {
@@ -40,10 +45,10 @@ const PortfolioDetailsRoute = () => {
   }
   return (
     <>
-      {portfolios.length > 0 && (
+      {portfolio.length > 0 && (
         <>
           <PageHeader
-            title={`${portfolios[0].name}`}
+            title={`${portfolio[0].name}`}
             breadcrumb={{
               routes,
               itemRender
@@ -52,7 +57,7 @@ const PortfolioDetailsRoute = () => {
             extra={[
               <Button
                 onClick={() => {
-                  history.push(`/portfolios/${portfolios[0].id}/add-company`);
+                  history.push(`/portfolios/${portfolio[0].id}/add-company`);
                 }}
               >
                 + Company
@@ -60,8 +65,9 @@ const PortfolioDetailsRoute = () => {
             ]}
           />
           <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-            {JSON.stringify(portfolios)}
-            <CompanyListTable/>
+            <CompaniesContext.Provider value={companiesContext}>
+              <CompanyListTable />
+            </CompaniesContext.Provider>
           </Layout>
         </>
       )}

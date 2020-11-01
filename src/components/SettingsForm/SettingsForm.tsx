@@ -11,16 +11,16 @@ import { SettingsContext } from "../../contexts/settings";
 function SettingsForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const { settings, fetchSettings, updateSettings } = useContext(SettingsContext);
+  const { settings, fetchSettings } = useContext(SettingsContext);
 
   const handleUpdate = useCallback(async (values) => {
-    const { selectedPortfolio } = values;
-    const settings: SettingsItemProps = {
-      selectedPortfolio
-    };
-    console.log(settings);
-    updateSettings(settings);
-  }, [updateSettings]);
+    // const { selectedPortfolio } = values;
+    // const settings: SettingsItemProps = {
+    //   selectedPortfolio
+    // };
+    // console.log(settings);
+    // updateSettings(settings);
+  }, []);
 
   useEffect(() => {
     fetchSettings();

@@ -1,23 +1,13 @@
 import { useState, useCallback } from "react";
 import { PortfoliosContextType } from "../contexts/portfolios";
-import { getPortfolios, addPortfolio as addPortfolioDAO } from "../daos/portfolio-dao";
+import { getPortfolios, addPortfolio as addPortfolioDAO, getPortfolioById } from "../daos/portfolio-dao";
 import { PortfolioFields, PortfolioItemProps } from "../types/portfolio";
 
 export function usePortfoliosContext(): PortfoliosContextType {
   const [portfolios, setPortFolios] = useState<PortfolioFields[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [portfolio, setPortFolio] = useState<PortfolioFields[]>([]);
 
-  // const fetchPosts = useCallback(() => {
-  //   setIsLoading(true);
-  //   fetch('https://jsonplaceholder.typicode.com/posts')
-  //     .then(response => response.json())
-  //     .then((fetchedPosts) => {
-  //       setPosts(fetchedPosts);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     })
-  // }, [setPosts]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchPortfolios = useCallback(() => {
     setIsLoading(true);
@@ -41,6 +31,16 @@ export function usePortfoliosContext(): PortfoliosContextType {
     addPortfolioDAO(portfolio, addPortfolioCallback);
   }, [fetchPortfolios])
 
+  const fetchPortfolio = useCallback((portfolioId: string) => {
+    setIsLoading(true);
+    getPortfolioById(portfolioId, getByIdCallback);
+  }, [])
+
+  const getByIdCallback = (result: PortfolioFields[]) => {
+    setPortFolio(result)
+    setIsLoading(false);
+  };
+
   // const removePost = useCallback((postId: number) => {
   //   setIsLoading(true);
   //   fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
@@ -61,8 +61,10 @@ export function usePortfoliosContext(): PortfoliosContextType {
 
   return {
     portfolios,
+    portfolio,
     isLoading,
     fetchPortfolios,
+    fetchPortfolio,
     addPortfolio
     // removePost
   }

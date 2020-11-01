@@ -35,14 +35,26 @@ export function addSettings(settings: SettingsItemProps, callback: Function) {
   return sql;
 }
 
-export function updateSettings(
-  settings: SettingsItemProps,
+export function updateSelectedPortfolio(
+  selectedPortfolio: string,
   callback: Function
 ) {
   //Call the DB
-  const sql = `UPDATE "settings" SET "selectedPortfolio" = '${settings.selectedPortfolio}' WHERE "id" = '1';`;
+  const sql = `UPDATE "settings" SET "selectedPortfolio" = '${selectedPortfolio}' WHERE "id" = '1';`;
 
-  console.log(sql);
+  sendSqlWithCallback(
+    sql,
+    updateSettingsMessageReply,
+    callback,
+    (error: string) => console.log(error)
+  );
+
+  return sql;
+}
+
+export function toggleCollapsed(callback: Function) {
+  //Call the DB
+  const sql = `UPDATE "settings" SET collapsed = ((collapsed | 1) - (collapsed & 1)) WHERE "id" = '1';`;
 
   sendSqlWithCallback(
     sql,

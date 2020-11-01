@@ -2,22 +2,18 @@ import { Select } from "antd";
 import React, { ReactElement, useContext, useEffect } from "react";
 import { PortfoliosContext } from "../../contexts/portfolios";
 import { SettingsContext } from "../../contexts/settings";
-import { updateSettings } from "../../daos/settings-dao";
 import { PortfolioFields } from "../../types/portfolio";
-import { SettingsItemProps } from "../../types/settings";
 
 
 export default function PortfolioSelector(): ReactElement {
-  const { settings, fetchSettings } = useContext(SettingsContext);
+  const { settings, fetchSettings, updateSelectedPortfolio } = useContext(SettingsContext);
   const { portfolios, fetchPortfolios } = useContext(PortfoliosContext);
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
-    const settings: SettingsItemProps = {
-      selectedPortfolio: value
-    };
+
     console.log(settings);
-    updateSettings(settings, fetchSettings);
+    updateSelectedPortfolio(value);
   }
 
   useEffect(() => {

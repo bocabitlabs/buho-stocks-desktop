@@ -5,14 +5,17 @@ export type SettingsContextType = {
   settings: SettingsItemProps[];
   isLoading: boolean;
   fetchSettings: () => void;
-  updateSettings: (settings: SettingsItemProps) => void;
+  updateSelectedPortfolio: (portfolioId: string) => void;
+  toggleCollapsed: () => void;
+
 };
 
 export const settingsDefaultValue: SettingsContextType = {
   settings: [],
   isLoading: false,
   fetchSettings: () => null,
-  updateSettings: () => null,
+  updateSelectedPortfolio: () => null,
+  toggleCollapsed: () => null,
 }
 
 export const SettingsContext = createContext<SettingsContextType>(settingsDefaultValue);

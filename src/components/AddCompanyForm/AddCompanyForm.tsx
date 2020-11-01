@@ -1,14 +1,14 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useContext, useEffect } from "react";
 import { Form, Input, Button, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { getCurrencies } from "../../daos/currency-dao";
 import { CurrencyFields } from "../../types/currency";
-import { getMarkets } from "../../daos/market-dao";
-import { getSectors } from "../../daos/sector-dao";
 import { MarketFields } from "../../types/market";
 import { SectorFields } from "../../types/sector";
-import { addCompany } from "../../daos/company-dao";
 import { CompanyItemProps } from "../../types/company";
+import { CurrenciesContext } from "../../contexts/currencies";
+import { MarketsContext } from "../../contexts/markets";
+import { SectorsContext } from "../../contexts/sectors";
+import { CompaniesContext } from "../../contexts/companies";
 
 interface AddCompanyFormProps {
   portfolioID: string;
@@ -19,39 +19,50 @@ interface AddCompanyFormProps {
  */
 function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
   const [form] = Form.useForm();
-  const [currencies, setCurrencies] = useState([]);
-  const [markets, setMarkets] = useState([]);
-  const [sectors, setSectors] = useState([]);
-  const [_, setCompany] = useState([]);
+  const { addCompany } = useContext(CompaniesContext);
+  const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
+  const { markets, fetchMarkets } = useContext(MarketsContext);
+  const { sectors, fetchSectors } = useContext(SectorsContext);
 
-  const handleAddCompany = useCallback(async (values) => {
-    const { url, name, ticker, market, sector, currency, description } = values;
-    const company: CompanyItemProps = {
-      url: url,
-      name: name,
-      ticker: ticker,
-      market: market,
-      sector: sector,
-      description: description,
-      currency: currency,
-      portfolio: portfolioID
-    };
-    console.log(values);
-    addCompany(company, setCompany);
-    // Add company
-  }, [portfolioID]);
+  const handleAddCompany = useCallback(
+    async (values) => {
+      const {
+        url,
+        name,
+        ticker,
+        market,
+        sector,
+        currency,
+        description
+      } = values;
+      const company: CompanyItemProps = {
+        url: url,
+        name: name,
+        ticker: ticker,
+        market: market,
+        sector: sector,
+        description: description,
+        currency: currency,
+        portfolio: portfolioID
+      };
+      console.log(values);
+      addCompany(company);
+      // Add company
+    },
+    [portfolioID, addCompany]
+  );
 
   useEffect(() => {
-    getCurrencies(setCurrencies);
-  }, []);
+    fetchCurrencies();
+  }, [fetchCurrencies]);
 
   useEffect(() => {
-    getMarkets(setMarkets);
-  }, []);
+    fetchMarkets();
+  }, [fetchMarkets]);
 
   useEffect(() => {
-    getSectors(setSectors);
-  }, []);
+    fetchSectors();
+  }, [fetchSectors]);
 
   const layout = {
     labelCol: { span: 4 },
