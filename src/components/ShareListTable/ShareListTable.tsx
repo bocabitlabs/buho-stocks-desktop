@@ -83,7 +83,6 @@ export default function ShareListTable({ companyId }: IProps) {
   };
   return (
     <>
-      {JSON.stringify(shares)}
       <Table columns={columns} dataSource={getData()} />
     </>
   );

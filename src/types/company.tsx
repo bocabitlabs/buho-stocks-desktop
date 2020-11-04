@@ -25,7 +25,12 @@ export interface CompanyItemProps {
   portfolio: string;
   portfolioName?: string;
   currencyName?: string;
+  sectorName?: string;
   currencySymbol?: string;
-  sharesNumber?: number;
-  total?: number;
+  buySharesNumber?: number;
+  buyTotal?: number;
+  buyCommission?: number;
+  sellSharesNumber?: number;
+  sellTotal?: number;
+  sellCommission?: number;
 }

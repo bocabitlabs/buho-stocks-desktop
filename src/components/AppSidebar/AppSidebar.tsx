@@ -65,6 +65,7 @@ export default function AppSidebar({isCollapsed}: AppSidebarProps): ReactElement
 
   return (
     <Layout.Sider
+      breakpoint="lg"
       theme="light"
       trigger={null}
       collapsible

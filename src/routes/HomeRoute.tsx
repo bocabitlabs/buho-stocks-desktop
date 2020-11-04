@@ -47,21 +47,12 @@ const Home = () => {
         ]}
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <ExampleComponent who={"me"} />
-        <ExampleComponentWithType who={"me2"} />
         <Row gutter={16}>
           {portfolios &&
             portfolios.map((portfolio: PortfolioFields, index) => (
-              <Col span={8}>
-                <Link
-                  to={`/portfolios/${portfolio.id}`}
-                  key={`portfolio-card-${index}`}
-                >
-                  <Card
-                    title={portfolio.name}
-                    hoverable
-                    key={`portfolio-card-${index}`}
-                  >
+              <Col span={8} key={`portfolio-card-${index}`}>
+                <Link to={`/portfolios/${portfolio.id}`}>
+                  <Card title={portfolio.name} hoverable>
                     {portfolio.description}
                   </Card>
                 </Link>
@@ -70,7 +61,6 @@ const Home = () => {
         </Row>
       </Layout>
 
-      {/* <CurrencyList uid={uid} /> */}
     </>
   );
 };
