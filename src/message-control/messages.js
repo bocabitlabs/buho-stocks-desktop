@@ -14,6 +14,8 @@ const addMarketsMessageReply = "addMarketsMessageReply";
 // Companies
 const getCompaniesMessageReply = "getCompaniesMessageReply";
 const addCompaniesMessageReply = "addCompaniesMessageReply";
+const getCompanyDetailsMessageReply = "getCompanyDetailsMessageReply";
+
 
 // Sectors
 const getSectorsMessageReply = "getSectorsMessageReply";
@@ -24,6 +26,10 @@ const getSectorDetailsMessageReply = "getSectorDetailsMessageReply";
 const getSettingsMessageReply = "getSettingsMessageReply";
 const addSettingsMessageReply = "uaddSettingsMessageReply";
 const updateSettingsMessageReply = "updateSettingsMessageReply";
+
+// Shares
+const getSharesMessageReply = "getSharesMessageReply";
+const addSharesMessageReply = "addSharesMessageReply";
 
 module.exports = {
   // portfolios
@@ -48,5 +54,9 @@ module.exports = {
   // Settings
   getSettingsMessageReply,
   addSettingsMessageReply,
-  updateSettingsMessageReply
+  updateSettingsMessageReply,
+  getCompanyDetailsMessageReply,
+  // Shares
+  addSharesMessageReply,
+  getSharesMessageReply
 };

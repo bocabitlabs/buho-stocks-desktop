@@ -1,11 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Button, Layout, PageHeader } from "antd";
 
-import AddCompanyForm from "../components/AddCompanyForm/AddCompanyForm";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { getPortfolioById } from "../daos/portfolio-dao";
-import { PortfolioFields } from "../types/portfolio";
 import CompanyListTable from "../components/CompanyListTable/CompanyListTable";
 import { useCompaniesContext } from "../hooks/companies";
 import { CompaniesContext } from "../contexts/companies";
@@ -66,7 +63,7 @@ const PortfolioDetailsRoute = () => {
           />
           <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
             <CompaniesContext.Provider value={companiesContext}>
-              <CompanyListTable />
+              <CompanyListTable portfolioId={id} />
             </CompaniesContext.Provider>
           </Layout>
         </>

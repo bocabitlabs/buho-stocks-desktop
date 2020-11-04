@@ -1,17 +1,17 @@
 import { useState, useCallback } from "react";
 import { CompaniesContextType } from "../contexts/companies";
-import { getCompanies, addCompany as addCompanyDAO } from "../daos/company-dao";
+import { getCompanies, addCompany as addCompanyDAO, getCompany } from "../daos/company-dao";
 import { CompanyFields, CompanyItemProps } from "../types/company";
 
 export function useCompaniesContext(): CompaniesContextType {
   const [companies, setCompanies] = useState<CompanyFields[]>([]);
-  // const [portfolio, setPortFolio] = useState<PortfolioFields | null>(null);
+  const [company, setCompany] = useState<CompanyFields|null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchCompanies = useCallback(() => {
+  const fetchCompanies = useCallback((portfolioId: string) => {
     setIsLoading(true);
-    getCompanies(getCallback);
+    getCompanies(portfolioId, getCallback);
   }, [])
 
   const getCallback = (result: CompanyFields[]) => {
@@ -19,51 +19,35 @@ export function useCompaniesContext(): CompaniesContextType {
     setIsLoading(false);
   };
 
-  const addCompany = useCallback((portfolio: CompanyItemProps) => {
+  const fetchCompany = useCallback((companyId: string) => {
+    setIsLoading(true);
+    getCompany(companyId, getSingleCallback);
+  }, [])
+
+  const getSingleCallback = (result: CompanyFields[]) => {
+    setCompany(result[0])
+    setIsLoading(false);
+  };
+
+  const addCompany = useCallback((company: CompanyItemProps) => {
 
     const addCompanyCallback = (result: []) => {
-      fetchCompanies()
+      fetchCompanies(company.portfolio)
       console.log(result);
       setIsLoading(false);
     };
 
     setIsLoading(true);
-    addCompanyDAO(portfolio, addCompanyCallback);
+    addCompanyDAO(company, addCompanyCallback);
   }, [fetchCompanies])
-
-  // const fetchPortfolio = useCallback((portfolioId: string) => {
-  //   setIsLoading(true);
-  //   getPortfolioById(portfolioId, getByIdCallback);
-  // }, [])
-
-  // const getByIdCallback = (result: PortfolioFields) => {
-  //   setPortFolio(result)
-  //   setIsLoading(false);
-  // };
-
-  // const removePost = useCallback((postId: number) => {
-  //   setIsLoading(true);
-  //   fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
-  //     method: 'DELETE'
-  //   })
-  //     .then(() => {
-  //       const newPosts = [...posts];
-  //       const removedPostIndex = newPosts.findIndex(post => post.id === postId);
-  //       if (removedPostIndex > -1) {
-  //         newPosts.splice(removedPostIndex, 1);
-  //       }
-  //       setPosts(newPosts);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     })
-  // }, [setPosts, posts]);
 
   return {
     companies,
+    company,
     // portfolio,
     isLoading,
     fetchCompanies,
+    fetchCompany,
     // fetchPortfolio,
     addCompany
     // removePost

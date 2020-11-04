@@ -16,7 +16,10 @@ const {
   getSectorDetailsMessageReply,
   getSettingsMessageReply,
   addSettingsMessageReply,
-  updateSettingsMessageReply
+  updateSettingsMessageReply,
+  getCompanyDetailsMessageReply,
+  addSharesMessageReply,
+  getSharesMessageReply,
 } = require("./messages");
 
 function handleMessageResponse(event, messageType, err, rows) {
@@ -36,7 +39,10 @@ function handleMessageResponse(event, messageType, err, rows) {
     getSectorDetailsMessageReply,
     getSettingsMessageReply,
     addSettingsMessageReply,
-    updateSettingsMessageReply
+    updateSettingsMessageReply,
+    getCompanyDetailsMessageReply,
+    addSharesMessageReply,
+    getSharesMessageReply
   }[messageType];
 
   if (handler) {

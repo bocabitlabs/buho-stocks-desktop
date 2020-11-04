@@ -27,6 +27,12 @@ import PortfolioSelectorMenu from "./components/PortfolioSelectorMenu/PortfolioS
 import AppSidebar from "./components/AppSidebar/AppSidebar";
 import { useMarketsContext } from "./hooks/markets";
 import { MarketsContext } from "./contexts/markets";
+import { useCompaniesContext } from "./hooks/companies";
+import { CompaniesContext } from "./contexts/companies";
+import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
+import AddShareRoute from "./routes/AddShareRoute/AddShareRoute";
+import { useSharesContext } from "./hooks/shares";
+import { SharesContext } from "./contexts/shares";
 
 function App() {
   /**
@@ -38,6 +44,8 @@ function App() {
   const currenciesContext = useCurrenciesContext();
   const sectorsContext = useSectorsContext();
   const marketsContext = useMarketsContext();
+  const companiesContext = useCompaniesContext();
+  const sharesContext = useSharesContext();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -141,6 +149,21 @@ function App() {
                 </SectorsContext.Provider>
               </PortfoliosContext.Provider>
             </Route>
+            <CompaniesContext.Provider value={companiesContext}>
+              <Route exact path="/portfolios/:portfolioId/companies/:companyId">
+                <CompanyDetailsRoute />
+              </Route>
+            </CompaniesContext.Provider>
+            <CompaniesContext.Provider value={companiesContext}>
+              <SharesContext.Provider value={sharesContext}>
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId/add-shares"
+                >
+                  <AddShareRoute />
+                </Route>
+              </SharesContext.Provider>
+            </CompaniesContext.Provider>
           </Layout.Content>
         </div>
       </div>
