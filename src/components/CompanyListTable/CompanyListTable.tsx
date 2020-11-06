@@ -1,5 +1,4 @@
 import { Space, Table } from "antd";
-import { ColumnsType } from "antd/lib/table/interface";
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CompaniesContext } from "../../contexts/companies";
@@ -72,7 +71,7 @@ export default function CompanyListTable({ portfolioId }: IProps) {
 
       render: (text: string, record: { name: string }) => (
         <Space size="middle">
-          <a>Delete</a>
+          Delete
         </Space>
       )
     }

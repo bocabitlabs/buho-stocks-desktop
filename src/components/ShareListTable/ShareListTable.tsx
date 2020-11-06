@@ -1,4 +1,4 @@
-import { Space, Table } from "antd";
+import { Table } from "antd";
 import moment from "moment";
 import React, { useContext, useEffect } from "react";
 import { SharesContext } from "../../contexts/shares";

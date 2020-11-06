@@ -1,7 +1,7 @@
 const path = require("path");
-
 const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
+const log = require('electron-log');
 
 require("../src/message-control/main");
 const { createDBSchema } = require("../src/database/create-schema");
@@ -12,11 +12,8 @@ const { closeDB } = require("../src/database/close-database");
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
-createDBSchema();
-insertSettings();
-
 if (isDev) {
-  console.log("Installing devtools")
+  log.info("Installing devtools")
   const devTools = require("electron-devtools-installer");
   installExtension = devTools.default;
   REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
@@ -67,10 +64,13 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow();
 
+  createDBSchema();
+  insertSettings();
+
   if (isDev) {
     installExtension(REACT_DEVELOPER_TOOLS)
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log('An error occurred: ', err));
+        .then((name) => log.info(`Added Extension:  ${name}`))
+        .catch((err) => log.error('An error occurred: ', err));
   }
 }); // UPDATED!
 

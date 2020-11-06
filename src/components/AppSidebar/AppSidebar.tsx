@@ -6,9 +6,8 @@ import {
   SettingOutlined
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { SettingsContext } from "../../contexts/settings";
 interface RoutePathProps {
   key: string;
   path: string;

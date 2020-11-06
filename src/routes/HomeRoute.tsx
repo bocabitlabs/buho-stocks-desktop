@@ -2,10 +2,6 @@ import React, { useContext, useEffect } from "react";
 
 import { Button, Card, Col, Layout, PageHeader, Row } from "antd";
 
-import {
-  ExampleComponent,
-  ExampleComponentWithType
-} from "../components/ExampleComponent";
 import { Link, useHistory } from "react-router-dom";
 import { PortfolioFields } from "../types/portfolio";
 import { PortfoliosContext } from "../contexts/portfolios";
