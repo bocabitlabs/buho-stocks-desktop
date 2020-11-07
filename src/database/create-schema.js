@@ -14,23 +14,17 @@ const createDBSchema = () => {
     const dataSql = fs.readFileSync(queryFilePath).toString();
     const dataArr = dataSql.toString().split(");");
 
-    database.serialize(() => {
-      // db.run runs your SQL query against the DB
-      database.run("PRAGMA foreign_keys=OFF;");
-      database.run("BEGIN TRANSACTION;");
-      // Loop through the `dataArr` and db.run each query
       dataArr.forEach((query) => {
         if (query) {
           // Add the delimiter back to each query before you run them
           // In my case the it was `);`
           query += ");";
-          database.run(query, (err) => {
-            if (err) throw err;
-          });
+
+          const createTable = database.prepare(query);
+          createTable.run();
         }
       });
-      database.run("COMMIT;");
-    });
+
   } catch (error) {
     log.error(error);
     throw error;

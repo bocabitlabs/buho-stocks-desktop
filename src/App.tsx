@@ -89,7 +89,7 @@ function App() {
               <HomeRoute />
             </PortfoliosContext.Provider>
           </Route>
-          <Route exact path="/settings">
+           <Route exact path="/settings">
             <SettingsContext.Provider value={settingsContext}>
               <SettingsRoute />
             </SettingsContext.Provider>

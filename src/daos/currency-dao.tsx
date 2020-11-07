@@ -1,8 +1,5 @@
-import { getCurrenciesMessageReply, addCurrenciesMessageReply } from "../message-control/messages";
+import sendSql from "../message-control/renderer";
 import { CurrencyItemProps } from "../types/currency";
-import sendSqlWithCallback from "./send-sql";
-
-
 
 export function addCurrency(currency: CurrencyItemProps, callback: Function) {
   //Call the DB
@@ -10,14 +7,20 @@ export function addCurrency(currency: CurrencyItemProps, callback: Function) {
   ("name", "abbreviation", "symbol", "country")
   VALUES ('${currency.name}', '${currency.abbreviation}', '${currency.symbol}', '${currency.country}');`;
 
-  sendSqlWithCallback(sql, addCurrenciesMessageReply, callback, (error:string)=> console.log(error))
+  const results = sendSql(sql, "insert");
+  console.log(results);
+
+  callback(results);
 
   return sql;
 }
 
 export const getCurrencies = async (callback: Function) => {
   //Call the DB
-  console.log("Get all currencies")
+  console.log("Get all currencies");
   const sql = `SELECT * FROM currencies`;
-  sendSqlWithCallback(sql, getCurrenciesMessageReply, callback, (error:string)=> console.log(error));
+  const results = sendSql(sql);
+  console.log(results);
+
+  callback(results);
 };

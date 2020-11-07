@@ -12,6 +12,9 @@ const { closeDB } = require("../src/database/close-database");
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
+createDBSchema();
+insertSettings();
+
 if (isDev) {
   log.info("Installing devtools")
   const devTools = require("electron-devtools-installer");
@@ -63,9 +66,6 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
-
-  createDBSchema();
-  insertSettings();
 
   if (isDev) {
     installExtension(REACT_DEVELOPER_TOOLS)

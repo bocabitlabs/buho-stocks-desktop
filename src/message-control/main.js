@@ -1,69 +1,26 @@
 const { ipcMain } = require("electron");
 const { database } = require("../database/load-database");
-const {
-  getPortfolioDetailsMessageReply,
-  getPortfoliosMessageReply,
-  addPortfoliosMessageReply,
-  getCurrenciesMessageReply,
-  addCurrenciesMessageReply,
-  getMarketsMessageReply,
-  addMarketsMessageReply,
-  addSampleCurrenciesMessageReply,
-  getCompaniesMessageReply,
-  addCompaniesMessageReply,
-  getSectorsMessageReply,
-  addSectorsMessageReply,
-  getSectorDetailsMessageReply,
-  getSettingsMessageReply,
-  addSettingsMessageReply,
-  updateSettingsMessageReply,
-  getCompanyDetailsMessageReply,
-  addSharesMessageReply,
-  getSharesMessageReply,
-} = require("./messages");
+const log = require("electron-log");
 
-function handleMessageResponse(event, messageType, err, rows) {
-  const handler = {
-    getPortfolioDetailsMessageReply,
-    getPortfoliosMessageReply,
-    addPortfoliosMessageReply,
-    getCurrenciesMessageReply,
-    addCurrenciesMessageReply,
-    getMarketsMessageReply,
-    addMarketsMessageReply,
-    addSampleCurrenciesMessageReply,
-    getCompaniesMessageReply,
-    addCompaniesMessageReply,
-    getSectorsMessageReply,
-    addSectorsMessageReply,
-    getSectorDetailsMessageReply,
-    getSettingsMessageReply,
-    addSettingsMessageReply,
-    updateSettingsMessageReply,
-    getCompanyDetailsMessageReply,
-    addSharesMessageReply,
-    getSharesMessageReply
-  }[messageType];
-
-  if (handler) {
-    try {
-      console.log(`Handler is ${handler}`);
-      event.reply(handler, (err && err.message) || rows);
-    } catch (error) {
-      console.error(`Error on event-handler: ${messageType}`);
-    }
-  } else {
-    console.error(`Unhandled event: ${messageType}`);
-    event.reply("asynchronous-reply", (err && err.message) || rows);
-  }
-}
-
-ipcMain.on("asynchronous-message", (event, arg, messageType) => {
+ipcMain.on("synchronous-message", (event, arg, queryType) => {
+  log.info("> ipcMain start");
+  log.info(arg); // prints "ping"
   const sql = arg;
-  console.log(messageType);
-  database.all(sql, (err, rows) => {
-    console.log("Sending get portfolios reply back");
-    console.log(sql);
-    handleMessageResponse(event, messageType, err, rows);
-  });
+
+  try {
+    const statement = database.prepare(sql);
+    log.info(sql);
+    log.info(queryType)
+    if (queryType === "select") {
+      const rows = statement.all();
+      log.info(rows);
+      event.returnValue = rows;
+    } else if (queryType === "insert") {
+      statement.run();
+      event.returnValue = "OK";
+    }
+  } catch (error) {
+    log.error(error);
+  }
+  log.info("< ipcMain end");
 });

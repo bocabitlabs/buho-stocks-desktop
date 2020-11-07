@@ -1,9 +1,5 @@
-import {
-  getSharesMessageReply,
-  addSharesMessageReply
-} from "../message-control/messages";
+import sendSql from "../message-control/renderer";
 import { ShareItemProps } from "../types/share";
-import sendSqlWithCallback from "./send-sql";
 
 export function addShare(share: ShareItemProps, callback: Function) {
   //Call the DB
@@ -25,12 +21,10 @@ export function addShare(share: ShareItemProps, callback: Function) {
          '${share.operationDate}',
           '${share.companyId}');`;
 
-  sendSqlWithCallback(
-    sql,
-    addSharesMessageReply,
-    callback,
-    (error: string) => console.log(error)
-  );
+  const results = sendSql(sql, "insert");
+  console.log(results);
+
+  callback(results);
 
   return sql;
 }
@@ -45,10 +39,8 @@ export const getShares = async (companyId: string, callback: Function) => {
   LEFT JOIN "currencies"
   ON currencies.id = companies.currencyId
   WHERE shares.companyId = '${companyId}';`;
-  sendSqlWithCallback(
-    sql,
-    getSharesMessageReply,
-    callback,
-    (error: string) => console.log(error)
-  );
+  const results = sendSql(sql);
+  console.log(results);
+
+  callback(results);
 };

@@ -1,11 +1,5 @@
-import {
-  addPortfoliosMessageReply,
-  getPortfolioDetailsMessageReply,
-  getPortfoliosMessageReply
-} from "../message-control/messages";
+import sendSql from "../message-control/renderer";
 import { PortfolioItemProps } from "../types/portfolio";
-import sendSqlWithCallback from "./send-sql";
-
 
 /**
  * Add a new portfolio
@@ -21,24 +15,20 @@ export function addPortfolio(
   ("name", "description", "currencyId")
   VALUES ('${portfolio.name}', '${portfolio.description}', '${portfolio.currencyId}');`;
 
-  sendSqlWithCallback(
-    sql,
-    addPortfoliosMessageReply,
-    callback,
-    (error: string) => console.log(error)
-  );
+  const results = sendSql(sql, "insert");
+  console.log(results);
+
+  callback(results);
 }
 
 export const getPortfolios = async (callback: Function) => {
   //Call the DB
   console.log("Get all portfolios");
   const sql = `SELECT * FROM portfolios`;
-  sendSqlWithCallback(
-    sql,
-    getPortfoliosMessageReply,
-    callback,
-    (error: string) => console.log(error)
-  );
+  const results = sendSql(sql);
+  console.log(results);
+
+  callback(results);
 };
 
 export const getPortfolioById = async (
@@ -48,10 +38,8 @@ export const getPortfolioById = async (
   //Call the DB
   console.log("Get portfolio by ID");
   const sql = `SELECT * FROM portfolios WHERE "id" = '${portfolioId}'`;
-  sendSqlWithCallback(
-    sql,
-    getPortfolioDetailsMessageReply,
-    callback,
-    (error: string) => console.log(error)
-  );
+  const results = sendSql(sql);
+  console.log(results);
+
+  callback(results);
 };

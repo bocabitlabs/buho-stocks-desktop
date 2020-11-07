@@ -1,11 +1,5 @@
-import {
-  getSettingsMessageReply,
-  addSettingsMessageReply,
-  updateSettingsMessageReply
-} from "../message-control/messages";
+import sendSql from "../message-control/renderer";
 import { SettingsItemProps } from "../types/settings";
-// import { SettingsItemProps } from "../types/settings";
-import sendSqlWithCallback from "./send-sql";
 
 /**
  *
@@ -15,9 +9,10 @@ export const getSettings = async (callback: Function) => {
   //Call the DB
   console.log("Get all settings");
   const sql = `SELECT * FROM settings WHERE id='1'`;
-  sendSqlWithCallback(sql, getSettingsMessageReply, callback, (error: string) =>
-    console.log(error)
-  );
+  const results = sendSql(sql);
+  console.log(results);
+
+  callback(results);
 };
 
 export function addSettings(settings: SettingsItemProps, callback: Function) {
@@ -26,11 +21,10 @@ export function addSettings(settings: SettingsItemProps, callback: Function) {
   ("selectedPortfolio")
   VALUES ('${settings.selectedPortfolio}');`;
 
-  console.log(sql);
+  const results = sendSql(sql, "insert");
+  console.log(results);
 
-  sendSqlWithCallback(sql, addSettingsMessageReply, callback, (error: string) =>
-    console.log(error)
-  );
+  callback(results);
 
   return sql;
 }
@@ -42,12 +36,10 @@ export function updateSelectedPortfolio(
   //Call the DB
   const sql = `UPDATE "settings" SET "selectedPortfolio" = '${selectedPortfolio}' WHERE "id" = '1';`;
 
-  sendSqlWithCallback(
-    sql,
-    updateSettingsMessageReply,
-    callback,
-    (error: string) => console.log(error)
-  );
+  const results = sendSql(sql, "insert");
+  console.log(results);
+
+  callback(results);
 
   return sql;
 }
@@ -56,12 +48,10 @@ export function toggleCollapsed(callback: Function) {
   //Call the DB
   const sql = `UPDATE "settings" SET collapsed = ((collapsed | 1) - (collapsed & 1)) WHERE "id" = '1';`;
 
-  sendSqlWithCallback(
-    sql,
-    updateSettingsMessageReply,
-    callback,
-    (error: string) => console.log(error)
-  );
+  const results = sendSql(sql, "insert");
+  console.log(results);
+
+  callback(results);
 
   return sql;
 }

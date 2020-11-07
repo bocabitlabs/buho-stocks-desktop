@@ -1,10 +1,5 @@
-import {
-  getSectorsMessageReply,
-  addSectorsMessageReply,
-  getSectorDetailsMessageReply
-} from "../message-control/messages";
+import sendSql from "../message-control/renderer";
 import { SectorItemProps } from "../types/sector";
-import sendSqlWithCallback from "./send-sql";
 
 export function addSector(company: SectorItemProps, callback: Function) {
   //Call the DB
@@ -12,9 +7,10 @@ export function addSector(company: SectorItemProps, callback: Function) {
   ("name")
   VALUES ('${company.name}');`;
 
-  sendSqlWithCallback(sql, addSectorsMessageReply, callback, (error: string) =>
-    console.log(error)
-  );
+  const results = sendSql(sql, "insert");
+  console.log(results);
+
+  callback(results);
 
   return sql;
 }
@@ -23,22 +19,18 @@ export const getSectors = async (callback: Function) => {
   //Call the DB
   console.log("Get all sectors");
   const sql = `SELECT * FROM sectors`;
-  sendSqlWithCallback(sql, getSectorsMessageReply, callback, (error: string) =>
-    console.log(error)
-  );
+  const results = sendSql(sql);
+  console.log(results);
+
+  callback(results);
 };
 
-export const getSectorById = async (
-  sectorId: string,
-  callback: Function
-) => {
+export const getSectorById = async (sectorId: string, callback: Function) => {
   //Call the DB
   console.log("Get sector by ID");
   const sql = `SELECT * FROM sector WHERE "id" = '${sectorId}'`;
-  sendSqlWithCallback(
-    sql,
-    getSectorDetailsMessageReply,
-    callback,
-    (error: string) => console.log(error)
-  );
+  const results = sendSql(sql);
+  console.log(results);
+
+  callback(results);
 };

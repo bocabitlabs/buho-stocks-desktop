@@ -11,6 +11,7 @@ export function useMarketsContext(): MarketsContextType {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchMarkets = useCallback(() => {
+    console.log("fetching markets")
     setIsLoading(true);
     getMarkets(getCallback);
   }, []);

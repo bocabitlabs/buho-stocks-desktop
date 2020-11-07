@@ -1,8 +1,5 @@
-import { getMarketsMessageReply, addMarketsMessageReply } from "../message-control/messages";
+import sendSql from "../message-control/renderer";
 import { MarketItemProps } from "../types/market";
-import sendSqlWithCallback from "./send-sql";
-
-
 
 export function addMarket(market: MarketItemProps, callback: Function) {
   //Call the DB
@@ -10,14 +7,19 @@ export function addMarket(market: MarketItemProps, callback: Function) {
   ("name", "description", "region", "openTime", "closeTime")
   VALUES ('${market.name}', '${market.description}', '${market.region}', '${market.openTime}', '${market.closeTime}');`;
 
-  sendSqlWithCallback(sql, addMarketsMessageReply, callback, (error:string)=> console.log(error))
+  const results = sendSql(sql, "insert");
+  console.log(results);
+
+  callback(results);
 
   return sql;
 }
 
 export const getMarkets = async (callback: Function) => {
   //Call the DB
-  console.log("Get all markets")
+  console.log("Get all markets");
   const sql = `SELECT * FROM markets`;
-  sendSqlWithCallback(sql, getMarketsMessageReply, callback, (error:string)=> console.log(error));
+  const results = sendSql(sql);
+  console.log(results);
+  callback(results);
 };

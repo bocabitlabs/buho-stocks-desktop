@@ -30,7 +30,7 @@ export default function PortfolioSelector(): ReactElement {
       placeholder="Portfolios"
       style={{ width: 120 }}
       onChange={handleChange}
-      value={settings[0]?.selectedPortfolio.toString()}
+      value={settings[0]?.selectedPortfolio?.toString()}
     >
       {portfolios.map((item: PortfolioFields) => (
         <Select.Option key={item.id} value={item.id.toString()}>
