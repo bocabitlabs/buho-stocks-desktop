@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { CompaniesContextType } from "../contexts/companies";
-import { getCompanies, addCompany as addCompanyDAO, getCompany } from "../daos/company-dao";
+import CompanyService from "../services/company-service";
 import { CompanyFields, CompanyItemProps } from "../types/company";
 
 export function useCompaniesContext(): CompaniesContextType {
@@ -11,7 +11,7 @@ export function useCompaniesContext(): CompaniesContextType {
 
   const fetchCompanies = useCallback((portfolioId: string) => {
     setIsLoading(true);
-    getCompanies(portfolioId, getCallback);
+    new CompanyService().getCompanies(portfolioId, getCallback);
   }, [])
 
   const getCallback = (result: CompanyFields[]) => {
@@ -21,11 +21,11 @@ export function useCompaniesContext(): CompaniesContextType {
 
   const fetchCompany = useCallback((companyId: string) => {
     setIsLoading(true);
-    getCompany(companyId, getSingleCallback);
+    new CompanyService().getCompany(companyId, getSingleCallback);
   }, [])
 
-  const getSingleCallback = (result: CompanyFields[]) => {
-    setCompany(result[0])
+  const getSingleCallback = (result: CompanyFields) => {
+    setCompany(result)
     setIsLoading(false);
   };
 
@@ -38,7 +38,7 @@ export function useCompaniesContext(): CompaniesContextType {
     };
 
     setIsLoading(true);
-    addCompanyDAO(company, addCompanyCallback);
+    new CompanyService().addCompany(company, addCompanyCallback);
   }, [fetchCompanies])
 
   return {

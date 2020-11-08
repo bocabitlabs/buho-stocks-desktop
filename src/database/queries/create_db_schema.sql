@@ -1,14 +1,14 @@
 CREATE TABLE IF NOT EXISTS "currencies" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"abbreviation" TEXT,
-	"name" TEXT,
+	"name" TEXT NOT NULL UNIQUE,
 	"symbol" TEXT,
 	"country" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "portfolios" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"name" TEXT,
+	"name" TEXT NOT NULL UNIQUE,
 	"description" TEXT,
 	"currencyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS "portfolios" (
 );
 CREATE TABLE IF NOT EXISTS "markets" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"name" TEXT,
+	"name" TEXT NOT NULL UNIQUE,
 	"description" TEXT,
 	"region" TEXT,
 	"openTime" TEXT,
@@ -52,12 +52,12 @@ CREATE TABLE IF NOT EXISTS "companies" (
 );
 CREATE TABLE IF NOT EXISTS "sectors" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"name" TEXT,
+	"name" TEXT NOT NULL UNIQUE,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "inflation" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"number" INTEGER NOT NULL UNIQUE,
+	"year" INTEGER NOT NULL UNIQUE,
 	"percentage" NUMERIC NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );

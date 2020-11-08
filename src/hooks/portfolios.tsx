@@ -1,17 +1,17 @@
 import { useState, useCallback } from "react";
 import { PortfoliosContextType } from "../contexts/portfolios";
-import { getPortfolios, addPortfolio as addPortfolioDAO, getPortfolioById } from "../daos/portfolio-dao";
+import PortfolioService from "../services/portfolio-service";
 import { PortfolioFields, PortfolioItemProps } from "../types/portfolio";
 
 export function usePortfoliosContext(): PortfoliosContextType {
   const [portfolios, setPortFolios] = useState<PortfolioFields[]>([]);
-  const [portfolio, setPortFolio] = useState<PortfolioFields[]>([]);
+  const [portfolio, setPortFolio] = useState<PortfolioFields|null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchPortfolios = useCallback(() => {
     setIsLoading(true);
-    getPortfolios(getCallback);
+    new PortfolioService().getPortfolios(getCallback);
   }, [])
 
   const getCallback = (result: PortfolioFields[]) => {
@@ -28,15 +28,15 @@ export function usePortfoliosContext(): PortfoliosContextType {
     };
 
     setIsLoading(true);
-    addPortfolioDAO(portfolio, addPortfolioCallback);
+    new PortfolioService().addPortfolio(portfolio, addPortfolioCallback);
   }, [fetchPortfolios])
 
   const fetchPortfolio = useCallback((portfolioId: string) => {
     setIsLoading(true);
-    getPortfolioById(portfolioId, getByIdCallback);
+    new PortfolioService().getPortfolioById(portfolioId, getByIdCallback);
   }, [])
 
-  const getByIdCallback = (result: PortfolioFields[]) => {
+  const getByIdCallback = (result: PortfolioFields) => {
     setPortFolio(result)
     setIsLoading(false);
   };

@@ -3,8 +3,6 @@ import React, { useEffect } from "react";
 import { Layout, PageHeader } from "antd";
 
 import { Link } from "react-router-dom";
-import AddSampleCurrenciesForm from "../../components/AddSampleCurrenciesForm/AddSampleCurrenciesForm";
-import AddSampleMarketsForm from "../../components/AddSampleMarketsForm/AddSampleMarketsForm";
 import SettingsForm from "../../components/SettingsForm/SettingsForm";
 
 const SettingsRoute = () => {

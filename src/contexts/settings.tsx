@@ -2,20 +2,21 @@ import { createContext } from "react";
 import { SettingsItemProps } from "../types/settings";
 
 export type SettingsContextType = {
-  settings: SettingsItemProps[];
+  settings: SettingsItemProps | null;
   isLoading: boolean;
   fetchSettings: () => void;
   updateSelectedPortfolio: (portfolioId: string) => void;
   toggleCollapsed: () => void;
-
 };
 
 export const settingsDefaultValue: SettingsContextType = {
-  settings: [],
+  settings: null,
   isLoading: false,
   fetchSettings: () => null,
   updateSelectedPortfolio: () => null,
-  toggleCollapsed: () => null,
-}
+  toggleCollapsed: () => null
+};
 
-export const SettingsContext = createContext<SettingsContextType>(settingsDefaultValue);
+export const SettingsContext = createContext<SettingsContextType>(
+  settingsDefaultValue
+);

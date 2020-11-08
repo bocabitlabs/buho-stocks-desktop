@@ -1,9 +1,6 @@
 import { useState, useCallback } from "react";
 import { SectorsContextType } from "../contexts/sectors";
-import {
-  getSectors,
-  addSector as addSectorDAO
-} from "../daos/sector-dao";
+import SectorService from "../services/sector-service";
 import { SectorFields, SectorItemProps } from "../types/sector";
 
 export function useSectorsContext(): SectorsContextType {
@@ -12,7 +9,7 @@ export function useSectorsContext(): SectorsContextType {
 
   const fetchSectors = useCallback(() => {
     setIsLoading(true);
-    getSectors(getCallback);
+    new SectorService().getSectors(getCallback);
   }, []);
 
   const getCallback = (result: SectorFields[]) => {
@@ -29,7 +26,7 @@ export function useSectorsContext(): SectorsContextType {
       };
 
       setIsLoading(true);
-      addSectorDAO(sector, addCallback);
+      new SectorService().addSector(sector, addCallback);
     },
     [fetchSectors]
   );

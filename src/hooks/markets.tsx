@@ -1,9 +1,6 @@
 import { useState, useCallback } from "react";
 import { MarketsContextType } from "../contexts/markets";
-import {
-  getMarkets,
-  addMarket as addMarketDAO
-} from "../daos/market-dao";
+import MarketService from "../services/market-service";
 import { MarketFields, MarketItemProps } from "../types/market";
 
 export function useMarketsContext(): MarketsContextType {
@@ -13,7 +10,7 @@ export function useMarketsContext(): MarketsContextType {
   const fetchMarkets = useCallback(() => {
     console.log("fetching markets")
     setIsLoading(true);
-    getMarkets(getCallback);
+    new MarketService().getMarkets(getCallback);
   }, []);
 
   const getCallback = (result: MarketFields[]) => {
@@ -30,7 +27,7 @@ export function useMarketsContext(): MarketsContextType {
       };
 
       setIsLoading(true);
-      addMarketDAO(sector, addCallback);
+      new MarketService().addMarket(sector, addCallback);
     },
     [fetchMarkets]
   );

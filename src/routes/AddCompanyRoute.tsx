@@ -33,7 +33,7 @@ const AddCompanyRoute = () => {
       path: `/portfolios/${id}`,
       name: "portfolio-details",
       breadcrumbName:
-        portfolio.length > 0 && portfolio[0] ? portfolio[0].name : ""
+        portfolio ? portfolio.name : ""
     },
     {
       path: `/portfolios/${id}/add-company`,

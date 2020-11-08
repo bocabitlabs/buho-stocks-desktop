@@ -3,7 +3,7 @@ import { PortfolioFields, PortfolioItemProps } from "../types/portfolio";
 
 export type PortfoliosContextType = {
   portfolios: PortfolioFields[];
-  portfolio: PortfolioFields[],
+  portfolio: PortfolioFields | null,
   isLoading: boolean;
   fetchPortfolios: () => void;
   fetchPortfolio: (portfolioId: string) => void,
@@ -12,7 +12,7 @@ export type PortfoliosContextType = {
 
 export const portfoliosDefaultValue: PortfoliosContextType = {
   portfolios: [],
-  portfolio: [],
+  portfolio: null,
   isLoading: false,
   fetchPortfolios: () => null,
   fetchPortfolio: () => null,

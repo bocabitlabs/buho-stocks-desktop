@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form, Input } from "antd";
-import { addCurrency } from "../../daos/currency-dao";
+import CurrencyService from "../../services/currency-service";
 
 /**
  * Add a new Currency
@@ -19,7 +19,7 @@ function AddCurrencyForm(): ReactElement {
         country
       };
       //Add the currency
-      addCurrency(currency, setResult)
+      new CurrencyService().addCurrency(currency, setResult)
     },
     []
   );

@@ -26,7 +26,7 @@ export default function PortfolioSelectorMenu({
   );
 
   const openPortfolio = () => {
-    history.push(`/portfolios/${settings[0]?.selectedPortfolio}`);
+    history.push(`/portfolios/${settings?.selectedPortfolio}`);
   };
 
   useEffect(() => {

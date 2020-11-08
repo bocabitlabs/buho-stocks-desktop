@@ -1,9 +1,6 @@
 import { useState, useCallback } from "react";
 import { CurrenciesContextType } from "../contexts/currencies";
-import {
-  getCurrencies,
-  addCurrency as addCurrencyDAO
-} from "../daos/currency-dao";
+import CurrencyService from "../services/currency-service";
 import { CurrencyFields, CurrencyItemProps } from "../types/currency";
 
 export function useCurrenciesContext(): CurrenciesContextType {
@@ -12,7 +9,7 @@ export function useCurrenciesContext(): CurrenciesContextType {
 
   const fetchCurrencies = useCallback(() => {
     setIsLoading(true);
-    getCurrencies(getCallback);
+    new CurrencyService().getCurrencies(getCallback);
   }, []);
 
   const getCallback = (result: CurrencyFields[]) => {
@@ -29,7 +26,7 @@ export function useCurrenciesContext(): CurrenciesContextType {
       };
 
       setIsLoading(true);
-      addCurrencyDAO(currency, addCurrenciesCallback);
+      new CurrencyService().addCurrency(currency, addCurrenciesCallback);
     },
     [fetchCurrencies]
   );

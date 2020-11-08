@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { SharesContextType } from "../contexts/shares";
-import { getShares, addShare as addShareDAO } from "../daos/share-dao";
+import ShareService from "../services/share-service";
 import { ShareFields, ShareItemProps } from "../types/share";
 
 export function useSharesContext(): SharesContextType {
@@ -10,7 +10,7 @@ export function useSharesContext(): SharesContextType {
 
   const fetchShares = useCallback((companyId: string) => {
     setIsLoading(true);
-    getShares(companyId, getCallback);
+    new ShareService().getShares(companyId, getCallback);
   }, [])
 
   const getCallback = (result: ShareFields[]) => {
@@ -27,7 +27,7 @@ export function useSharesContext(): SharesContextType {
     };
 
     setIsLoading(true);
-    addShareDAO(share, addShareCallback);
+    new ShareService().addShare(share, addShareCallback);
   }, [fetchShares])
 
   return {

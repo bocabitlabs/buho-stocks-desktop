@@ -1,13 +1,13 @@
 import { Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { getMarkets } from "../../daos/market-dao";
+import MarketService from "../../services/market-service";
 import { MarketItemProps } from "../../types/market";
 
 export default function MarketListTable() {
   const [markets, setMarkets] = useState([]);
 
   useEffect(() => {
-    getMarkets(setMarkets);
+    new MarketService().getMarkets(setMarkets);
   }, []);
 
   const columns = [

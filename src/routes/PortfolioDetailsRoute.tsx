@@ -34,7 +34,7 @@ const PortfolioDetailsRoute = () => {
       path: `/portfolios/${id}`,
       name: "portfolio-details",
       breadcrumbName:
-      portfolio.length > 0 && portfolio[0] ? portfolio[0].name : ""
+      portfolio ? portfolio.name : ""
     }
   ];
   function itemRender(route: any) {
@@ -42,10 +42,10 @@ const PortfolioDetailsRoute = () => {
   }
   return (
     <>
-      {portfolio.length > 0 && (
+      {portfolio && (
         <>
           <PageHeader
-            title={`${portfolio[0].name}`}
+            title={`${portfolio.name}`}
             breadcrumb={{
               routes,
               itemRender
@@ -54,7 +54,7 @@ const PortfolioDetailsRoute = () => {
             extra={[
               <Button
                 onClick={() => {
-                  history.push(`/portfolios/${portfolio[0].id}/add-company`);
+                  history.push(`/portfolios/${portfolio.id}/add-company`);
                 }}
               >
                 + Company

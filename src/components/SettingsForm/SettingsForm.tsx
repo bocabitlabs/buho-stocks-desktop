@@ -1,6 +1,5 @@
 import React, { ReactElement, useCallback, useContext, useEffect } from "react";
 import { Button, Form } from "antd";
-import { SettingsItemProps } from "../../types/settings";
 import AddSampleCurrenciesForm from "../AddSampleCurrenciesForm/AddSampleCurrenciesForm";
 import AddSampleMarketsForm from "../AddSampleMarketsForm/AddSampleMarketsForm";
 import { SettingsContext } from "../../contexts/settings";

@@ -1,8 +1,8 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form } from "antd";
-import { addCurrency } from "../../daos/currency-dao";
 import sampleCurrencies from "./sample-currencies";
 import { CurrencyItemProps } from "../../types/currency";
+import CurrencyService from "../../services/currency-service";
 /**
  * Add a new Currency
  */
@@ -13,7 +13,7 @@ function AddSampleCurrenciesForm(): ReactElement {
 
   const handleAddCurrencies = useCallback(async () => {
     currencies.forEach((currency: CurrencyItemProps) => {
-      addCurrency(currency, setCurrencies);
+      new CurrencyService().addCurrency(currency, setCurrencies);
     });
   }, [currencies]);
 

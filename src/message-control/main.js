@@ -10,7 +10,7 @@ ipcMain.on("synchronous-message", (event, arg, queryType) => {
   try {
     const statement = database.prepare(sql);
     log.info(sql);
-    log.info(queryType)
+    log.info(queryType);
     if (queryType === "select") {
       const rows = statement.all();
       log.info(rows);
@@ -18,9 +18,13 @@ ipcMain.on("synchronous-message", (event, arg, queryType) => {
     } else if (queryType === "insert") {
       statement.run();
       event.returnValue = "OK";
+    } else if (queryType === "get") {
+      const row = statement.get();
+      event.returnValue = row;
     }
   } catch (error) {
     log.error(error);
+    event.returnValue = "ERROR";
   }
   log.info("< ipcMain end");
 });

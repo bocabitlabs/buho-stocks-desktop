@@ -1,22 +1,19 @@
 import { useState, useCallback } from "react";
 import { SettingsContextType } from "../contexts/settings";
-import {
-  getSettings as getSettingsDAO,
-  updateSelectedPortfolio as updateSelectedPortfolioDAO,
-  toggleCollapsed as updateCollapsedDAO
-} from "../daos/settings-dao";
+import SettingsService from "../services/settings-service";
+
 import { SettingsItemProps } from "../types/settings";
 
 export function useSettingsContext(): SettingsContextType {
-  const [settings, setSettings] = useState<SettingsItemProps[]>([]);
+  const [settings, setSettings] = useState<SettingsItemProps | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchSettings = useCallback(() => {
     setIsLoading(true);
-    getSettingsDAO(getSettingCallback);
+    new SettingsService().getSettings(getSettingCallback);
   }, []);
 
-  const getSettingCallback = (result: SettingsItemProps[]) => {
+  const getSettingCallback = (result: SettingsItemProps) => {
     setSettings(result);
     console.log(result);
     setIsLoading(false);
@@ -24,7 +21,10 @@ export function useSettingsContext(): SettingsContextType {
 
   const updateSelectedPortfolio = useCallback((selectedPortfolio: string) => {
     setIsLoading(true);
-    updateSelectedPortfolioDAO(selectedPortfolio, updateSettingsCallback);
+    new SettingsService().updateSelectedPortfolio(
+      selectedPortfolio,
+      updateSettingsCallback
+    );
   }, []);
 
   const updateSettingsCallback = (result: SettingsItemProps[]) => {
@@ -34,7 +34,7 @@ export function useSettingsContext(): SettingsContextType {
 
   const toggleCollapsed = useCallback(() => {
     setIsLoading(true);
-    updateCollapsedDAO(updateSettingsCallback);
+    new SettingsService().toggleCollapsed(updateSettingsCallback);
   }, []);
 
   return {

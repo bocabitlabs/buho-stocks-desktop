@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form, Input, TimePicker } from "antd";
-import { addMarket } from "../../daos/market-dao";
+import MarketService from "../../services/market-service";
 
 /**
  * Add a new Currency
@@ -21,7 +21,7 @@ function AddMarketForm(): ReactElement {
     };
     console.log(market);
     //Add the currency
-    addMarket(market, setResult);
+    new MarketService().addMarket(market, setResult);
   }, []);
 
   return (

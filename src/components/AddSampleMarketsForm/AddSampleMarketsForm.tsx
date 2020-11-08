@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form } from "antd";
-import { addMarket } from "../../daos/market-dao";
+import MarketService from "../../services/market-service";
 import sampleMarkets from "./sample-markets";
 import { MarketItemProps } from "../../types/market";
 /**
@@ -13,7 +13,7 @@ function AddSampleMarketsForm(): ReactElement {
 
   const handleAddMarkets = useCallback(async () => {
     markets.forEach((market: MarketItemProps) => {
-      addMarket(market, setMarkets);
+      new MarketService().addMarket(market, setMarkets);
     });
   }, [markets]);
 
