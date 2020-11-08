@@ -85,6 +85,7 @@ export default function CompanyListTable({ portfolioId }: IProps) {
       ticker: company.ticker,
       sectorName: company.sectorName,
       currency: company.currency,
+      color: company.color,
       sharesNumber:
         (company.buySharesNumber || 0) - (company.sellSharesNumber || 0),
       total: (company.buyTotal || 0) - (company.sellTotal || 0),

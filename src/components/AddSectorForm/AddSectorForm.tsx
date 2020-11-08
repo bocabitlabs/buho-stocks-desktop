@@ -1,5 +1,7 @@
-import React, { ReactElement, useCallback, useContext } from "react";
+import React, { ReactElement, useCallback, useContext, useState } from "react";
 import { Button, Form, Input } from "antd";
+import { CirclePicker } from "react-color";
+
 import { SectorsContext } from "../../contexts/sectors";
 
 /**
@@ -9,15 +11,21 @@ function AddSectorForm(): ReactElement {
   const [form] = Form.useForm();
 
   const { addSector } = useContext(SectorsContext);
-
+  const [color, setColor] = useState("#607d8b");
 
   const handleAdd = useCallback(async (values) => {
-    const { name } = values;
+    const { name, color } = values;
     const sector = {
-      name
+      name,
+      color
     };
     addSector(sector,)
   }, [addSector]);
+
+  const handleColorChange = (color: any, event: any) => {
+    console.log(color.hex);
+    setColor(color.hex);
+  };
 
   return (
     <Form form={form} name="basic" onFinish={handleAdd}>
@@ -29,6 +37,10 @@ function AddSectorForm(): ReactElement {
         ]}
       >
         <Input type="text" />
+      </Form.Item>
+      <Form.Item label="Color">
+        <CirclePicker onChange={handleColorChange} />
+        <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

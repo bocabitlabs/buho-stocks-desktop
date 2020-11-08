@@ -3,6 +3,7 @@ export interface MarketItemProps {
   name: string;
   description: string;
   region: string;
+  color: string;
   openTime: string;
   closeTime: string;
 }
@@ -12,6 +13,7 @@ export interface MarketFields {
   name: string;
   description: string;
   region: string;
+  color: string;
   openTime: string;
   closeTime: string;
 }

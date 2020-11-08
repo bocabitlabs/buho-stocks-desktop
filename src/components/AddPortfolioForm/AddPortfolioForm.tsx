@@ -1,5 +1,13 @@
-import React, { ReactElement, useCallback, useContext, useEffect } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { Button, Form, Input, Select } from "antd";
+import { CirclePicker } from "react-color";
+
 import { CurrencyFields } from "../../types/currency";
 import { PortfoliosContext } from "../../contexts/portfolios";
 import { CurrenciesContext } from "../../contexts/currencies";
@@ -12,21 +20,30 @@ function AddPortfolioForm(): ReactElement {
 
   const { addPortfolio } = useContext(PortfoliosContext);
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
+  const [color, setColor] = useState("#607d8b");
 
-
-  const handleAddCurrency = useCallback(async (values) => {
-    const { name, description, currencyId } = values;
-    const portfolio = {
-      name,
-      description,
-      currencyId
-    };
-    addPortfolio(portfolio)
-  }, [addPortfolio]);
+  const handleAddCurrency = useCallback(
+    async (values) => {
+      const { name, description, currencyId, color } = values;
+      const portfolio = {
+        name,
+        description,
+        currencyId,
+        color
+      };
+      addPortfolio(portfolio);
+    },
+    [addPortfolio]
+  );
 
   useEffect(() => {
     fetchCurrencies();
   }, [fetchCurrencies]);
+
+  const handleColorChange = (color: any, event: any) => {
+    console.log(color.hex);
+    setColor(color.hex);
+  };
 
   return (
     <Form form={form} name="basic" onFinish={handleAddCurrency}>
@@ -39,6 +56,10 @@ function AddPortfolioForm(): ReactElement {
       >
         <Input type="text" />
       </Form.Item>
+      <Form.Item label="Color">
+        <CirclePicker onChange={handleColorChange} />
+        <Input type="hidden" value={color} />
+      </Form.Item>
       <Form.Item
         name="description"
         label="Description"
@@ -48,7 +69,11 @@ function AddPortfolioForm(): ReactElement {
       >
         <Input type="text" />
       </Form.Item>
-      <Form.Item name="currencyId" label="Currency" rules={[{ required: true }]}>
+      <Form.Item
+        name="currencyId"
+        label="Currency"
+        rules={[{ required: true }]}
+      >
         <Select
           placeholder="Select a option and change input text above"
           allowClear

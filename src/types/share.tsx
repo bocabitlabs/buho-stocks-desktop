@@ -12,6 +12,7 @@ export interface ShareItemProps {
   exchangeRate: number;
   operationDate: Date;
   companyId: string;
+  color: string;
   notes: string;
   currencyName?: string;
   currencySymbol?: string;
@@ -24,6 +25,7 @@ export interface ShareFields {
   commission: number;
   type: OperationType;
   exchangeRate: number;
+  color: string;
   operationDate: Date;
   companyId: string;
   notes: string;

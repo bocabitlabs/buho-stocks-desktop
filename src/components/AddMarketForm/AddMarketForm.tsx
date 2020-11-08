@@ -1,5 +1,7 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form, Input, TimePicker } from "antd";
+import { CirclePicker } from "react-color";
+
 import MarketService from "../../services/market-service";
 
 /**
@@ -8,6 +10,7 @@ import MarketService from "../../services/market-service";
 function AddMarketForm(): ReactElement {
   const [form] = Form.useForm();
   const [result, setResult] = useState("");
+  const [color, setColor] = useState("#607d8b");
 
   const handleAdd = useCallback(async (values) => {
     const { name, description, region, openTime, closeTime } = values;
@@ -16,13 +19,19 @@ function AddMarketForm(): ReactElement {
       name,
       description,
       region,
+      color,
       openTime: openTime.format("HH:mm"),
       closeTime: closeTime.format("HH:mm")
     };
     console.log(market);
     //Add the currency
     new MarketService().addMarket(market, setResult);
-  }, []);
+  }, [color]);
+
+  const handleColorChange = (color: any, event: any) => {
+    console.log(color.hex);
+    setColor(color.hex);
+  };
 
   return (
     <Form form={form} name="basic" onFinish={handleAdd}>
@@ -41,6 +50,10 @@ function AddMarketForm(): ReactElement {
         rules={[{ required: false }]}
       >
         <Input type="text" />
+      </Form.Item>
+      <Form.Item label="Color">
+        <CirclePicker onChange={handleColorChange} />
+        <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item
         name="region"

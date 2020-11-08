@@ -7,6 +7,7 @@ export interface CompanyFields {
   currency: string;
   market: string;
   sector: string;
+  color: string;
   portfolio: string;
   portfolioName: string;
   currencyName: string;
@@ -23,6 +24,7 @@ export interface CompanyItemProps {
   market: string;
   sector: string;
   portfolio: string;
+  color: string;
   portfolioName?: string;
   currencyName?: string;
   sectorName?: string;

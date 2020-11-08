@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS "currencies" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"abbreviation" TEXT,
 	"name" TEXT NOT NULL UNIQUE,
+	"color" TEXT,
 	"symbol" TEXT,
 	"country" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT)
@@ -10,6 +11,7 @@ CREATE TABLE IF NOT EXISTS "portfolios" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"name" TEXT NOT NULL UNIQUE,
 	"description" TEXT,
+	"color" TEXT,
 	"currencyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("currencyId") REFERENCES "currencies" ("id")
@@ -18,6 +20,7 @@ CREATE TABLE IF NOT EXISTS "markets" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"name" TEXT NOT NULL UNIQUE,
 	"description" TEXT,
+	"color" TEXT,
 	"region" TEXT,
 	"openTime" TEXT,
 	"closeTime" TEXT,
@@ -28,6 +31,7 @@ CREATE TABLE IF NOT EXISTS "dividends" (
 	"operationDate" TEXT,
 	"priceShare" NUMERIC,
 	"exchangeRate" NUMERIC,
+	"color" TEXT,
 	"numberShares" INTEGER,
 	"commission" NUMERIC,
 	"companyId" INTEGER NOT NULL,
@@ -40,6 +44,7 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	"ticker" INTEGER,
 	"description" INTEGER,
 	"url" INTEGER,
+	"color" TEXT,
 	"sectorId" INTEGER NOT NULL,
 	"marketId" INTEGER NOT NULL,
 	"currencyId" INTEGER NOT NULL,
@@ -53,6 +58,8 @@ CREATE TABLE IF NOT EXISTS "companies" (
 CREATE TABLE IF NOT EXISTS "sectors" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"name" TEXT NOT NULL UNIQUE,
+	"color" TEXT,
+
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "inflation" (
@@ -66,6 +73,7 @@ CREATE TABLE IF NOT EXISTS "rights" (
 	"rightsNumber" INTEGER,
 	"priceRight" NUMERIC,
 	"commission" NUMERIC,
+	"color" TEXT,
 	"type" TEXT,
 	"operationDate" TEXT,
 	"exchangeRate" INTEGER,
@@ -79,6 +87,7 @@ CREATE TABLE IF NOT EXISTS "shares" (
 	"sharesNumber" INTEGER,
 	"priceShare" NUMERIC,
 	"commission" NUMERIC,
+	"color" TEXT,
 	"type" TEXT,
 	"operationDate" TEXT,
 	"exchangeRate" NUMERIC,

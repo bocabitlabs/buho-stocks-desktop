@@ -1,5 +1,13 @@
-import React, { ReactElement, useCallback, useContext, useEffect } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { Form, Input, Button, Select } from "antd";
+import { CirclePicker } from "react-color";
+
 import TextArea from "antd/lib/input/TextArea";
 import { CurrencyFields } from "../../types/currency";
 import { MarketFields } from "../../types/market";
@@ -23,6 +31,7 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
   const { markets, fetchMarkets } = useContext(MarketsContext);
   const { sectors, fetchSectors } = useContext(SectorsContext);
+  const [color, setColor] = useState("#607d8b");
 
   const handleAddCompany = useCallback(
     async (values) => {
@@ -33,7 +42,8 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
         market,
         sector,
         currency,
-        description
+        description,
+        color
       } = values;
       const company: CompanyItemProps = {
         url: url,
@@ -41,6 +51,7 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
         ticker: ticker,
         market: market,
         sector: sector,
+        color: color,
         description: description,
         currency: currency,
         portfolio: portfolioID
@@ -73,6 +84,11 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
     wrapperCol: { span: 14, offset: 4 }
   };
 
+  const handleColorChange = (color: any, event: any) => {
+    console.log(color.hex);
+    setColor(color.hex);
+  };
+
   return (
     <Form {...layout} form={form} name="basic" onFinish={handleAddCompany}>
       <Form.Item
@@ -92,6 +108,10 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
         ]}
       >
         <Input type="text" placeholder="NASDQ:MSFT, NYSE:T..." />
+      </Form.Item>
+      <Form.Item label="Color">
+        <CirclePicker onChange={handleColorChange} />
+        <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item name="sector" label="Sector" rules={[{ required: true }]}>
         <Select
