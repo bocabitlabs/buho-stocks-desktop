@@ -9,7 +9,6 @@ import MarketService from "../../services/market-service";
  */
 function AddMarketForm(): ReactElement {
   const [form] = Form.useForm();
-  const [result, setResult] = useState("");
   const [color, setColor] = useState("#607d8b");
 
   const handleAdd = useCallback(async (values) => {
@@ -25,7 +24,7 @@ function AddMarketForm(): ReactElement {
     };
     console.log(market);
     //Add the currency
-    new MarketService().addMarket(market, setResult);
+    const result = new MarketService().addMarket(market);
   }, [color]);
 
   const handleColorChange = (color: any, event: any) => {
@@ -78,7 +77,6 @@ function AddMarketForm(): ReactElement {
         {/* <Input type="time" placeholder="HH:mm" /> */}
         <TimePicker name="closeTime" format="HH:mm"/>
       </Form.Item>
-      {JSON.stringify(result)}
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Add market

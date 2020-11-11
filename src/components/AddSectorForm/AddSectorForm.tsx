@@ -1,8 +1,8 @@
-import React, { ReactElement, useCallback, useContext, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { CirclePicker } from "react-color";
+import SectorService from "../../services/sector-service";
 
-import { SectorsContext } from "../../contexts/sectors";
 
 /**
  * Add a new Currency
@@ -10,7 +10,6 @@ import { SectorsContext } from "../../contexts/sectors";
 function AddSectorForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const { addSector } = useContext(SectorsContext);
   const [color, setColor] = useState("#607d8b");
 
   const handleAdd = useCallback(async (values) => {
@@ -19,8 +18,8 @@ function AddSectorForm(): ReactElement {
       name,
       color
     };
-    addSector(sector,)
-  }, [addSector]);
+    const result = new SectorService().addSector(sector);
+  }, []);
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);

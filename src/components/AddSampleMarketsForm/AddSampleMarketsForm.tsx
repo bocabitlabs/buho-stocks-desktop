@@ -9,11 +9,11 @@ import { MarketItemProps } from "../../types/market";
 function AddSampleMarketsForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const [markets, setMarkets] = useState(sampleMarkets);
+  const [markets] = useState(sampleMarkets);
 
   const handleAddMarkets = useCallback(async () => {
     markets.forEach((market: MarketItemProps) => {
-      new MarketService().addMarket(market, setMarkets);
+      new MarketService().addMarket(market);
     });
   }, [markets]);
 

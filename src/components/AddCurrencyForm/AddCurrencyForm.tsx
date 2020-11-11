@@ -9,24 +9,20 @@ import CurrencyService from "../../services/currency-service";
  */
 function AddCurrencyForm(): ReactElement {
   const [form] = Form.useForm();
-  const [result, setResult] = useState("");
   const [color, setColor] = useState("#607d8b");
 
-  const handleAddCurrency = useCallback(
-    async (values) => {
-      const { currencyName, abbreviation, symbol, country } = values;
-      const currency = {
-        name: currencyName,
-        abbreviation: abbreviation,
-        symbol: symbol,
-        country,
-        color
-      };
-      //Add the currency
-      new CurrencyService().addCurrency(currency, setResult);
-    },
-    [color]
-  );
+  const handleAddCurrency = (values: any) => {
+    const { currencyName, abbreviation, symbol, country } = values;
+    const currency = {
+      name: currencyName,
+      abbreviation: abbreviation,
+      symbol: symbol,
+      country,
+      color
+    };
+    //Add the currency
+    new CurrencyService().addCurrency(currency);
+  };
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
@@ -75,7 +71,6 @@ function AddCurrencyForm(): ReactElement {
       >
         <Input type="text" placeholder="USA, EU, Japan..." />
       </Form.Item>
-      {JSON.stringify(result)}
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Add Currency

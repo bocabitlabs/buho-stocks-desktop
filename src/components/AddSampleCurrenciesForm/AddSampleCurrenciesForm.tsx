@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Button, Form } from "antd";
 import sampleCurrencies from "./sample-currencies";
 import { CurrencyItemProps } from "../../types/currency";
@@ -9,13 +9,13 @@ import CurrencyService from "../../services/currency-service";
 function AddSampleCurrenciesForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const [currencies, setCurrencies] = useState(sampleCurrencies);
+  const [currencies] = useState(sampleCurrencies);
 
-  const handleAddCurrencies = useCallback(async () => {
+  const handleAddCurrencies =  () => {
     currencies.forEach((currency: CurrencyItemProps) => {
-      new CurrencyService().addCurrency(currency, setCurrencies);
+      new CurrencyService().addCurrency(currency);
     });
-  }, [currencies]);
+  }
 
   return (
     <Form form={form} name="basic" onFinish={handleAddCurrencies}>

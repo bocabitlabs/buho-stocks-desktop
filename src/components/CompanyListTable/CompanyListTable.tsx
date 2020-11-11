@@ -1,4 +1,4 @@
-import { Space, Table } from "antd";
+import { Empty, Space, Table } from "antd";
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CompaniesContext } from "../../contexts/companies";
@@ -93,10 +93,9 @@ export default function CompanyListTable({ portfolioId }: IProps) {
     }));
     return companies2;
   };
-
+  console.log(companies.length)
   return (
-    <>
-      <Table
+    <Table
         size="small"
         style={{ maxWidth: "max(500px, 76vw)" }}
         columns={columns1}
@@ -105,6 +104,5 @@ export default function CompanyListTable({ portfolioId }: IProps) {
         bordered
 
       />
-    </>
   );
 }

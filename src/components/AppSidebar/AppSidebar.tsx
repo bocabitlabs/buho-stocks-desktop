@@ -22,9 +22,7 @@ interface AppSidebarProps {
 export default function AppSidebar({isCollapsed}: AppSidebarProps): ReactElement {
   const history = useHistory();
   const location = useLocation();
-  // const { settings } = useContext(
-  //   SettingsContext
-  // );
+
 
   const navLinks: RoutePathProps[] = [
     { key: "0", path: "/home", text: "Home", icon: <HomeOutlined /> },

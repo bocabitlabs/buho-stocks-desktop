@@ -1,14 +1,15 @@
 import { Space, Table } from "antd";
-import React, { useEffect, useState } from "react";
-import MarketService from "../../services/market-service";
+import React, { useContext, useEffect } from "react";
+import { MarketsContext } from "../../contexts/markets";
 import { MarketItemProps } from "../../types/market";
 
 export default function MarketListTable() {
-  const [markets, setMarkets] = useState([]);
+  const { markets, fetchMarkets } = useContext(MarketsContext);
+
 
   useEffect(() => {
-    new MarketService().getMarkets(setMarkets);
-  }, []);
+    fetchMarkets();
+  }, [fetchMarkets]);
 
   const columns = [
     {

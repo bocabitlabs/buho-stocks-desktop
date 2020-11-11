@@ -7,6 +7,7 @@ import { CirclePicker } from "react-color";
 
 import { SharesContext } from "../../contexts/shares";
 import { ShareItemProps } from "../../types/share";
+import ShareService from "../../services/share-service";
 
 interface Props {
   companyId: string;
@@ -18,7 +19,6 @@ interface Props {
 export default function AddShareForm({ companyId }: Props): ReactElement {
   const [form] = Form.useForm();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { addShare } = useContext(SharesContext);
   const [color, setColor] = useState("#607d8b");
 
 
@@ -36,9 +36,9 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
       companyId
     };
     console.log(values);
-    addShare(share);
+    const result = new ShareService().addShare(share);
     // Add company
-  }, [addShare, companyId]);
+  }, [companyId]);
 
   useEffect(() => {
     fetchCompany(companyId);

@@ -16,7 +16,7 @@ import { CompanyItemProps } from "../../types/company";
 import { CurrenciesContext } from "../../contexts/currencies";
 import { MarketsContext } from "../../contexts/markets";
 import { SectorsContext } from "../../contexts/sectors";
-import { CompaniesContext } from "../../contexts/companies";
+import CompanyService from "../../services/company-service";
 
 interface AddCompanyFormProps {
   portfolioID: string;
@@ -27,7 +27,6 @@ interface AddCompanyFormProps {
  */
 function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
   const [form] = Form.useForm();
-  const { addCompany } = useContext(CompaniesContext);
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
   const { markets, fetchMarkets } = useContext(MarketsContext);
   const { sectors, fetchSectors } = useContext(SectorsContext);
@@ -57,10 +56,10 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
         portfolio: portfolioID
       };
       console.log(values);
-      addCompany(company);
+      const result = new CompanyService().addCompany(company)
       // Add company
     },
-    [portfolioID, addCompany]
+    [portfolioID]
   );
 
   useEffect(() => {

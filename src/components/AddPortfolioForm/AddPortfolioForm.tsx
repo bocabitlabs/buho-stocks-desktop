@@ -1,16 +1,10 @@
-import React, {
-  ReactElement,
-  useCallback,
-  useContext,
-  useEffect,
-  useState
-} from "react";
-import { Button, Form, Input, Select } from "antd";
+import React, { ReactElement, useContext, useEffect } from "react";
+import { Button, Form, Input, message, Select } from "antd";
 import { CirclePicker } from "react-color";
 
 import { CurrencyFields } from "../../types/currency";
-import { PortfoliosContext } from "../../contexts/portfolios";
 import { CurrenciesContext } from "../../contexts/currencies";
+import PortfolioService from "../../services/portfolio-service";
 
 /**
  * Add a new Currency
@@ -18,23 +12,35 @@ import { CurrenciesContext } from "../../contexts/currencies";
 function AddPortfolioForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const { addPortfolio } = useContext(PortfoliosContext);
+  // const { addPortfolio } = useContext(PortfoliosContext);
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
-  const [color, setColor] = useState("#607d8b");
+  const key = "updatable";
+  let color = "#607d8b";
 
-  const handleAddCurrency = useCallback(
-    async (values) => {
-      const { name, description, currencyId, color } = values;
-      const portfolio = {
-        name,
-        description,
-        currencyId,
-        color
-      };
-      addPortfolio(portfolio);
-    },
-    [addPortfolio]
-  );
+  const handleAdd = (values: any) => {
+    message.loading({ content: "Adding portfolio...", key });
+
+    const { name, description, currencyId, color } = values;
+    const portfolio = {
+      name,
+      description,
+      currencyId,
+      color
+    };
+    const portfolioService = new PortfolioService();
+
+    const added = portfolioService.addPortfolio(portfolio);
+    console.log(added);
+    if (added === 'OK') {
+      setTimeout(() => {
+        message.success({ content: "Portfolio Added!", key, duration: 2 });
+      }, 1000);
+    }else{
+      setTimeout(() => {
+        message.error({ content: "Unable to add the portfolio!", key, duration: 2 });
+      }, 1000);
+    }
+  };
 
   useEffect(() => {
     fetchCurrencies();
@@ -42,11 +48,12 @@ function AddPortfolioForm(): ReactElement {
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
-    setColor(color.hex);
+    color = color.hex;
   };
-
+  console.log("AddPortfolioForm rendered");
+  console.log(currencies)
   return (
-    <Form form={form} name="basic" onFinish={handleAddCurrency}>
+    <Form form={form} name="basic" onFinish={handleAdd}>
       <Form.Item
         name="name"
         label="Name"
@@ -89,8 +96,6 @@ function AddPortfolioForm(): ReactElement {
             ))}
         </Select>
       </Form.Item>
-      {/* {JSON.stringify(result)} */}
-
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Add Portfolio
