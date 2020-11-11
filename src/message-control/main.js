@@ -15,7 +15,7 @@ ipcMain.on("synchronous-message", (event, arg, queryType) => {
       const rows = statement.all();
       log.info(rows);
       event.returnValue = rows;
-    } else if (queryType === "insert") {
+    } else if (queryType === "insert" || queryType === "delete") {
       statement.run();
       event.returnValue = "OK";
     } else if (queryType === "get") {
