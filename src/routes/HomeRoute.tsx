@@ -1,18 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 
-import { Button, Card, Col, Layout, PageHeader, Row } from "antd";
+import { Button, Layout, PageHeader } from "antd";
 
-import { Link, useHistory } from "react-router-dom";
-import { PortfolioFields } from "../types/portfolio";
-import { PortfoliosContext } from "../contexts/portfolios";
+import { useHistory } from "react-router-dom";
+import PortfolioList from "../components/PortfolioList/PortfolioList";
 
 const Home = () => {
   const history = useHistory();
-  const { portfolios, fetchPortfolios } = useContext(PortfoliosContext);
-
-  useEffect(() => {
-    fetchPortfolios();
-  }, [fetchPortfolios]);
+  console.log("Home rendered");
 
   return (
     <>
@@ -20,6 +15,7 @@ const Home = () => {
         title="HOME"
         extra={[
           <Button
+            key={"portfolio-add-header"}
             onClick={() => {
               history.push("/add/portfolio");
             }}
@@ -27,6 +23,7 @@ const Home = () => {
             Add Portfolio
           </Button>,
           <Button
+            key={"currency-add-header"}
             onClick={() => {
               history.push("/add/currency");
             }}
@@ -34,6 +31,7 @@ const Home = () => {
             Add Currency
           </Button>,
           <Button
+            key={"market-add-header"}
             onClick={() => {
               history.push("/add/market");
             }}
@@ -43,20 +41,8 @@ const Home = () => {
         ]}
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <Row gutter={16}>
-          {portfolios &&
-            portfolios.map((portfolio: PortfolioFields, index) => (
-              <Col span={8} key={`portfolio-card-${index}`}>
-                <Link to={`/portfolios/${portfolio.id}`}>
-                  <Card title={portfolio.name} hoverable>
-                    {portfolio.description}
-                  </Card>
-                </Link>
-              </Col>
-            ))}
-        </Row>
+        <PortfolioList />
       </Layout>
-
     </>
   );
 };
