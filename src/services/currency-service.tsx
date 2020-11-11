@@ -2,11 +2,15 @@ import CurrencyDAO from "../database/daos/currency-dao";
 import { CurrencyItemProps } from "../types/currency";
 
 export default class CurrencyService {
-  addCurrency = (currency: CurrencyItemProps, callback: Function) => {
-    new CurrencyDAO().addCurrency(currency, callback);
+  addCurrency = (currency: CurrencyItemProps) => {
+    return new CurrencyDAO().addCurrency(currency);
   };
 
-  getCurrencies = async (callback: Function) => {
-    new CurrencyDAO().getCurrencies(callback);
+  getCurrencies = () => {
+    return new CurrencyDAO().getCurrencies();
+  };
+
+  deleteCurrencyById = (currencyId: string) => {
+    return new CurrencyDAO().deleteCurrencyById(currencyId);
   };
 }

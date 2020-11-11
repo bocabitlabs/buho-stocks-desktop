@@ -2,7 +2,7 @@ import sendIpcSql from "../../message-control/renderer";
 import { MarketItemProps } from "../../types/market";
 
 export default class MarketOperations {
-  addMarket = (market: MarketItemProps, callback: Function) => {
+  addMarket = (market: MarketItemProps) => {
     //Call the DB
     const sql = `INSERT INTO "markets"
     ("name", "description", "region", "openTime", "closeTime")
@@ -11,14 +11,22 @@ export default class MarketOperations {
     const results = sendIpcSql(sql, "insert");
     console.log(results);
 
-    callback(results);
+    return results;
   };
-  getMarkets = (callback: Function) => {
+  getMarkets = () => {
     //Call the DB
     console.log("Get all markets");
     const sql = `SELECT * FROM markets`;
     const results = sendIpcSql(sql);
     console.log(results);
-    callback(results);
+    return results;
+  };
+  deleteMarketById = (marketId: string) => {
+    //Call the DB
+    console.log("Delete market by ID");
+    const sql = `DELETE FROM markets WHERE "id" = '${marketId}'`;
+    const results = sendIpcSql(sql, "delete");
+    console.log(results);
+    return results;
   };
 }

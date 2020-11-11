@@ -6,23 +6,24 @@ export default class SettingsService {
    *
    * @param callback
    */
-  getSettings = (callback: Function) => {
-    new SettingsDAO().getSettings(callback);
+  getSettings = () => {
+    return new SettingsDAO().getSettings();
   };
 
-  addSettings = (settings: SettingsItemProps, callback: Function) => {
-    new SettingsDAO().addSettings(settings, callback);
+  getIsCollapsed = () => {
+    return new SettingsDAO().getIsCollapsed();
   };
 
-  updateSelectedPortfolio = (selectedPortfolio: string, callback: Function) => {
-    new SettingsDAO().updateSelectedPortfolio(
-      selectedPortfolio,
-      callback
-    );
+  addSettings = (settings: SettingsItemProps) => {
+    return new SettingsDAO().addSettings(settings);
   };
 
-  toggleCollapsed = (callback: Function) => {
+  updateSelectedPortfolio = (selectedPortfolio: string) => {
+    return new SettingsDAO().updateSelectedPortfolio(selectedPortfolio);
+  };
+
+  toggleCollapsed = () => {
     //Call the DB
-    new SettingsDAO().toggleCollapsed(callback);
+    return new SettingsDAO().toggleCollapsed();
   };
 }

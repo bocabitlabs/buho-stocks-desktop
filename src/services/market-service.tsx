@@ -2,11 +2,15 @@ import MarketDAO from "../database/daos/market-dao";
 import { MarketItemProps } from "../types/market";
 
 export default class MarketService {
-  addMarket = (market: MarketItemProps, callback: Function) => {
-    new MarketDAO().addMarket(market, callback);
+  addMarket = (market: MarketItemProps) => {
+    return new MarketDAO().addMarket(market);
   };
 
-  getMarkets = async (callback: Function) => {
-    new MarketDAO().getMarkets(callback);
+  getMarkets = () => {
+    return new MarketDAO().getMarkets();
+  };
+
+  deleteMarketById = (marketId: string) => {
+    return new MarketDAO().deleteMarketById(marketId);
   };
 }

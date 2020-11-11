@@ -1,20 +1,25 @@
 import PortfolioDAO from "../database/daos/portfolio-dao";
 import { PortfolioItemProps } from "../types/portfolio";
 
-export default class MarketService {
+export default class PortfolioService {
   /**
    * Add a new portfolio
    * @param portfolio
    */
-  addPortfolio = (portfolio: PortfolioItemProps, callback: Function) => {
-    new PortfolioDAO().addPortfolio(portfolio, callback);
+  addPortfolio = (portfolio: PortfolioItemProps) => {
+    const result = new PortfolioDAO().addPortfolio(portfolio);
+    return result;
   };
 
-  getPortfolios = (callback: Function) => {
-    new PortfolioDAO().getPortfolios(callback);
+  getPortfolios = () => {
+    return new PortfolioDAO().getPortfolios();
   };
 
-  getPortfolioById = (portfolioId: string, callback: Function) => {
-    new PortfolioDAO().getPortfolioById(portfolioId, callback);
+  getPortfolioById = (portfolioId: string) => {
+    return new PortfolioDAO().getPortfolioById(portfolioId);
+  };
+
+  deletePortfolioById = (portfolioId: string) => {
+    return new PortfolioDAO().deletePortfolioById(portfolioId);
   };
 }

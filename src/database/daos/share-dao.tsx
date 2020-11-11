@@ -2,7 +2,7 @@ import sendIpcSql from "../../message-control/renderer";
 import { ShareItemProps } from "../../types/share";
 
 export default class ShareDAO {
-  addShare = (share: ShareItemProps, callback: Function) => {
+  addShare = (share: ShareItemProps) => {
     //Call the DB
     const sql = `INSERT INTO "shares"
     ("sharesNumber",
@@ -24,10 +24,10 @@ export default class ShareDAO {
 
     const results = sendIpcSql(sql, "insert");
     console.log(results);
-    callback(results);
+    return results;
   };
 
-  getShares = (companyId: string, callback: Function) => {
+  getShares = (companyId: string) => {
     //Call the DB
     console.log("Get all shares");
     const sql = `SELECT shares.*, currencies.symbol as currencySymbol, currencies.name as currencyName
@@ -40,6 +40,15 @@ export default class ShareDAO {
     const results = sendIpcSql(sql);
     console.log(results);
 
-    callback(results);
+    return results;
+  };
+
+  deleteShareById = (shareId: string) => {
+    //Call the DB
+    console.log("Delete share by ID");
+    const sql = `DELETE FROM shares WHERE "id" = '${shareId}'`;
+    const results = sendIpcSql(sql, "delete");
+    console.log(results);
+    return results;
   };
 }

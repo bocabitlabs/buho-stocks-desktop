@@ -2,26 +2,26 @@ import sendIpcSql from "../../message-control/renderer";
 import { SectorItemProps } from "../../types/sector";
 
 export default class SectorDAO {
-  getSectors = (callback: Function) => {
+  getSectors = () => {
     //Call the DB
     console.log("Get all sectors");
     const sql = `SELECT * FROM sectors`;
     const results = sendIpcSql(sql);
     console.log(results);
 
-    callback(results);
+    return results;
   };
 
-  getSectorById = (sectorId: string, callback: Function) => {
+  getSectorById = (sectorId: string) => {
     //Call the DB
     console.log("Get sector by ID");
     const sql = `SELECT * FROM sector WHERE "id" = '${sectorId}'`;
     const results = sendIpcSql(sql, "get");
     console.log(results);
-    callback(results);
+    return results;
   };
 
-  addSector = (company: SectorItemProps, callback: Function) => {
+  addSector = (company: SectorItemProps) => {
     //Call the DB
     const sql = `INSERT INTO "sectors"
     ("name")
@@ -30,6 +30,15 @@ export default class SectorDAO {
     const results = sendIpcSql(sql, "insert");
     console.log(results);
 
-    callback(results);
+    return results;
+  };
+
+  deleteSectorById = (sectorId: string) => {
+    //Call the DB
+    console.log("Delete sector by ID");
+    const sql = `DELETE FROM sectors WHERE "id" = '${sectorId}'`;
+    const results = sendIpcSql(sql, "delete");
+    console.log(results);
+    return results;
   };
 }

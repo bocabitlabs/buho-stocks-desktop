@@ -1,12 +1,16 @@
 import ShareDAO from "../database/daos/share-dao";
 import { ShareItemProps } from "../types/share";
 
-export default class SettingsService {
-  addShare = (share: ShareItemProps, callback: Function) => {
-    new ShareDAO().addShare(share, callback);
+export default class ShareService {
+  addShare = (share: ShareItemProps) => {
+    return new ShareDAO().addShare(share);
   };
 
-  getShares = (companyId: string, callback: Function) => {
-    new ShareDAO().getShares(companyId, callback);
+  getShares = (shareId: string) => {
+    return new ShareDAO().getShares(shareId);
+  };
+
+  deleteShareById = (shareId: string) => {
+    return new ShareDAO().deleteShareById(shareId);
   };
 }
