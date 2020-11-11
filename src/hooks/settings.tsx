@@ -6,42 +6,19 @@ import { SettingsItemProps } from "../types/settings";
 
 export function useSettingsContext(): SettingsContextType {
   const [settings, setSettings] = useState<SettingsItemProps | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const fetchSettings = useCallback(() => {
-    setIsLoading(true);
-    new SettingsService().getSettings(getSettingCallback);
+    const settings = new SettingsService().getSettings();
+    setSettings(settings);
   }, []);
-
-  const getSettingCallback = (result: SettingsItemProps) => {
-    setSettings(result);
-    console.log(result);
-    setIsLoading(false);
-  };
 
   const updateSelectedPortfolio = useCallback((selectedPortfolio: string) => {
-    setIsLoading(true);
-    new SettingsService().updateSelectedPortfolio(
-      selectedPortfolio,
-      updateSettingsCallback
-    );
-  }, []);
-
-  const updateSettingsCallback = (result: SettingsItemProps[]) => {
-    console.log(result);
-    setIsLoading(false);
-  };
-
-  const toggleCollapsed = useCallback(() => {
-    setIsLoading(true);
-    new SettingsService().toggleCollapsed(updateSettingsCallback);
+    new SettingsService().updateSelectedPortfolio(selectedPortfolio);
   }, []);
 
   return {
     settings,
-    isLoading,
     fetchSettings,
-    updateSelectedPortfolio,
-    toggleCollapsed
+    updateSelectedPortfolio
   };
 }
