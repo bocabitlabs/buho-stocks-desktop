@@ -32,6 +32,7 @@ import { CompaniesContext } from "./contexts/companies";
 import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
 import AddShareRoute from "./routes/AddShareRoute/AddShareRoute";
 import { useSharesContext } from "./hooks/shares";
+import AlertMessage from "./components/AlertMessage/AlertMessage";
 import { SharesContext } from "./contexts/shares";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
    */
 
   const settingsContext = useSettingsContext();
+
   const portfoliosContext = usePortfoliosContext();
   const currenciesContext = useCurrenciesContext();
   const sectorsContext = useSectorsContext();
@@ -48,12 +50,10 @@ function App() {
   const sharesContext = useSharesContext();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
-
+  console.log("App Rendered");
   return (
     <Layout>
-      <SettingsContext.Provider value={settingsContext}>
-        <AppSidebar isCollapsed={isCollapsed} />
-      </SettingsContext.Provider>
+      <AppSidebar isCollapsed={isCollapsed} />
 
       <Layout>
         <Layout.Header
@@ -69,6 +69,8 @@ function App() {
             </PortfoliosContext.Provider>
           </SettingsContext.Provider>
         </Layout.Header>
+        <AlertMessage />
+
         <Layout.Content
           className="site-layout-background"
           style={{
@@ -89,31 +91,29 @@ function App() {
               <HomeRoute />
             </PortfoliosContext.Provider>
           </Route>
-           <Route exact path="/settings">
+          <Route exact path="/settings">
             <SettingsContext.Provider value={settingsContext}>
               <SettingsRoute />
             </SettingsContext.Provider>
           </Route>
-          <Route exact path="/add/portfolio">
-            <PortfoliosContext.Provider value={portfoliosContext}>
-              <CurrenciesContext.Provider value={currenciesContext}>
-                <AddPortfolioRoute />
-              </CurrenciesContext.Provider>
-            </PortfoliosContext.Provider>
-          </Route>
+          <Route exact path="/add/portfolio" component={AddPortfolioRoute} />
           <Route exact path="/add/currency">
             <CurrenciesContext.Provider value={currenciesContext}>
               <AddCurrencyRoute />
             </CurrenciesContext.Provider>
           </Route>
           <Route exact path="/add/market" component={AddMarketRoute} />
-          <Route exact path="/markets" component={MarketListRoute} />
+          <Route exact path="/markets">
+            <MarketsContext.Provider value={marketsContext}>
+              <MarketListRoute />
+            </MarketsContext.Provider>
+          </Route>
           <Route exact path="/currencies">
             <CurrenciesContext.Provider value={currenciesContext}>
               <CurrencyListRoute />
             </CurrenciesContext.Provider>
           </Route>
-          <Route exact path="/sectors">
+           <Route exact path="/sectors">
             <SectorsContext.Provider value={sectorsContext}>
               <SectorListRoute />
             </SectorsContext.Provider>
