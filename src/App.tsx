@@ -7,10 +7,10 @@ import { Layout } from "antd";
 
 import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute/PortfolioDetailsRoute";
 import AddPortfolioRoute from "./routes/AddPortfolioRoute";
-import AddCurrencyRoute from "./routes/AddCurrencyRoute";
+import AddCurrencyRoute from "./routes/AddCurrencyRoute/AddCurrencyRoute";
 import AddCompanyRoute from "./routes/AddCompanyRoute/AddCompanyRoute";
 import AddMarketRoute from "./routes/AddMarketRoute";
-import MarketListRoute from "./routes/MarketListRoute";
+import MarketListRoute from "./routes/MarketListRoute/MarketListRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
 import CurrencyListRoute from "./routes/CurrencyListRoute";
 import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
@@ -41,7 +41,6 @@ function App() {
   const portfoliosContext = usePortfoliosContext();
   const currenciesContext = useCurrenciesContext();
   const sectorsContext = useSectorsContext();
-  const marketsContext = useMarketsContext();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   console.log("App Rendered");
@@ -90,17 +89,9 @@ function App() {
             </SettingsContext.Provider>
           </Route>
           <Route exact path="/add/portfolio" component={AddPortfolioRoute} />
-          <Route exact path="/add/currency">
-            <CurrenciesContext.Provider value={currenciesContext}>
-              <AddCurrencyRoute />
-            </CurrenciesContext.Provider>
-          </Route>
+          <Route exact path="/add/currency" component={AddCurrencyRoute} />
           <Route exact path="/add/market" component={AddMarketRoute} />
-          <Route exact path="/markets">
-            <MarketsContext.Provider value={marketsContext}>
-              <MarketListRoute />
-            </MarketsContext.Provider>
-          </Route>
+          <Route exact path="/markets" component={MarketListRoute} />
           <Route exact path="/currencies">
             <CurrenciesContext.Provider value={currenciesContext}>
               <CurrencyListRoute />
