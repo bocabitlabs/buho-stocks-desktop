@@ -1,6 +1,6 @@
 import { Table } from "antd";
 import moment from "moment";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { SharesContext } from "../../contexts/shares";
 import { ShareItemProps } from "../../types/share";
 
@@ -8,12 +8,8 @@ interface IProps {
   companyId: string;
 }
 
-export default function ShareListTable({ companyId }: IProps) {
-  const { shares, fetchShares } = useContext(SharesContext);
-
-  useEffect(() => {
-    fetchShares(companyId);
-  }, [fetchShares, companyId]);
+export default function ShareListTable() {
+  const { shares } = useContext(SharesContext);
 
   const columns = [
     {

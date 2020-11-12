@@ -1,8 +1,9 @@
 import React, { ReactElement, useCallback, useState } from "react";
-import { Button, Form, Input, TimePicker } from "antd";
+import { Button, Form, Input, message, TimePicker } from "antd";
 import { CirclePicker } from "react-color";
 
 import MarketService from "../../services/market-service";
+import { useHistory } from "react-router-dom";
 
 /**
  * Add a new Currency
@@ -10,8 +11,10 @@ import MarketService from "../../services/market-service";
 function AddMarketForm(): ReactElement {
   const [form] = Form.useForm();
   const [color, setColor] = useState("#607d8b");
+  const key = "updatable";
+  const history = useHistory();
 
-  const handleAdd = useCallback(async (values) => {
+  const handleAdd = (values: any) => {
     const { name, description, region, openTime, closeTime } = values;
     console.log(openTime);
     const market = {
@@ -24,8 +27,22 @@ function AddMarketForm(): ReactElement {
     };
     console.log(market);
     //Add the currency
-    const result = new MarketService().addMarket(market);
-  }, [color]);
+    const added = new MarketService().addMarket(market);
+    if (added === "OK") {
+      history.push({
+        pathname: "/markets",
+        state: { message: { type: "success", text: "Market has been added" } }
+      });
+    } else {
+      setTimeout(() => {
+        message.error({
+          content: "Unable to add the market",
+          key,
+          duration: 2
+        });
+      }, 1000);
+    }
+  };
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
@@ -75,7 +92,7 @@ function AddMarketForm(): ReactElement {
         rules={[{ required: true, message: "Please input the closing time" }]}
       >
         {/* <Input type="time" placeholder="HH:mm" /> */}
-        <TimePicker name="closeTime" format="HH:mm"/>
+        <TimePicker name="closeTime" format="HH:mm" />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

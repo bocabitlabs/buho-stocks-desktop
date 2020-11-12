@@ -21,7 +21,7 @@ export default function PortfolioSelectorMenu({
 }: AppSidebarProps): ReactElement {
   const history = useHistory();
 
-  const { settings, fetchSettings } = useContext(SettingsContext);
+  const { settings } = useContext(SettingsContext);
 
   const openPortfolio = () => {
     console.log(settings?.selectedPortfolio);
@@ -29,10 +29,6 @@ export default function PortfolioSelectorMenu({
       history.push(`/portfolios/${settings?.selectedPortfolio}`);
     }
   };
-
-  useEffect(() => {
-    fetchSettings();
-  }, [fetchSettings]);
 
   const changeIsCollapsed = () => {
     console.log("Changing is collapsed...");

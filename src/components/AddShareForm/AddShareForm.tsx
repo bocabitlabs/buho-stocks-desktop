@@ -1,13 +1,25 @@
-import React, { ReactElement, useCallback, useContext, useEffect, useState } from "react";
-import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
+import React, {
+  ReactElement,
+  useContext,
+  useState
+} from "react";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  message,
+  Select
+} from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { CompaniesContext } from "../../contexts/companies";
 import moment from "moment";
 import { CirclePicker } from "react-color";
 
-import { SharesContext } from "../../contexts/shares";
 import { ShareItemProps } from "../../types/share";
 import ShareService from "../../services/share-service";
+import { useHistory } from "react-router-dom";
+import { CompanyContext } from "../../contexts/company";
 
 interface Props {
   companyId: string;
@@ -18,12 +30,23 @@ interface Props {
  */
 export default function AddShareForm({ companyId }: Props): ReactElement {
   const [form] = Form.useForm();
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { company } = useContext(CompanyContext);
   const [color, setColor] = useState("#607d8b");
+  const history = useHistory();
 
+  const key = "updatable";
 
-  const handleAdd = useCallback(async (values) => {
-    const { sharesNumber, color, priceShare, type, commission, operationDate, exchangeRate, notes } = values;
+  const handleAdd = (values: any) => {
+    const {
+      sharesNumber,
+      color,
+      priceShare,
+      type,
+      commission,
+      operationDate,
+      exchangeRate,
+      notes
+    } = values;
     const share: ShareItemProps = {
       sharesNumber,
       priceShare,
@@ -36,13 +59,23 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
       companyId
     };
     console.log(values);
-    const result = new ShareService().addShare(share);
+    const added = new ShareService().addShare(share);
+    if (added === "OK") {
+      history.push({
+        pathname: `/portfolios/${company?.portfolio}/companies/${companyId}`,
+        state: { message: { type: "success", text: "Shares has been added" } }
+      });
+    } else {
+      setTimeout(() => {
+        message.error({
+          content: "Unable to add the shares",
+          key,
+          duration: 2
+        });
+      }, 1000);
+    }
     // Add company
-  }, [companyId]);
-
-  useEffect(() => {
-    fetchCompany(companyId);
-  }, [companyId, fetchCompany]);
+  };
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
@@ -60,11 +93,16 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
   const dateFormat = "DD/MM/YYYY";
 
   return (
-    <Form {...layout} form={form} name="basic" onFinish={handleAdd}
-    initialValues={{
-      type: 'BUY',
-      operationDate: moment(new Date(), dateFormat),
-    }}>
+    <Form
+      {...layout}
+      form={form}
+      name="basic"
+      onFinish={handleAdd}
+      initialValues={{
+        type: "BUY",
+        operationDate: moment(new Date(), dateFormat)
+      }}
+    >
       {JSON.stringify(company)}
       <Form.Item
         name="sharesNumber"
@@ -96,11 +134,11 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
         />
       </Form.Item>
       <Form.Item
-      name="type"
-      label="Operation's type"
-      rules={[
-        { required: true, message: "Please input the type of operation" }
-      ]}
+        name="type"
+        label="Operation's type"
+        rules={[
+          { required: true, message: "Please input the type of operation" }
+        ]}
       >
         <Select placeholder="Select a option" style={{ width: "20em" }}>
           <Select.Option value="BUY">Buy</Select.Option>

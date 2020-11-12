@@ -1,8 +1,9 @@
-import React, { ReactElement, useCallback, useState } from "react";
-import { Button, Form, Input } from "antd";
+import React, { ReactElement, useState } from "react";
+import { Button, Form, Input, message } from "antd";
 import { CirclePicker } from "react-color";
 
 import CurrencyService from "../../services/currency-service";
+import { useHistory } from "react-router-dom";
 
 /**
  * Add a new Currency
@@ -10,8 +11,12 @@ import CurrencyService from "../../services/currency-service";
 function AddCurrencyForm(): ReactElement {
   const [form] = Form.useForm();
   const [color, setColor] = useState("#607d8b");
+  const history = useHistory();
+  const key = "updatable";
 
-  const handleAddCurrency = (values: any) => {
+  const handleAdd = (values: any) => {
+    message.loading({ content: "Adding currency...", key });
+
     const { currencyName, abbreviation, symbol, country } = values;
     const currency = {
       name: currencyName,
@@ -21,7 +26,23 @@ function AddCurrencyForm(): ReactElement {
       color
     };
     //Add the currency
-    new CurrencyService().addCurrency(currency);
+    const added = new CurrencyService().addCurrency(currency);
+    if (added === "OK") {
+      history.push({
+        pathname: "/currencies",
+        state: {
+          message: { type: "success", text: "Currency has been added" }
+        }
+      });
+    } else {
+      setTimeout(() => {
+        message.error({
+          content: "Unable to add the currency",
+          key,
+          duration: 2
+        });
+      }, 1000);
+    }
   };
 
   const handleColorChange = (color: any, event: any) => {
@@ -30,7 +51,7 @@ function AddCurrencyForm(): ReactElement {
   };
 
   return (
-    <Form form={form} name="basic" onFinish={handleAddCurrency}>
+    <Form form={form} name="basic" onFinish={handleAdd}>
       <Form.Item
         name="currencyName"
         label="Currency Name"

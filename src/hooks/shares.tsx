@@ -1,18 +1,17 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { SharesContextType } from "../contexts/shares";
 import ShareService from "../services/share-service";
 import { ShareFields } from "../types/share";
 
-export function useSharesContext(): SharesContextType {
+export function useSharesContext(companyId: string): SharesContextType {
   const [shares, setShares] = useState<ShareFields[]>([]);
 
-  const fetchShares = useCallback((companyId: string) => {
+  useEffect(() => {
     const results = new ShareService().getShares(companyId);
     setShares(results);
-  }, []);
+  }, [companyId])
 
   return {
     shares,
-    fetchShares
   };
 }

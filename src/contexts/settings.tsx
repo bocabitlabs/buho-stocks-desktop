@@ -10,7 +10,7 @@ export type IsCollapsedContextType = {
 export const isCollapsedDefaultValue: IsCollapsedContextType = {
   isCollapsed: false,
   fetchIsCollapsed: () => null,
-  toggleCollapsed: () => '',
+  toggleCollapsed: () => ""
 };
 
 export const IsCollapsedContext = createContext<IsCollapsedContextType>(
@@ -19,14 +19,10 @@ export const IsCollapsedContext = createContext<IsCollapsedContextType>(
 
 export type SettingsContextType = {
   settings: SettingsItemProps | null;
-  fetchSettings: () => void;
-  updateSelectedPortfolio: (portfolioId: string) => void;
 };
 
 export const settingsDefaultValue: SettingsContextType = {
-  settings: null,
-  fetchSettings: () => null,
-  updateSelectedPortfolio: () => null,
+  settings: null
 };
 
 export const SettingsContext = createContext<SettingsContextType>(

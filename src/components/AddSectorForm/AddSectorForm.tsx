@@ -1,25 +1,43 @@
-import React, { ReactElement, useCallback, useState } from "react";
-import { Button, Form, Input } from "antd";
+import React, { ReactElement, useState } from "react";
+import { Button, Form, Input, message } from "antd";
 import { CirclePicker } from "react-color";
 import SectorService from "../../services/sector-service";
-
+import { useHistory } from "react-router-dom";
 
 /**
  * Add a new Currency
  */
 function AddSectorForm(): ReactElement {
   const [form] = Form.useForm();
+  const history = useHistory();
+  const key = "updatable";
 
   const [color, setColor] = useState("#607d8b");
 
-  const handleAdd = useCallback(async (values) => {
+  const handleAdd = (values: any) => {
+    message.loading({ content: "Adding sector...", key });
+
     const { name, color } = values;
     const sector = {
       name,
       color
     };
-    const result = new SectorService().addSector(sector);
-  }, []);
+    const added = new SectorService().addSector(sector);
+    if (added === "OK") {
+      history.push({
+        pathname: "/sectors",
+        state: { message: { type: "success", text: "Sector has been added" } }
+      });
+    } else {
+      setTimeout(() => {
+        message.error({
+          content: "Unable to add the sector",
+          key,
+          duration: 2
+        });
+      }, 1000);
+    }
+  };
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);

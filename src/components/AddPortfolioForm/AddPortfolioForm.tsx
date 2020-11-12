@@ -5,15 +5,16 @@ import { CirclePicker } from "react-color";
 import { CurrencyFields } from "../../types/currency";
 import { CurrenciesContext } from "../../contexts/currencies";
 import PortfolioService from "../../services/portfolio-service";
+import { useHistory } from "react-router-dom";
 
 /**
  * Add a new Currency
  */
 function AddPortfolioForm(): ReactElement {
   const [form] = Form.useForm();
+  const history = useHistory();
 
-  // const { addPortfolio } = useContext(PortfoliosContext);
-  const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
+  const { currencies } = useContext(CurrenciesContext);
   const key = "updatable";
   let color = "#607d8b";
 
@@ -30,21 +31,17 @@ function AddPortfolioForm(): ReactElement {
     const portfolioService = new PortfolioService();
 
     const added = portfolioService.addPortfolio(portfolio);
-    console.log(added);
     if (added === 'OK') {
-      setTimeout(() => {
-        message.success({ content: "Portfolio Added!", key, duration: 2 });
-      }, 1000);
+      history.push({
+        pathname: "/home",
+        state: { message: {type: "success", text: "Portfolio has been added" }}
+      });
     }else{
       setTimeout(() => {
         message.error({ content: "Unable to add the portfolio!", key, duration: 2 });
       }, 1000);
     }
   };
-
-  useEffect(() => {
-    fetchCurrencies();
-  }, [fetchCurrencies]);
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);

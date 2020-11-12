@@ -10,7 +10,7 @@ import { SettingsContext } from "../../contexts/settings";
 function SettingsForm(): ReactElement {
   const [form] = Form.useForm();
 
-  const { settings, fetchSettings } = useContext(SettingsContext);
+  const { settings } = useContext(SettingsContext);
 
   const handleUpdate = useCallback(async (values) => {
     // const { selectedPortfolio } = values;
@@ -20,10 +20,6 @@ function SettingsForm(): ReactElement {
     // console.log(settings);
     // updateSettings(settings);
   }, []);
-
-  useEffect(() => {
-    fetchSettings();
-  }, [fetchSettings]);
 
   return (
     <>

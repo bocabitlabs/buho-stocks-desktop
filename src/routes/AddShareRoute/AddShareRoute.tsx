@@ -1,10 +1,14 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 
-import { Layout, PageHeader } from "antd";
+import { Layout } from "antd";
 
-import { Link, useParams } from "react-router-dom";
-import { CompaniesContext } from "../../contexts/companies";
+import { useParams } from "react-router-dom";
 import AddShareForm from "../../components/AddShareForm/AddShareForm";
+import { useSharesContext } from "../../hooks/shares";
+import { SharesContext } from "../../contexts/shares";
+import AddShareRouteHeader from "./AddShareRouteHeader";
+import { useCompanyContext } from "../../hooks/company";
+import { CompanyContext } from "../../contexts/company";
 
 export interface Props {
   portfolioId: string;
@@ -12,53 +16,19 @@ export interface Props {
 }
 
 const AddShareRoute = () => {
-  // const { portfolio, fetchPortfolio } = useContext(PortfoliosContext);
-  const { company, fetchCompany } = useContext(CompaniesContext);
   const { portfolioId, companyId } = useParams<Props>();
+  const sharesContext = useSharesContext(companyId);
+  const companyContext = useCompanyContext(companyId);
 
-  const routes = [
-    {
-      path: "/home",
-      name: "home",
-      breadcrumbName: "Home"
-    },
-    {
-      path: `/portfolios/${portfolioId}`,
-      name: "portfolio-details",
-      breadcrumbName: company ? company.portfolioName : ""
-    },
-    {
-      path: `/portfolios/${portfolioId}/companies/${companyId}`,
-      name: "company-details",
-      breadcrumbName: company ? company.name : ""
-    },
-    {
-      path: `/portfolios/${portfolioId}/companies/${company?.id}/add-shares`,
-      name: "add_shares",
-      breadcrumbName: "+ Add Shares"
-    }
-  ];
-
-  useEffect(() => {
-    fetchCompany(companyId);
-  }, [companyId, fetchCompany]);
-
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
   return (
     <>
-      <PageHeader
-        className="site-page-header"
-        title="Add Shares"
-        breadcrumb={{
-          routes,
-          itemRender
-        }}
-        subTitle="This is a subtitle"
-      />
+      <CompanyContext.Provider value={companyContext}>
+        <AddShareRouteHeader companyId={companyId} portfolioId={portfolioId} />
+      </CompanyContext.Provider>
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
+        <SharesContext.Provider value={sharesContext}>
           <AddShareForm companyId={companyId} />
+        </SharesContext.Provider>
       </Layout>
     </>
   );

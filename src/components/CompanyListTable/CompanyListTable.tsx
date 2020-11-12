@@ -1,7 +1,8 @@
-import { Empty, Space, Table } from "antd";
-import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Button, Popconfirm, Space, Table } from "antd";
+import React, { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { CompaniesContext } from "../../contexts/companies";
+import CompanyService from "../../services/company-service";
 import { CompanyItemProps } from "../../types/company";
 
 interface IProps {
@@ -9,11 +10,21 @@ interface IProps {
 }
 
 export default function CompanyListTable({ portfolioId }: IProps) {
-  const { companies, fetchCompanies } = useContext(CompaniesContext);
+  const { companies } = useContext(CompaniesContext);
+  const history = useHistory();
 
-  useEffect(() => {
-    fetchCompanies(portfolioId);
-  }, [fetchCompanies, portfolioId]);
+
+  function confirm(recordId: string) {
+    const result = new CompanyService().deleteCompanyById(recordId);
+    if (result === "OK") {
+      history.push({
+        pathname: "/currencies",
+        state: {
+          message: { type: "success", text: "Company has been deleted" }
+        }
+      });
+    }
+  }
 
   const columns1 = [
     {
@@ -53,13 +64,13 @@ export default function CompanyListTable({ portfolioId }: IProps) {
       width: 70
     },
     {
-      title: "Commission",
+      title: "Total Commission",
       dataIndex: "commission",
       key: "commission",
       width: 70
     },
     {
-      title: "Total",
+      title: "Total inv.",
       dataIndex: "total",
       key: "total",
       width: 70
@@ -69,9 +80,17 @@ export default function CompanyListTable({ portfolioId }: IProps) {
       key: "action",
       width: 70,
 
-      render: (text: string, record: { name: string }) => (
+      render: (text: string, record: any) => (
         <Space size="middle">
-          Delete
+          <Popconfirm
+            key={`company-delete-${record.key}`}
+            title={`Delete company ${record.name} and all it's contents?`}
+            onConfirm={() => confirm(record.key)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button>Delete</Button>
+          </Popconfirm>
         </Space>
       )
     }
@@ -84,7 +103,7 @@ export default function CompanyListTable({ portfolioId }: IProps) {
       name: company.name,
       ticker: company.ticker,
       sectorName: company.sectorName,
-      currency: company.currency,
+      currency: company.currencyName,
       color: company.color,
       sharesNumber:
         (company.buySharesNumber || 0) - (company.sellSharesNumber || 0),

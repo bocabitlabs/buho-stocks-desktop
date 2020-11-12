@@ -5,10 +5,10 @@ import { Redirect, Route } from "react-router-dom";
 import HomeRoute from "./routes/HomeRoute";
 import { Layout } from "antd";
 
-import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute";
+import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute/PortfolioDetailsRoute";
 import AddPortfolioRoute from "./routes/AddPortfolioRoute";
 import AddCurrencyRoute from "./routes/AddCurrencyRoute";
-import AddCompanyRoute from "./routes/AddCompanyRoute";
+import AddCompanyRoute from "./routes/AddCompanyRoute/AddCompanyRoute";
 import AddMarketRoute from "./routes/AddMarketRoute";
 import MarketListRoute from "./routes/MarketListRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
@@ -27,13 +27,9 @@ import PortfolioSelectorMenu from "./components/PortfolioSelectorMenu/PortfolioS
 import AppSidebar from "./components/AppSidebar/AppSidebar";
 import { useMarketsContext } from "./hooks/markets";
 import { MarketsContext } from "./contexts/markets";
-import { useCompaniesContext } from "./hooks/companies";
-import { CompaniesContext } from "./contexts/companies";
 import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
 import AddShareRoute from "./routes/AddShareRoute/AddShareRoute";
-import { useSharesContext } from "./hooks/shares";
 import AlertMessage from "./components/AlertMessage/AlertMessage";
-import { SharesContext } from "./contexts/shares";
 
 function App() {
   /**
@@ -46,8 +42,6 @@ function App() {
   const currenciesContext = useCurrenciesContext();
   const sectorsContext = useSectorsContext();
   const marketsContext = useMarketsContext();
-  const companiesContext = useCompaniesContext();
-  const sharesContext = useSharesContext();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   console.log("App Rendered");
@@ -77,7 +71,6 @@ function App() {
             margin: "16px",
             marginTop: 80
           }}
-          // style={{ padding: "0 50px", marginTop: 64 }}
         >
           <Route
             exact
@@ -113,7 +106,7 @@ function App() {
               <CurrencyListRoute />
             </CurrenciesContext.Provider>
           </Route>
-           <Route exact path="/sectors">
+          <Route exact path="/sectors">
             <SectorsContext.Provider value={sectorsContext}>
               <SectorListRoute />
             </SectorsContext.Provider>
@@ -124,37 +117,21 @@ function App() {
             </SectorsContext.Provider>
           </Route>
 
-          <Route exact path="/portfolios/:id">
-            <PortfoliosContext.Provider value={portfoliosContext}>
-              <PortfolioDetailsRoute />
-            </PortfoliosContext.Provider>
+          <Route
+            exact
+            path="/portfolios/:id"
+            component={PortfolioDetailsRoute}
+          />
+          <Route exact path="/portfolios/:id/add-company" component={AddCompanyRoute}/>
+          <Route exact path="/portfolios/:portfolioId/companies/:companyId">
+            <CompanyDetailsRoute />
           </Route>
-          <Route exact path="/portfolios/:id/add-company">
-            <PortfoliosContext.Provider value={portfoliosContext}>
-              <SectorsContext.Provider value={sectorsContext}>
-                <CurrenciesContext.Provider value={currenciesContext}>
-                  <MarketsContext.Provider value={marketsContext}>
-                    <AddCompanyRoute />
-                  </MarketsContext.Provider>
-                </CurrenciesContext.Provider>
-              </SectorsContext.Provider>
-            </PortfoliosContext.Provider>
+          <Route
+            exact
+            path="/portfolios/:portfolioId/companies/:companyId/add-shares"
+          >
+            <AddShareRoute />
           </Route>
-          <CompaniesContext.Provider value={companiesContext}>
-            <Route exact path="/portfolios/:portfolioId/companies/:companyId">
-              <CompanyDetailsRoute />
-            </Route>
-          </CompaniesContext.Provider>
-          <CompaniesContext.Provider value={companiesContext}>
-            <SharesContext.Provider value={sharesContext}>
-              <Route
-                exact
-                path="/portfolios/:portfolioId/companies/:companyId/add-shares"
-              >
-                <AddShareRoute />
-              </Route>
-            </SharesContext.Provider>
-          </CompaniesContext.Provider>
         </Layout.Content>
       </Layout>
     </Layout>

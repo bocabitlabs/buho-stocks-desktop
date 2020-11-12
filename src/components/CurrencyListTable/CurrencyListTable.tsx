@@ -1,21 +1,32 @@
-import { Space, Table } from "antd";
-import React, { useContext, useEffect } from "react";
+import { Button, Popconfirm, Space, Table } from "antd";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { CurrenciesContext } from "../../contexts/currencies";
+import CurrencyService from "../../services/currency-service";
 import { CurrencyItemProps } from "../../types/currency";
 
 export default function CurrencyListTable() {
-  const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
+  const { currencies } = useContext(CurrenciesContext);
+  const history = useHistory();
 
-  useEffect(() => {
-    fetchCurrencies();
-  }, [fetchCurrencies]);
+  function confirm(recordId: string) {
+    const result = new CurrencyService().deleteCurrencyById(recordId);
+    if (result === "OK") {
+      history.push({
+        pathname: "/currencies",
+        state: {
+          message: { type: "success", text: "Currency has been deleted" }
+        }
+      });
+    }
+  }
 
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text: string) => <a>{text}</a>
+      render: (text: string) => text
     },
     {
       title: "Abbreviation",
@@ -35,9 +46,17 @@ export default function CurrencyListTable() {
     {
       title: "Action",
       key: "action",
-      render: (text: string, record: { name: string }) => (
+      render: (text: string, record: any) => (
         <Space size="middle">
-          <a>Delete</a>
+          <Popconfirm
+            key={`currency-delete-${record.key}`}
+            title={`Delete currency ${record.name}?`}
+            onConfirm={() => confirm(record.key)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button>Delete</Button>
+          </Popconfirm>
         </Space>
       )
     }

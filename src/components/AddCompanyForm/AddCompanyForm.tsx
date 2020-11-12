@@ -1,11 +1,10 @@
 import React, {
   ReactElement,
-  useCallback,
   useContext,
   useEffect,
   useState
 } from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, message } from "antd";
 import { CirclePicker } from "react-color";
 
 import TextArea from "antd/lib/input/TextArea";
@@ -17,6 +16,7 @@ import { CurrenciesContext } from "../../contexts/currencies";
 import { MarketsContext } from "../../contexts/markets";
 import { SectorsContext } from "../../contexts/sectors";
 import CompanyService from "../../services/company-service";
+import { useHistory } from "react-router-dom";
 
 interface AddCompanyFormProps {
   portfolioID: string;
@@ -27,13 +27,14 @@ interface AddCompanyFormProps {
  */
 function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
   const [form] = Form.useForm();
-  const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
-  const { markets, fetchMarkets } = useContext(MarketsContext);
-  const { sectors, fetchSectors } = useContext(SectorsContext);
+  const { currencies } = useContext(CurrenciesContext);
+  const { markets } = useContext(MarketsContext);
+  const { sectors } = useContext(SectorsContext);
   const [color, setColor] = useState("#607d8b");
+  const history = useHistory();
+  const key = "updatable";
 
-  const handleAddCompany = useCallback(
-    async (values) => {
+  const handleAddCompany = (values: any) => {
       const {
         url,
         name,
@@ -56,23 +57,24 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
         portfolio: portfolioID
       };
       console.log(values);
-      const result = new CompanyService().addCompany(company)
-      // Add company
-    },
-    [portfolioID]
-  );
-
-  useEffect(() => {
-    fetchCurrencies();
-  }, [fetchCurrencies]);
-
-  useEffect(() => {
-    fetchMarkets();
-  }, [fetchMarkets]);
-
-  useEffect(() => {
-    fetchSectors();
-  }, [fetchSectors]);
+      const added = new CompanyService().addCompany(company)
+      if (added === "OK") {
+        history.push({
+          pathname: `/portfolios/${portfolioID}`,
+          state: {
+            message: { type: "success", text: "Company has been added" }
+          }
+        });
+      } else {
+        setTimeout(() => {
+          message.error({
+            content: "Unable to add the  company",
+            key,
+            duration: 2
+          });
+        }, 1000);
+      }
+    };
 
   const layout = {
     labelCol: { span: 4 },

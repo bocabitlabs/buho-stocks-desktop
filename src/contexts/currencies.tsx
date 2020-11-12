@@ -1,16 +1,14 @@
 import { createContext } from "react";
-import { CurrencyFields, CurrencyItemProps } from "../types/currency";
+import { CurrencyFields } from "../types/currency";
 
 export type CurrenciesContextType = {
   currencies: CurrencyFields[];
-  fetchCurrencies: () => void;
-  // addCurrency: (currency: CurrencyItemProps) => void;
 };
 
 export const currenciesDefaultValue: CurrenciesContextType = {
-  currencies: [],
-  fetchCurrencies: () => null,
-  // addCurrency: () => null
-}
+  currencies: []
+};
 
-export const CurrenciesContext = createContext<CurrenciesContextType>(currenciesDefaultValue);
+export const CurrenciesContext = createContext<CurrenciesContextType>(
+  currenciesDefaultValue
+);

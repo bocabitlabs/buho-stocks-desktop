@@ -1,14 +1,10 @@
 import { Space, Table } from "antd";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { SectorsContext } from "../../contexts/sectors";
 import { SectorItemProps } from "../../types/sector";
 
 export default function SectorListTable() {
-  const { sectors, fetchSectors } = useContext(SectorsContext);
-
-  useEffect(() => {
-    fetchSectors();
-  }, [fetchSectors]);
+  const { sectors } = useContext(SectorsContext);
 
   const columns = [
     {

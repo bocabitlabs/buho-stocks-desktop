@@ -1,29 +1,30 @@
 import { Select } from "antd";
-import React, { ReactElement, useContext, useEffect } from "react";
+import React, { ReactElement, useContext } from "react";
 import { PortfoliosContext } from "../../contexts/portfolios";
 import { SettingsContext } from "../../contexts/settings";
+import SettingsService from "../../services/settings-service";
 import { PortfolioFields } from "../../types/portfolio";
 
-
 export default function PortfolioSelector(): ReactElement {
-  const { settings, fetchSettings, updateSelectedPortfolio } = useContext(SettingsContext);
-  const { portfolios, fetchPortfolios } = useContext(PortfoliosContext);
+  const { settings } = useContext(
+    SettingsContext
+  );
+  const { portfolios } = useContext(PortfoliosContext);
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
 
     console.log(settings);
-    updateSelectedPortfolio(value);
+    new SettingsService().updateSelectedPortfolio(value);
   }
 
-  useEffect(() => {
-    fetchPortfolios();
-  }, [fetchPortfolios]);
+  console.log(`Portfolios length=${portfolios.length}`)
 
-  useEffect(() => {
-    fetchSettings();
-  }, [fetchSettings]);
-
+  // useEffect(() => {
+  //   if (portfolios.length === 0) {
+  //     updateSelectedPortfolio("");
+  //   }
+  // }, [updateSelectedPortfolio, portfolios]);
 
   return (
     <Select

@@ -2,8 +2,13 @@ import { message } from "antd";
 import React, { ReactElement, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+interface MessageProps {
+  type: "error" | "success";
+  text: string;
+}
+
 interface IState {
-  message?: string;
+  message?: MessageProps;
 }
 
 export default function AlertMessage(): ReactElement {
@@ -11,13 +16,16 @@ export default function AlertMessage(): ReactElement {
   const resultMessage = (location.state as IState)?.message;
 
   useEffect(() => {
-    if (message) {
-      const messageType = resultMessage;
-      if (messageType === "portfolio-deleted") {
-        message.success("Portfolio has been deleted.");
+    if (resultMessage) {
+      const messageType = resultMessage.type;
+      const messageText = resultMessage.text;
+      if (messageType === "success") {
+        message.success(messageText);
+      } else if (messageType === "error") {
+        message.success(messageText);
       }
     }
   }, [resultMessage]);
 
-  return <div></div>;
+  return <></>;
 }

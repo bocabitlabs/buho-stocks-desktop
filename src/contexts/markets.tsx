@@ -3,12 +3,12 @@ import { MarketFields } from "../types/market";
 
 export type MarketsContextType = {
   markets: MarketFields[];
-  fetchMarkets: () => void;
 };
 
 export const marketsDefaultValue: MarketsContextType = {
-  markets: [],
-  fetchMarkets: () => null,
-}
+  markets: []
+};
 
-export const MarketsContext = createContext<MarketsContextType>(marketsDefaultValue);
+export const MarketsContext = createContext<MarketsContextType>(
+  marketsDefaultValue
+);
