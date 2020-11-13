@@ -2,16 +2,17 @@ import SettingsDAO from "../database/daos/settings-dao";
 import { SettingsItemProps } from "../types/settings";
 
 export default class SettingsService {
-  /**
-   *
-   * @param callback
-   */
+
   getSettings = () => {
     return new SettingsDAO().getSettings();
   };
 
   getIsCollapsed = () => {
     return new SettingsDAO().getIsCollapsed();
+  };
+
+  getSelectedPortfolio = () => {
+    return new SettingsDAO().getSelectedPortfolio();
   };
 
   addSettings = (settings: SettingsItemProps) => {

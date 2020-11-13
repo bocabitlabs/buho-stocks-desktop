@@ -5,61 +5,60 @@ import {
   MenuUnfoldOutlined
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import React, { ReactElement, useContext, useEffect } from "react";
+import React, { ReactElement, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { SettingsContext } from "../../contexts/settings";
+import { IsCollapsedContext } from "../../contexts/is-collapsed";
+import { SelectedPortfolioContext } from "../../contexts/selected-portfolio";
+import SettingsService from "../../services/settings-service";
+
 import PortfolioSelector from "../PortfolioSelector/PortfolioSelector";
 
-interface AppSidebarProps {
-  isCollapsed: boolean;
-  setIsCollapsed: Function;
-}
+// interface Props {
+//   isCollapsed: boolean;
+//   setIsCollapsed: Function;
+// }
 
-export default function PortfolioSelectorMenu({
-  isCollapsed,
-  setIsCollapsed
-}: AppSidebarProps): ReactElement {
+export default function PortfolioSelectorMenu(): ReactElement {
   const history = useHistory();
+  const { selectedPortfolio } = useContext(SelectedPortfolioContext);
+  const { isCollapsed } = useContext(IsCollapsedContext);
 
-  const { settings } = useContext(SettingsContext);
 
   const openPortfolio = () => {
-    console.log(settings?.selectedPortfolio);
-    if (settings?.selectedPortfolio) {
-      history.push(`/portfolios/${settings?.selectedPortfolio}`);
+    console.log(selectedPortfolio);
+    if (selectedPortfolio) {
+      history.push(`/portfolios/${selectedPortfolio}`);
     }
   };
 
   const changeIsCollapsed = () => {
     console.log("Changing is collapsed...");
-    setIsCollapsed(!isCollapsed);
-    // toggleCollapsed()
+    // setIsCollapsed(!isCollapsed);
+    new SettingsService().toggleCollapsed()
   };
-  console.log(settings);
 
   return (
-    <>
-      <Menu theme="light" mode="horizontal">
-        <Menu.Item className="trigger" onClick={changeIsCollapsed}>
-          {isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        </Menu.Item>
-        <PortfolioSelector />
-        <Menu.Item
-          title="Open the selected portfolio"
-          key="open-portfolio"
-          onClick={openPortfolio}
-          disabled={settings?.selectedPortfolio? false : true}
-          icon={<FolderOpenOutlined />}
-        >
-          Open portfolio
-        </Menu.Item>
-        <Menu.Item
-          title="Add a portfolio"
-          onClick={() => history.push(`/add/portfolio/`)}
-          key="add-portfolio"
-          icon={<FolderAddOutlined />}
-        />
-      </Menu>
-    </>
+    <Menu theme="light" mode="horizontal">
+      <Menu.Item className="trigger" onClick={changeIsCollapsed}>
+        {isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </Menu.Item>
+
+      <PortfolioSelector />
+      <Menu.Item
+        title="Open the selected portfolio"
+        key="open-portfolio"
+        onClick={openPortfolio}
+        disabled={selectedPortfolio === "" ? true : false}
+        icon={<FolderOpenOutlined />}
+      >
+        Open portfolio
+      </Menu.Item>
+      <Menu.Item
+        title="Add a portfolio"
+        onClick={() => history.push(`/add/portfolio/`)}
+        key="add-portfolio"
+        icon={<FolderAddOutlined />}
+      />
+    </Menu>
   );
 }

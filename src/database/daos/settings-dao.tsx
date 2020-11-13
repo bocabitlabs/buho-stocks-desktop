@@ -16,6 +16,12 @@ export default class SettingsOperations {
     console.log(result);
     return result.collapsed;
   }
+  getSelectedPortfolio = () => {
+    const sql = `SELECT selectedPortfolio FROM settings WHERE id='1'`;
+    const result = sendIpcSql(sql, "get");
+    console.log(result);
+    return result.selectedPortfolio;
+  }
   addSettings(settings: SettingsItemProps) {
     //Call the DB
     const sql = `INSERT INTO "settings"

@@ -6,8 +6,9 @@ import {
   SettingOutlined
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { IsCollapsedContext } from "../../contexts/is-collapsed";
 interface RoutePathProps {
   key: string;
   path: string;
@@ -15,13 +16,14 @@ interface RoutePathProps {
   icon: ReactElement;
 }
 
-interface AppSidebarProps {
-  isCollapsed: boolean;
-}
+// interface AppSidebarProps {
+//   isCollapsed: boolean;
+// }
 
-export default function AppSidebar({isCollapsed}: AppSidebarProps): ReactElement {
+export default function AppSidebar(): ReactElement {
   const history = useHistory();
   const location = useLocation();
+  const { isCollapsed } = useContext(IsCollapsedContext);
 
 
   const navLinks: RoutePathProps[] = [
