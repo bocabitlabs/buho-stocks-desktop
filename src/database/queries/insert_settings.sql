@@ -1,3 +1,3 @@
 INSERT INTO "settings"
-  ("id")
-  VALUES ('1');
+  ("id", "currentDatabaseVersion")
+  VALUES ('1', 1);

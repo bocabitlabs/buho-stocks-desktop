@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS "shares" (
 CREATE TABLE IF NOT EXISTS "settings" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"selectedPortfolio" TEXT,
+	"currentDatabaseVersion" INTEGER NOT NULL,
 	"collapsed" INTEGER NOT NULL DEFAULT 0 CHECK(collapsed IN (0,1)),
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
