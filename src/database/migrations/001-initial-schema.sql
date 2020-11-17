@@ -1,3 +1,4 @@
+-- Up
 CREATE TABLE IF NOT EXISTS "currencies" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"abbreviation" TEXT,
@@ -59,7 +60,6 @@ CREATE TABLE IF NOT EXISTS "sectors" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"name" TEXT NOT NULL UNIQUE,
 	"color" TEXT,
-
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "inflation" (
@@ -96,11 +96,23 @@ CREATE TABLE IF NOT EXISTS "shares" (
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ("id")
 );
-
 CREATE TABLE IF NOT EXISTS "settings" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"selectedPortfolio" TEXT,
 	"currentDatabaseVersion" INTEGER NOT NULL,
-	"collapsed" INTEGER NOT NULL DEFAULT 0 CHECK(collapsed IN (0,1)),
+	"collapsed" INTEGER NOT NULL DEFAULT 0 CHECK(collapsed IN (0, 1)),
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
+INSERT INTO "settings" ("id", "currentDatabaseVersion")
+VALUES ('1', 1);
+-- Down
+DROP TABLE currencies;
+DROP TABLE portfolios;
+DROP TABLE markets;
+DROP TABLE dividends;
+DROP TABLE companies;
+DROP TABLE inflation;
+DROP TABLE shares;
+DROP TABLE rights;
+DROP TABLE shares;
+DROP TABLE settings;

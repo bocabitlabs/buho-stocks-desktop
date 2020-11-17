@@ -1,7 +1,6 @@
 const { app } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
-// const sqlite3 = require("sqlite3");
 const log = require("electron-log");
 const Database = require("better-sqlite3");
 
@@ -11,6 +10,8 @@ log.info(path.join(appPath, "db.sqlite3"));
 if (isDev) {
   appPath = "./public";
 }
+
+// The first call creates the global instance with your settings
 const database = new Database(
   path.join(appPath, "db.sqlite3")
   // ,
@@ -19,12 +20,4 @@ const database = new Database(
   // }
 );
 
-const getQueriesFolderPath = () => {
-  let queriesFolderPath = path.join(__dirname, "../database/queries");
-  if (isDev) {
-    queriesFolderPath = path.join(__dirname, "./queries");
-  }
-  return queriesFolderPath;
-};
-
-module.exports = { database, getQueriesFolderPath };
+module.exports = { database };
