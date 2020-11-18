@@ -2,26 +2,41 @@ const { ipcMain } = require("electron");
 const { database } = require("../database/load-database");
 const log = require("electron-log");
 
+function handleStatement(type, statement) {
+  const runStatement = () => {
+    statement.run();
+    return "OK";
+  };
+
+  const queryAllStatement = () => {
+    const rows = statement.all();
+    log.info(rows);
+    return rows;
+  };
+
+  const getStatement = () => {
+    const row = statement.get();
+    return row;
+  };
+
+  const dbCalls = {
+    select: queryAllStatement,
+    insert: runStatement,
+    delete: runStatement,
+    get: getStatement
+  };
+  return dbCalls[type]();
+}
+
 ipcMain.on("synchronous-message", (event, arg, queryType) => {
-  log.info("> ipcMain start");
-  log.info(arg); // prints "ping"
   const sql = arg;
 
   try {
     const statement = database.prepare(sql);
-    log.info(sql);
+    log.debug(sql);
     log.info(queryType);
-    if (queryType === "select") {
-      const rows = statement.all();
-      log.info(rows);
-      event.returnValue = rows;
-    } else if (queryType === "insert" || queryType === "delete") {
-      statement.run();
-      event.returnValue = "OK";
-    } else if (queryType === "get") {
-      const row = statement.get();
-      event.returnValue = row;
-    }
+    const statementResult = handleStatement(queryType, statement);
+    event.returnValue = statementResult;
   } catch (error) {
     log.error(error);
     event.returnValue = "ERROR";
