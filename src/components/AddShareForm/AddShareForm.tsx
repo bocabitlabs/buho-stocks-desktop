@@ -31,15 +31,14 @@ interface Props {
 export default function AddShareForm({ companyId }: Props): ReactElement {
   const [form] = Form.useForm();
   const { company } = useContext(CompanyContext);
-  const [color, setColor] = useState("#607d8b");
   const history = useHistory();
+  let color = "#607d8b";
 
   const key = "updatable";
 
   const handleAdd = (values: any) => {
     const {
       sharesNumber,
-      color,
       priceShare,
       type,
       commission,
@@ -79,7 +78,7 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
-    setColor(color.hex);
+    color = color.hex;
   };
 
   const layout = {

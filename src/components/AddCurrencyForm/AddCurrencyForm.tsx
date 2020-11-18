@@ -10,9 +10,9 @@ import { useHistory } from "react-router-dom";
  */
 function AddCurrencyForm(): ReactElement {
   const [form] = Form.useForm();
-  const [color, setColor] = useState("#607d8b");
   const history = useHistory();
   const key = "updatable";
+  let color = "#607d8b";
 
   const handleAdd = (values: any) => {
     message.loading({ content: "Adding currency...", key });
@@ -46,8 +46,7 @@ function AddCurrencyForm(): ReactElement {
   };
 
   const handleColorChange = (color: any, event: any) => {
-    console.log(color.hex);
-    setColor(color.hex);
+    color = color.hex;
   };
 
   return (

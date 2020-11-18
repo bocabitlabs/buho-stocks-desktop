@@ -30,9 +30,9 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
   const { currencies } = useContext(CurrenciesContext);
   const { markets } = useContext(MarketsContext);
   const { sectors } = useContext(SectorsContext);
-  const [color, setColor] = useState("#607d8b");
   const history = useHistory();
   const key = "updatable";
+  let color = "#607d8b";
 
   const handleAddCompany = (values: any) => {
       const {
@@ -43,17 +43,16 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
         sector,
         currency,
         description,
-        color
       } = values;
       const company: CompanyItemProps = {
-        url: url,
-        name: name,
-        ticker: ticker,
-        market: market,
-        sector: sector,
-        color: color,
-        description: description,
-        currency: currency,
+        url,
+        name,
+        ticker,
+        market,
+        sector,
+        color,
+        description,
+        currency,
         portfolio: portfolioID
       };
       console.log(values);
@@ -87,7 +86,7 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
-    setColor(color.hex);
+    color = color.hex;
   };
 
   return (

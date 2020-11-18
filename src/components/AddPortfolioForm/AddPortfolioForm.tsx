@@ -21,7 +21,7 @@ function AddPortfolioForm(): ReactElement {
   const handleAdd = (values: any) => {
     message.loading({ content: "Adding portfolio...", key });
 
-    const { name, description, currencyId, color } = values;
+    const { name, description, currencyId } = values;
     const portfolio = {
       name,
       description,
@@ -29,7 +29,6 @@ function AddPortfolioForm(): ReactElement {
       color
     };
     const portfolioService = new PortfolioService();
-
     const added = portfolioService.addPortfolio(portfolio);
     if (added === 'OK') {
       history.push({
@@ -48,7 +47,7 @@ function AddPortfolioForm(): ReactElement {
     color = color.hex;
   };
   console.log("AddPortfolioForm rendered");
-  console.log(currencies)
+  console.log(currencies);
   return (
     <Form form={form} name="basic" onFinish={handleAdd}>
       <Form.Item
@@ -60,7 +59,7 @@ function AddPortfolioForm(): ReactElement {
       >
         <Input type="text" />
       </Form.Item>
-      <Form.Item label="Color">
+      <Form.Item name="color" label="Color">
         <CirclePicker onChange={handleColorChange} />
         <Input type="hidden" value={color} />
       </Form.Item>

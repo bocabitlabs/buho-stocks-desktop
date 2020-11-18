@@ -11,13 +11,12 @@ function AddSectorForm(): ReactElement {
   const [form] = Form.useForm();
   const history = useHistory();
   const key = "updatable";
-
-  const [color, setColor] = useState("#607d8b");
+  let color = "#607d8b";
 
   const handleAdd = (values: any) => {
     message.loading({ content: "Adding sector...", key });
 
-    const { name, color } = values;
+    const { name } = values;
     const sector = {
       name,
       color
@@ -41,7 +40,7 @@ function AddSectorForm(): ReactElement {
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
-    setColor(color.hex);
+    color = color.hex;
   };
 
   return (

@@ -31,7 +31,7 @@ export default function CompanyListTable({ portfolioId }: IProps) {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width: 20,
+      width: 70,
 
       render: (text: string, record: any) => (
         <Link to={`/portfolios/${portfolioId}/companies/${record.id}`}>
@@ -117,11 +117,10 @@ export default function CompanyListTable({ portfolioId }: IProps) {
     <Table
         size="small"
         style={{ maxWidth: "max(500px, 76vw)" }}
-        columns={columns1}
-        dataSource={getData()}
         scroll={{ x: 800 }}
         bordered
-
+        columns={columns1}
+        dataSource={getData()}
       />
   );
 }

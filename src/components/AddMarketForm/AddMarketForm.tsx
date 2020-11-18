@@ -10,9 +10,9 @@ import { useHistory } from "react-router-dom";
  */
 function AddMarketForm(): ReactElement {
   const [form] = Form.useForm();
-  const [color, setColor] = useState("#607d8b");
   const key = "updatable";
   const history = useHistory();
+  let color = "#607d8b";
 
   const handleAdd = (values: any) => {
     const { name, description, region, openTime, closeTime } = values;
@@ -25,7 +25,6 @@ function AddMarketForm(): ReactElement {
       openTime: openTime.format("HH:mm"),
       closeTime: closeTime.format("HH:mm")
     };
-    console.log(market);
     //Add the currency
     const added = new MarketService().addMarket(market);
     if (added === "OK") {
@@ -46,7 +45,7 @@ function AddMarketForm(): ReactElement {
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
-    setColor(color.hex);
+    color = color.hex;
   };
 
   return (
