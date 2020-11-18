@@ -46,7 +46,7 @@ const applicationMenu = Menu.buildFromTemplate([
         label: "Open logs folder",
         accelerator: "CmdOrCtrl+L",
         click: (menuItem) => {
-          log.info("Clicked Open logs folder");
+          log.debug("Clicked Open logs folder");
           openLogsFolder();
         }
       },

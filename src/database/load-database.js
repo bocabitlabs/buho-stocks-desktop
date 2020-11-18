@@ -5,19 +5,13 @@ const log = require("electron-log");
 const Database = require("better-sqlite3");
 
 let appPath = app.getPath("userData");
-log.info(path.join(appPath, "db.sqlite3"));
-
 if (isDev) {
   appPath = "./public";
 }
+const databasePath = path.join(appPath, "db.sqlite3")
+log.info(`Database Path: ${databasePath}`);
 
 // The first call creates the global instance with your settings
-const database = new Database(
-  path.join(appPath, "db.sqlite3")
-  // ,
-  // (err) => {
-  //   if (err) log.error("Database opening error: ", err);
-  // }
-);
+const database = new Database(databasePath);
 
 module.exports = { database };
