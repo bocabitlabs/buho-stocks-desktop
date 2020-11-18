@@ -5,8 +5,8 @@ export default class MarketOperations {
   addMarket = (market: MarketItemProps) => {
     //Call the DB
     const sql = `INSERT INTO "markets"
-    ("name", "description", "region", "openTime", "closeTime")
-    VALUES ('${market.name}', '${market.description}', '${market.region}', '${market.openTime}', '${market.closeTime}');`;
+    ("name", "description", "region", "openTime", "closeTime", "color")
+    VALUES ('${market.name}', '${market.description}', '${market.region}', '${market.openTime}', '${market.closeTime}', '${market.color}');`;
 
     const results = sendIpcSql(sql, "insert");
     console.log(results);

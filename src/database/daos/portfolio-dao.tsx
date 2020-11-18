@@ -6,8 +6,8 @@ export default class PortfolioDAO {
     //Call the DB
 
     const sql = `INSERT INTO "portfolios"
-    ("name", "description", "currencyId")
-    VALUES ('${portfolio.name}', '${portfolio.description}', '${portfolio.currencyId}');`;
+    ("name", "description", "currencyId", "color")
+    VALUES ('${portfolio.name}', '${portfolio.description}', '${portfolio.currencyId}', '${portfolio.color}');`;
 
     const result = sendIpcSql(sql, "insert");
     return result;

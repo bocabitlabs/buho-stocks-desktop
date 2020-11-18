@@ -5,8 +5,8 @@ export default class CurrencyDAO {
   addCurrency = (currency: CurrencyItemProps) => {
     //Call the DB
     const sql = `INSERT INTO "currencies"
-    ("name", "abbreviation", "symbol", "country")
-    VALUES ('${currency.name}', '${currency.abbreviation}', '${currency.symbol}', '${currency.country}');`;
+    ("name", "abbreviation", "symbol", "country", "color")
+    VALUES ('${currency.name}', '${currency.abbreviation}', '${currency.symbol}', '${currency.country}', '${currency.color}');`;
     const result = sendIpcSql(sql, "insert");
     console.log(result);
     return result;

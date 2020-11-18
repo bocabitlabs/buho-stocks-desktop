@@ -5,8 +5,8 @@ export default class CompanyDAO {
   addCompany = (company: CompanyItemProps) => {
     //Call the DB
     const sql = `INSERT INTO "companies"
-    ("name", "ticker", "description", "sectorId", "marketId", "currencyId", "portfolioId", "url")
-    VALUES ('${company.name}', '${company.ticker}', '${company.description}', '${company.sector}', '${company.market}', '${company.currency}', '${company.portfolio}', '${company.url}');`;
+    ("name", "ticker", "description", "sectorId", "marketId", "currencyId", "portfolioId", "url", "color")
+    VALUES ('${company.name}', '${company.ticker}', '${company.description}', '${company.sector}', '${company.market}', '${company.currency}', '${company.portfolio}', '${company.url}', '${company.color}');`;
 
     const result = sendIpcSql(sql, "insert");
     console.log(result);

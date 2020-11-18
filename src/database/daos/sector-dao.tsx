@@ -21,11 +21,11 @@ export default class SectorDAO {
     return results;
   };
 
-  addSector = (company: SectorItemProps) => {
+  addSector = (sector: SectorItemProps) => {
     //Call the DB
     const sql = `INSERT INTO "sectors"
-    ("name")
-    VALUES ('${company.name}');`;
+    ("name", "color")
+    VALUES ('${sector.name}', '${sector.color}');`;
 
     const results = sendIpcSql(sql, "insert");
     console.log(results);
