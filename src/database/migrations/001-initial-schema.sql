@@ -27,17 +27,17 @@ CREATE TABLE IF NOT EXISTS "markets" (
 	"closeTime" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "dividends" (
+CREATE TABLE IF NOT EXISTS "sectors" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"operationDate" TEXT,
-	"priceShare" NUMERIC,
-	"exchangeRate" NUMERIC,
+	"name" TEXT NOT NULL UNIQUE,
 	"color" TEXT,
-	"numberShares" INTEGER,
-	"commission" NUMERIC,
-	"companyId" INTEGER NOT NULL,
-	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("companyId") REFERENCES "companies"
+	PRIMARY KEY ("id" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "inflation" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"year" INTEGER NOT NULL UNIQUE,
+	"percentage" NUMERIC NOT NULL,
+	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "companies" (
 	"id" INTEGER NOT NULL UNIQUE,
@@ -56,17 +56,17 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	FOREIGN KEY ("currencyId") REFERENCES "currencies" ("id"),
 	FOREIGN KEY ("marketId") REFERENCES "markets" ("id")
 );
-CREATE TABLE IF NOT EXISTS "sectors" (
+CREATE TABLE IF NOT EXISTS "dividends" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"name" TEXT NOT NULL UNIQUE,
+	"operationDate" TEXT,
+	"priceShare" NUMERIC,
+	"exchangeRate" NUMERIC,
 	"color" TEXT,
-	PRIMARY KEY ("id" AUTOINCREMENT)
-);
-CREATE TABLE IF NOT EXISTS "inflation" (
-	"id" INTEGER NOT NULL UNIQUE,
-	"year" INTEGER NOT NULL UNIQUE,
-	"percentage" NUMERIC NOT NULL,
-	PRIMARY KEY ("id" AUTOINCREMENT)
+	"sharesNumber" INTEGER,
+	"commission" NUMERIC,
+	"companyId" INTEGER NOT NULL,
+	PRIMARY KEY ("id" AUTOINCREMENT),
+	FOREIGN KEY ("companyId") REFERENCES "companies"
 );
 CREATE TABLE IF NOT EXISTS "rights" (
 	"id" INTEGER NOT NULL UNIQUE,
