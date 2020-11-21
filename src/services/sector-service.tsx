@@ -10,11 +10,11 @@ export default class SectorService {
     return new SectorDAO().getSectors();
   };
 
-  getSectorById = (sectorId: string) => {
-    return new SectorDAO().getSectorById(sectorId);
+  getById = (sectorId: string) => {
+    return new SectorDAO().getById(sectorId);
   };
 
-  deleteSectorById = (sectorId: string) => {
-    return new SectorDAO().deleteSectorById(sectorId);
+  deleteById = (sectorId: string) => {
+    return new SectorDAO().deleteById(sectorId);
   };
 }

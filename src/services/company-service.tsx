@@ -14,7 +14,7 @@ export default class CompanyService {
     return new CompanyDAO().getCompany(companyId);
   };
 
-  deleteCompanyById = (companyId: string) => {
-    return new CompanyDAO().deleteCompanyById(companyId);
+  deleteById = (companyId: string) => {
+    return new CompanyDAO().deleteById(companyId);
   };
 }

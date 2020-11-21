@@ -15,11 +15,11 @@ export default class PortfolioService {
     return new PortfolioDAO().getPortfolios();
   };
 
-  getPortfolioById = (portfolioId: string) => {
-    return new PortfolioDAO().getPortfolioById(portfolioId);
+  getById = (portfolioId: string) => {
+    return new PortfolioDAO().getById(portfolioId);
   };
 
-  deletePortfolioById = (portfolioId: string) => {
-    return new PortfolioDAO().deletePortfolioById(portfolioId);
+  deleteById = (portfolioId: string) => {
+    return new PortfolioDAO().deleteById(portfolioId);
   };
 }

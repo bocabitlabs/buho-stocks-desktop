@@ -10,7 +10,7 @@ export default class MarketService {
     return new MarketDAO().getMarkets();
   };
 
-  deleteMarketById = (marketId: string) => {
-    return new MarketDAO().deleteMarketById(marketId);
+  deleteById = (marketId: string) => {
+    return new MarketDAO().deleteById(marketId);
   };
 }
