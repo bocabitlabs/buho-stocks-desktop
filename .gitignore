@@ -26,3 +26,5 @@ yarn-error.log*
 config.tsx
 config.js
 public/db.sqlite3
+public/db.sqlite3-shm
+public/db.sqlite3-wal
