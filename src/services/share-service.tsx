@@ -10,7 +10,7 @@ export default class ShareService {
     return new ShareDAO().getShares(shareId);
   };
 
-  deleteShareById = (shareId: string) => {
-    return new ShareDAO().deleteShareById(shareId);
+  deleteById = (shareId: string) => {
+    return new ShareDAO().deleteById(shareId);
   };
 }

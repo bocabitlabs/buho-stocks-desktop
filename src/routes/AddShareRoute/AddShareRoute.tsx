@@ -21,16 +21,14 @@ const AddShareRoute = () => {
   const companyContext = useCompanyContext(companyId);
 
   return (
-    <>
-      <CompanyContext.Provider value={companyContext}>
-        <AddShareRouteHeader companyId={companyId} portfolioId={portfolioId} />
-      </CompanyContext.Provider>
+    <CompanyContext.Provider value={companyContext}>
+      <AddShareRouteHeader companyId={companyId} portfolioId={portfolioId} />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
         <SharesContext.Provider value={sharesContext}>
           <AddShareForm companyId={companyId} />
         </SharesContext.Provider>
       </Layout>
-    </>
+    </CompanyContext.Provider>
   );
 };
 

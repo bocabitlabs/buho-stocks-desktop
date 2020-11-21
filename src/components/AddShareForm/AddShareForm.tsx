@@ -1,7 +1,6 @@
 import React, {
   ReactElement,
-  useContext,
-  useState
+  useContext
 } from "react";
 import {
   Button,
@@ -35,7 +34,6 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
   let color = "#607d8b";
 
   const key = "updatable";
-
   const handleAdd = (values: any) => {
     const {
       sharesNumber,
@@ -46,12 +44,13 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
       exchangeRate,
       notes
     } = values;
+
     const share: ShareItemProps = {
       sharesNumber,
       priceShare,
       type,
       commission,
-      operationDate,
+      operationDate: moment(new Date(operationDate)).format("YYYY-MM-DD"),
       exchangeRate,
       notes,
       color,
@@ -61,7 +60,7 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
     const added = new ShareService().addShare(share);
     if (added === "OK") {
       history.push({
-        pathname: `/portfolios/${company?.portfolio}/companies/${companyId}`,
+        pathname: `/portfolios/${company?.portfolio}/companies/${companyId}?tab=shares`,
         state: { message: { type: "success", text: "Shares has been added" } }
       });
     } else {
@@ -87,7 +86,7 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
   };
 
   const buttonItemLayout = {
-    wrapperCol: { span: 14, offset: 4 }
+    wrapperCol: { span: 14, offset: 0 }
   };
   const dateFormat = "DD/MM/YYYY";
 
@@ -102,7 +101,6 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
         operationDate: moment(new Date(), dateFormat)
       }}
     >
-      {JSON.stringify(company)}
       <Form.Item
         name="sharesNumber"
         label="Number of Shares"
@@ -168,7 +166,6 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
         ]}
       >
         <DatePicker
-          defaultValue={moment(new Date(), dateFormat)}
           format={dateFormat}
         />
       </Form.Item>
