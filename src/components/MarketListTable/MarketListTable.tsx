@@ -10,7 +10,7 @@ export default function MarketListTable() {
   const history = useHistory();
 
   function confirm(recordId: string) {
-    const result = new MarketService().deleteMarketById(recordId);
+    const result = new MarketService().deleteById(recordId);
     if (result === "OK") {
       history.push({
         pathname: "/markets",

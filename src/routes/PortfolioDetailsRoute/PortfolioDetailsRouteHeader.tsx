@@ -36,7 +36,7 @@ export default function PortfolioDetailsRouteHeader({
 
   function confirm(e: any) {
     console.log(e);
-    const result = new PortfolioService().deletePortfolioById(portfolioId);
+    const result = new PortfolioService().deleteById(portfolioId);
     if (result === "OK") {
       history.push({
         pathname: "/home",

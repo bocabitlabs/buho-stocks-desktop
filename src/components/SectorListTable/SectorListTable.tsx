@@ -10,7 +10,7 @@ export default function SectorListTable() {
   const history = useHistory();
 
   function confirm(recordId: string) {
-    const result = new SectorService().deleteSectorById(recordId);
+    const result = new SectorService().deleteById(recordId);
     if (result === "OK") {
       history.push({
         pathname: "/currencies",

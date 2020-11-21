@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useContext, useEffect } from "react";
+import React, { ReactElement, useCallback, useContext } from "react";
 import { Button, Form } from "antd";
 import AddSampleCurrenciesForm from "../AddSampleCurrenciesForm/AddSampleCurrenciesForm";
 import AddSampleMarketsForm from "../AddSampleMarketsForm/AddSampleMarketsForm";
@@ -13,12 +13,7 @@ function SettingsForm(): ReactElement {
   const { settings } = useContext(SettingsContext);
 
   const handleUpdate = useCallback(async (values) => {
-    // const { selectedPortfolio } = values;
-    // const settings: SettingsItemProps = {
-    //   selectedPortfolio
-    // };
-    // console.log(settings);
-    // updateSettings(settings);
+
   }, []);
 
   return (

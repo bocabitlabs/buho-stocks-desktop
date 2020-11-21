@@ -10,7 +10,7 @@ export default function CurrencyListTable() {
   const history = useHistory();
 
   function confirm(recordId: string) {
-    const result = new CurrencyService().deleteCurrencyById(recordId);
+    const result = new CurrencyService().deleteById(recordId);
     if (result === "OK") {
       history.push({
         pathname: "/currencies",

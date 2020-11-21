@@ -2,9 +2,7 @@ import { Button, PageHeader } from "antd";
 import React, { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
 
-interface Props {}
-
-export default function HomeRouteHeader({}: Props): ReactElement {
+export default function HomeRouteHeader(): ReactElement {
   const history = useHistory();
 
   return (

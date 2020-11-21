@@ -34,12 +34,11 @@ ipcMain.on("synchronous-message", (event, arg, queryType) => {
   try {
     const statement = database.prepare(sql);
     log.debug(sql);
-    log.info(queryType);
+    log.debug(queryType);
     const statementResult = handleStatement(queryType, statement);
     event.returnValue = statementResult;
   } catch (error) {
     log.error(error);
     event.returnValue = "ERROR";
   }
-  log.info("< ipcMain end");
 });
