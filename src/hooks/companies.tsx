@@ -9,7 +9,7 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
   useEffect(() => {
     const result = new CompanyService().getCompanies(portfolioId);
     setCompanies(result);
-  }, [])
+  }, [portfolioId])
 
   return {
     companies

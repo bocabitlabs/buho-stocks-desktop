@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { SelectedPortfolioContextType } from "../contexts/selected-portfolio";
 import SettingsService from "../services/settings-service";
 
