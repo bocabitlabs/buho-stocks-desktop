@@ -15,7 +15,6 @@ export default function CompanyDetailsRouteHeader({
   const history = useHistory();
   const { company } = useContext(CompanyContext);
 
-
   const routes = [
     {
       path: "/home",
@@ -53,6 +52,7 @@ export default function CompanyDetailsRouteHeader({
       }}
       extra={[
         <Button
+          key={"add-shares-button"}
           onClick={() => {
             history.push(
               `/portfolios/${portfolioId}/companies/${company?.id}/add-shares`
@@ -60,6 +60,16 @@ export default function CompanyDetailsRouteHeader({
           }}
         >
           + Shares
+        </Button>,
+        <Button
+          key={"add-dividends-button"}
+          onClick={() => {
+            history.push(
+              `/portfolios/${portfolioId}/companies/${company?.id}/add-dividends`
+            );
+          }}
+        >
+          + Dividends
         </Button>
       ]}
     />

@@ -15,10 +15,10 @@ export default function CompanyListTable({ portfolioId }: IProps) {
 
 
   function confirm(recordId: string) {
-    const result = new CompanyService().deleteCompanyById(recordId);
+    const result = new CompanyService().deleteById(recordId);
     if (result === "OK") {
       history.push({
-        pathname: "/currencies",
+        pathname: `/portfolios/:portfolioId`,
         state: {
           message: { type: "success", text: "Company has been deleted" }
         }
