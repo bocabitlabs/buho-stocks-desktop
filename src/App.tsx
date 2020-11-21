@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import { Redirect, Route } from "react-router-dom";
 
@@ -25,6 +25,7 @@ import { IsCollapsedContext } from "./contexts/is-collapsed";
 import AppSidebar from "./components/AppSidebar/AppSidebar";
 import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
+import AddDividendRoute from "./routes/AddDividendRoute/AddDividendRoute";
 
 function App() {
   /**
@@ -99,9 +100,13 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-shares"
-              >
-                <AddShareRoute />
-              </Route>
+                component={AddShareRoute}
+              />
+              <Route
+                exact
+                path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
+                component={AddDividendRoute}
+              />
             </Layout.Content>
           </Layout>
         </SelectedPortfolioContext.Provider>

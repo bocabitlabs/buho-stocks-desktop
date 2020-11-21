@@ -10,7 +10,7 @@ export default class CurrencyService {
     return new CurrencyDAO().getCurrencies();
   };
 
-  deleteCurrencyById = (currencyId: string) => {
-    return new CurrencyDAO().deleteCurrencyById(currencyId);
+  deleteById = (currencyId: string) => {
+    return new CurrencyDAO().deleteById(currencyId);
   };
 }
