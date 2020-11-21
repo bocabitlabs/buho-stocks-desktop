@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect } from "react";
+import React, { ReactElement, useContext } from "react";
 import { Button, Form, Input, message, Select } from "antd";
 import { CirclePicker } from "react-color";
 

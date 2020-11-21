@@ -1,8 +1,6 @@
 import React, {
   ReactElement,
-  useContext,
-  useEffect,
-  useState
+  useContext
 } from "react";
 import { Form, Input, Button, Select, message } from "antd";
 import { CirclePicker } from "react-color";
