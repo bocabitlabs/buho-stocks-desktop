@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS "dividends" (
 	"sharesNumber" INTEGER,
 	"commission" NUMERIC,
 	"companyId" INTEGER NOT NULL,
+	"notes" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies"
 );
