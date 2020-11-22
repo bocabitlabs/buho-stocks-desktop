@@ -6,8 +6,12 @@ export default class ShareService {
     return new ShareDAO().addShare(share);
   };
 
-  getShares = (shareId: string) => {
-    return new ShareDAO().getShares(shareId);
+  getShares = (companyId: string) => {
+    return new ShareDAO().getShares(companyId);
+  };
+
+  getSharesPerYearByCompanyId = (companyId: string) => {
+    return new ShareDAO().getSharesPerYearByCompanyId(companyId);
   };
 
   deleteById = (shareId: string) => {

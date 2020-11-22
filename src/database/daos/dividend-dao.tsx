@@ -57,16 +57,18 @@ export default class DividendDAO {
   getDividendsPerYearByCompanyId = (companyId: string) => {
     const sql = `
     SELECT
-      strftime("%Y", operationDate) as 'year',
-      companyId,
-      sum(sharesNumber) as usedShares,
-      sum(commission) as dividendsCommission,
-      count(priceShare) as dividendCount,
-      sum(sharesNumber * priceShare) as totalDividends,
-      sum(sharesNumber * priceShare * exchangeRate) as totalDividendsBase
-    FROM  "dividends"
+      strftime('%Y', dividends.operationDate) as year
+      , count(dividends.companyId) as dividendsOperationsCount
+      , sum(dividends.commission) as dividendsCommission
+      , sum(dividends.sharesNumber) as sharesNumber
+      , sum(dividends.priceShare * dividends.sharesNumber - dividends.commission) as dividendsNet
+      , sum(dividends.priceShare * dividends.sharesNumber - dividends.commission) as dividendsNetBaseCurrency
+      , sum(dividends.priceShare * dividends.sharesNumber) as dividendsTotal
+      , sum(dividends.priceShare * dividends.sharesNumber * dividends.exchangeRate) as dividendsTotalBaseCurrency
+	  FROM "dividends"
     WHERE dividends.companyId = '${companyId}'
-    GROUP BY strftime("%Y", operationDate)
+    GROUP BY strftime('%Y', operationDate)
+    ORDER BY strftime('%Y', operationDate)
     ;
     `;
     const results = sendIpcSql(sql);

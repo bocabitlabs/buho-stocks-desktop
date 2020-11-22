@@ -23,3 +23,11 @@ export interface DividendFields {
   companyId: string;
   notes: string;
 }
+
+export interface YearlyDividendFields {
+  year: string;
+  companyId: string;
+  dividendsTotal: number;
+  dividendsNet: number;
+  sharesNumber: number;
+}

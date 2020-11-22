@@ -31,10 +31,24 @@ function handleStatement(type, statement) {
 ipcMain.on("synchronous-message", (event, arg, queryType) => {
   const sql = arg;
 
+  // const execSql = () => {
+  //   log.debug("Exec query");
+  //   const row = database.exec(sql);
+  //   log.debug(row);
+  //   return row;
+  // };
+
   try {
+    // if (queryType === "exec") {
+    //   const result = execSql();
+    //   event.returnValue = result;
+    //   return;
+    // }
+
     const statement = database.prepare(sql);
-    log.debug(sql);
-    log.debug(queryType);
+    // log.debug(statement);
+    // log.debug(sql);
+    // log.debug(queryType);
     const statementResult = handleStatement(queryType, statement);
     event.returnValue = statementResult;
   } catch (error) {

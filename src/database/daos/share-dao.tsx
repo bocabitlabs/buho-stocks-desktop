@@ -58,8 +58,8 @@ export default class ShareDAO {
   getSharesPerYearByCompanyId = (companyId: string) => {
     const sql = `
     SELECT
-      strftime("%Y", operationDate) as 'year',
-      companyId
+      strftime('%Y', operationDate) as 'year'
+      , companyId
       , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) as buySharesCount
       , sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as sellSharesCount
       , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as buyTotal
@@ -71,10 +71,12 @@ export default class ShareDAO {
       , count(priceShare) as operationsCount
       FROM  "shares"
       WHERE shares.companyId = '${companyId}'
-      GROUP BY strftime("%Y", operationDate)
+      GROUP BY strftime('%Y', operationDate)
+      ORDER BY strftime('%Y', operationDate)
       ;
       `;
     const results = sendIpcSql(sql);
+    console.log(results);
     return results;
   };
 

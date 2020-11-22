@@ -30,3 +30,17 @@ export interface ShareFields {
   companyId: string;
   notes: string;
 }
+
+export interface YearlyShareFields {
+  year: string;
+  companyId: string;
+  buySharesCount: number;
+  sellSharesCount: number;
+  buyTotal: number;
+  buyTotalBaseCurrency: number;
+  sellTotal: number;
+  sellTotalBaseCurrency: number;
+  buyCommission: number;
+  sellCommission: number;
+  operationsCount: number;
+}
