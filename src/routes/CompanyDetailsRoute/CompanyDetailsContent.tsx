@@ -37,7 +37,6 @@ export default function CompanyDetailsContent({
           </Typography.Text>
 
           <CompanyDetailsTable
-            portfolioId={company.portfolio}
             companyId={companyId}
           />
 

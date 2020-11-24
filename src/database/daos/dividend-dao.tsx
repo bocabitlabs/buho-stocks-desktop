@@ -62,9 +62,9 @@ export default class DividendDAO {
       , sum(dividends.commission) as dividendsCommission
       , sum(dividends.sharesNumber) as sharesNumber
       , sum(dividends.priceShare * dividends.sharesNumber - dividends.commission) as dividendsNet
-      , sum(dividends.priceShare * dividends.sharesNumber - dividends.commission) as dividendsNetBaseCurrency
-      , sum(dividends.priceShare * dividends.sharesNumber) as dividendsTotal
-      , sum(dividends.priceShare * dividends.sharesNumber * dividends.exchangeRate) as dividendsTotalBaseCurrency
+      , sum((dividends.priceShare * dividends.sharesNumber - dividends.commission) * dividends.exchangeRate) as dividendsNetBaseCurrency
+      , sum(dividends.priceShare * dividends.sharesNumber) as dividendsGross
+      , sum(dividends.priceShare * dividends.sharesNumber * dividends.exchangeRate) as dividendsGrossBaseCurrency
 	  FROM "dividends"
     WHERE dividends.companyId = '${companyId}'
     GROUP BY strftime('%Y', operationDate)

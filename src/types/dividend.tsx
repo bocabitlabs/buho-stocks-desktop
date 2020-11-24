@@ -27,7 +27,9 @@ export interface DividendFields {
 export interface YearlyDividendFields {
   year: string;
   companyId: string;
-  dividendsTotal: number;
-  dividendsNet: number;
   sharesNumber: number;
+  dividendsGross: number;
+  dividendsGrossBaseCurrency: number;
+  dividendsNet: number;
+  dividendsNetBaseCurrency: number;
 }

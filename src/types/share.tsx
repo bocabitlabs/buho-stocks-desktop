@@ -34,13 +34,13 @@ export interface ShareFields {
 export interface YearlyShareFields {
   year: string;
   companyId: string;
-  buySharesCount: number;
-  sellSharesCount: number;
-  buyTotal: number;
-  buyTotalBaseCurrency: number;
-  sellTotal: number;
-  sellTotalBaseCurrency: number;
-  buyCommission: number;
+  sharesBought: number;
+  sharesSold: number;
+  investedAmount: number;
+  investedAmountBaseCurrency: number;
+  soldAmount: number;
+  soldAmountBaseCurrency: number;
+  investmentCommission: number;
   sellCommission: number;
   operationsCount: number;
 }

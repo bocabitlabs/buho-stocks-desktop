@@ -60,13 +60,13 @@ export default class ShareDAO {
     SELECT
       strftime('%Y', operationDate) as 'year'
       , companyId
-      , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) as buySharesCount
-      , sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as sellSharesCount
-      , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as buyTotal
-      , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END * exchangeRate) as buyTotalBaseCurrency
-      , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as sellTotal
-      , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END * exchangeRate) as sellTotalBaseCurrency
-      , sum(CASE WHEN shares.type='BUY' THEN shares.commission ELSE 0 END) as buyCommission
+      , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) as sharesBought
+      , sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as sharesSold
+      , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as investedAmount
+      , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END * exchangeRate) as investedAmountBaseCurrency
+      , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as soldAmount
+      , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END * exchangeRate) as soldAmountBaseCurrency
+      , sum(CASE WHEN shares.type='BUY' THEN shares.commission ELSE 0 END) as investmentCommission
       , sum(CASE WHEN shares.type='SELL' THEN shares.commission ELSE 0 END) as sellCommission
       , count(priceShare) as operationsCount
       FROM  "shares"

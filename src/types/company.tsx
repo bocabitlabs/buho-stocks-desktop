@@ -40,26 +40,32 @@ export interface CompanyItemProps {
 export interface YearlyOperationsFields {
   year: string;
   companyId: string;
-  buySharesCount: number;
-  sellSharesCount: number;
-  buyTotal: number;
-  buyTotalBaseCurrency: number;
-  sellTotal: number;
-  sellTotalBaseCurrency: number;
-  buyCommission: number;
+  // Shares
+  sharesBought: number;
+  sharesSold: number;
+  investedAmount: number;
+  investedAmountBaseCurrency: number;
+  soldAmount: number;
+  soldAmountBaseCurrency: number;
+  investmentCommission: number;
   sellCommission: number;
   operationsCount: number;
-  accumulativeBuyTotal:number;
-  accumulativeSellTotal: number;
-  accumulativeBuyCommission: number;
-  accumulativeSellCommission: number;
-  accumulativeSharesNumber: number;
+  // Dividends
+  dividendsGross: number;
+  dividendsGrossBaseCurrency: number;
+  accumulatedDividendsGross: number;
+  accumulatedDividendsGrossBaseCurrency: number;
+  dividendsNet: number;
+  accumulatedDividendsNet: number;
+  accumulatedDividendsNetBaseCurrency: number;
+  dividendsPerShare: number;
+  // Calculated
+  accumulatedInvestment: number;
+  accumulatedSoldAmount: number;
+  accumulatedInvestmentCommission: number;
+  accumulatedSellCommission: number;
+  accumulatedSharesNumber: number;
   totalInvested: number;
   averagePrice: number;
-  totalWithCommission: number;
-  dividendsTotal: number;
-  dividendsNet: number;
-  dps: number;
-  accumulatedDividendTotal: number;
-  accumulatedDividendNet: number;
+  totalInvestedWithCommission: number;
 }
