@@ -3,8 +3,8 @@ import {
   setAccumulatedYearlySharesAttributes,
   YearlyOperationsDictProps
 } from "./table-logic";
-import { YearlyShareFields } from "../../types/share";
-import { YearlyOperationsFields } from "../../types/company";
+import { YearlyShareFields } from "../../../types/share";
+import { YearlyOperationsFields } from "../../../types/company";
 
 const year2017: YearlyShareFields = {
   year: "2017",
@@ -48,67 +48,7 @@ const year2021: YearlyShareFields = {
   operationsCount: 2
 };
 
-describe("setYearlySharesAttributes tests", () => {
-  test("Empty share results", () => {
-    const originYearlyShares: YearlyShareFields[] = [];
-    let originYears: YearlyOperationsDictProps = {};
-    const result = setYearlySharesAttributes(originYearlyShares, originYears);
-    expect(result).toStrictEqual({});
-  });
-
-  test("Has expected output one year", () => {
-    const expectedResult: any = {
-      "2017": year2017
-    };
-    expectedResult["2017"].averagePrice = 10;
-    expectedResult["2017"].totalInvestedWithCommission = 102;
-
-    const originYearlyShares: YearlyShareFields[] = [year2017];
-    let originYears: YearlyOperationsDictProps = {};
-    const result = setYearlySharesAttributes(originYearlyShares, originYears);
-    expect(result).toStrictEqual(expectedResult);
-  });
-
-  test("Has expected output with two years as input", () => {
-    const expectedResult: any = {
-      "2017": year2017,
-      "2018": year2018
-    };
-
-    // 100 / 10 = 10 -> investedAmount / sharesBought
-    expectedResult["2017"].averagePrice = 10;
-    // 100 + 5 = 105 -> investedAmount + investmentCommission
-    expectedResult["2017"].totalInvestedWithCommission = 102;
-
-    expectedResult["2018"].averagePrice = 10;
-    expectedResult["2018"].totalInvestedWithCommission = 104;
-
-    const sharesResults: YearlyShareFields[] = [year2017, year2018];
-    let originYears: YearlyOperationsDictProps = {};
-    const yearsDict = setYearlySharesAttributes(sharesResults, originYears);
-    expect(yearsDict).toStrictEqual(expectedResult);
-  });
-
-  test("Has expected output with three years as input", () => {
-    const expectedResult: any = {
-      "2021": year2021,
-      "2017": year2017,
-      "2018": year2018
-    };
-    expectedResult["2017"].averagePrice = 10;
-    expectedResult["2017"].totalInvestedWithCommission = 102;
-
-    expectedResult["2018"].averagePrice = 10;
-    expectedResult["2018"].totalInvestedWithCommission = 104;
-
-    expectedResult["2021"].averagePrice = 20;
-    expectedResult["2021"].totalInvestedWithCommission = 205;
-
-    const sharesResults: YearlyShareFields[] = [year2017, year2018, year2021];
-    let originYears: YearlyOperationsDictProps = {};
-    const yearsDict = setYearlySharesAttributes(sharesResults, originYears);
-    expect(yearsDict).toStrictEqual(expectedResult);
-  });
+describe("setAccumulatedYearlySharesAttributes tests", () => {
 
   test("Has expected accumulatedInvestmentCommission value for 3 years", () => {
     const expectedResult: any = {
@@ -259,16 +199,17 @@ describe("setYearlySharesAttributes tests", () => {
     let originYears: YearlyOperationsDictProps = {};
     let yearsDict = setYearlySharesAttributes(sharesResults, originYears);
     yearsDict = setAccumulatedYearlySharesAttributes(sharesResults, yearsDict);
-    // expect(yearsDict).toStrictEqual(expectedResult);
     const element2017 = yearsDict["2017"] as YearlyOperationsFields;
     const element2018 = yearsDict["2018"] as YearlyOperationsFields;
     const element2021 = yearsDict["2021"] as YearlyOperationsFields;
 
     // 50 -> sellCommission
     expect(element2017.accumulatedSoldAmount).toBe(50);
-    // 100
+    // 50 + 50 = 100
     expect(element2018.accumulatedSoldAmount).toBe(100);
-    // 200
+    // 50 + 50 + 100 = 200
     expect(element2021.accumulatedSoldAmount).toBe(200);
   });
+
+
 });

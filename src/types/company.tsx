@@ -59,6 +59,7 @@ export interface YearlyOperationsFields {
   accumulatedDividendsNet: number;
   accumulatedDividendsNetBaseCurrency: number;
   dividendsPerShare: number;
+  dividendsCommission: number;
   // Calculated
   accumulatedInvestment: number;
   accumulatedSoldAmount: number;

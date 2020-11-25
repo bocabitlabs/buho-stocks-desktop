@@ -32,4 +32,5 @@ export interface YearlyDividendFields {
   dividendsGrossBaseCurrency: number;
   dividendsNet: number;
   dividendsNetBaseCurrency: number;
+  dividendsCommission: number;
 }

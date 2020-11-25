@@ -1,6 +1,6 @@
-import { YearlyOperationsFields } from "../../types/company";
-import { YearlyDividendFields } from "../../types/dividend";
-import { YearlyShareFields } from "../../types/share";
+import { YearlyOperationsFields } from "../../../types/company";
+import { YearlyDividendFields } from "../../../types/dividend";
+import { YearlyShareFields } from "../../../types/share";
 
 export interface YearlyOperationsDictProps {
   [year: string]: YearlyOperationsFields | {};
@@ -37,7 +37,7 @@ export const computeYearlyData = (
 
   return resultArray;
 };
-function setAccumulatedYearlyDividendsAttributes(
+export function setAccumulatedYearlyDividendsAttributes(
   dividends: YearlyDividendFields[],
   originYears: YearlyOperationsDictProps
 ) {
@@ -91,7 +91,7 @@ function setAccumulatedYearlyDividendsAttributes(
  * @param dividends
  * @param years
  */
-function setYearlyDividendsAttributes(
+export function setYearlyDividendsAttributes(
   dividends: YearlyDividendFields[],
   originYears: YearlyOperationsDictProps
 ): YearlyOperationsDictProps {
