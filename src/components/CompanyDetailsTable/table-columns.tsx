@@ -92,7 +92,7 @@ export const columns = [
     render: (text: string, record: any) => text
   },
   {
-    title: "Net dividends",
+    title: "Net accumulated dividends",
     dataIndex: "accumulatedDividendsNet",
     key: "accumulatedDividendsNet",
     width: 70,
