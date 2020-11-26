@@ -5,7 +5,7 @@ import ShareService from "../../services/share-service";
 import { YearlyOperationsFields } from "../../types/company";
 import { DividendUtils } from "../../utils/dividend-utils";
 import { columns } from "./table-columns";
-import { computeYearlyData } from "./table-logic";
+import { computeYearlyData } from "./logic/table-logic";
 
 interface IProps {
   companyId: string;
