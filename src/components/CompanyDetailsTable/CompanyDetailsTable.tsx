@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import DividendService from "../../services/dividend-service";
 import ShareService from "../../services/share-service";
 import { YearlyOperationsFields } from "../../types/company";
-import { DividendUtils } from "../../utils/dividend-utils";
+// import { DividendUtils } from "../../utils/dividend-utils";
 import { columns } from "./table-columns";
 import { computeYearlyData } from "./logic/table-logic";
 
@@ -28,7 +28,7 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
   }, [setYearlyData, companyId]);
 
   const getData = () => {
-    const dividentUtils = new DividendUtils();
+    // const dividentUtils = new DividendUtils();
 
     const parsedYearlyData = yearlyData.map(
       (share: YearlyOperationsFields, index: number) => ({
