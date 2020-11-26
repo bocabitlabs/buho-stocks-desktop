@@ -56,6 +56,14 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	FOREIGN KEY ("currencyId") REFERENCES "currencies" ("id"),
 	FOREIGN KEY ("marketId") REFERENCES "markets" ("id")
 );
+CREATE TABLE IF NOT EXISTS "stockPrices" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"operationDate" TEXT,
+	"priceShare" NUMERIC,
+	"companyId" INTEGER NOT NULL,
+	PRIMARY KEY ("id" AUTOINCREMENT),
+	FOREIGN KEY ("companyId") REFERENCES "companies"
+);
 CREATE TABLE IF NOT EXISTS "dividends" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"operationDate" TEXT,
@@ -117,3 +125,4 @@ DROP TABLE shares;
 DROP TABLE rights;
 DROP TABLE shares;
 DROP TABLE settings;
+DROP TABLE stockPrices;
