@@ -1,6 +1,7 @@
 import { Button, Modal, PageHeader, Tag } from "antd";
 import React, { ReactElement, useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import AddStockPriceForm from "../../components/AddStockPriceForm/AddStockPriceForm";
 import { CompanyContext } from "../../contexts/company";
 
 interface Props {
@@ -101,9 +102,12 @@ export default function CompanyDetailsRouteHeader({
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        {company && (
+          <AddStockPriceForm
+            companyId={companyId}
+            currencySymbol={company?.currencySymbol}
+          />
+        )}
       </Modal>
     </>
   );

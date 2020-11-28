@@ -6,7 +6,7 @@ export default class StockPriceDAO {
   add = (stockPrice: StockPriceItemProps) => {
     //Call the DB
     const sql = `
-    INSERT INTO "shares"
+    INSERT INTO stockPrices
     (
       "priceShare"
       , "operationDate"
