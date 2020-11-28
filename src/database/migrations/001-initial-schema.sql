@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS "inflation" (
 );
 CREATE TABLE IF NOT EXISTS "companies" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"name" TEXT,
-	"ticker" INTEGER,
+	"name" TEXT NOT NULL,
+	"ticker" INTEGER NOT NULL,
 	"description" INTEGER,
 	"url" INTEGER,
 	"color" TEXT,
@@ -58,20 +58,20 @@ CREATE TABLE IF NOT EXISTS "companies" (
 );
 CREATE TABLE IF NOT EXISTS "stockPrices" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"operationDate" TEXT,
-	"priceShare" NUMERIC,
+	"operationDate" TEXT NOT NULL,
+	"priceShare" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies"
 );
 CREATE TABLE IF NOT EXISTS "dividends" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"operationDate" TEXT,
-	"priceShare" NUMERIC,
-	"exchangeRate" NUMERIC,
+	"operationDate" TEXT NOT NULL,
+	"priceShare" NUMERIC NOT NULL,
+	"exchangeRate" NUMERIC NOT NULL,
 	"color" TEXT,
-	"sharesNumber" INTEGER,
-	"commission" NUMERIC,
+	"sharesNumber" INTEGER NOT NULL,
+	"commission" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
@@ -79,13 +79,13 @@ CREATE TABLE IF NOT EXISTS "dividends" (
 );
 CREATE TABLE IF NOT EXISTS "rights" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"rightsNumber" INTEGER,
-	"priceRight" NUMERIC,
-	"commission" NUMERIC,
+	"rightsNumber" INTEGER NOT NULL,
+	"priceRight" NUMERIC NOT NULL,
+	"commission" NUMERIC NOT NULL,
 	"color" TEXT,
-	"type" TEXT,
-	"operationDate" TEXT,
-	"exchangeRate" INTEGER,
+	"type" TEXT NOT NULL,
+	"operationDate" TEXT NOT NULL,
+	"exchangeRate" INTEGER NOT NULL,
 	"notes" TEXT,
 	"companyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
@@ -93,13 +93,13 @@ CREATE TABLE IF NOT EXISTS "rights" (
 );
 CREATE TABLE IF NOT EXISTS "shares" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"sharesNumber" INTEGER,
-	"priceShare" NUMERIC,
-	"commission" NUMERIC,
+	"sharesNumber" INTEGER NOT NULL,
+	"priceShare" NUMERIC NOT NULL,
+	"commission" NUMERIC NOT NULL,
 	"color" TEXT,
-	"type" TEXT,
-	"operationDate" TEXT,
-	"exchangeRate" NUMERIC,
+	"type" TEXT NOT NULL,
+	"operationDate" TEXT NOT NULL,
+	"exchangeRate" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
