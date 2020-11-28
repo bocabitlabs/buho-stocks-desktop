@@ -1,4 +1,5 @@
-import { Button, Modal, PageHeader, Tag } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Menu, Modal, PageHeader, Tag } from "antd";
 import React, { ReactElement, useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AddStockPriceForm from "../../components/AddStockPriceForm/AddStockPriceForm";
@@ -50,6 +51,39 @@ export default function CompanyDetailsRouteHeader({
   const handleCancel = (e: any) => {
     setVisible(false);
   };
+
+  const menu = (
+    <Menu>
+      <Menu.Item
+        onClick={() => {
+          showModal();
+        }}
+      >
+        + Stock Price
+      </Menu.Item>
+    </Menu>
+  );
+
+  const DropdownMenu = () => {
+    return (
+      <Dropdown key="more" overlay={menu}>
+        <Button
+          style={{
+            border: "none",
+            padding: 0
+          }}
+        >
+          <EllipsisOutlined
+            style={{
+              fontSize: 20,
+              verticalAlign: "top"
+            }}
+          />
+        </Button>
+      </Dropdown>
+    );
+  };
+
   // TODO: Finish this
   return (
     <>
@@ -86,14 +120,7 @@ export default function CompanyDetailsRouteHeader({
           >
             + Dividends
           </Button>,
-          <Button
-            key={"add-stock-price-button"}
-            onClick={() => {
-              showModal();
-            }}
-          >
-            + Stock Price
-          </Button>
+          <DropdownMenu key="more" />
         ]}
       />
       <Modal
