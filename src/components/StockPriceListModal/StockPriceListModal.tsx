@@ -1,5 +1,6 @@
 import { Modal } from "antd";
 import React, { ReactElement } from "react";
+import StockPriceList from "../StockPriceList/StockPriceList";
 
 interface Props {
   companyId: string;
@@ -29,7 +30,7 @@ export default function StockPriceListModal({
       onOk={handleOk}
       onCancel={handleCancel}
     >
-      TODO
+      <StockPriceList companyId={companyId} currencySymbol={currencySymbol} />
     </Modal>
   );
 }
