@@ -1,8 +1,9 @@
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Menu, Modal, PageHeader, Tag } from "antd";
+import { Button, Dropdown, Menu, PageHeader, Tag } from "antd";
 import React, { ReactElement, useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import AddStockPriceForm from "../../components/AddStockPriceForm/AddStockPriceForm";
+import AddStockPriceModal from "../../components/AddStockPriceModal/AddStockPriceModal";
+import StockPriceListModal from "../../components/StockPriceListModal/StockPriceListModal";
 import { CompanyContext } from "../../contexts/company";
 
 interface Props {
@@ -16,7 +17,8 @@ export default function CompanyDetailsRouteHeader({
 }: Props): ReactElement {
   const history = useHistory();
   const { company } = useContext(CompanyContext);
-  const [visible, setVisible] = useState(false);
+  const [addStockModalVisible, setAddStockModalVisible] = useState(false);
+  const [listStockModalVisible, setListStockModalVisible] = useState(false);
 
   const routes = [
     {
@@ -40,26 +42,29 @@ export default function CompanyDetailsRouteHeader({
     return <Link to={route.path}>{route.breadcrumbName}</Link>;
   }
 
-  const showModal = () => {
-    setVisible(true);
+  const showAddStockPriceModal = () => {
+    setAddStockModalVisible(true);
   };
 
-  const handleOk = (e: any) => {
-    setVisible(false);
-  };
-
-  const handleCancel = (e: any) => {
-    setVisible(false);
+  const showListStockPriceModal = () => {
+    setListStockModalVisible(true);
   };
 
   const menu = (
     <Menu>
       <Menu.Item
         onClick={() => {
-          showModal();
+          showAddStockPriceModal();
         }}
       >
-        + Stock Price
+        Add stock price
+      </Menu.Item>
+      <Menu.Item
+        onClick={() => {
+          showListStockPriceModal();
+        }}
+      >
+        List stock prices
       </Menu.Item>
     </Menu>
   );
@@ -84,7 +89,6 @@ export default function CompanyDetailsRouteHeader({
     );
   };
 
-  // TODO: Finish this
   return (
     <>
       <PageHeader
@@ -123,19 +127,22 @@ export default function CompanyDetailsRouteHeader({
           <DropdownMenu key="more" />
         ]}
       />
-      <Modal
-        title="Add a stock price"
-        visible={visible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        {company && (
-          <AddStockPriceForm
-            companyId={companyId}
-            currencySymbol={company?.currencySymbol}
-          />
-        )}
-      </Modal>
+      {company && (
+        <AddStockPriceModal
+          companyId={companyId}
+          currencySymbol={company.currencySymbol}
+          visible={addStockModalVisible}
+          setVisible={setAddStockModalVisible}
+        />
+      )}
+      {company && (
+        <StockPriceListModal
+          companyId={companyId}
+          currencySymbol={company.currencySymbol}
+          visible={listStockModalVisible}
+          setVisible={setListStockModalVisible}
+        />
+      )}
     </>
   );
 }
