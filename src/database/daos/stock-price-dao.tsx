@@ -1,9 +1,9 @@
 import sendIpcSql from "../../message-control/renderer";
-import { ShareItemProps } from "../../types/share";
+import { StockPriceItemProps } from "../../types/stock-price";
 import { deleteById } from "./operations";
 
-export default class stockPriceDAO {
-  add = (share: ShareItemProps) => {
+export default class StockPriceDAO {
+  add = (stockPrice: StockPriceItemProps) => {
     //Call the DB
     const sql = `
     INSERT INTO "shares"
@@ -14,9 +14,9 @@ export default class stockPriceDAO {
     )
     VALUES
     (
-        '${share.priceShare}'
-      , '${share.operationDate}'
-      , '${share.companyId}'
+        '${stockPrice.priceShare}'
+      , '${stockPrice.operationDate}'
+      , '${stockPrice.companyId}'
     );
     `;
 
