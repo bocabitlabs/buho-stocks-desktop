@@ -7,7 +7,7 @@ const DB = require("better-sqlite3-helper");
 let appPath = app.getPath("userData");
 
 if (isDev) {
-  appPath = "./public";
+  appPath = "./data";
 }
 
 const getMigrationsFolderPath = () => {
