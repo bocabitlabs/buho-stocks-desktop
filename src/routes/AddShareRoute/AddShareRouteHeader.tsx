@@ -1,7 +1,7 @@
 import { PageHeader } from 'antd';
-import React, { ReactElement, useContext } from 'react'
+import React, { ReactElement, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { CompanyContext } from '../../contexts/company';
+import { CompaniesContext } from '../../contexts/companies';
 
 interface Props {
   companyId: string;
@@ -9,7 +9,11 @@ interface Props {
 }
 
 export default function AddShareRouteHeader({companyId, portfolioId}: Props): ReactElement {
-  const { company } = useContext(CompanyContext);
+  const { company, fetchCompany } = useContext(CompaniesContext);
+
+  useEffect(() => {
+    fetchCompany(companyId);
+  }, [companyId, fetchCompany])
 
   const routes = [
     {

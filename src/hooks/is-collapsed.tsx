@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { IsCollapsedContextType } from "../contexts/is-collapsed";
 import SettingsService from "../services/settings-service";
 
@@ -10,7 +10,17 @@ export function useIsCollapsedContext(): IsCollapsedContextType {
     setIsCollapsed(result);
   }, [])
 
+  const toggleCollapsed = useCallback(() => {
+    const result = new SettingsService().toggleCollapsed();
+    console.log(result)
+    if(result.changes){
+      const result = new SettingsService().getIsCollapsed();
+      setIsCollapsed(result);
+    }
+  }, []);
+
   return {
-    isCollapsed
+    isCollapsed,
+    toggleCollapsed
   };
 }

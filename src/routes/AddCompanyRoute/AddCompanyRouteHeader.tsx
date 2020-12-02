@@ -1,7 +1,7 @@
 import { PageHeader } from "antd";
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { PortfolioContext } from "../../contexts/portfolio";
+import { PortfoliosContext } from "../../contexts/portfolios";
 
 interface Props {
   portfolioId: string;
@@ -10,7 +10,11 @@ interface Props {
 export default function AddCompanyRouteHeader({
   portfolioId
 }: Props): ReactElement {
-  const { portfolio } = useContext(PortfolioContext);
+  const { portfolio, fetchPortfolio } = useContext(PortfoliosContext);
+
+  useEffect(() => {
+    fetchPortfolio(portfolioId)
+  }, [portfolioId, fetchPortfolio])
 
   const routes = [
     {

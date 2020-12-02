@@ -53,23 +53,12 @@ function AddCompanyForm({ portfolioID }: AddCompanyFormProps): ReactElement {
         currency,
         portfolio: portfolioID
       };
-      console.log(values);
       const added = new CompanyService().addCompany(company)
-      if (added === "OK") {
-        history.push({
-          pathname: `/portfolios/${portfolioID}`,
-          state: {
-            message: { type: "success", text: "Company has been added" }
-          }
-        });
+      if (added.changes) {
+        history.push(`/portfolios/${portfolioID}`);
+        message.success({ content: "Company has been added", key });
       } else {
-        setTimeout(() => {
-          message.error({
-            content: "Unable to add the  company",
-            key,
-            duration: 2
-          });
-        }, 1000);
+        message.error({ content: "Unable to add the  company", key });
       }
     };
 

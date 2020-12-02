@@ -1,17 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { CurrenciesContextType } from "../contexts/currencies";
 import CurrencyService from "../services/currency-service";
-import { CurrencyFields } from "../types/currency";
+import { CurrencyFields, CurrencyItemProps } from "../types/currency";
 
 export function useCurrenciesContext(): CurrenciesContextType {
   const [currencies, setCurrencies] = useState<CurrencyFields[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const currencies = new CurrencyService().getCurrencies();
     setCurrencies(currencies);
+    setIsLoading(false);
+  }, []);
+
+  const fetchCurrencies = useCallback(() => {
+    setIsLoading(true);
+    const currencies = new CurrencyService().getCurrencies();
+    setCurrencies(currencies);
+    setIsLoading(false);
+  }, []);
+
+  const addCurrency = useCallback((currency: CurrencyItemProps) => {
+    setIsLoading(true);
+    const result = new CurrencyService().addCurrency(currency);
+    setIsLoading(false);
+    return result;
   }, []);
 
   return {
-    currencies
+    currencies,
+    isLoading,
+    fetchCurrencies,
+    addCurrency
   };
 }

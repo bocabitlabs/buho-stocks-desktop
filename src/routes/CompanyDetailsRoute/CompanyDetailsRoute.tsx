@@ -1,8 +1,8 @@
 import { Layout } from "antd";
 import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
-import { CompanyContext } from "../../contexts/company";
-import { useCompanyContext } from "../../hooks/company";
+import { CompaniesContext } from "../../contexts/companies";
+import { useCompaniesContext } from "../../hooks/companies";
 import CompanyDetailsContent from "./CompanyDetailsContent";
 import CompanyDetailsRouteHeader from "./CompanyDetailsRouteHeader";
 
@@ -13,10 +13,10 @@ export interface Props {
 
 export default function CompanyDetailsRoute(): ReactElement {
   const { portfolioId, companyId } = useParams<Props>();
-  const companyContext = useCompanyContext(companyId);
+  const companiesContext = useCompaniesContext(companyId);
 
   return (
-    <CompanyContext.Provider value={companyContext}>
+    <CompaniesContext.Provider value={companiesContext}>
       <CompanyDetailsRouteHeader
         companyId={companyId}
         portfolioId={portfolioId}
@@ -24,6 +24,6 @@ export default function CompanyDetailsRoute(): ReactElement {
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
         <CompanyDetailsContent companyId={companyId} />
       </Layout>
-    </CompanyContext.Provider>
+    </CompaniesContext.Provider>
   );
 }

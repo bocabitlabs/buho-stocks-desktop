@@ -27,21 +27,11 @@ function AddCurrencyForm(): ReactElement {
     };
     //Add the currency
     const added = new CurrencyService().addCurrency(currency);
-    if (added === "OK") {
-      history.push({
-        pathname: "/currencies",
-        state: {
-          message: { type: "success", text: "Currency has been added" }
-        }
-      });
+    if (added.changes) {
+      history.push("/currencies");
+      message.success({ content: "Currency has been added", key });
     } else {
-      setTimeout(() => {
-        message.error({
-          content: "Unable to add the currency",
-          key,
-          duration: 2
-        });
-      }, 1000);
+      message.success({ content: "Unable to add the currency", key });
     }
   };
 

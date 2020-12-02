@@ -1,22 +1,21 @@
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { MarketsContext } from "../../contexts/markets";
 import MarketService from "../../services/market-service";
 import { MarketItemProps } from "../../types/market";
 
 export default function MarketListTable() {
-  const { markets } = useContext(MarketsContext);
-  const history = useHistory();
+  const { markets, fetchMarkets } = useContext(MarketsContext);
+  const key = "updatable";
 
   function confirm(recordId: string) {
     const result = new MarketService().deleteById(recordId);
-    if (result === "OK") {
-      history.push({
-        pathname: "/markets",
-        state: {
-          message: { type: "success", text: "Market has been deleted" }
-        }
+    if (result.changes) {
+      fetchMarkets();
+      message.success({
+        content: "Market has been deleted",
+        key,
+        duration: 2
       });
     }
   }

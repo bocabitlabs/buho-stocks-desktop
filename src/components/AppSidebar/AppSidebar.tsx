@@ -19,30 +19,28 @@ interface RoutePathProps {
 // interface AppSidebarProps {
 //   isCollapsed: boolean;
 // }
+const navLinks: RoutePathProps[] = [
+  { key: "0", path: "/home", text: "Home", icon: <HomeOutlined /> },
+  { key: "-1", path: "/markets", text: "Markets", icon: <BankOutlined /> },
+  {
+    key: "-2",
+    path: "/currencies",
+    text: "Currencies",
+    icon: <DollarCircleOutlined />
+  },
+  { key: "-3", path: "/sectors", text: "Sectors", icon: <ClusterOutlined /> },
+  {
+    key: "-4",
+    path: "/settings",
+    text: "Settings",
+    icon: <SettingOutlined />
+  }
+];
 
 export default function AppSidebar(): ReactElement {
   const history = useHistory();
   const location = useLocation();
   const { isCollapsed } = useContext(IsCollapsedContext);
-
-
-  const navLinks: RoutePathProps[] = [
-    { key: "0", path: "/home", text: "Home", icon: <HomeOutlined /> },
-    { key: "-1", path: "/markets", text: "Markets", icon: <BankOutlined /> },
-    {
-      key: "-2",
-      path: "/currencies",
-      text: "Currencies",
-      icon: <DollarCircleOutlined />
-    },
-    { key: "-3", path: "/sectors", text: "Sectors", icon: <ClusterOutlined /> },
-    {
-      key: "-4",
-      path: "/settings",
-      text: "Settings",
-      icon: <SettingOutlined />
-    }
-  ];
 
   const [selectedKey, setSelectedKey] = useState(
     navLinks.find((item) => location.pathname.startsWith(item.path))?.key || ""
@@ -60,7 +58,7 @@ export default function AppSidebar(): ReactElement {
       navLinks.find((item) => location.pathname.startsWith(item.path))?.key ||
       "";
     setSelectedKey(selected);
-  }, [location, navLinks]);
+  }, [location]);
 
   return (
     <Layout.Sider

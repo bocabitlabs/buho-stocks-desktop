@@ -1,22 +1,21 @@
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { CurrenciesContext } from "../../contexts/currencies";
 import CurrencyService from "../../services/currency-service";
 import { CurrencyItemProps } from "../../types/currency";
 
 export default function CurrencyListTable() {
-  const { currencies } = useContext(CurrenciesContext);
-  const history = useHistory();
+  const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
+  const key = "updatable"
 
   function confirm(recordId: string) {
     const result = new CurrencyService().deleteById(recordId);
     if (result === "OK") {
-      history.push({
-        pathname: "/currencies",
-        state: {
-          message: { type: "success", text: "Currency has been deleted" }
-        }
+      fetchCurrencies();
+      message.success({
+        content: "Currency has been deleted",
+        key,
+        duration: 2
       });
     }
   }

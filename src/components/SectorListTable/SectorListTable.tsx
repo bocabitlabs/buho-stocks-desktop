@@ -1,22 +1,21 @@
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { SectorsContext } from "../../contexts/sectors";
 import SectorService from "../../services/sector-service";
 import { SectorItemProps } from "../../types/sector";
 
 export default function SectorListTable() {
-  const { sectors } = useContext(SectorsContext);
-  const history = useHistory();
+  const { sectors, fetchSectors } = useContext(SectorsContext);
+  const key = "updatable";
 
   function confirm(recordId: string) {
     const result = new SectorService().deleteById(recordId);
-    if (result === "OK") {
-      history.push({
-        pathname: "/currencies",
-        state: {
-          message: { type: "success", text: "Currency has been deleted" }
-        }
+    if (result.changes) {
+      fetchSectors();
+      message.success({
+        content: "Sector has been deleted",
+        key,
+        duration: 2
       });
     }
   }

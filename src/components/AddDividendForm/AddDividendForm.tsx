@@ -1,6 +1,7 @@
 import React, {
   ReactElement,
-  useContext
+  useContext,
+  useEffect
 } from "react";
 import {
   Button,
@@ -15,9 +16,9 @@ import moment from "moment";
 import { CirclePicker } from "react-color";
 
 import { useHistory } from "react-router-dom";
-import { CompanyContext } from "../../contexts/company";
 import DividendService from "../../services/dividend-service";
 import { DividendItemProps } from "../../types/dividend";
+import { CompaniesContext } from "../../contexts/companies";
 
 interface Props {
   companyId: string;
@@ -26,11 +27,15 @@ interface Props {
 
 export default function AddDividendForm({ companyId }: Props): ReactElement {
   const [form] = Form.useForm();
-  const { company } = useContext(CompanyContext);
+  const { company, fetchCompany } = useContext(CompaniesContext);
   const history = useHistory();
   let color = "#607d8b";
-
   const key = "updatable";
+
+  useEffect(() => {
+    fetchCompany(companyId)
+  }, [companyId, fetchCompany])
+
   const handleAdd = (values: any) => {
     const {
       sharesNumber,
@@ -53,19 +58,11 @@ export default function AddDividendForm({ companyId }: Props): ReactElement {
     };
     console.log(values);
     const added = new DividendService().addDividend(dividend);
-    if (added === "OK") {
-      history.push({
-        pathname: `/portfolios/${company?.portfolio}/companies/${companyId}?tab=dividends`,
-        state: { message: { type: "success", text: "Dividend has been added" } }
-      });
+    if (added.changes) {
+      history.push(`/portfolios/${company?.portfolio}/companies/${companyId}?tab=dividends`);
+      message.success({ content: "Dividend has been added", key });
     } else {
-      setTimeout(() => {
-        message.error({
-          content: "Unable to add the dividend",
-          key,
-          duration: 2
-        });
-      }, 1000);
+      message.error({ content: "Unable to add the dividend", key });
     }
   };
 

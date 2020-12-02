@@ -1,10 +1,10 @@
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu, PageHeader, Tag } from "antd";
-import React, { ReactElement, useContext, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AddStockPriceModal from "../../components/AddStockPriceModal/AddStockPriceModal";
 import StockPriceListModal from "../../components/StockPriceListModal/StockPriceListModal";
-import { CompanyContext } from "../../contexts/company";
+import { CompaniesContext } from "../../contexts/companies";
 
 interface Props {
   portfolioId: string;
@@ -16,9 +16,13 @@ export default function CompanyDetailsRouteHeader({
   companyId
 }: Props): ReactElement {
   const history = useHistory();
-  const { company } = useContext(CompanyContext);
+  const { company, fetchCompany } = useContext(CompaniesContext);
   const [addStockModalVisible, setAddStockModalVisible] = useState(false);
   const [listStockModalVisible, setListStockModalVisible] = useState(false);
+
+  useEffect(() => {
+    fetchCompany(companyId);
+  }, [companyId, fetchCompany])
 
   const routes = [
     {

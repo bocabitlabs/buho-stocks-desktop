@@ -2,9 +2,9 @@ import { message } from "antd";
 import Button from "antd/lib/button";
 import PageHeader from "antd/lib/page-header";
 import Popconfirm from "antd/lib/popconfirm";
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { PortfolioContext } from "../../contexts/portfolio";
+import { PortfoliosContext } from "../../contexts/portfolios";
 import PortfolioService from "../../services/portfolio-service";
 
 interface Props {
@@ -15,7 +15,12 @@ export default function PortfolioDetailsRouteHeader({
   portfolioId
 }: Props): ReactElement {
   const history = useHistory();
-  const { portfolio } = useContext(PortfolioContext);
+  const { portfolio, fetchPortfolios, fetchPortfolio } = useContext(PortfoliosContext);
+  const key = "updatable";
+
+  useEffect(() => {
+    fetchPortfolio(portfolioId)
+  }, [portfolioId, fetchPortfolio])
 
   const routes = [
     {
@@ -37,13 +42,14 @@ export default function PortfolioDetailsRouteHeader({
   function confirm(e: any) {
     console.log(e);
     const result = new PortfolioService().deleteById(portfolioId);
-    if (result === "OK") {
-      history.push({
-        pathname: "/home",
-        state: {
-          message: { type: "success", text: "Portfolio has been deleted" }
-        }
+    if (result.changes) {
+      fetchPortfolios();
+      message.success({
+        content: "Portfolio has been deleted",
+        key,
+        duration: 2
       });
+      history.push("/home");
     }
   }
 

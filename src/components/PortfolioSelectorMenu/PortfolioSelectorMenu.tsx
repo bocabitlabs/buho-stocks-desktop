@@ -21,7 +21,7 @@ import PortfolioSelector from "../PortfolioSelector/PortfolioSelector";
 export default function PortfolioSelectorMenu(): ReactElement {
   const history = useHistory();
   const { selectedPortfolio } = useContext(SelectedPortfolioContext);
-  const { isCollapsed } = useContext(IsCollapsedContext);
+  const { isCollapsed, toggleCollapsed } = useContext(IsCollapsedContext);
 
 
   const openPortfolio = () => {
@@ -34,7 +34,7 @@ export default function PortfolioSelectorMenu(): ReactElement {
   const changeIsCollapsed = () => {
     console.log("Changing is collapsed...");
     // setIsCollapsed(!isCollapsed);
-    new SettingsService().toggleCollapsed()
+    toggleCollapsed()
   };
 
   return (

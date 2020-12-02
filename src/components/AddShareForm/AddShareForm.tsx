@@ -1,6 +1,7 @@
 import React, {
   ReactElement,
-  useContext
+  useContext,
+  useEffect
 } from "react";
 import {
   Button,
@@ -18,7 +19,8 @@ import { CirclePicker } from "react-color";
 import { ShareItemProps } from "../../types/share";
 import ShareService from "../../services/share-service";
 import { useHistory } from "react-router-dom";
-import { CompanyContext } from "../../contexts/company";
+import { CompaniesContext } from "../../contexts/companies";
+
 
 interface Props {
   companyId: string;
@@ -29,11 +31,15 @@ interface Props {
  */
 export default function AddShareForm({ companyId }: Props): ReactElement {
   const [form] = Form.useForm();
-  const { company } = useContext(CompanyContext);
+  const { company, fetchCompany } = useContext(CompaniesContext);
   const history = useHistory();
   let color = "#607d8b";
-
   const key = "updatable";
+
+  useEffect(() => {
+    fetchCompany(companyId)
+  }, [companyId, fetchCompany])
+
   const handleAdd = (values: any) => {
     const {
       sharesNumber,
@@ -58,21 +64,12 @@ export default function AddShareForm({ companyId }: Props): ReactElement {
     };
     console.log(values);
     const added = new ShareService().addShare(share);
-    if (added === "OK") {
-      history.push({
-        pathname: `/portfolios/${company?.portfolio}/companies/${companyId}?tab=shares`,
-        state: { message: { type: "success", text: "Shares has been added" } }
-      });
+    if (added.changes) {
+      history.push(`/portfolios/${company?.portfolio}/companies/${companyId}?tab=shares`);
+      message.success({ content: "Shares has been added", key });
     } else {
-      setTimeout(() => {
-        message.error({
-          content: "Unable to add the shares",
-          key,
-          duration: 2
-        });
-      }, 1000);
+      message.error({ content: "Unable to add the shares", key });
     }
-    // Add company
   };
 
   const handleColorChange = (color: any, event: any) => {

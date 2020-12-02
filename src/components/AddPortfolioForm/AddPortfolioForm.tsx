@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import { Button, Form, Input, message, Select } from "antd";
 import { CirclePicker } from "react-color";
 
@@ -15,8 +15,8 @@ function AddPortfolioForm(): ReactElement {
   const history = useHistory();
 
   const { currencies } = useContext(CurrenciesContext);
+  const [color, setColor] = useState("#607d8b")
   const key = "updatable";
-  let color = "#607d8b";
 
   const handleAdd = (values: any) => {
     message.loading({ content: "Adding portfolio...", key });
@@ -28,23 +28,18 @@ function AddPortfolioForm(): ReactElement {
       currencyId,
       color
     };
-    const portfolioService = new PortfolioService();
-    const added = portfolioService.addPortfolio(portfolio);
-    if (added === 'OK') {
-      history.push({
-        pathname: "/home",
-        state: { message: {type: "success", text: "Portfolio has been added" }}
-      });
-    }else{
-      setTimeout(() => {
-        message.error({ content: "Unable to add the portfolio!", key, duration: 2 });
-      }, 1000);
+    const added = new PortfolioService().addPortfolio(portfolio);
+    if (added.changes) {
+      history.push("/home");
+      message.success({ content: "Portfolio has been added", key });
+    } else {
+      message.success({ content: "Unable to add the portfolio", key });
     }
   };
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
-    color = color.hex;
+    setColor(color.hex);
   };
   console.log("AddPortfolioForm rendered");
   console.log(currencies);

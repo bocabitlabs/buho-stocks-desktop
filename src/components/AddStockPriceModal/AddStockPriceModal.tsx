@@ -33,6 +33,7 @@ export default function AddStockPriceModal({
       <AddStockPriceForm
         companyId={companyId}
         currencySymbol={currencySymbol}
+        onSuccess={handleOk}
       />
     </Modal>
   );

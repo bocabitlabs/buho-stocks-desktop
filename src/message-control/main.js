@@ -4,8 +4,8 @@ const log = require("electron-log");
 
 function handleStatement(type, statement) {
   const runStatement = () => {
-    statement.run();
-    return "OK";
+    const result = statement.run();
+    return result;
   };
 
   const queryAllStatement = () => {
@@ -31,24 +31,8 @@ function handleStatement(type, statement) {
 ipcMain.on("synchronous-message", (event, arg, queryType) => {
   const sql = arg;
 
-  // const execSql = () => {
-  //   log.debug("Exec query");
-  //   const row = database.exec(sql);
-  //   log.debug(row);
-  //   return row;
-  // };
-
   try {
-    // if (queryType === "exec") {
-    //   const result = execSql();
-    //   event.returnValue = result;
-    //   return;
-    // }
-
     const statement = database.prepare(sql);
-    // log.debug(statement);
-    // log.debug(sql);
-    // log.debug(queryType);
     const statementResult = handleStatement(queryType, statement);
     event.returnValue = statementResult;
   } catch (error) {

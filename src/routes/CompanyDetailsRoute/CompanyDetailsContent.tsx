@@ -1,10 +1,10 @@
 import { Tabs, Typography } from "antd";
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import CompanyDetailsTable from "../../components/CompanyDetailsTable/CompanyDetailsTable";
 import DividendListTable from "../../components/DividendListTable/DividendListTable";
 import ShareListTable from "../../components/ShareListTable/ShareListTable";
-import { CompanyContext } from "../../contexts/company";
+import { CompaniesContext } from "../../contexts/companies";
 import { DividendsContext } from "../../contexts/dividends";
 import { SharesContext } from "../../contexts/shares";
 import { useDividendsContext } from "../../hooks/dividends";
@@ -24,9 +24,13 @@ export default function CompanyDetailsContent({
   companyId
 }: Props): ReactElement {
   let query = useQuery();
-  const { company } = useContext(CompanyContext);
+  const { company, fetchCompany } = useContext(CompaniesContext);
   const sharesContext = useSharesContext(companyId);
   const dividendsContext = useDividendsContext(companyId);
+
+  useEffect(() => {
+    fetchCompany(companyId);
+  }, [companyId, fetchCompany])
 
   return (
     <>

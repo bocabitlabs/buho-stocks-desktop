@@ -22,19 +22,11 @@ function AddSectorForm(): ReactElement {
       color
     };
     const added = new SectorService().addSector(sector);
-    if (added === "OK") {
-      history.push({
-        pathname: "/sectors",
-        state: { message: { type: "success", text: "Sector has been added" } }
-      });
+    if (added.changes) {
+      history.push("/sectors");
+      message.success({ content: "Sector has been added", key });
     } else {
-      setTimeout(() => {
-        message.error({
-          content: "Unable to add the sector",
-          key,
-          duration: 2
-        });
-      }, 1000);
+      message.error({ content: "Unable to add the sector", key });
     }
   };
 

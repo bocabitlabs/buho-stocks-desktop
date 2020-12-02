@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import DividendService from "../../services/dividend-service";
 import ShareService from "../../services/share-service";
 import { YearlyOperationsFields } from "../../types/company";
@@ -13,6 +13,7 @@ interface IProps {
 
 export default function CompanyDetailsTable({ companyId }: IProps) {
   const [yearlyData, setYearlyData] = useState<YearlyOperationsFields[]>([]);
+  const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const sharesResults = new ShareService().getSharesPerYearByCompanyId(
@@ -26,6 +27,15 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
     console.log(results);
     setYearlyData(results);
   }, [setYearlyData, companyId]);
+
+  useLayoutEffect(() => {
+    function updateSize() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   const getData = () => {
     // const dividentUtils = new DividendUtils();
@@ -67,13 +77,13 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
     );
     return parsedYearlyData;
   };
-
+  console.log(width);
   return (
     <div>
       <>
         <Table
           size="small"
-          style={{ maxWidth: "max(500px, 76vw)" }}
+          style={{ maxWidth: `max(500px, ${width-300}px)` }}
           scroll={{ x: 800 }}
           bordered
           columns={columns}

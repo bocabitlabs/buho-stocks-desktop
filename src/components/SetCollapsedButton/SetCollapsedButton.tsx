@@ -2,14 +2,13 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import React, { ReactElement, useContext } from "react";
 import { IsCollapsedContext } from "../../contexts/is-collapsed";
-import SettingsService from "../../services/settings-service";
 
 export default function SetCollapsedButton(): ReactElement {
-  const { isCollapsed } = useContext(IsCollapsedContext);
+  const { isCollapsed, toggleCollapsed } = useContext(IsCollapsedContext);
 
   const changeIsCollapsed = () => {
     console.log("Changing is collapsed...");
-    const result = new SettingsService().toggleCollapsed();
+    toggleCollapsed();
   };
 
   return (

@@ -18,7 +18,6 @@ import AddSectorRoute from "./routes/AddSectorRoute/AddSectorRoute";
 
 import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
 import AddShareRoute from "./routes/AddShareRoute/AddShareRoute";
-import AlertMessage from "./components/AlertMessage/AlertMessage";
 import TopNavbar from "./components/TopNavbar/TopNavbar";
 import { useIsCollapsedContext } from "./hooks/is-collapsed";
 import { IsCollapsedContext } from "./contexts/is-collapsed";
@@ -53,7 +52,6 @@ function App() {
             >
               <TopNavbar />
             </Layout.Header>
-            <AlertMessage />
 
             <Layout.Content
               className="site-layout-background"

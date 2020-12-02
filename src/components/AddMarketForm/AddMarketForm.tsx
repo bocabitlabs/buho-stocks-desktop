@@ -27,19 +27,11 @@ function AddMarketForm(): ReactElement {
     };
     //Add the currency
     const added = new MarketService().addMarket(market);
-    if (added === "OK") {
-      history.push({
-        pathname: "/markets",
-        state: { message: { type: "success", text: "Market has been added" } }
-      });
+    if (added.changes) {
+      history.push("/markets");
+      message.success({ content: "Market has been added", key });
     } else {
-      setTimeout(() => {
-        message.error({
-          content: "Unable to add the market",
-          key,
-          duration: 2
-        });
-      }, 1000);
+      message.success({ content: "Unable to add the market", key });
     }
   };
 

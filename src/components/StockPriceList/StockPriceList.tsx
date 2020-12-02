@@ -57,7 +57,7 @@ export default function StockPriceList({
 
   function confirm(recordId: string) {
     const added = new StockPriceService().deleteById(recordId);
-    if (added === "OK") {
+    if (added.changes) {
       setTimeout(() => {
         message.success({
           content: "Stock price removed",
@@ -65,6 +65,8 @@ export default function StockPriceList({
           duration: 2
         });
       }, 1000);
+      const results = new StockPriceService().getStockPrices(companyId);
+      setStockPrices(results);
     } else {
       setTimeout(() => {
         message.error({

@@ -1,7 +1,7 @@
 import { PageHeader } from 'antd';
 import React, { ReactElement, useContext } from 'react'
 import { Link } from 'react-router-dom';
-import { CompanyContext } from '../../contexts/company';
+import { CompaniesContext } from '../../contexts/companies';
 
 interface Props {
   companyId: string;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function AddDividendRouteHeader({companyId, portfolioId}: Props): ReactElement {
-  const { company } = useContext(CompanyContext);
+  const { company } = useContext(CompaniesContext);
 
   const routes = [
     {
