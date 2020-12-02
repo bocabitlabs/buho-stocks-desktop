@@ -9,14 +9,9 @@ import React, { ReactElement, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { IsCollapsedContext } from "../../contexts/is-collapsed";
 import { SelectedPortfolioContext } from "../../contexts/selected-portfolio";
-import SettingsService from "../../services/settings-service";
 
 import PortfolioSelector from "../PortfolioSelector/PortfolioSelector";
 
-// interface Props {
-//   isCollapsed: boolean;
-//   setIsCollapsed: Function;
-// }
 
 export default function PortfolioSelectorMenu(): ReactElement {
   const history = useHistory();

@@ -1,9 +1,3 @@
-import {
-  CheckCircleTwoTone,
-  HeartTwoTone,
-  SmileFilled,
-  SmileTwoTone
-} from "@ant-design/icons";
 import { Card, Col, Row } from "antd";
 import React, { ReactElement, useContext } from "react";
 import { Link } from "react-router-dom";

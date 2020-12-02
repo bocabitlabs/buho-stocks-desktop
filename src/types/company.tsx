@@ -69,4 +69,7 @@ export interface YearlyOperationsFields {
   totalInvested: number;
   averagePrice: number;
   totalInvestedWithCommission: number;
+  // Calculated from stock price
+  latestYearStockPrice: number;
+  portfolioValue: number;
 }

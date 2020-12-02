@@ -97,6 +97,20 @@ export const columns = [
     key: "accumulatedDividendsNet",
     width: 70,
     render: (text: string, record: any) => text
+  },
+  {
+    title: "Stock price",
+    dataIndex: "latestYearStockPrice",
+    key: "latestYearStockPrice",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "Portfolio Value",
+    dataIndex: "portfolioValue",
+    key: "portfolioValue",
+    width: 70,
+    render: (text: string, record: any) => text
   }
   // {
   //   title: "Total invested in base currency",

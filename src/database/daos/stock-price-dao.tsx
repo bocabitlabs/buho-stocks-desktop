@@ -46,7 +46,7 @@ export default class StockPriceDAO {
     ORDER BY strftime(stockPrices.operationDate) DESC
     LIMIT 1;
       `;
-    const results = sendIpcSql(sql);
+    const results = sendIpcSql(sql, 'get');
     console.log(results);
     return results;
   };

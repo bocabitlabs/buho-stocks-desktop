@@ -29,3 +29,5 @@ public/db.sqlite3
 public/db.sqlite3-shm
 public/db.sqlite3-wal
 data/db.sqlite3
+data/db.sqlite3-shm
+data/db.sqlite3-wal

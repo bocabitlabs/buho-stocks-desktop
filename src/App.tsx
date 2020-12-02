@@ -6,25 +6,27 @@ import HomeRoute from "./routes/HomeRoute/HomeRoute";
 import { Layout } from "antd";
 
 import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute/PortfolioDetailsRoute";
-import AddPortfolioRoute from "./routes/AddPortfolioRoute/AddPortfolioRoute";
-import AddCurrencyRoute from "./routes/AddCurrencyRoute/AddCurrencyRoute";
-import AddCompanyRoute from "./routes/AddCompanyRoute/AddCompanyRoute";
-import AddMarketRoute from "./routes/AddMarketRoute/AddMarketRoute";
 import MarketListRoute from "./routes/MarketListRoute/MarketListRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
 import CurrencyListRoute from "./routes/CurrencyListRoute/CurrencyListRoute";
 import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
-import AddSectorRoute from "./routes/AddSectorRoute/AddSectorRoute";
 
 import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
-import AddShareRoute from "./routes/AddShareRoute/AddShareRoute";
 import TopNavbar from "./components/TopNavbar/TopNavbar";
 import { useIsCollapsedContext } from "./hooks/is-collapsed";
 import { IsCollapsedContext } from "./contexts/is-collapsed";
 import AppSidebar from "./components/AppSidebar/AppSidebar";
 import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
-import AddDividendRoute from "./routes/AddDividendRoute/AddDividendRoute";
+import CompanyAddRoute from "./routes/CompanyAddRoute/CompanyAddRoute";
+import PortfolioAddRoute from "./routes/PortfolioAddRoute/PortfolioAddRoute";
+import CurrencyAddRoute from "./routes/CurrencyAddRoute/CurrencyAddRoute";
+import MarketAddRoute from "./routes/MarketAddRoute/MarketAddRoute";
+import SectorAddRoute from "./routes/SectorAddRoute/SectorAddRoute";
+import ShareAddRoute from "./routes/ShareAddRoute/ShareAddRoute";
+import DividendAddRoute from "./routes/DividendAddRoute/DividendAddRoute";
+import InflationAddRoute from "./routes/InflationAddRoute/InflationAddRoute";
+import InflationListRoute from "./routes/InflationListRoute/InflationListRoute";
 
 function App() {
   /**
@@ -72,14 +74,18 @@ function App() {
               <Route
                 exact
                 path="/add/portfolio"
-                component={AddPortfolioRoute}
+                component={PortfolioAddRoute}
               />
-              <Route exact path="/add/currency" component={AddCurrencyRoute} />
-              <Route exact path="/add/market" component={AddMarketRoute} />
-              <Route exact path="/markets" component={MarketListRoute} />
+              <Route exact path="/add/currency" component={CurrencyAddRoute} />
               <Route exact path="/currencies" component={CurrencyListRoute} />
+
+              <Route exact path="/add/market" component={MarketAddRoute} />
+              <Route exact path="/markets" component={MarketListRoute} />
+              <Route exact path="/add/inflation" component={InflationAddRoute} />
+              <Route exact path="/inflations" component={InflationListRoute} />
+
               <Route exact path="/sectors" component={SectorListRoute} />
-              <Route exact path="/add/sector" component={AddSectorRoute} />
+              <Route exact path="/add/sector" component={SectorAddRoute} />
               <Route
                 exact
                 path="/portfolios/:id"
@@ -88,7 +94,7 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:id/add-company"
-                component={AddCompanyRoute}
+                component={CompanyAddRoute}
               />
               <Route
                 exact
@@ -98,12 +104,12 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-shares"
-                component={AddShareRoute}
+                component={ShareAddRoute}
               />
               <Route
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
-                component={AddDividendRoute}
+                component={DividendAddRoute}
               />
             </Layout.Content>
           </Layout>

@@ -1,3 +1,4 @@
+import StockPriceService from "../../../services/stock-price-service";
 import { YearlyOperationsFields } from "../../../types/company";
 import { YearlyDividendFields } from "../../../types/dividend";
 import { YearlyShareFields } from "../../../types/share";
@@ -11,7 +12,6 @@ export const computeYearlyData = (
   yearlyDividends: YearlyDividendFields[] | []
 ) => {
   let resultArray: YearlyOperationsFields[] = [];
-
   let years: YearlyOperationsDictProps = {};
 
   // Every year of operations
@@ -30,9 +30,25 @@ export const computeYearlyData = (
   }
   console.log("Years are:", years);
 
-  for (var key in years) {
-    const currentYearElement = years[key] as YearlyOperationsFields;
+  for (var year in years) {
+    const currentYearElement = years[year] as YearlyOperationsFields;
     resultArray.push(currentYearElement);
+  }
+
+  for (let year in years) {
+    const currentYearElement = years[year] as YearlyOperationsFields;
+    const latestYearStockPrice = new StockPriceService().getLastStockPricePerYearByCompanyId(
+      currentYearElement.companyId,
+      year
+    );
+    console.log(latestYearStockPrice);
+    currentYearElement.latestYearStockPrice = latestYearStockPrice.priceShare;
+    console.log(currentYearElement.sharesSold)
+    console.log(currentYearElement.latestYearStockPrice)
+    currentYearElement.portfolioValue =
+      (currentYearElement.sharesBought - currentYearElement.sharesSold) *
+      latestYearStockPrice.priceShare;
+    console.log(currentYearElement.portfolioValue)
   }
 
   return resultArray;

@@ -72,7 +72,10 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
         //  Total amount of dividends for the current + previous years
         accumulatedDividendsGross: share.accumulatedDividendsGross,
         // Net amount of dividends for the current + previous years
-        accumulatedDividendsNet: share.accumulatedDividendsNet
+        accumulatedDividendsNet: share.accumulatedDividendsNet,
+        // Values where stock price is required
+        latestYearStockPrice: share.latestYearStockPrice,
+        portfolioValue: share.portfolioValue
       })
     );
     return parsedYearlyData;
