@@ -8,5 +8,6 @@
             "group": "projects"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

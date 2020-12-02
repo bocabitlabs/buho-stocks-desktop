@@ -28,3 +28,4 @@ config.js
 public/db.sqlite3
 public/db.sqlite3-shm
 public/db.sqlite3-wal
+data/db.sqlite3
