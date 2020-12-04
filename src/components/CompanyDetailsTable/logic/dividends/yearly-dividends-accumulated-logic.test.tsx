@@ -1,10 +1,10 @@
-import { YearlyOperationsFields } from "../../../types/company";
-import { YearlyDividendFields } from "../../../types/dividend";
+import { YearlyOperationsFields } from "../../../../types/company";
+import { YearlyDividendFields } from "../../../../types/dividend";
 import {
   YearlyOperationsDictProps,
-  setYearlyDividendsAttributes,
-  setAccumulatedYearlyDividendsAttributes
-} from "./table-logic";
+} from "../table-logic";
+import { setAccumulatedYearlyDividendsAttributes } from "./yearly-dividends-accumulated-logic";
+import { setYearlyDividendsAttributes } from "./yearly-dividends-logic";
 
 const year2017: YearlyDividendFields = {
   year: "2017",
@@ -144,37 +144,6 @@ describe("setYearlyDividendsAttributes tests", () => {
       /**
     +     "accumulatedDividendsNetBaseCurrency": 90,
        */
-  });
-
-  test("Has expected accumulatedDividendsGrossBaseCurrency for three years", () => {
-    const expectedResult: any = {
-      "2017": year2017,
-      "2018": year2018,
-      "2021": year2021
-    };
-    expectedResult["2017"].dividendsPerShare = 10;
-    expectedResult["2018"].dividendsPerShare = 10;
-    expectedResult["2021"].dividendsPerShare = 100;
-
-    const originYearlyShares: YearlyDividendFields[] = [year2017, year2018, year2021];
-    let originYears: YearlyOperationsDictProps = {};
-    let yearsDict = setYearlyDividendsAttributes(
-      originYearlyShares,
-      originYears
-    );
-    yearsDict = setAccumulatedYearlyDividendsAttributes(originYearlyShares, yearsDict);
-
-    const element2017 = yearsDict["2017"] as YearlyOperationsFields;
-    const element2018 = yearsDict["2018"] as YearlyOperationsFields;
-    const element2021 = yearsDict["2021"] as YearlyOperationsFields;
-
-    // 90 -> accumulatedDividendsGross
-    expect(element2017.accumulatedDividendsGrossBaseCurrency).toBe(90);
-    // 90 + 90
-    expect(element2018.accumulatedDividendsGrossBaseCurrency).toBe(180);
-    // 90 + 90 + 900
-    expect(element2021.accumulatedDividendsGrossBaseCurrency).toBe(1080);
-
   });
 
   test("Has expected accumulatedDividendsNetBaseCurrency for three years", () => {

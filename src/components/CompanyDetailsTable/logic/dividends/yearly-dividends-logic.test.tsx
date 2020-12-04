@@ -1,9 +1,7 @@
-import { YearlyOperationsFields } from "../../../types/company";
-import { YearlyDividendFields } from "../../../types/dividend";
-import {
-  YearlyOperationsDictProps,
-  setYearlyDividendsAttributes
-} from "./table-logic";
+import { YearlyOperationsFields } from "../../../../types/company";
+import { YearlyDividendFields } from "../../../../types/dividend";
+import { YearlyOperationsDictProps } from "../table-logic";
+import { setYearlyDividendsAttributes } from "./yearly-dividends-logic";
 
 const year2017: YearlyDividendFields = {
   year: "2017",

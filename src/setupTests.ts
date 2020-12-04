@@ -21,3 +21,5 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: jest.fn()
   }))
 });
+
+window.require = require;

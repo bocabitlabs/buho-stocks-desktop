@@ -111,6 +111,62 @@ export const columns = [
     key: "portfolioValue",
     width: 70,
     render: (text: string, record: any) => text
+  },
+  {
+    title: "Portfolio Value Inf.",
+    dataIndex: "portfolioValueInflation",
+    key: "portfolioValueInflation",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "Return",
+    dataIndex: "yearReturn",
+    key: "yearReturn",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "Acum. Return",
+    dataIndex: "accumulatedReturn",
+    key: "accumulatedReturn",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "Return %",
+    dataIndex: "returnPercentage",
+    key: "returnPercentage",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "Accum. Return %",
+    dataIndex: "accumulatedReturnPercentage",
+    key: "accumulatedReturnPercentage",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "Dividend Return %",
+    dataIndex: "dividendsReturnPercentage",
+    key: "dividendsReturnPercentage",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "YOC",
+    dataIndex: "yoc",
+    key: "yoc",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "RPD Emp",
+    dataIndex: "rpdEmp",
+    key: "rpdEmp",
+    width: 70,
+    render: (text: string, record: any) => text
   }
   // {
   //   title: "Total invested in base currency",

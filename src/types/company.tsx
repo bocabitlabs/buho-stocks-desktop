@@ -72,4 +72,14 @@ export interface YearlyOperationsFields {
   // Calculated from stock price
   latestYearStockPrice: number;
   portfolioValue: number;
+  portfolioValueInflation: number;
+  accumulatedInflation: number;
+  // Returns
+  yearReturn: number;
+  accumulatedReturn: number;
+  returnPercentage: number;
+  accumulatedReturnPercentage: number;
+  dividendsReturnPercentage: number;
+  yoc: number;
+  rpdEmp: number;
 }

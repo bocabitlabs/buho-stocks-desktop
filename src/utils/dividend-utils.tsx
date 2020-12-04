@@ -3,6 +3,10 @@ export class DividendUtils {
     return amount;
   };
 
+  getPercentage = (value: string) => {
+    return `${value} %`;
+  };
+
   getAmountWithSymbol = (priceShare: number, symbol: string = "?") => {
     return `${this.getAmount(priceShare)} ${symbol}`;
   };

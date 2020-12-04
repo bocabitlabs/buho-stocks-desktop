@@ -34,14 +34,15 @@ export default class InflationDAO {
     return results;
   };
 
-  getInflatioForYear = (year: number) => {
+  getInflationsForYear = (year: number) => {
     const sql = `
     SELECT *
     FROM inflations
-    WHERE year=${year}
+    WHERE year<${year}
+    ORDER BY year ASC
     `;
 
-    const results = sendIpcSql(sql, "get");
+    const results = sendIpcSql(sql);
     return results;
   };
 

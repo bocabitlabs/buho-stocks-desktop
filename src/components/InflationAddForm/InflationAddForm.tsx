@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
-import { Button, Form, Input, InputNumber, message } from "antd";
+import { Button, Form, InputNumber, message } from "antd";
 import { useHistory } from "react-router-dom";
-import InflationService from "../../services/inflation-service";
+import InflationService from "../../services/inflation/inflation-service";
 
 /**
  * Add a new Currency
@@ -19,7 +19,7 @@ function InflationAddForm(): ReactElement {
       year,
       percentage
     };
-    const added = new InflationService().add(inflation);
+    const added = InflationService.add(inflation);
     if (added.changes) {
       history.push("/inflations");
       message.success({ content: "Inflation has been added", key });

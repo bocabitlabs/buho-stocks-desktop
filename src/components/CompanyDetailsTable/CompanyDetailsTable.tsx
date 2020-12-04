@@ -3,9 +3,9 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import DividendService from "../../services/dividend-service";
 import ShareService from "../../services/share-service";
 import { YearlyOperationsFields } from "../../types/company";
-// import { DividendUtils } from "../../utils/dividend-utils";
 import { columns } from "./table-columns";
 import { computeYearlyData } from "./logic/table-logic";
+import { DividendUtils } from "../../utils/dividend-utils";
 
 interface IProps {
   companyId: string;
@@ -38,7 +38,7 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
   }, []);
 
   const getData = () => {
-    // const dividentUtils = new DividendUtils();
+    const dividentUtils = new DividendUtils();
 
     const parsedYearlyData = yearlyData.map(
       (share: YearlyOperationsFields, index: number) => ({
@@ -64,18 +64,27 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
         // Total invested + commission
         totalInvestedWithCommission: share.totalInvestedWithCommission,
         // Dividends amount with commissions
-        dividendsGross: share.dividendsGross,
+        dividendsGross: share.dividendsGross.toFixed(2),
         // Dividends amount without commissions
-        dividendsNet: share.dividendsNet,
+        dividendsNet: share.dividendsNet.toFixed(2),
         // Dividend Per Share
         dividendsPerShare: share.dividendsPerShare,
         //  Total amount of dividends for the current + previous years
         accumulatedDividendsGross: share.accumulatedDividendsGross,
         // Net amount of dividends for the current + previous years
-        accumulatedDividendsNet: share.accumulatedDividendsNet,
+        accumulatedDividendsNet: share.accumulatedDividendsNet.toFixed(2),
         // Values where stock price is required
         latestYearStockPrice: share.latestYearStockPrice,
-        portfolioValue: share.portfolioValue
+        portfolioValue: share.portfolioValue.toFixed(2),
+        portfolioValueInflation: share.portfolioValueInflation.toFixed(2),
+        // Returns
+        yearReturn: share.yearReturn.toFixed(2),
+        accumulatedReturn: share.accumulatedReturn.toFixed(2),
+        returnPercentage: dividentUtils.getPercentage(share.returnPercentage.toFixed(2)),
+        accumulatedReturnPercentage: dividentUtils.getPercentage(share.accumulatedReturnPercentage.toFixed(2)),
+        dividendsReturnPercentage: dividentUtils.getPercentage(share.dividendsReturnPercentage.toFixed(2)),
+        yoc: dividentUtils.getPercentage(share.yoc.toFixed(2)),
+        rpdEmp: dividentUtils.getPercentage(share.rpdEmp.toFixed(2)),
       })
     );
     return parsedYearlyData;

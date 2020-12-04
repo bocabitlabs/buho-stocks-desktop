@@ -1,10 +1,10 @@
 import {
-  setYearlySharesAttributes,
-  setAccumulatedYearlySharesAttributes,
   YearlyOperationsDictProps
-} from "./table-logic";
-import { YearlyShareFields } from "../../../types/share";
-import { YearlyOperationsFields } from "../../../types/company";
+} from "../table-logic";
+import { YearlyShareFields } from "../../../../types/share";
+import { YearlyOperationsFields } from "../../../../types/company";
+import { setYearlySharesAttributes } from "./yearly-shares-logic";
+import { setAccumulatedYearlySharesAttributes } from "./yearly-shares-accumulated-logic";
 
 const year2017: YearlyShareFields = {
   year: "2017",

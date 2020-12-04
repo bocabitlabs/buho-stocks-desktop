@@ -1,8 +1,7 @@
-import {
-  setYearlySharesAttributes,
-  YearlyOperationsDictProps
-} from "./table-logic";
-import { YearlyShareFields } from "../../../types/share";
+import { YearlyShareFields } from "../../../../types/share";
+import { YearlyOperationsDictProps } from "../table-logic";
+import { setYearlySharesAttributes } from "./yearly-shares-logic";
+
 
 const year2017: YearlyShareFields = {
   year: "2017",

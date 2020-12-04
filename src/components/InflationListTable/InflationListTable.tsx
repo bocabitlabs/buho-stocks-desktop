@@ -1,7 +1,7 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { InflationsContext } from "../../contexts/inflations";
-import InflationService from "../../services/inflation-service";
+import InflationService from "../../services/inflation/inflation-service";
 import { InflationItemProps } from "../../types/inflation";
 
 export default function InflationListTable() {
@@ -9,7 +9,7 @@ export default function InflationListTable() {
   const key = "updatable";
 
   function confirm(recordId: string) {
-    const result = new InflationService().deleteById(recordId);
+    const result = InflationService.deleteById(recordId);
     if (result.changes) {
       fetchInflations();
       message.success({
