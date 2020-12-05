@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn
-      - run: yarn test --coverage
+      - run: CI=true yarn test --coverage
 
       - name: Upload coverage
         uses: codecov/codecov-action@v1
