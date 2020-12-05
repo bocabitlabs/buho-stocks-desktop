@@ -17,7 +17,6 @@ describe("calculateInflationForYear tests", () => {
   });
 
   test("Empty share results", () => {
-    // const originYearlyShares: YearlyDividendFields[] = [];
     let originYears: YearlyOperationsDictProps = {};
 
     mockedInflationService.getInflationsForYear = jest.fn().mockReturnValue([]);
@@ -29,19 +28,14 @@ describe("calculateInflationForYear tests", () => {
   });
 
   test("Two years of inflation with no input for 2020", () => {
-
     let originYears: YearlyOperationsDictProps = {};
-
     mockedInflationService.getInflationsForYear =  jest.fn().mockReturnValue(yearsWithData);
     expect(mockedInflationService.getInflationsForYear.mock).toBeTruthy();
-
     const result = calculateInflationForYear(originYears, "2020");
-
     expect(result.accumulatedInflation).toEqual(0.07100000000000001);
   });
 
   test("Two years of inflation with input", () => {
-
     let originYears: YearlyOperationsDictProps = {
       "2019": {
         companyId: "1",
@@ -73,7 +67,6 @@ describe("calculateInflationForYear tests", () => {
   });
 
   test("Two years of inflation with input for 2021", () => {
-
     let originYears: YearlyOperationsDictProps = {
       "2019": {
         companyId: "1",
@@ -98,9 +91,7 @@ describe("calculateInflationForYear tests", () => {
       .fn()
       .mockReturnValue(yearsWithData);
     expect(mockedInflationService.getInflationsForYear.mock).toBeTruthy();
-
     const result = calculateInflationForYear(originYears, "2021");
-
     expect(result.accumulatedInflation).toEqual(0.11384);
   });
 });

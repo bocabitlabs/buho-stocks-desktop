@@ -2,19 +2,19 @@ import InflationDAO from "../../database/daos/inflation-dao";
 import { InflationItemProps } from "../../types/inflation";
 
 const add = (inflation: InflationItemProps) => {
-  return new InflationDAO().addInflation(inflation);
+  return InflationDAO.addInflation(inflation);
 };
 
 const deleteById = (inflationId: string) => {
-  return new InflationDAO().deleteById(inflationId);
+  return InflationDAO.deleteById(inflationId);
 };
 
 const getAll = () => {
-  return new InflationDAO().getAll();
+  return InflationDAO.getAll();
 };
 
 const getInflationsForYear = (year: number) => {
-  return new InflationDAO().getInflationsForYear(year);
+  return InflationDAO.getInflationsForYear(year);
 };
 
 const exportedModule = {
@@ -25,21 +25,3 @@ const exportedModule = {
 };
 
 export default exportedModule;
-
-// export default ;
-
-// export default class InflationService {
-
-//   getAll = () => {
-//     return new InflationDAO().getAll();
-//   };
-
-//   static getInflationsForYear = (year: number) => {
-//     return new InflationDAO().getInflationsForYear(year);
-//   }
-
-//   deleteById = (inflationId: string) => {
-//     return new InflationDAO().deleteById(inflationId);
-//   };
-
-// }

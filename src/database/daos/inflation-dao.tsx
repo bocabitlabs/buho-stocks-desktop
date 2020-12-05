@@ -1,54 +1,65 @@
 import sendIpcSql from "../../message-control/renderer";
 import { InflationItemProps } from "../../types/inflation";
-import { deleteById, getById } from "./operations";
+import {
+  deleteById as deleteByIdOperation,
+  getById as getByIdOperation
+} from "./operations";
 
-export default class InflationDAO {
-  getAll = () => {
-    //Call the DB
-    const sql = `
-    SELECT * FROM inflations
-    `;
-    const results = sendIpcSql(sql);
-    return results;
-  };
+const addInflation = (inflation: InflationItemProps) => {
+  //Call the DB
+  const sql = `
+  INSERT INTO "inflations"
+  (
+      "year"
+    , "percentage"
+    )
+  VALUES (
+      '${inflation.year}'
+    , '${inflation.percentage}'
+    );
+  `;
+  const results = sendIpcSql(sql, "insert");
+  return results;
+};
 
-  getById = (id: string) => {
-    const results = getById("inflations", id);
-    return results;
-  };
+const deleteById = (id: string) => {
+  //Call the DB
+  const results = deleteByIdOperation("inflations", id);
+  return results;
+};
 
-  addInflation = (inflation: InflationItemProps) => {
-    //Call the DB
-    const sql = `
-    INSERT INTO "inflations"
-    (
-        "year"
-      , "percentage"
-      )
-    VALUES (
-        '${inflation.year}'
-      , '${inflation.percentage}'
-      );
-    `;
-    const results = sendIpcSql(sql, "insert");
-    return results;
-  };
+const getAll = (): InflationItemProps[] => {
+  //Call the DB
+  const sql = `
+  SELECT * FROM inflations
+  `;
+  const results = sendIpcSql(sql);
+  return results;
+};
 
-  getInflationsForYear = (year: number) => {
-    const sql = `
-    SELECT *
-    FROM inflations
-    WHERE year<${year}
-    ORDER BY year ASC
-    `;
+const getById = (id: string): InflationItemProps => {
+  const results = getByIdOperation("inflations", id);
+  return results;
+};
 
-    const results = sendIpcSql(sql);
-    return results;
-  };
+const getInflationsForYear = (year: number): InflationItemProps[] => {
+  const sql = `
+  SELECT *
+  FROM inflations
+  WHERE year<${year}
+  ORDER BY year ASC
+  `;
 
-  deleteById = (id: string) => {
-    //Call the DB
-    const results = deleteById("inflations", id);
-    return results;
-  };
-}
+  const results = sendIpcSql(sql);
+  return results;
+};
+
+const exportedModule = {
+  addInflation,
+  deleteById,
+  getAll,
+  getById,
+  getInflationsForYear
+};
+
+export default exportedModule;

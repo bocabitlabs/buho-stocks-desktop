@@ -1,29 +1,46 @@
-import { mocked } from "ts-jest/utils";
-import helpers from "./inflation-service";
+import { InflationItemProps } from "../../types/inflation";
+import InflationService from "./inflation-service";
 
-// const mockedMethod = jest.fn();
+const returnAllExample: InflationItemProps[] = [
+  { id: "1", year: 2019, percentage: 5 },
+  { id: "2", year: 2020, percentage: 2 },
+  { id: "3", year: 2021, percentage: 4 }
+];
 
-// jest.mock("./inflation-service");
-
-// const mMock = jest.fn();
-// InflationService.mockImplementation(() => {
-//   return {
-//     getInflationsForYear: mMock,
-//   };
-// });
-
-// const foo = require('../foo');
-
-// // foo is a mock function
-// foo.mockImplementation(() => 42);
-// foo();
+jest.mock("../../database/daos/inflation-dao", () => ({
+  getAll: () => returnAllExample,
+  getInflationsForYear: () => returnAllExample,
+  addInflation: () => ({changes: 1}),
+  deleteById: () => ({changes: 1})
+}));
 
 describe("InflationService tests", () => {
-  test("return empty results", () => {
-    helpers.add = jest.fn();
-    helpers.getInflationsForYear = jest.fn();
-    expect(helpers.add.mock).toBeTruthy();
-    expect(helpers.getInflationsForYear.mock).toBeTruthy();
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
+  test("getAll return all results", () => {
+    const result = InflationService.getAll();
+    expect(result).toStrictEqual(returnAllExample);
+  });
+
+  test("get inflations for year", () => {
+    const result = InflationService.getInflationsForYear(2019);
+    expect(result).toStrictEqual(returnAllExample);
+  });
+
+  test("add inflation", () => {
+    const inflationToAdd: InflationItemProps = {
+      year: 2017,
+      percentage: 5
+    };
+
+    const result = InflationService.add(inflationToAdd);
+    expect(result).toStrictEqual({changes: 1});
+  });
+
+  test("delete inflation", () => {
+    const result = InflationService.deleteById("1");
+    expect(result).toStrictEqual({changes: 1});
   });
 });
