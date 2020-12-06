@@ -6,6 +6,7 @@ import { YearlyOperationsFields } from "../../types/company";
 import { columns } from "./table-columns";
 import { computeYearlyData } from "./logic/table-logic";
 import { DividendUtils } from "../../utils/dividend-utils";
+import getTableFooter from "./table-footer";
 
 interface IProps {
   companyId: string;
@@ -32,9 +33,9 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
     function updateSize() {
       setWidth(window.innerWidth);
     }
-    window.addEventListener('resize', updateSize);
+    window.addEventListener("resize", updateSize);
     updateSize();
-    return () => window.removeEventListener('resize', updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
 
   const getData = () => {
@@ -64,9 +65,9 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
         // Total invested + commission
         totalInvestedWithCommission: share.totalInvestedWithCommission,
         // Dividends amount with commissions
-        dividendsGross: share.dividendsGross.toFixed(2),
+        dividendsGross: share.dividendsGross,
         // Dividends amount without commissions
-        dividendsNet: share.dividendsNet.toFixed(2),
+        dividendsNet: share.dividendsNet,
         // Dividend Per Share
         dividendsPerShare: share.dividendsPerShare,
         //  Total amount of dividends for the current + previous years
@@ -75,33 +76,33 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
         accumulatedDividendsNet: share.accumulatedDividendsNet.toFixed(2),
         // Values where stock price is required
         latestYearStockPrice: share.latestYearStockPrice,
-        portfolioValue: share.portfolioValue.toFixed(2),
-        portfolioValueInflation: share.portfolioValueInflation.toFixed(2),
+        portfolioValue: share.portfolioValue,
+        portfolioValueInflation: share.portfolioValueInflation,
         // Returns
         yearReturn: share.yearReturn.toFixed(2),
-        accumulatedReturn: share.accumulatedReturn.toFixed(2),
-        returnPercentage: dividentUtils.getPercentage(share.returnPercentage.toFixed(2)),
-        accumulatedReturnPercentage: dividentUtils.getPercentage(share.accumulatedReturnPercentage.toFixed(2)),
-        dividendsReturnPercentage: dividentUtils.getPercentage(share.dividendsReturnPercentage.toFixed(2)),
+        accumulatedReturn: share.accumulatedReturn,
+        returnPercentage: share.returnPercentage,
+        accumulatedReturnPercentage: dividentUtils.getPercentage(
+          share.accumulatedReturnPercentage.toFixed(2)
+        ),
+        dividendsReturnPercentage: dividentUtils.getPercentage(
+          share.dividendsReturnPercentage.toFixed(2)
+        ),
         yoc: dividentUtils.getPercentage(share.yoc.toFixed(2)),
-        rpdEmp: dividentUtils.getPercentage(share.rpdEmp.toFixed(2)),
+        rpdEmp: dividentUtils.getPercentage(share.rpdEmp.toFixed(2))
       })
     );
     return parsedYearlyData;
   };
-  console.log(width);
   return (
-    <div>
-      <>
-        <Table
-          size="small"
-          style={{ maxWidth: `max(500px, ${width-300}px)` }}
-          scroll={{ x: 800 }}
-          bordered
-          columns={columns}
-          dataSource={getData()}
-        />
-      </>
-    </div>
+    <Table
+      size="small"
+      style={{ maxWidth: `max(500px, ${width - 300}px)` }}
+      scroll={{ x: 800 }}
+      bordered
+      columns={columns}
+      dataSource={getData()}
+      summary={getTableFooter()}
+    />
   );
 }

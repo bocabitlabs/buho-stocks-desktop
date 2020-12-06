@@ -1,3 +1,7 @@
+import { DividendUtils } from "../../utils/dividend-utils";
+
+const dividentUtils = new DividendUtils();
+
 export const columns = [
   {
     title: "Year",
@@ -68,14 +72,14 @@ export const columns = [
     dataIndex: "dividendsGross",
     key: "dividendsGross",
     width: 70,
-    render: (text: string, record: any) => text
+    render: (text: number, record: any) => text.toFixed(2)
   },
   {
     title: "Net Dividends",
     dataIndex: "dividendsNet",
     key: "dividendsNet",
     width: 70,
-    render: (text: string, record: any) => text
+    render: (text: number, record: any) => text.toFixed(2)
   },
   {
     title: "DPS",
@@ -110,14 +114,14 @@ export const columns = [
     dataIndex: "portfolioValue",
     key: "portfolioValue",
     width: 70,
-    render: (text: string, record: any) => text
+    render: (text: number, record: any) => text.toFixed(2)
   },
   {
     title: "Portfolio Value Inf.",
     dataIndex: "portfolioValueInflation",
     key: "portfolioValueInflation",
     width: 70,
-    render: (text: string, record: any) => text
+    render: (text: number, record: any) => text.toFixed(2)
   },
   {
     title: "Return",
@@ -131,14 +135,15 @@ export const columns = [
     dataIndex: "accumulatedReturn",
     key: "accumulatedReturn",
     width: 70,
-    render: (text: string, record: any) => text
+    render: (text: number, record: any) => text.toFixed(2)
   },
   {
     title: "Return %",
     dataIndex: "returnPercentage",
     key: "returnPercentage",
     width: 70,
-    render: (text: string, record: any) => text
+    render: (text: number, record: any) =>
+      dividentUtils.getPercentage(text.toFixed(2))
   },
   {
     title: "Accum. Return %",

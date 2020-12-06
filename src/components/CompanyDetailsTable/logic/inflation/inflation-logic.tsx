@@ -1,10 +1,11 @@
 import InflationService from "../../../../services/inflation/inflation-service";
 import { YearlyOperationsFields } from "../../../../types/company";
-import { InflationFields } from "../../../../types/inflation";
+import { InflationItemProps } from "../../../../types/inflation";
 import { YearlyOperationsDictProps } from "../table-logic";
 
 /**
  * Calculate the inflation for all the years in the yearlyOperations array.
+ * https://www.contabilidae.com/inflacion/#Inflacion_acumulada
  * @param yearlyOperations
  */
 export function calculateInflationForYears(
@@ -38,7 +39,7 @@ export function calculateInflationForYear(
   );
   let accumulatedInflation = 0;
   let count = 0;
-  inflationsForYear.forEach((inflation: InflationFields) => {
+  inflationsForYear.forEach((inflation: InflationItemProps) => {
     if (inflation.year <= parseInt(year)) {
       if (count === 0) {
         accumulatedInflation = inflation.percentage / 100;

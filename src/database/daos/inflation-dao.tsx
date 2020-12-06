@@ -1,5 +1,5 @@
 import sendIpcSql from "../../message-control/renderer";
-import { InflationItemProps } from "../../types/inflation";
+import { InflationFields, InflationItemProps } from "../../types/inflation";
 import {
   deleteById as deleteByIdOperation,
   getById as getByIdOperation
@@ -28,7 +28,7 @@ const deleteById = (id: string) => {
   return results;
 };
 
-const getAll = (): InflationItemProps[] => {
+const getAll = (): InflationFields[] => {
   //Call the DB
   const sql = `
   SELECT * FROM inflations
@@ -37,12 +37,12 @@ const getAll = (): InflationItemProps[] => {
   return results;
 };
 
-const getById = (id: string): InflationItemProps => {
+const getById = (id: string): InflationFields => {
   const results = getByIdOperation("inflations", id);
   return results;
 };
 
-const getInflationsForYear = (year: number): InflationItemProps[] => {
+const getInflationsForYear = (year: number): InflationFields[] => {
   const sql = `
   SELECT *
   FROM inflations
