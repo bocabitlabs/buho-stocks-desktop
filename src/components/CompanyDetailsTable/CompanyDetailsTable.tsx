@@ -63,7 +63,7 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
         // Share average price
         averagePrice: share.averagePrice,
         // Total invested + commission
-        totalInvestedWithCommission: share.totalInvestedWithCommission,
+        ivestmentWithCommission: share.ivestmentWithCommission,
         // Dividends amount with commissions
         dividendsGross: share.dividendsGross,
         // Dividends amount without commissions
@@ -73,11 +73,14 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
         //  Total amount of dividends for the current + previous years
         accumulatedDividendsGross: share.accumulatedDividendsGross,
         // Net amount of dividends for the current + previous years
-        accumulatedDividendsNet: share.accumulatedDividendsNet.toFixed(2),
+        accumulatedDividendsNet:
+          share.accumulatedDividendsNet > 0
+            ? share.accumulatedDividendsNet.toFixed(2)
+            : "0",
         // Values where stock price is required
         latestYearStockPrice: share.latestYearStockPrice,
         portfolioValue: share.portfolioValue,
-        portfolioValueInflation: share.portfolioValueInflation,
+        portfolioValueWithInflation: share.portfolioValueWithInflation,
         // Returns
         yearReturn: share.yearReturn.toFixed(2),
         accumulatedReturn: share.accumulatedReturn,
@@ -102,7 +105,7 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
       bordered
       columns={columns}
       dataSource={getData()}
-      summary={getTableFooter()}
+      // summary={getTableFooter()}
     />
   );
 }

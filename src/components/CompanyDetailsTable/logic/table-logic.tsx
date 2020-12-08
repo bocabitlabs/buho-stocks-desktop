@@ -9,8 +9,6 @@ import { setAccumulatedYearlySharesAttributes } from "./shares/yearly-shares-acc
 import { setYearlySharesAttributes } from "./shares/yearly-shares-logic";
 import { calculatePortfolioValueWithStockPrices } from "./stock-prices/stock-prices-logic";
 
-
-
 export interface YearlyOperationsDictProps {
   [year: string]: YearlyOperationsFields | {};
 }
@@ -19,30 +17,27 @@ export const computeYearlyData = (
   yearlyShares: YearlyShareFields[] | [],
   yearlyDividends: YearlyDividendFields[] | []
 ) => {
-  let years: YearlyOperationsDictProps = {};
-
   // Every year of operations
-  if (yearlyShares.length > 0) {
-    // There are operations
-    years = setYearlySharesAttributes(yearlyShares, years);
-    // Calculate the accumulated values for yearly shares
-    years = setAccumulatedYearlySharesAttributes(yearlyShares, years);
-  }
+  // There are operations
+  let modifiedYears = setYearlySharesAttributes(yearlyShares);
+  // Calculate the accumulated values for yearly shares
+  modifiedYears = setAccumulatedYearlySharesAttributes(modifiedYears);
 
-  if (yearlyDividends.length > 0) {
-    // There are dividends
-    years = setYearlyDividendsAttributes(yearlyDividends, years);
-    // Accumulated values for dividends
-    years = setAccumulatedYearlyDividendsAttributes(yearlyDividends, years);
-  }
+  // There are dividends
+  modifiedYears = setYearlyDividendsAttributes(yearlyDividends, modifiedYears);
+  // Accumulated values for dividends
+  modifiedYears = setAccumulatedYearlyDividendsAttributes(
+    yearlyDividends,
+    modifiedYears
+  );
 
-  years = calculateInflationForYears(years);
-  years = calculatePortfolioValueWithStockPrices(years);
-  years = calculatePortfolioReturns(years);
+  modifiedYears = calculateInflationForYears(modifiedYears);
+  modifiedYears = calculatePortfolioValueWithStockPrices(modifiedYears);
+  modifiedYears = calculatePortfolioReturns(modifiedYears);
 
   let resultArray: YearlyOperationsFields[] = [];
-  for (var year in years) {
-    const currentYearElement = years[year] as YearlyOperationsFields;
+  for (var year in modifiedYears) {
+    const currentYearElement = modifiedYears[year] as YearlyOperationsFields;
     resultArray.push(currentYearElement);
   }
 

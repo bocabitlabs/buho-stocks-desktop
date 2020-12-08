@@ -48,8 +48,7 @@ const year2021: YearlyShareFields = {
 describe("setYearlySharesAttributes tests", () => {
   test("Empty share results", () => {
     const originYearlyShares: YearlyShareFields[] = [];
-    let originYears: YearlyOperationsDictProps = {};
-    const result = setYearlySharesAttributes(originYearlyShares, originYears);
+    const result = setYearlySharesAttributes(originYearlyShares);
     expect(result).toStrictEqual({});
   });
 
@@ -58,11 +57,10 @@ describe("setYearlySharesAttributes tests", () => {
       "2017": year2017
     };
     expectedResult["2017"].averagePrice = 10;
-    expectedResult["2017"].totalInvestedWithCommission = 102;
+    expectedResult["2017"].ivestmentWithCommission = 102;
 
     const originYearlyShares: YearlyShareFields[] = [year2017];
-    let originYears: YearlyOperationsDictProps = {};
-    const result = setYearlySharesAttributes(originYearlyShares, originYears);
+    const result = setYearlySharesAttributes(originYearlyShares);
     expect(result).toStrictEqual(expectedResult);
   });
 
@@ -75,14 +73,13 @@ describe("setYearlySharesAttributes tests", () => {
     // 100 / 10 = 10 -> investedAmount / sharesBought
     expectedResult["2017"].averagePrice = 10;
     // 100 + 5 = 105 -> investedAmount + investmentCommission
-    expectedResult["2017"].totalInvestedWithCommission = 102;
+    expectedResult["2017"].ivestmentWithCommission = 102;
 
     expectedResult["2018"].averagePrice = 10;
-    expectedResult["2018"].totalInvestedWithCommission = 104;
+    expectedResult["2018"].ivestmentWithCommission = 104;
 
     const sharesResults: YearlyShareFields[] = [year2017, year2018];
-    let originYears: YearlyOperationsDictProps = {};
-    const yearsDict = setYearlySharesAttributes(sharesResults, originYears);
+    const yearsDict = setYearlySharesAttributes(sharesResults);
     expect(yearsDict).toStrictEqual(expectedResult);
   });
 
@@ -93,17 +90,16 @@ describe("setYearlySharesAttributes tests", () => {
       "2018": year2018
     };
     expectedResult["2017"].averagePrice = 10;
-    expectedResult["2017"].totalInvestedWithCommission = 102;
+    expectedResult["2017"].ivestmentWithCommission = 102;
 
     expectedResult["2018"].averagePrice = 10;
-    expectedResult["2018"].totalInvestedWithCommission = 104;
+    expectedResult["2018"].ivestmentWithCommission = 104;
 
     expectedResult["2021"].averagePrice = 20;
-    expectedResult["2021"].totalInvestedWithCommission = 205;
+    expectedResult["2021"].ivestmentWithCommission = 205;
 
     const sharesResults: YearlyShareFields[] = [year2017, year2018, year2021];
-    let originYears: YearlyOperationsDictProps = {};
-    const yearsDict = setYearlySharesAttributes(sharesResults, originYears);
+    const yearsDict = setYearlySharesAttributes(sharesResults);
     expect(yearsDict).toStrictEqual(expectedResult);
   });
 });

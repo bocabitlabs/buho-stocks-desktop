@@ -35,7 +35,7 @@ interface FooterProps {
   // Values where stock price is required
   latestYearStockPrice: number;
   portfolioValue: number;
-  portfolioValueInflation: number;
+  portfolioValueWithInflation: number;
   // Returns
   yearReturn: string;
   accumulatedReturn: number;
@@ -57,7 +57,7 @@ export default function getTableFooter(): (
     let dividendsGrossSummary = 0;
     let dividendsNetSummary = 0;
     let portfolioValueSummary = 0;
-    let portfolioValueInflationSummary = 0;
+    let portfolioValueWithInflationSummary = 0;
     let accumulatedReturnSummary = 0;
 
     pageData.forEach(
@@ -69,7 +69,7 @@ export default function getTableFooter(): (
         dividendsGross,
         dividendsNet,
         portfolioValue,
-        portfolioValueInflation,
+        portfolioValueWithInflation,
         accumulatedReturn
       }) => {
         totalSharesSummary += totalShares;
@@ -79,7 +79,7 @@ export default function getTableFooter(): (
         dividendsGrossSummary += dividendsGross;
         dividendsNetSummary += dividendsNet;
         portfolioValueSummary = portfolioValue;
-        portfolioValueInflationSummary = portfolioValueInflation;
+        portfolioValueWithInflationSummary = portfolioValueWithInflation;
         accumulatedReturnSummary = accumulatedReturn;
       }
     );
@@ -90,7 +90,7 @@ export default function getTableFooter(): (
     let returnPercentageSummary = 0;
     if (investedAmountSummary > 0) {
       returnPercentageSummary =
-        ((portfolioValueInflationSummary - investedAmountSummary) /
+        ((portfolioValueWithInflationSummary - investedAmountSummary) /
           investedAmountSummary) *
         100;
     }
@@ -137,7 +137,7 @@ export default function getTableFooter(): (
           {portfolioValueSummary}
         </Table.Summary.Cell>
         <Table.Summary.Cell index={13}>
-          {portfolioValueInflationSummary.toFixed(2)}
+          {portfolioValueWithInflationSummary.toFixed(2)}
         </Table.Summary.Cell>
         <Table.Summary.Cell index={14}></Table.Summary.Cell>
         <Table.Summary.Cell index={15}>

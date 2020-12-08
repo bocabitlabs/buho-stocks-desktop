@@ -6,23 +6,60 @@ export function calculatePortfolioValueWithStockPrices(
   yearlyOperationsDict: YearlyOperationsDictProps
 ) {
   for (let year in yearlyOperationsDict) {
-    const currentYearElement = yearlyOperationsDict[year] as YearlyOperationsFields;
+    const currentYearElement = yearlyOperationsDict[
+      year
+    ] as YearlyOperationsFields;
     const latestYearStockPrice = new StockPriceService().getLastStockPricePerYearByCompanyId(
       currentYearElement.companyId,
       year
     );
-    console.log(latestYearStockPrice);
-    currentYearElement.latestYearStockPrice = latestYearStockPrice.priceShare;
-    console.log(currentYearElement.sharesSold);
-    console.log(currentYearElement.latestYearStockPrice);
-    currentYearElement.portfolioValue = currentYearElement.accumulatedSharesNumber
-       *
-      latestYearStockPrice.priceShare;
+    let portfolioValue = 0;
+
+    if (latestYearStockPrice) {
+      currentYearElement.latestYearStockPrice = latestYearStockPrice.priceShare;
+      console.log("CHECK PORTFOLIO VALUE");
+      console.log(
+        currentYearElement.accumulatedSharesNumber *
+          latestYearStockPrice.priceShare
+      );
+
+      portfolioValue = getPortfolioValue(
+        currentYearElement.accumulatedSharesNumber,
+        latestYearStockPrice.priceShare
+      );
+      currentYearElement.portfolioValue = portfolioValue;
+      console.log(currentYearElement.portfolioValue);
+
+      // Q6/(1+'Resumen Anual'!I5) Portfolio Value with inflation
+      currentYearElement.portfolioValueWithInflation =
+        currentYearElement.portfolioValue /
+        (1 + currentYearElement.accumulatedInflation);
+
+        console.log(`PortfolioValueWithInflation =
+        currentYearElement.portfolioValue ${currentYearElement.portfolioValue}
+        /
+        (1 + currentYearElement.accumulatedInflation) ${(1 + currentYearElement.accumulatedInflation)}
+        =
+        ${currentYearElement.portfolioValueWithInflation}
+        `)
+
+    } else {
+      currentYearElement.portfolioValue = 0;
+      currentYearElement.portfolioValueWithInflation = 0;
+    }
+    console.log("currentYearElement.portfolioValue");
+
     console.log(currentYearElement.portfolioValue);
-    // Q6/(1+'Resumen Anual'!I5) Portfolio Value with inflation
-    currentYearElement.portfolioValueInflation =
-      currentYearElement.portfolioValue /
-      (1 + currentYearElement.accumulatedInflation);
   }
   return yearlyOperationsDict;
+}
+function getPortfolioValue(
+  accumulatedSharesNumber: number,
+  priceShare: number
+) {
+  let portfolioValue = 0;
+  if (!isNaN(accumulatedSharesNumber)) {
+    portfolioValue = accumulatedSharesNumber * priceShare;
+  }
+  return portfolioValue;
 }

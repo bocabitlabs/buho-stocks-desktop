@@ -76,7 +76,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
       title: "Action",
       key: "action",
       render: (text: string, record: any) => (
-        <Space size="middle">
+        <Space>
           <Popconfirm
             key={`sector-delete-${record.key}`}
             title={`Delete sector ${record.name}?`}
@@ -101,7 +101,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
       operationDate: share.operationDate,
       priceShare: `${share.priceShare} ${share.currencySymbol}`,
       commission: `${share.commission} ${share.currencySymbol}`,
-      total: `${share.sharesNumber * share.priceShare - share.commission} ${
+      total: `${share.sharesNumber * share.priceShare + share.commission} ${
         share.currencySymbol
       }`,
       notes: share.notes

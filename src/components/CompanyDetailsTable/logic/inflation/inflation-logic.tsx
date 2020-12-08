@@ -16,7 +16,7 @@ export function calculateInflationForYears(
       accumulatedInflation,
       currentYearElement
     } = calculateInflationForYear(yearlyOperationsDict, year);
-    console.log(`Accum. Inflation for year: ${year}=${accumulatedInflation}`);
+    // console.log(`Accum. Inflation for year: ${year}=${accumulatedInflation}`);
     currentYearElement.accumulatedInflation = accumulatedInflation;
   }
   return yearlyOperationsDict;
@@ -48,6 +48,7 @@ export function calculateInflationForYear(
         accumulatedInflation += currentInflation * (1 + accumulatedInflation);
       }
     }
+    // console.log(`Inflation for year ${inflation.year}=${accumulatedInflation}`)
     count++;
   });
 

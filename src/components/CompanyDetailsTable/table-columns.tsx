@@ -19,7 +19,7 @@ export const columns = [
     render: (text: string, record: any) => text
   },
   {
-    title: "Accumulated Shares",
+    title: "Accum. Shares",
     dataIndex: "accumulatedSharesNumber",
     key: "accumulatedSharesNumber",
     width: 70,
@@ -33,9 +33,44 @@ export const columns = [
     render: (text: string, record: any) => text
   },
   {
-    title: "Acum. invested",
+    title: "Acum. investment",
     dataIndex: "accumulatedInvestment",
     key: "accumulatedInvestment",
+    width: 70,
+    render: (text: string, record: any) => text
+  },
+  {
+    title: "Commission",
+    dataIndex: "investmentCommission",
+    key: "investmentCommission",
+    width: 70,
+    render(text: string, record: any) {
+      return {
+        props: {
+          style: { background: "#fff1f0" },
+        },
+        children: text,
+      };
+    },
+  },
+  {
+    title: "Acum. commission",
+    dataIndex: "accumulatedInvestmentCommission",
+    key: "accumulatedInvestmentCommission",
+    width: 70,
+    render(text: string, record: any) {
+      return {
+        props: {
+          style: { background: "#fff1f0" },
+        },
+        children: text,
+      };
+    },
+  },
+  {
+    title: "Total invested with commission",
+    dataIndex: "ivestmentWithCommission",
+    key: "ivestmentWithCommission",
     width: 70,
     render: (text: string, record: any) => text
   },
@@ -47,39 +82,18 @@ export const columns = [
     render: (text: string, record: any) => text
   },
   {
-    title: "Commission",
-    dataIndex: "investmentCommission",
-    key: "investmentCommission",
-    width: 70,
-    render: (text: string, record: any) => text
-  },
-  {
-    title: "Acum. commission",
-    dataIndex: "accumulatedInvestmentCommission",
-    key: "accumulatedInvestmentCommission",
-    width: 70,
-    render: (text: string, record: any) => text
-  },
-  {
-    title: "Total invested with commission",
-    dataIndex: "totalInvestedWithCommission",
-    key: "totalInvestedWithCommission",
-    width: 70,
-    render: (text: string, record: any) => text
-  },
-  {
     title: "Gross Dividends",
     dataIndex: "dividendsGross",
     key: "dividendsGross",
     width: 70,
-    render: (text: number, record: any) => text.toFixed(2)
+    render: (text: number, record: any) => text===0?text.toFixed(2):"0"
   },
   {
     title: "Net Dividends",
     dataIndex: "dividendsNet",
     key: "dividendsNet",
     width: 70,
-    render: (text: number, record: any) => text.toFixed(2)
+    render: (text: number, record: any) => text===0?text.toFixed(2):"0"
   },
   {
     title: "DPS",
@@ -114,14 +128,14 @@ export const columns = [
     dataIndex: "portfolioValue",
     key: "portfolioValue",
     width: 70,
-    render: (text: number, record: any) => text.toFixed(2)
+    render: (text: number, record: any) => text===0?"0":text.toFixed(2)
   },
   {
     title: "Portfolio Value Inf.",
-    dataIndex: "portfolioValueInflation",
-    key: "portfolioValueInflation",
+    dataIndex: "portfolioValueWithInflation",
+    key: "portfolioValueWithInflation",
     width: 70,
-    render: (text: number, record: any) => text.toFixed(2)
+    render: (text: number, record: any) => text===0?"0":text.toFixed(2)
   },
   {
     title: "Return",
@@ -135,7 +149,7 @@ export const columns = [
     dataIndex: "accumulatedReturn",
     key: "accumulatedReturn",
     width: 70,
-    render: (text: number, record: any) => text.toFixed(2)
+    render: (text: number, record: any) => text===0?"0":text.toFixed(2)
   },
   {
     title: "Return %",
@@ -143,7 +157,7 @@ export const columns = [
     key: "returnPercentage",
     width: 70,
     render: (text: number, record: any) =>
-      dividentUtils.getPercentage(text.toFixed(2))
+      dividentUtils.getPercentage(text===0?"0":text.toFixed(2))
   },
   {
     title: "Accum. Return %",

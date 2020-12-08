@@ -9,25 +9,27 @@ import { YearlyOperationsDictProps } from "../table-logic";
  */
 export function setYearlySharesAttributes(
   shares: YearlyShareFields[],
-  originYears: YearlyOperationsDictProps
 ): YearlyOperationsDictProps {
-  let years = originYears;
+  let modifiedYears: YearlyOperationsDictProps = {};
+
   for (let index = 0; index < shares.length; index++) {
     const yearlyShares = shares[index] as YearlyShareFields;
     const currentYear = yearlyShares.year;
 
-    if (!years.hasOwnProperty(currentYear)) {
-      years[currentYear] = { year: currentYear };
+    if (!modifiedYears.hasOwnProperty(currentYear)) {
+      modifiedYears[currentYear] = { year: currentYear };
     }
 
-    let currentYearElement = years[currentYear] as YearlyOperationsFields;
+    let currentYearElement = modifiedYears[currentYear] as YearlyOperationsFields;
 
     Object.assign(currentYearElement, yearlyShares);
 
+    // Average price
     currentYearElement.averagePrice =
       yearlyShares.investedAmount / yearlyShares.sharesBought;
-    currentYearElement.totalInvestedWithCommission =
+    //Investment with Commission
+    currentYearElement.ivestmentWithCommission =
       yearlyShares.investedAmount + yearlyShares.investmentCommission;
   }
-  return years;
+  return modifiedYears;
 }

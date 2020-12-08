@@ -1,6 +1,3 @@
-import {
-  YearlyOperationsDictProps
-} from "../table-logic";
 import { YearlyShareFields } from "../../../../types/share";
 import { YearlyOperationsFields } from "../../../../types/company";
 import { setYearlySharesAttributes } from "./yearly-shares-logic";
@@ -66,9 +63,8 @@ describe("setAccumulatedYearlySharesAttributes tests", () => {
     expectedResult["2021"].totalInvestedWithCommission = 205;
 
     const sharesResults: YearlyShareFields[] = [year2017, year2018, year2021];
-    let originYears: YearlyOperationsDictProps = {};
-    let yearsDict = setYearlySharesAttributes(sharesResults, originYears);
-    yearsDict = setAccumulatedYearlySharesAttributes(sharesResults, yearsDict);
+    let yearsDict = setYearlySharesAttributes(sharesResults);
+    yearsDict = setAccumulatedYearlySharesAttributes(yearsDict);
     // expect(yearsDict).toStrictEqual(expectedResult);
     const element2017 = yearsDict["2017"] as YearlyOperationsFields;
     const element2018 = yearsDict["2018"] as YearlyOperationsFields;
@@ -99,20 +95,19 @@ describe("setAccumulatedYearlySharesAttributes tests", () => {
     expectedResult["2021"].totalInvestedWithCommission = 205;
 
     const sharesResults: YearlyShareFields[] = [year2017, year2018, year2021];
-    let originYears: YearlyOperationsDictProps = {};
-    let yearsDict = setYearlySharesAttributes(sharesResults, originYears);
-    yearsDict = setAccumulatedYearlySharesAttributes(sharesResults, yearsDict);
+    let yearsDict = setYearlySharesAttributes(sharesResults);
+    yearsDict = setAccumulatedYearlySharesAttributes(yearsDict);
     // expect(yearsDict).toStrictEqual(expectedResult);
     const element2017 = yearsDict["2017"] as YearlyOperationsFields;
     const element2018 = yearsDict["2018"] as YearlyOperationsFields;
     const element2021 = yearsDict["2021"] as YearlyOperationsFields;
 
     // 100 -> Invested amount
-    expect(element2017.accumulatedInvestment).toBe(100);
+    expect(element2017.accumulatedInvestment).toBe(102);
     // 100 + 100
-    expect(element2018.accumulatedInvestment).toBe(200);
+    expect(element2018.accumulatedInvestment).toBe(206);
     // 100 + 100 + 200
-    expect(element2021.accumulatedInvestment).toBe(400);
+    expect(element2021.accumulatedInvestment).toBe(411);
 
   });
 
@@ -132,9 +127,8 @@ describe("setAccumulatedYearlySharesAttributes tests", () => {
     expectedResult["2021"].totalInvestedWithCommission = 205;
 
     const sharesResults: YearlyShareFields[] = [year2017, year2018, year2021];
-    let originYears: YearlyOperationsDictProps = {};
-    let yearsDict = setYearlySharesAttributes(sharesResults, originYears);
-    yearsDict = setAccumulatedYearlySharesAttributes(sharesResults, yearsDict);
+    let yearsDict = setYearlySharesAttributes(sharesResults);
+    yearsDict = setAccumulatedYearlySharesAttributes(yearsDict);
     // expect(yearsDict).toStrictEqual(expectedResult);
     const element2017 = yearsDict["2017"] as YearlyOperationsFields;
     const element2018 = yearsDict["2018"] as YearlyOperationsFields;
@@ -164,9 +158,8 @@ describe("setAccumulatedYearlySharesAttributes tests", () => {
     expectedResult["2021"].totalInvestedWithCommission = 205;
 
     const sharesResults: YearlyShareFields[] = [year2017, year2018, year2021];
-    let originYears: YearlyOperationsDictProps = {};
-    let yearsDict = setYearlySharesAttributes(sharesResults, originYears);
-    yearsDict = setAccumulatedYearlySharesAttributes(sharesResults, yearsDict);
+    let yearsDict = setYearlySharesAttributes(sharesResults);
+    yearsDict = setAccumulatedYearlySharesAttributes(yearsDict);
     // expect(yearsDict).toStrictEqual(expectedResult);
     const element2017 = yearsDict["2017"] as YearlyOperationsFields;
     const element2018 = yearsDict["2018"] as YearlyOperationsFields;
@@ -196,9 +189,8 @@ describe("setAccumulatedYearlySharesAttributes tests", () => {
     expectedResult["2021"].totalInvestedWithCommission = 205;
 
     const sharesResults: YearlyShareFields[] = [year2017, year2018, year2021];
-    let originYears: YearlyOperationsDictProps = {};
-    let yearsDict = setYearlySharesAttributes(sharesResults, originYears);
-    yearsDict = setAccumulatedYearlySharesAttributes(sharesResults, yearsDict);
+    let yearsDict = setYearlySharesAttributes(sharesResults);
+    yearsDict = setAccumulatedYearlySharesAttributes(yearsDict);
     const element2017 = yearsDict["2017"] as YearlyOperationsFields;
     const element2018 = yearsDict["2018"] as YearlyOperationsFields;
     const element2021 = yearsDict["2021"] as YearlyOperationsFields;

@@ -41,21 +41,23 @@ export interface YearlyOperationsFields {
   year: string;
   companyId: string;
   // Shares
-  sharesBought: number;
-  sharesSold: number;
   investedAmount: number;
   investedAmountBaseCurrency: number;
+  investmentCommission: number;
+  ivestmentWithCommission: number;
+  operationsCount: number;
+  sellCommission: number;
+  sharesBought: number;
+  sharesSold: number;
   soldAmount: number;
   soldAmountBaseCurrency: number;
-  investmentCommission: number;
-  sellCommission: number;
-  operationsCount: number;
   // Dividends
   dividendsGross: number;
   dividendsGrossBaseCurrency: number;
+  dividendsNet: number;
+  // Accumulated
   accumulatedDividendsGross: number;
   accumulatedDividendsGrossBaseCurrency: number;
-  dividendsNet: number;
   accumulatedDividendsNet: number;
   accumulatedDividendsNetBaseCurrency: number;
   dividendsPerShare: number;
@@ -63,16 +65,16 @@ export interface YearlyOperationsFields {
   // Calculated
   accumulatedInvestment: number;
   accumulatedSoldAmount: number;
+  accumulatedInvestmentWithCommision: number;
   accumulatedInvestmentCommission: number;
   accumulatedSellCommission: number;
   accumulatedSharesNumber: number;
   totalInvested: number;
   averagePrice: number;
-  totalInvestedWithCommission: number;
   // Calculated from stock price
   latestYearStockPrice: number;
   portfolioValue: number;
-  portfolioValueInflation: number;
+  portfolioValueWithInflation: number;
   accumulatedInflation: number;
   // Returns
   yearReturn: number;

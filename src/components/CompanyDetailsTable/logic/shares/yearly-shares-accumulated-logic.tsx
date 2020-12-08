@@ -1,63 +1,67 @@
 import { YearlyOperationsFields } from "../../../../types/company";
-import { YearlyShareFields } from "../../../../types/share";
 import { YearlyOperationsDictProps } from "../table-logic";
 
+/**
+ *
+ * @param modifiedYears
+ */
 export function setAccumulatedYearlySharesAttributes(
-  shares: YearlyShareFields[],
-  originYears: YearlyOperationsDictProps
+  modifiedYears: YearlyOperationsDictProps
 ): YearlyOperationsDictProps {
-  let years = originYears;
-  for (let index = 0; index < shares.length; index++) {
-    const yearlyShares = shares[index] as YearlyShareFields;
-    const currentYear = yearlyShares.year;
+  let yearsWithExtraFields = modifiedYears;
 
-    if (!years.hasOwnProperty(currentYear)) {
-      years[currentYear] = { year: currentYear };
-    }
+  Object.entries(modifiedYears).forEach(([year, currentValues]) => {
+    const currentYearElement = currentValues as YearlyOperationsFields;
 
-    let currentYearElement = years[currentYear] as YearlyOperationsFields;
+    Object.entries(modifiedYears).forEach(([year2, currentValues2]) => {
+      const yearlyValues2 = currentValues2 as YearlyOperationsFields;
 
-    if (!currentYearElement.accumulatedSharesNumber) {
-      currentYearElement.accumulatedSharesNumber = 0;
-    }
+      initializeNaNValues(currentYearElement);
 
-    if (!currentYearElement.accumulatedSoldAmount) {
-      currentYearElement.accumulatedSoldAmount = 0;
-    }
-
-    if (!currentYearElement.accumulatedInvestment) {
-      currentYearElement.accumulatedInvestment = 0;
-    }
-
-    if (!currentYearElement.accumulatedInvestmentCommission) {
-      currentYearElement.accumulatedInvestmentCommission = 0;
-    }
-
-    if (!currentYearElement.accumulatedSellCommission) {
-      currentYearElement.accumulatedSellCommission = 0;
-    }
-
-    for (let index = 0; index < shares.length; index++) {
-      const secondaryShares = shares[index] as YearlyOperationsFields;
-      const secondaryYear = secondaryShares.year;
-
-      if (parseInt(secondaryYear) <= parseInt(currentYear)) {
+      if (parseInt(year2) <= parseInt(year)) {
         // Shares number
         currentYearElement.accumulatedSharesNumber +=
-          secondaryShares.sharesBought - secondaryShares.sharesSold;
-        //Investment
-        currentYearElement.accumulatedInvestment +=
-          secondaryShares.investedAmount;
+          yearlyValues2.sharesBought - yearlyValues2.sharesSold;
+        //Accumulated Investment
+        if (!isNaN(yearlyValues2.ivestmentWithCommission)) {
+          currentYearElement.accumulatedInvestment +=
+            yearlyValues2.ivestmentWithCommission;
+          // console.log(
+          //   `accumulatedInvestment is ${currentYearElement.accumulatedInvestment} +(${yearlyValues2.ivestmentWithCommission})`
+          // );
+        }
         // Sold amount
-        currentYearElement.accumulatedSoldAmount += secondaryShares.soldAmount;
+        currentYearElement.accumulatedSoldAmount += yearlyValues2.soldAmount;
         // Investment Commission
         currentYearElement.accumulatedInvestmentCommission +=
-          secondaryShares.investmentCommission;
+          yearlyValues2.investmentCommission;
         // Sell Commission
         currentYearElement.accumulatedSellCommission +=
-          secondaryShares.sellCommission;
+          yearlyValues2.sellCommission;
       }
-    }
+    });
+  });
+
+  return yearsWithExtraFields;
+}
+function initializeNaNValues(currentYearElement: YearlyOperationsFields) {
+  if (isNaN(currentYearElement.accumulatedSharesNumber)) {
+    currentYearElement.accumulatedSharesNumber = 0;
   }
-  return years;
+
+  if (isNaN(currentYearElement.accumulatedInvestment)) {
+    currentYearElement.accumulatedInvestment = 0;
+  }
+
+  if (isNaN(currentYearElement.accumulatedInvestmentCommission)) {
+    currentYearElement.accumulatedInvestmentCommission = 0;
+  }
+
+  if (isNaN(currentYearElement.accumulatedSellCommission)) {
+    currentYearElement.accumulatedSellCommission = 0;
+  }
+
+  if (isNaN(currentYearElement.accumulatedSoldAmount)) {
+    currentYearElement.accumulatedSoldAmount = 0;
+  }
 }

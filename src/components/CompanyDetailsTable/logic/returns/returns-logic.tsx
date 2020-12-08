@@ -7,37 +7,30 @@ export function calculatePortfolioReturns(years: YearlyOperationsDictProps) {
   for (let year in years) {
     const currentYearElement = years[year] as YearlyOperationsFields;
 
+    console.log(`Calculating return for year ${currentYearElement.year}`);
     // = portfolio value with inflation - (previous year's portfolio value with inflation + new investment)
-    const yearReturn =
-      currentYearElement.portfolioValueInflation -
-      (previousYearPortfolioValueWithInflation +
-        currentYearElement.investedAmount);
-
+    const yearReturn = getCurrentYearReturn(
+      currentYearElement.portfolioValueWithInflation,
+      currentYearElement.ivestmentWithCommission,
+      previousYearPortfolioValueWithInflation
+    );
     currentYearElement.yearReturn = yearReturn;
 
-    currentYearElement.accumulatedReturn =
-      currentYearElement.portfolioValueInflation -
-      currentYearElement.accumulatedInvestment;
-    // =SI((S3+F4)>0,(S4-(S3+F4))/(S3+F4),0)
-    // S3: previous year portfolio value
-    // F4: new investment current year
-    // S4: current year portfolio value
-    let returnPercentage = 0;
-    if (previousYearPortfolioValue + currentYearElement.investedAmount > 0) {
-      console.log("CALCULATING RETURN PERCENTAGE");
-      console.log(
-        `previousYearPortfolioValue + currentYearElement.investedAmount = ${previousYearPortfolioValue} + ${
-          currentYearElement.investedAmount
-        } = ${previousYearPortfolioValue + currentYearElement.investedAmount}`
-      );
-      returnPercentage =
-        (currentYearElement.portfolioValue -
-          (previousYearPortfolioValue + currentYearElement.investedAmount)) /
-        (previousYearPortfolioValue + currentYearElement.investedAmount);
-      console.log(`Return percentage= ${returnPercentage}`);
-    } else {
-      returnPercentage = 0;
-    }
+    console.log(`Calculating acum. return for year ${currentYearElement.year}`);
+    const accumulatedReturn = getAccumulatedReturn(
+      currentYearElement.portfolioValueWithInflation,
+      currentYearElement.accumulatedInvestment
+    );
+    currentYearElement.accumulatedReturn = accumulatedReturn;
+
+    console.log(
+      `Calculating return percentage for year ${currentYearElement.year}`
+    );
+    let returnPercentage = getReturnPercentage(
+      currentYearElement.ivestmentWithCommission,
+      currentYearElement.portfolioValue,
+      previousYearPortfolioValue
+    );
     currentYearElement.returnPercentage = returnPercentage * 100;
 
     // // =SI(G3>0,(S3-G3)/G3,0)
@@ -46,43 +39,129 @@ export function calculatePortfolioReturns(years: YearlyOperationsDictProps) {
 
     // }
     // =SI(G4>0,(S4-G4)/G4,0)
-    if (currentYearElement.accumulatedInvestment > 0) {
-      currentYearElement.accumulatedReturnPercentage =
-        ((currentYearElement.portfolioValue -
-          currentYearElement.accumulatedInvestment) /
-          currentYearElement.accumulatedInvestment) *
-        100;
-    } else {
-      currentYearElement.accumulatedReturnPercentage = 0;
-    }
+    let accumulatedReturnPercentage = getCurrentYearAccumulatedReturnPercentage(
+      currentYearElement.accumulatedInvestment,
+      currentYearElement.portfolioValue
+    );
+    currentYearElement.accumulatedReturnPercentage = accumulatedReturnPercentage;
+
+    let dividendsReturnPercentage = getCurrentYearsDividendsReturnPercentage(
+      currentYearElement.portfolioValue,
+      currentYearElement.dividendsGross
+    );
+    currentYearElement.dividendsReturnPercentage = dividendsReturnPercentage;
+
+    let yoc = getCurrentYearYoc(
+      currentYearElement.dividendsGross,
+      currentYearElement.accumulatedInvestment
+    );
+    currentYearElement.yoc = yoc;
+
+    let rpdEmp = getCurrenYearRpdEmp(
+      currentYearElement.latestYearStockPrice,
+      currentYearElement.dividendsPerShare
+    );
+    currentYearElement.rpdEmp = rpdEmp;
 
     // Set previous year values
     previousYearPortfolioValueWithInflation =
-      currentYearElement.portfolioValueInflation;
+      currentYearElement.portfolioValueWithInflation;
     previousYearPortfolioValue = currentYearElement.portfolioValue;
-
-    if (currentYearElement.portfolioValue > 0) {
-      currentYearElement.dividendsReturnPercentage =
-        currentYearElement.dividendsGross / currentYearElement.portfolioValue * 100;
-    } else {
-      currentYearElement.dividendsReturnPercentage = 0;
-    }
-
-    if (currentYearElement.accumulatedInvestment > 0) {
-      currentYearElement.yoc =
-        currentYearElement.dividendsGross / currentYearElement.accumulatedInvestment * 100;
-    } else {
-      currentYearElement.yoc = 0;
-    }
-
-    if (currentYearElement.latestYearStockPrice > 0) {
-      currentYearElement.rpdEmp =
-        currentYearElement.dividendsPerShare / currentYearElement.latestYearStockPrice * 100;
-    } else {
-      currentYearElement.rpdEmp = 0;
-    }
-
-
   }
   return years;
+}
+
+function getReturnPercentage(
+  totalInvestedWithCommission: number,
+  portfolioValue: number,
+  previousYearPortfolioValue: number
+) {
+  let returnPercentage = 0;
+  // =IF((S3+F4)>0,(S4-(S3+F4))/(S3+F4),0)
+  // S3: previous year portfolio value
+  // F4: new investment current year
+  // S4: current year portfolio value
+  if (previousYearPortfolioValue + totalInvestedWithCommission > 0) {
+    returnPercentage =
+      (portfolioValue -
+        (previousYearPortfolioValue + totalInvestedWithCommission)) /
+      (previousYearPortfolioValue + totalInvestedWithCommission);
+    console.log(`Return percentage= ${returnPercentage}`);
+  } else {
+    returnPercentage = 0;
+  }
+  return returnPercentage;
+}
+
+function getCurrentYearAccumulatedReturnPercentage(
+  accumulatedInvestment: number,
+  portfolioValue: number
+) {
+  let accumulatedReturnPercentage = 0;
+  if (accumulatedInvestment > 0) {
+    accumulatedReturnPercentage =
+      ((portfolioValue - accumulatedInvestment) / accumulatedInvestment) * 100;
+  }
+  return accumulatedReturnPercentage;
+}
+
+function getCurrentYearsDividendsReturnPercentage(
+  portfolioValue: number,
+  dividendsGross: number
+) {
+  let dividendsReturnPercentage = 0;
+
+  if (portfolioValue > 0) {
+    dividendsReturnPercentage = (dividendsGross / portfolioValue) * 100;
+  } else {
+    dividendsReturnPercentage = 0;
+  }
+  return dividendsReturnPercentage;
+}
+
+function getCurrentYearYoc(
+  dividendsGross: number,
+  accumulatedInvestment: number
+) {
+  let yoc = 0;
+  if (accumulatedInvestment > 0) {
+    yoc = (dividendsGross / accumulatedInvestment) * 100;
+  }
+  return yoc;
+}
+
+function getCurrenYearRpdEmp(
+  latestYearStockPrice: number,
+  dividendsPerShare: number
+) {
+  let rpdEmp = 0;
+  if (latestYearStockPrice > 0) {
+    rpdEmp = (dividendsPerShare / latestYearStockPrice) * 100;
+  }
+  return rpdEmp;
+}
+
+function getAccumulatedReturn(
+  portfolioValueWithInflation: number,
+  accumulatedInvestment: number
+) {
+  const acumReturn = portfolioValueWithInflation - accumulatedInvestment;
+  console.log(
+    `getAccumulatedReturn = portfolioValueWithInflation ${portfolioValueWithInflation} - accumulatedInvestment ${accumulatedInvestment} = ${acumReturn}`
+  );
+  return acumReturn;
+}
+
+function getCurrentYearReturn(
+  portfolioValueWithInflation: number,
+  totalInvestedWithCommission: number,
+  previousYearPortfolioValueWithInflation: number
+) {
+  const yearReturn =
+    portfolioValueWithInflation -
+    (previousYearPortfolioValueWithInflation + totalInvestedWithCommission);
+  console.log(
+    `getCurrentYearReturn = portfolioValueWithInflation (${portfolioValueWithInflation}) - previousYearPortfolioValueWithInflation (${previousYearPortfolioValueWithInflation}) + totalInvestedWithCommission (${totalInvestedWithCommission}) = ${yearReturn}`
+  );
+  return yearReturn;
 }
