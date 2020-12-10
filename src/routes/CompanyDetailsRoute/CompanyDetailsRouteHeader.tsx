@@ -22,7 +22,7 @@ export default function CompanyDetailsRouteHeader({
 
   useEffect(() => {
     fetchCompany(companyId);
-  }, [companyId, fetchCompany])
+  }, [companyId, fetchCompany]);
 
   const routes = [
     {
@@ -107,29 +107,7 @@ export default function CompanyDetailsRouteHeader({
           routes,
           itemRender
         }}
-        extra={[
-          <Button
-            key={"add-shares-button"}
-            onClick={() => {
-              history.push(
-                `/portfolios/${portfolioId}/companies/${company?.id}/add-shares`
-              );
-            }}
-          >
-            + Shares
-          </Button>,
-          <Button
-            key={"add-dividends-button"}
-            onClick={() => {
-              history.push(
-                `/portfolios/${portfolioId}/companies/${company?.id}/add-dividends`
-              );
-            }}
-          >
-            + Dividends
-          </Button>,
-          <DropdownMenu key="more" />
-        ]}
+        extra={[<DropdownMenu key="more" />]}
       />
       {company && (
         <StockPriceAddModal

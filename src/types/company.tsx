@@ -35,6 +35,7 @@ export interface CompanyItemProps {
   sellSharesNumber?: number;
   sellTotal?: number;
   sellCommission?: number;
+  lastOperationDate?: string;
 }
 
 export interface YearlyOperationsFields {
@@ -84,4 +85,29 @@ export interface YearlyOperationsFields {
   dividendsReturnPercentage: number;
   yoc: number;
   rpdEmp: number;
+}
+
+export interface CompanyTotalProps {
+  id: string;
+  name: string;
+  ticker: string;
+  url: string;
+  sector: string;
+  currency: string;
+  sharesNumber: number;
+  investedAmount: number;
+  averagePrice: number;
+  averagePriceWithoutCommission: number;
+  commission: number;
+  commissionPercentage: number;
+  lastStockPrice: number;
+  portfolioValue: number;
+  portfolioValueWithInflation: number;
+  lastOperationDate: number;
+  accumReturn: number;
+  accumReturnPercentage: number;
+  accumulatedDividendsGross: number;
+  accumulatedDividendsNet: number;
+  returnWithDividends: number;
+  returnWithDividendsPercentage: number;
 }

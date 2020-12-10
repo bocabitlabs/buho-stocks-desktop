@@ -48,6 +48,10 @@ body {
   overflow-y: auto;
 }
 
+.company-table .ant-table table {
+  font-size: 12px;
+}
+
 @import "~antd/dist/antd.css";
 /* ul {
   display: inline-flex;

@@ -27,6 +27,7 @@ export default class CompanyDAO {
       , S.sellTotal
       , S.sellCommission
       , S.buyCommission
+      , S.lastOperationDate
       , portfolios.name as portfolioName
 
     FROM "companies"
@@ -43,6 +44,7 @@ export default class CompanyDAO {
       , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as sellTotal
       , sum(CASE WHEN shares.type='BUY' THEN shares.commission ELSE 0 END) as buyCommission
       , sum(CASE WHEN shares.type='SELL' THEN shares.commission ELSE 0 END) as sellCommission
+      , max(operationDate) as lastOperationDate
     FROM "shares"
       GROUP BY shares.companyId) AS S
       ON companies.id = S.companyId

@@ -35,6 +35,7 @@ export const computeYearlyData = (
   modifiedYears = calculatePortfolioValueWithStockPrices(modifiedYears);
   modifiedYears = calculatePortfolioReturns(modifiedYears);
 
+  // Convert from Dict to Array
   let resultArray: YearlyOperationsFields[] = [];
   for (var year in modifiedYears) {
     const currentYearElement = modifiedYears[year] as YearlyOperationsFields;

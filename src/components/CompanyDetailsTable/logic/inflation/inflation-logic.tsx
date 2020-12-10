@@ -12,10 +12,10 @@ export function calculateInflationForYears(
   yearlyOperationsDict: YearlyOperationsDictProps
 ) {
   for (let year in yearlyOperationsDict) {
-    const {
-      accumulatedInflation,
-      currentYearElement
-    } = calculateInflationForYear(yearlyOperationsDict, year);
+    const currentYearElement = yearlyOperationsDict[
+      year
+    ] as YearlyOperationsFields;
+    const accumulatedInflation = calculateInflationForYear(year);
     // console.log(`Accum. Inflation for year: ${year}=${accumulatedInflation}`);
     currentYearElement.accumulatedInflation = accumulatedInflation;
   }
@@ -24,16 +24,9 @@ export function calculateInflationForYears(
 
 /**
  * Calculate the inflation and the accumulated inflation for a given year in the yearlyOperations array
- * @param years
  * @param year
  */
-export function calculateInflationForYear(
-  yearlyOperationsDict: YearlyOperationsDictProps,
-  year: string
-) {
-  const currentYearElement = yearlyOperationsDict[
-    year
-  ] as YearlyOperationsFields;
+export function calculateInflationForYear(year: string) {
   const inflationsForYear = InflationService.getInflationsForYear(
     parseInt(year)
   );
@@ -52,5 +45,5 @@ export function calculateInflationForYear(
     count++;
   });
 
-  return { accumulatedInflation, currentYearElement };
+  return accumulatedInflation;
 }

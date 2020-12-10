@@ -5,7 +5,6 @@ import ShareService from "../../services/share-service";
 import { YearlyOperationsFields } from "../../types/company";
 import { columns } from "./table-columns";
 import { computeYearlyData } from "./logic/table-logic";
-import { DividendUtils } from "../../utils/dividend-utils";
 import getTableFooter from "./table-footer";
 
 interface IProps {
@@ -39,8 +38,6 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
   }, []);
 
   const getData = () => {
-    const dividentUtils = new DividendUtils();
-
     const parsedYearlyData = yearlyData.map(
       (share: YearlyOperationsFields, index: number) => ({
         id: index.toString(),
@@ -52,47 +49,40 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
         totalShares: share.sharesBought - share.sharesSold,
         // Total number of shares for current + previous years
         accumulatedSharesNumber: share.accumulatedSharesNumber,
-        //  Total amount invested in the current year
+        // //  Total amount invested in the current year
         investedAmount: share.investedAmount,
-        // Total amount invested in the current + previous years
+        // // Total amount invested in the current + previous years
         accumulatedInvestment: share.accumulatedInvestment,
-        // Commision
+        // // Commision
         investmentCommission: share.investmentCommission,
-        // Accumulated Commission
+        // // Accumulated Commission
         accumulatedInvestmentCommission: share.accumulatedInvestmentCommission,
-        // Share average price
+        // // Share average price
         averagePrice: share.averagePrice,
-        // Total invested + commission
+        // // Total invested + commission
         ivestmentWithCommission: share.ivestmentWithCommission,
-        // Dividends amount with commissions
+        // // Dividends amount with commissions
         dividendsGross: share.dividendsGross,
-        // Dividends amount without commissions
+        // // Dividends amount without commissions
         dividendsNet: share.dividendsNet,
-        // Dividend Per Share
+        // // Dividend Per Share
         dividendsPerShare: share.dividendsPerShare,
-        //  Total amount of dividends for the current + previous years
+        // //  Total amount of dividends for the current + previous years
         accumulatedDividendsGross: share.accumulatedDividendsGross,
-        // Net amount of dividends for the current + previous years
-        accumulatedDividendsNet:
-          share.accumulatedDividendsNet > 0
-            ? share.accumulatedDividendsNet.toFixed(2)
-            : "0",
-        // Values where stock price is required
+        // // Net amount of dividends for the current + previous years
+        accumulatedDividendsNet: share.accumulatedDividendsNet,
+        // // Values where stock price is required
         latestYearStockPrice: share.latestYearStockPrice,
         portfolioValue: share.portfolioValue,
         portfolioValueWithInflation: share.portfolioValueWithInflation,
-        // Returns
-        yearReturn: share.yearReturn.toFixed(2),
+        // // Returns
+        yearReturn: share.yearReturn,
         accumulatedReturn: share.accumulatedReturn,
         returnPercentage: share.returnPercentage,
-        accumulatedReturnPercentage: dividentUtils.getPercentage(
-          share.accumulatedReturnPercentage.toFixed(2)
-        ),
-        dividendsReturnPercentage: dividentUtils.getPercentage(
-          share.dividendsReturnPercentage.toFixed(2)
-        ),
-        yoc: dividentUtils.getPercentage(share.yoc.toFixed(2)),
-        rpdEmp: dividentUtils.getPercentage(share.rpdEmp.toFixed(2))
+        accumulatedReturnPercentage: share.accumulatedReturnPercentage,
+        dividendsReturnPercentage: share.dividendsReturnPercentage,
+        yoc: share.yoc,
+        // currencySymbol: share.currencySymbol
       })
     );
     return parsedYearlyData;
@@ -101,11 +91,12 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
     <Table
       size="small"
       style={{ maxWidth: `max(500px, ${width - 300}px)` }}
+      className={'company-table'}
       scroll={{ x: 800 }}
       bordered
       columns={columns}
       dataSource={getData()}
-      // summary={getTableFooter()}
+      summary={getTableFooter()}
     />
   );
 }

@@ -75,6 +75,20 @@ export default class DividendDAO {
     return results;
   };
 
+  getDividendsByCompanyId = (companyId: string) => {
+    const sql = `
+      SELECT
+      sum(dividends.priceShare * dividends.sharesNumber - dividends.commission) as dividendsNet
+      , sum((dividends.priceShare * dividends.sharesNumber - dividends.commission) * dividends.exchangeRate) as dividendsNetBaseCurrency
+      , sum(dividends.priceShare * dividends.sharesNumber) as dividendsGross
+      , sum(dividends.priceShare * dividends.sharesNumber * dividends.exchangeRate) as dividendsGrossBaseCurrency
+	  FROM "dividends"
+    WHERE dividends.companyId = '${companyId}';
+      `;
+    const results = sendIpcSql(sql, 'get');
+    return results;
+  };
+
   deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("dividends", id);

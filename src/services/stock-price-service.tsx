@@ -11,7 +11,14 @@ export default class StockPriceService {
   };
 
   getLastStockPricePerYearByCompanyId = (companyId: string, year: string) => {
-    return new StockPriceDAO().getLastStockPricePerYearByCompanyId(companyId, year);
+    return new StockPriceDAO().getLastStockPricePerYearByCompanyId(
+      companyId,
+      year
+    );
+  };
+
+  getLastStockPriceByCompanyId = (companyId: string) => {
+    return new StockPriceDAO().getLastStockPriceByCompanyId(companyId);
   };
 
   deleteById = (shareId: string) => {

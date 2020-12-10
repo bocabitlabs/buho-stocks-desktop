@@ -1,11 +1,11 @@
 import { Button, Popconfirm, Space, Table } from "antd";
 import moment from "moment";
-import React, { useContext } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { DividendsContext } from "../../contexts/dividends";
 import DividendService from "../../services/dividend-service";
 import { DividendItemProps } from "../../types/dividend";
-import { DividendUtils } from "../../utils/dividend-utils";
+import DividendUtils from "../../utils/dividend-utils";
 
 interface IProps {
   portfolioId: string;
@@ -14,7 +14,18 @@ interface IProps {
 
 export default function DividendListTable({ portfolioId, companyId }: IProps) {
   const { dividends } = useContext(DividendsContext);
+  const [width, setWidth] = useState(window.innerWidth);
+
   const history = useHistory();
+
+  useLayoutEffect(() => {
+    function updateSize() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   function confirm(recordId: string) {
     const result = new DividendService().deleteById(recordId);
@@ -49,21 +60,24 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       dataIndex: "priceShare",
       key: "priceShare",
       width: 70,
-      render: (text: string, record: any) => record.priceShare
+      render: (text: string, record: any) =>
+        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
     },
     {
       title: "Commission",
       dataIndex: "commission",
       key: "commission",
       width: 70,
-      render: (text: string, record: any) => record.commission
+      render: (text: string, record: any) =>
+        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
     },
     {
       title: "Total",
       dataIndex: "total",
       key: "total",
       width: 70,
-      render: (text: string, record: any) => record.total
+      render: (text: string, record: any) =>
+        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
     },
     {
       title: "Action",
@@ -85,29 +99,17 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   ];
 
   const getData = () => {
-    const dividentUtils = new DividendUtils();
-
     const shares2 = dividends.map((dividend: DividendItemProps) => ({
       id: dividend.id,
       key: dividend.id,
       name: "dividend",
       sharesNumber: dividend.sharesNumber.toString(),
       operationDate: dividend.operationDate,
-      priceShare: dividentUtils.getAmountWithSymbol(
-        dividend.priceShare,
-        dividend.currencySymbol
-      ),
-      commission: dividentUtils.getAmountWithSymbol(
-        dividend.commission,
-        dividend.currencySymbol
-      ),
-      total: dividentUtils.getTotalInvestedWithSymbol(
-        dividend.sharesNumber,
-        dividend.priceShare,
-        dividend.commission,
-        dividend.currencySymbol
-      ),
-      notes: dividend.notes
+      priceShare: dividend.priceShare,
+      commission: dividend.commission,
+      total: dividend.sharesNumber * dividend.priceShare + dividend.commission,
+      notes: dividend.notes,
+      currencySymbol: dividend.currencySymbol
     }));
     return shares2;
   };
@@ -115,7 +117,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
     <>
       <Table
         size="small"
-        style={{ maxWidth: "max(500px, 76vw)" }}
+        style={{ maxWidth: `max(500px, ${width - 300}px)` }}
         scroll={{ x: 800 }}
         bordered
         columns={columns}
@@ -124,7 +126,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
           expandedRowRender: (record) => (
             <p style={{ margin: 0 }}>{record.notes}</p>
           ),
-          rowExpandable: (record) => record.notes !== ""
+          rowExpandable: (record) => record.notes !== "undefined"
         }}
       />
     </>

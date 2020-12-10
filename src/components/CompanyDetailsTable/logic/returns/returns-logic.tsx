@@ -111,6 +111,10 @@ function getCurrentYearsDividendsReturnPercentage(
 ) {
   let dividendsReturnPercentage = 0;
 
+  if (isNaN(dividendsGross)) {
+    dividendsGross = 0;
+  }
+
   if (portfolioValue > 0) {
     dividendsReturnPercentage = (dividendsGross / portfolioValue) * 100;
   } else {
@@ -124,6 +128,11 @@ function getCurrentYearYoc(
   accumulatedInvestment: number
 ) {
   let yoc = 0;
+
+  if (isNaN(dividendsGross)) {
+    dividendsGross = 0;
+  }
+
   if (accumulatedInvestment > 0) {
     yoc = (dividendsGross / accumulatedInvestment) * 100;
   }
@@ -135,6 +144,11 @@ function getCurrenYearRpdEmp(
   dividendsPerShare: number
 ) {
   let rpdEmp = 0;
+
+  if (isNaN(dividendsPerShare)) {
+    dividendsPerShare = 0;
+  }
+
   if (latestYearStockPrice > 0) {
     rpdEmp = (dividendsPerShare / latestYearStockPrice) * 100;
   }

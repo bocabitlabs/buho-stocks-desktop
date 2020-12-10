@@ -1,5 +1,4 @@
 import { YearlyShareFields } from "../../../../types/share";
-import { YearlyOperationsDictProps } from "../table-logic";
 import { setYearlySharesAttributes } from "./yearly-shares-logic";
 
 

@@ -51,6 +51,19 @@ export default class StockPriceDAO {
     return results;
   };
 
+  getLastStockPriceByCompanyId = (companyId: string) => {
+    const sql = `
+    SELECT *
+    FROM stockPrices
+    WHERE companyId = '${companyId}'
+    ORDER BY strftime(stockPrices.operationDate) DESC
+    LIMIT 1;
+      `;
+    const results = sendIpcSql(sql, 'get');
+    console.log(results);
+    return results;
+  };
+
   deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("stockPrices", id);

@@ -1,6 +1,6 @@
-import { Tabs, Typography } from "antd";
+import { Button, Tabs, Typography } from "antd";
 import React, { ReactElement, useContext, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import CompanyDetailsTable from "../../components/CompanyDetailsTable/CompanyDetailsTable";
 import DividendListTable from "../../components/DividendListTable/DividendListTable";
 import ShareListTable from "../../components/ShareListTable/ShareListTable";
@@ -18,11 +18,14 @@ function useQuery() {
 
 interface Props {
   companyId: string;
+  portfolioId: string;
 }
 
 export default function CompanyDetailsContent({
-  companyId
+  companyId,
+  portfolioId
 }: Props): ReactElement {
+  const history = useHistory();
   let query = useQuery();
   const { company, fetchCompany } = useContext(CompaniesContext);
   const sharesContext = useSharesContext(companyId);
@@ -36,9 +39,13 @@ export default function CompanyDetailsContent({
     <>
       {company && (
         <>
-          <Typography.Text type="secondary">
+          {/* <Typography.Text type="secondary">
             {company.description}
-          </Typography.Text>
+          </Typography.Text> */}
+
+          <Typography.Paragraph>
+          {company.description}
+          </Typography.Paragraph>
 
           <CompanyDetailsTable
             companyId={companyId}
@@ -49,6 +56,28 @@ export default function CompanyDetailsContent({
             onChange={() => {
               console.log("Tab click");
             }}
+            tabBarExtraContent={[
+              <Button
+                key={"add-shares-button"}
+                onClick={() => {
+                  history.push(
+                    `/portfolios/${portfolioId}/companies/${company?.id}/add-shares`
+                  );
+                }}
+              >
+                + Shares
+              </Button>,
+              <Button
+                key={"add-dividends-button"}
+                onClick={() => {
+                  history.push(
+                    `/portfolios/${portfolioId}/companies/${company?.id}/add-dividends`
+                  );
+                }}
+              >
+                + Dividends
+              </Button>
+            ]}
           >
             <Tabs.TabPane tab="Shares" key="shares">
               <SharesContext.Provider value={sharesContext}>

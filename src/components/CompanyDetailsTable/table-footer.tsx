@@ -1,4 +1,5 @@
 import { Table } from "antd";
+import DividendUtils from "../../utils/dividend-utils";
 
 interface FooterProps {
   id: string;
@@ -10,40 +11,39 @@ interface FooterProps {
   totalShares: number;
   // Total number of shares for current + previous years
   accumulatedSharesNumber: number;
-  //  Total amount invested in the current year
+  // //  Total amount invested in the current year
   investedAmount: number;
-  // Total amount invested in the current + previous years
+  // // Total amount invested in the current + previous years
   accumulatedInvestment: number;
-  // Commision
+  // // Commision
   investmentCommission: number;
-  // Accumulated Commission
+  // // Accumulated Commission
   accumulatedInvestmentCommission: number;
-  // Share average price
+  // // Share average price
   averagePrice: number;
-  // Total invested + commission
-  totalInvestedWithCommission: number;
-  // Dividends amount with commissions
+  // // Total invested + commission
+  ivestmentWithCommission: number;
+  // // Dividends amount with commissions
   dividendsGross: number;
-  // Dividends amount without commissions
+  // // Dividends amount without commissions
   dividendsNet: number;
-  // Dividend Per Share
+  // // Dividend Per Share
   dividendsPerShare: number;
-  //  Total amount of dividends for the current + previous years
+  // //  Total amount of dividends for the current + previous years
   accumulatedDividendsGross: number;
-  // Net amount of dividends for the current + previous years
-  accumulatedDividendsNet: string;
-  // Values where stock price is required
+  // // Net amount of dividends for the current + previous years
+  accumulatedDividendsNet: number;
+  // // Values where stock price is required
   latestYearStockPrice: number;
   portfolioValue: number;
   portfolioValueWithInflation: number;
-  // Returns
-  yearReturn: string;
+  // // Returns
+  yearReturn: number;
   accumulatedReturn: number;
   returnPercentage: number;
-  accumulatedReturnPercentage: string;
-  dividendsReturnPercentage: string;
-  yoc: string;
-  rpdEmp: string;
+  accumulatedReturnPercentage: number;
+  dividendsReturnPercentage: number;
+  yoc: number;
 }
 
 export default function getTableFooter(): (
@@ -57,7 +57,7 @@ export default function getTableFooter(): (
     let dividendsGrossSummary = 0;
     let dividendsNetSummary = 0;
     let portfolioValueSummary = 0;
-    let portfolioValueWithInflationSummary = 0;
+    let portfolioValueInflationSummary = 0;
     let accumulatedReturnSummary = 0;
 
     pageData.forEach(
@@ -65,7 +65,7 @@ export default function getTableFooter(): (
         totalShares,
         investedAmount,
         investmentCommission,
-        totalInvestedWithCommission,
+        ivestmentWithCommission,
         dividendsGross,
         dividendsNet,
         portfolioValue,
@@ -75,11 +75,11 @@ export default function getTableFooter(): (
         totalSharesSummary += totalShares;
         investedAmountSummary += investedAmount;
         investmentCommissionSummary += investmentCommission;
-        totalInvestedWithCommissionSummary += totalInvestedWithCommission;
+        totalInvestedWithCommissionSummary += ivestmentWithCommission;
         dividendsGrossSummary += dividendsGross;
         dividendsNetSummary += dividendsNet;
         portfolioValueSummary = portfolioValue;
-        portfolioValueWithInflationSummary = portfolioValueWithInflation;
+        portfolioValueInflationSummary = portfolioValueWithInflation;
         accumulatedReturnSummary = accumulatedReturn;
       }
     );
@@ -90,7 +90,7 @@ export default function getTableFooter(): (
     let returnPercentageSummary = 0;
     if (investedAmountSummary > 0) {
       returnPercentageSummary =
-        ((portfolioValueWithInflationSummary - investedAmountSummary) /
+        ((portfolioValueInflationSummary - investedAmountSummary) /
           investedAmountSummary) *
         100;
     }
@@ -108,50 +108,102 @@ export default function getTableFooter(): (
 
     return (
       <Table.Summary.Row>
-        <Table.Summary.Cell index={1}>Total</Table.Summary.Cell>
-        <Table.Summary.Cell index={2}>{totalSharesSummary}</Table.Summary.Cell>
+        <Table.Summary.Cell index={0}>Total</Table.Summary.Cell>
+        <Table.Summary.Cell index={1}>{totalSharesSummary}</Table.Summary.Cell>
         <Table.Summary.Cell index={2}></Table.Summary.Cell>
         <Table.Summary.Cell index={3}>
-          {investedAmountSummary}
+          {DividendUtils.getAmountWithSymbol(
+            investedAmountSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
         </Table.Summary.Cell>
         <Table.Summary.Cell index={4}></Table.Summary.Cell>
-        <Table.Summary.Cell index={4}>{averagePriceSummary}</Table.Summary.Cell>
-        <Table.Summary.Cell index={4}>
-          {investmentCommissionSummary}
+
+        <Table.Summary.Cell index={5}>
+          {DividendUtils.getAmountWithSymbol(
+            investmentCommissionSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
         </Table.Summary.Cell>
-        <Table.Summary.Cell index={5}></Table.Summary.Cell>
-        <Table.Summary.Cell index={6}>
-          {totalInvestedWithCommissionSummary}
-        </Table.Summary.Cell>
+        <Table.Summary.Cell index={6}></Table.Summary.Cell>
         <Table.Summary.Cell index={7}>
-          {dividendsGrossSummary.toFixed(2)}
+          {DividendUtils.getAmountWithSymbol(
+            totalInvestedWithCommissionSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
         </Table.Summary.Cell>
         <Table.Summary.Cell index={8}>
-          {dividendsNetSummary.toFixed(2)}
+          {DividendUtils.getAmountWithSymbol(
+            averagePriceSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
         </Table.Summary.Cell>
-        <Table.Summary.Cell index={9}></Table.Summary.Cell>
-        <Table.Summary.Cell index={10}></Table.Summary.Cell>
+
+        <Table.Summary.Cell index={9}>
+          {DividendUtils.getAmountWithSymbol(
+            dividendsGrossSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
+        </Table.Summary.Cell>
+        <Table.Summary.Cell index={10}>
+          {DividendUtils.getAmountWithSymbol(
+            dividendsNetSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
+        </Table.Summary.Cell>
         <Table.Summary.Cell index={11}></Table.Summary.Cell>
         <Table.Summary.Cell index={12}></Table.Summary.Cell>
-        <Table.Summary.Cell index={13}>
-          {portfolioValueSummary}
-        </Table.Summary.Cell>
-        <Table.Summary.Cell index={13}>
-          {portfolioValueWithInflationSummary.toFixed(2)}
-        </Table.Summary.Cell>
+        <Table.Summary.Cell index={13}></Table.Summary.Cell>
         <Table.Summary.Cell index={14}></Table.Summary.Cell>
         <Table.Summary.Cell index={15}>
-          {accumulatedReturnSummary.toFixed(2)}
+          {DividendUtils.getAmountWithSymbol(
+            portfolioValueSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
         </Table.Summary.Cell>
-        <Table.Summary.Cell index={16}></Table.Summary.Cell>
+        <Table.Summary.Cell index={16}>
+          {DividendUtils.getAmountWithSymbol(
+            portfolioValueInflationSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
+        </Table.Summary.Cell>
         <Table.Summary.Cell index={17}>
-          {returnPercentageSummary.toFixed(2)}
+          {DividendUtils.getAmountWithSymbol(
+            accumulatedReturnSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "$"
+          )}
         </Table.Summary.Cell>
-        <Table.Summary.Cell index={18}>
-          {dividendsReturnPercentageSummary.toFixed(2)}
-        </Table.Summary.Cell>
+        <Table.Summary.Cell index={18}></Table.Summary.Cell>
         <Table.Summary.Cell index={19}>
-          {yocSummary.toFixed(2)}
+          {DividendUtils.getAmountWithSymbol(
+            returnPercentageSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "%"
+          )}
+        </Table.Summary.Cell>
+        <Table.Summary.Cell index={20}></Table.Summary.Cell>
+        <Table.Summary.Cell index={21}>
+          {DividendUtils.getAmountWithSymbol(
+            dividendsReturnPercentageSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "%"
+          )}
+        </Table.Summary.Cell>
+        <Table.Summary.Cell index={22}>
+          {DividendUtils.getAmountWithSymbol(
+            yocSummary.toFixed(2).toString(),
+            // record.currencySymbol
+            "%"
+          )}
         </Table.Summary.Cell>
       </Table.Summary.Row>
     );

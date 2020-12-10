@@ -22,7 +22,10 @@ export default function CompanyDetailsRoute(): ReactElement {
         portfolioId={portfolioId}
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <CompanyDetailsContent companyId={companyId} />
+        <CompanyDetailsContent
+          companyId={companyId}
+          portfolioId={portfolioId}
+        />
       </Layout>
     </CompaniesContext.Provider>
   );

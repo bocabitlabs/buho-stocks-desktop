@@ -4,9 +4,12 @@ import { YearlyOperationsDictProps } from "../table-logic";
 
 
 /**
- *
+ * Asign all the values from the dividends to the current
+ * object in the dictionary
  * @param dividends
+ * @type dividends: YearlyDividendFields[]
  * @param years
+ * @type years: YearlyOperationsDictProps
  */
 export function setYearlyDividendsAttributes(
   dividends: YearlyDividendFields[],

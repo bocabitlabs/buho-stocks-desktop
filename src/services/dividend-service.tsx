@@ -14,6 +14,10 @@ export default class DividendService {
     return new DividendDAO().getDividendsPerYearByCompanyId(companyId);
   };
 
+  getDividendsByCompanyId = (companyId: string) => {
+    return new DividendDAO().getDividendsByCompanyId(companyId);
+  }
+
   deleteById = (shareId: string) => {
     return new DividendDAO().deleteById(shareId);
   };

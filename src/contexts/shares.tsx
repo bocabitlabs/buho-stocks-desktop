@@ -1,12 +1,18 @@
 import { createContext } from "react";
-import { ShareFields } from "../types/share";
+import { ShareFields, ShareItemProps } from "../types/share";
 
 export type SharesContextType = {
   shares: ShareFields[];
+  isLoading: boolean;
+  fetchShares: () => void;
+  addShare: (sector: ShareItemProps) => void;
 };
 
 export const sharesDefaultValue: SharesContextType = {
-  shares: []
+  shares: [],
+  isLoading: false,
+  fetchShares: () => null,
+  addShare: () => null
 };
 
 export const SharesContext = createContext<SharesContextType>(
