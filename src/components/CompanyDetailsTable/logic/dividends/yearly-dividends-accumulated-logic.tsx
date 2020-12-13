@@ -8,12 +8,10 @@ export function setAccumulatedYearlyDividendsAttributes(
 ) {
   // let years = originYears;
 
-  let yearsWithExtraFields = modifiedYears;
 
   Object.entries(modifiedYears).forEach(([year, currentValues]) => {
     const currentYearElement = currentValues as YearlyOperationsFields;
 
-    console.log(`Handling Year ${currentYearElement.year}`);
 
     initializeNaNValues(currentYearElement);
 
@@ -21,15 +19,10 @@ export function setAccumulatedYearlyDividendsAttributes(
       const secondaryDividends = element;
       const year2 = secondaryDividends.year;
 
-      console.log(`Handling Year Secondary ${year2}`);
-
       // initializeDividendNaNValues(secondaryDividends);
 
       // Only accumulate lower years
       if (parseInt(year2) <= parseInt(year)) {
-        console.log(
-          `Secondary dividends gross: ${secondaryDividends.dividendsGross}`
-        );
         // Accumulated Dividends gross
         currentYearElement.accumulatedDividendsGross +=
           secondaryDividends.dividendsGross;
@@ -150,6 +143,4 @@ function initializeNaNValues(currentYearElement: YearlyOperationsFields) {
     currentYearElement.accumulatedDividendsNetBaseCurrency = 0;
   }
 
-  console.log(`CURRENT GROSS YEAR ${currentYearElement.year}`);
-  console.log(currentYearElement.dividendsGross);
 }
