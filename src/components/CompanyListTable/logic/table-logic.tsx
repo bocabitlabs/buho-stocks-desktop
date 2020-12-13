@@ -2,6 +2,10 @@ import DividendService from "../../../services/dividend-service";
 import StockPriceService from "../../../services/stock-price-service";
 import { CompanyItemProps, CompanyTotalProps } from "../../../types/company";
 import { calculateInflationForYear } from "../../CompanyDetailsTable/logic/inflation/inflation-logic";
+import {
+  getDividendsReturnPercentage,
+  getYoc
+} from "../../CompanyDetailsTable/logic/returns/returns-logic";
 
 export interface CompanyTotalDictProps {
   [year: string]: CompanyTotalProps | {};
@@ -26,6 +30,7 @@ export const computeCompanyData = (companies: CompanyItemProps[]) => {
       company.ticker
     ] as CompanyTotalProps;
 
+    currentTotalElement.id = company.id || "";
     currentTotalElement.name = company.name;
     currentTotalElement.sector = company.sectorName || "";
     currentTotalElement.currency = company.currencyName || "";
@@ -112,6 +117,17 @@ export const computeCompanyData = (companies: CompanyItemProps[]) => {
 
     // let companyTotal: CompanyTotalProps = {};
 
+    const rpd = getDividendsReturnPercentage(
+      currentTotalElement.portfolioValue,
+      currentTotalElement.accumulatedDividendsGross
+    );
+    currentTotalElement.dividendsReturnPercentage = rpd;
+
+    let yoc = getYoc(
+      currentTotalElement.accumulatedDividendsGross,
+      currentTotalElement.investedAmount
+    );
+    currentTotalElement.yoc = yoc;
     // companyTotal.ticker = company.ticker;
     // //Average Price
     // companyTotal.averagePrice = (company.buyTotal || 0) - (company.sellTotal || 0) +

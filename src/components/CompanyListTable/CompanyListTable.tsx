@@ -68,7 +68,9 @@ export default function CompanyListTable({ portfolioId }: IProps) {
       accumulatedDividendsGross: company.accumulatedDividendsGross,
       accumulatedDividendsNet: company.accumulatedDividendsNet,
       returnWithDividends: company.returnWithDividends,
-      returnWithDividendsPercentage: company.returnWithDividendsPercentage
+      returnWithDividendsPercentage: company.returnWithDividendsPercentage,
+      rpd: company.dividendsReturnPercentage,
+      yoc: company.yoc
     }));
     return columnData;
   };

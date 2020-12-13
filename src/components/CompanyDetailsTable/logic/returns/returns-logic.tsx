@@ -45,13 +45,13 @@ export function calculatePortfolioReturns(years: YearlyOperationsDictProps) {
     );
     currentYearElement.accumulatedReturnPercentage = accumulatedReturnPercentage;
 
-    let dividendsReturnPercentage = getCurrentYearsDividendsReturnPercentage(
+    let dividendsReturnPercentage = getDividendsReturnPercentage(
       currentYearElement.portfolioValue,
       currentYearElement.dividendsGross
     );
     currentYearElement.dividendsReturnPercentage = dividendsReturnPercentage;
 
-    let yoc = getCurrentYearYoc(
+    let yoc = getYoc(
       currentYearElement.dividendsGross,
       currentYearElement.accumulatedInvestment
     );
@@ -105,7 +105,7 @@ function getCurrentYearAccumulatedReturnPercentage(
   return accumulatedReturnPercentage;
 }
 
-function getCurrentYearsDividendsReturnPercentage(
+export function getDividendsReturnPercentage(
   portfolioValue: number,
   dividendsGross: number
 ) {
@@ -123,7 +123,7 @@ function getCurrentYearsDividendsReturnPercentage(
   return dividendsReturnPercentage;
 }
 
-function getCurrentYearYoc(
+export function getYoc(
   dividendsGross: number,
   accumulatedInvestment: number
 ) {

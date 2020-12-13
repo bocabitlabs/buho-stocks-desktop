@@ -110,4 +110,6 @@ export interface CompanyTotalProps {
   accumulatedDividendsNet: number;
   returnWithDividends: number;
   returnWithDividendsPercentage: number;
+  dividendsReturnPercentage: number;
+  yoc: number;
 }

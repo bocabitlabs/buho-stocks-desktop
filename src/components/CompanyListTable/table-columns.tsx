@@ -15,11 +15,12 @@ const getColumns = ({ portfolioId, confirm }: Props) => {
       key: "name",
       width: 70,
 
-      render: (text: string, record: any) => (
+      render: (text: string, record: any) => {
+        return (
         <Link to={`/portfolios/${portfolioId}/companies/${record.id}`}>
           {text}
         </Link>
-      )
+      )}
     },
     {
       title: "Ticker",
@@ -128,7 +129,20 @@ const getColumns = ({ portfolioId, confirm }: Props) => {
       dataIndex: "returnWithDividendsPercentage",
       key: "returnWithDividendsPercentage",
       width: 70
-    },{
+    },
+    {
+      title: "RPD",
+      dataIndex: "rpd",
+      key: "rpd",
+      width: 70
+    },
+    {
+      title: "YOC",
+      dataIndex: "yoc",
+      key: "yoc",
+      width: 70
+    },
+    {
       title: "Action",
       key: "action",
       width: 70,
