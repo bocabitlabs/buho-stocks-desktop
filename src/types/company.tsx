@@ -113,3 +113,15 @@ export interface CompanyTotalProps {
   dividendsReturnPercentage: number;
   yoc: number;
 }
+
+export interface PortfolioYearlyProps {
+  id: string;
+  year: string;
+  portfolioId: string;
+}
+
+export interface PortfolioYearlyFields {
+  id: string;
+  year: string;
+  portfolioId: string;
+}

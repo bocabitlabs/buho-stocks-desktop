@@ -1,4 +1,5 @@
 import sendIpcSql from "../../message-control/renderer";
+import { PortfolioYearlyProps } from "../../types/company";
 import { PortfolioItemProps } from "../../types/portfolio";
 import { deleteById, getById } from "./operations";
 
@@ -39,6 +40,34 @@ export default class PortfolioDAO {
   getById = (id: string) => {
     //Call the DB
     const results = getById("portfolios", id);
+    return results;
+  };
+
+  getYearlyDataById = (portfolioId: string): PortfolioYearlyProps[] => {
+    console.log("Getting yearly data by company ID");
+    const sql = `
+    SELECT
+      strftime('%Y', operationDate) as 'year'
+      , portfolios.id as portfolioId
+      , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) as sharesBought
+      , sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as sellSharesNumber
+      , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as buyTotal
+      , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as sellTotal
+      , sum(CASE WHEN shares.type='BUY' THEN shares.commission ELSE 0 END) as buyCommission
+      , sum(CASE WHEN shares.type='SELL' THEN shares.commission ELSE 0 END) as sellCommission
+      FROM  "shares"
+      LEFT JOIN "companies"
+        ON companies.id = shares.companyId
+      LEFT JOIN "portfolios"
+        ON companies.portfolioId = portfolios.id
+      WHERE portfolios.id = '${portfolioId}'
+      GROUP BY strftime('%Y', operationDate)
+      ORDER BY strftime('%Y', operationDate)
+      ;
+    `;
+    console.log(sql);
+    const results = sendIpcSql(sql);
+    console.log(results)
     return results;
   };
 
