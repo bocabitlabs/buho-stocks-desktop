@@ -12,21 +12,29 @@ export const computeYearlyData = (
 ): PortfolioYearlyProps[] => {
   let modifiedTotal: YearlyTotalDictProps = {};
 
-  portfolioDataYears.forEach((company) => {
-    if (!modifiedTotal.hasOwnProperty(company.year)) {
-      modifiedTotal[company.year] = { year: company.year };
+  portfolioDataYears.forEach((yearData) => {
+    if (!modifiedTotal.hasOwnProperty(yearData.year)) {
+      modifiedTotal[yearData.year] = { year: yearData.year };
     }
 
-    console.log(company.year)
+    console.log(yearData.year);
 
     let currentTotalElement = modifiedTotal[
-      company.year
+      yearData.year
     ] as PortfolioYearlyProps;
 
-    currentTotalElement.portfolioId = company.portfolioId
+    currentTotalElement.portfolioId = yearData.portfolioId;
 
+    // Number of shares
+    currentTotalElement.sharesNumber = yearData.sharesBought - yearData.sharesSold;
+
+    //Investment with Commission
+    currentTotalElement.investedWithCommission =
+    (yearData.buyTotal || 0) -
+    (yearData.sellTotal || 0) +
+    (yearData.buyCommission || 0) +
+    (yearData.sellCommission || 0);
   });
-
 
   // Convert from Dict to Array
   let resultArray: PortfolioYearlyFields[] = [];
@@ -35,7 +43,7 @@ export const computeYearlyData = (
     resultArray.push(currentYearElement);
   }
 
-  console.log(resultArray)
+  console.log(resultArray);
 
   return resultArray;
 };

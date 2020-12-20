@@ -39,10 +39,12 @@ export default function PortfolioYearlySummaryTable({
   }, []);
 
   const getData = () => {
-    const columnData = yearlyData.map((company: PortfolioYearlyProps) => ({
-      id: company.id,
-      key: company.id,
-      year: company.year
+    const columnData = yearlyData.map((yearData: PortfolioYearlyProps) => ({
+      id: yearData.id,
+      key: yearData.id,
+      year: yearData.year,
+      sharesNumber: yearData.sharesNumber,
+      investedWithCommission: yearData.investedWithCommission
     }));
     return columnData;
   };

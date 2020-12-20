@@ -118,10 +118,30 @@ export interface PortfolioYearlyProps {
   id: string;
   year: string;
   portfolioId: string;
+  sharesBought: number;
+  sharesSold: number;
+  sharesNumber: number;
+  buyTotal: number;
+  sellTotal: number;
+  buyCommission: number;
+  sellCommission: number;
+  investedAmount: number;
+  investmentCommission: number;
+  investedWithCommission: number;
 }
 
 export interface PortfolioYearlyFields {
   id: string;
   year: string;
   portfolioId: string;
+  sharesBought: number;
+  sharesSold: number;
+  sharesNumber: number;
+  buyTotal: number;
+  sellTotal: number;
+  buyCommission: number;
+  sellCommission: number;
+  investedAmount: number;
+  investmentCommission: number;
+  investedWithCommission: number;
 }

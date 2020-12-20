@@ -50,7 +50,7 @@ export default class PortfolioDAO {
       strftime('%Y', operationDate) as 'year'
       , portfolios.id as portfolioId
       , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) as sharesBought
-      , sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as sellSharesNumber
+      , sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as sharesSold
       , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as buyTotal
       , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as sellTotal
       , sum(CASE WHEN shares.type='BUY' THEN shares.commission ELSE 0 END) as buyCommission
