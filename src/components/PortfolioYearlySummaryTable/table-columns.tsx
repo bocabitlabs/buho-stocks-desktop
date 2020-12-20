@@ -25,6 +25,12 @@ const getColumns = () => {
       key: "investedWithCommission",
       width: 70
     },
+    {
+      title: "Accum. Invested",
+      dataIndex: "accumulatedInvestmentWithCommission",
+      key: "accumulatedInvestmentWithCommission",
+      width: 70
+    },
   ];
 };
 

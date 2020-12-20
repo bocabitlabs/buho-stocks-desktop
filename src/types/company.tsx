@@ -132,6 +132,7 @@ export interface PortfolioYearlyProps {
   Accumulated
   */
   accumulatedSharesNumber: number;
+  accumulatedInvestmentWithCommission: number;
 }
 
 export interface PortfolioYearlyFields {
@@ -151,5 +152,6 @@ export interface PortfolioYearlyFields {
   /*
   Accumulated
   */
- accumulatedSharesNumber: number;
+  accumulatedSharesNumber: number;
+  accumulatedInvestmentWithCommission: number;
 }

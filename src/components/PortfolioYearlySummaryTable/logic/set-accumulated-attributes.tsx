@@ -18,15 +18,20 @@ export function setAccumulatedAttributes(
       if (parseInt(year2) <= parseInt(year)) {
         // Shares number
         setAccumulatedShares(secondaryYear, currentYear);
+        // Investment
+        setAccumulatedInvestment(secondaryYear, currentYear);
       }
     });
   });
 
   return modifiedYears;
 }
-function setAccumulatedShares(secondaryYear: PortfolioYearlyProps, currentYear: PortfolioYearlyProps) {
+function setAccumulatedShares(
+  secondaryYear: PortfolioYearlyProps,
+  currentYear: PortfolioYearlyProps
+) {
   if (secondaryYear.sharesBought === undefined) {
-    secondaryYear.sharesBought = 0;
+    secondaryYear.sharesNumber = 0;
   }
   if (secondaryYear.sharesSold === undefined) {
     secondaryYear.sharesSold = 0;
@@ -36,4 +41,16 @@ function setAccumulatedShares(secondaryYear: PortfolioYearlyProps, currentYear: 
   }
   currentYear.accumulatedSharesNumber += secondaryYear.sharesNumber;
 }
+function setAccumulatedInvestment(
+  secondaryYear: PortfolioYearlyProps,
+  currentYear: PortfolioYearlyProps
+) {
+  if (secondaryYear.investedWithCommission === undefined) {
+    secondaryYear.investedWithCommission = 0;
+  }
 
+  if (currentYear.accumulatedInvestmentWithCommission === undefined) {
+    currentYear.accumulatedInvestmentWithCommission = 0;
+  }
+  currentYear.accumulatedInvestmentWithCommission += secondaryYear.investedWithCommission;
+}
