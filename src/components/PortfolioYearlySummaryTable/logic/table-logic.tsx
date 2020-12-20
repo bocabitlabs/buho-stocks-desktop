@@ -2,6 +2,8 @@ import {
   PortfolioYearlyFields,
   PortfolioYearlyProps
 } from "../../../types/company";
+import { setAccumulatedAttributes } from "./set-accumulated-attributes";
+import { setCalculatedAttributes } from "./set-calculated-attributes";
 
 export interface YearlyTotalDictProps {
   [year: string]: PortfolioYearlyProps | {};
@@ -11,30 +13,14 @@ export const computeYearlyData = (
   portfolioDataYears: PortfolioYearlyProps[]
 ): PortfolioYearlyProps[] => {
   let modifiedTotal: YearlyTotalDictProps = {};
-
+  // Iterate all years
   portfolioDataYears.forEach((yearData) => {
-    if (!modifiedTotal.hasOwnProperty(yearData.year)) {
-      modifiedTotal[yearData.year] = { year: yearData.year };
-    }
-
-    console.log(yearData.year);
-
-    let currentTotalElement = modifiedTotal[
-      yearData.year
-    ] as PortfolioYearlyProps;
-
-    currentTotalElement.portfolioId = yearData.portfolioId;
-
-    // Number of shares
-    currentTotalElement.sharesNumber = yearData.sharesBought - yearData.sharesSold;
-
-    //Investment with Commission
-    currentTotalElement.investedWithCommission =
-    (yearData.buyTotal || 0) -
-    (yearData.sellTotal || 0) +
-    (yearData.buyCommission || 0) +
-    (yearData.sellCommission || 0);
+    // Create the year if it doesn't exist
+    let currentYear = initializeYear(modifiedTotal, yearData);
+    setCalculatedAttributes(currentYear, yearData);
   });
+
+  setAccumulatedAttributes(modifiedTotal)
 
   // Convert from Dict to Array
   let resultArray: PortfolioYearlyFields[] = [];
@@ -47,3 +33,16 @@ export const computeYearlyData = (
 
   return resultArray;
 };
+
+
+function initializeYear(modifiedTotal: YearlyTotalDictProps, yearData: PortfolioYearlyProps) {
+  if (!modifiedTotal.hasOwnProperty(yearData.year)) {
+    modifiedTotal[yearData.year] = { year: yearData.year };
+  }
+
+  const currentYear = modifiedTotal[
+    yearData.year
+  ] as PortfolioYearlyProps;
+  return currentYear;
+}
+

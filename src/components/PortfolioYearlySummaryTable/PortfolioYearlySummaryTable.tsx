@@ -44,7 +44,8 @@ export default function PortfolioYearlySummaryTable({
       key: yearData.id,
       year: yearData.year,
       sharesNumber: yearData.sharesNumber,
-      investedWithCommission: yearData.investedWithCommission
+      investedWithCommission: yearData.investedWithCommission,
+      accumulatedSharesNumber: yearData.accumulatedSharesNumber
     }));
     return columnData;
   };

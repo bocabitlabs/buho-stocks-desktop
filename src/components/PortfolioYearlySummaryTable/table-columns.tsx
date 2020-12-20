@@ -14,6 +14,12 @@ const getColumns = () => {
       width: 70
     },
     {
+      title: "Accum. Shares",
+      dataIndex: "accumulatedSharesNumber",
+      key: "accumulatedSharesNumber",
+      width: 70
+    },
+    {
       title: "Invested",
       dataIndex: "investedWithCommission",
       key: "investedWithCommission",
