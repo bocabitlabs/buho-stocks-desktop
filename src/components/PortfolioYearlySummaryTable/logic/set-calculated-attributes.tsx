@@ -16,4 +16,11 @@ export function setCalculatedAttributes(
   // Commission
   currentYear.commission =
     (yearData.buyCommission || 0) + (yearData.sellCommission || 0);
+  // Commission %
+  if (currentYear.investedWithCommission > 0) {
+    currentYear.commissionPercentage =
+      currentYear.commission / currentYear.investedWithCommission;
+  } else {
+    currentYear.commissionPercentage = 0;
+  }
 }

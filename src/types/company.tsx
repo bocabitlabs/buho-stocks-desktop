@@ -129,6 +129,7 @@ export interface PortfolioYearlyProps {
   investmentCommission: number;
   investedWithCommission: number;
   commission: number;
+  commissionPercentage: number;
   /*
   Accumulated
   */
@@ -151,6 +152,7 @@ export interface PortfolioYearlyFields {
   investmentCommission: number;
   investedWithCommission: number;
   commission: number;
+  commissionPercentage: number;
   /*
   Accumulated
   */

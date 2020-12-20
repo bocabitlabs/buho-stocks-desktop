@@ -37,6 +37,12 @@ const getColumns = () => {
       key: "commission",
       width: 70
     },
+    {
+      title: "Commission %",
+      dataIndex: "commissionPercentage",
+      key: "commissionPercentage",
+      width: 70
+    },
   ];
 };
 
