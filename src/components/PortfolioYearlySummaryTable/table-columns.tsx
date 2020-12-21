@@ -47,6 +47,12 @@ const getColumns = () => {
       dataIndex: "portfolioValue",
       key: "portfolioValue",
       width: 70
+    },
+    {
+      title: "Portfolio Value Inf.",
+      dataIndex: "portfolioValueWithInflation",
+      key: "portfolioValueWithInflation",
+      width: 70
     }
   ];
 };

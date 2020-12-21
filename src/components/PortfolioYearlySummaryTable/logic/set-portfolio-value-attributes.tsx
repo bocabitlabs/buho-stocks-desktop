@@ -4,6 +4,7 @@ import {
   PortfolioYearlyProps,
   YearlyTotalDictProps
 } from "../../../types/company";
+import { calculateInflationForYear } from "../../CompanyDetailsTable/logic/inflation/inflation-logic";
 import { getPortfolioValue } from "../../CompanyDetailsTable/logic/stock-prices/stock-prices-logic";
 
 export function setPortfolioValueAttributes(
@@ -32,9 +33,12 @@ export function setPortfolioValueAttributes(
 
       currentYear.portfolioValue = portfolioValue;
 
-      console.log(accumulatedShares);
-      console.log(latestYearStockPrice);
-      console.log(portfolioValue);
+      const accumulatedInflation = calculateInflationForYear(year);
+
+      currentYear.portfolioValueWithInflation =
+      currentYear.portfolioValue /
+      (1 + accumulatedInflation);
+
     });
 
     // Object.entries(modifiedYears).forEach(([year2, currentValues2]) => {

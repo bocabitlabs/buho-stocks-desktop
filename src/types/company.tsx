@@ -139,6 +139,7 @@ export interface PortfolioYearlyProps {
   Calculated
   */
   portfolioValue: number;
+  portfolioValueWithInflation: number;
 }
 
 export interface PortfolioYearlyFields {
@@ -166,6 +167,7 @@ export interface PortfolioYearlyFields {
   Calculated
   */
   portfolioValue: number;
+  portfolioValueWithInflation: number;
 }
 
 export interface YearlyTotalDictProps {
