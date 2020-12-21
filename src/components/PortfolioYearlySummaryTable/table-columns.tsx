@@ -1,4 +1,3 @@
-
 const getColumns = () => {
   return [
     {
@@ -43,6 +42,12 @@ const getColumns = () => {
       key: "commissionPercentage",
       width: 70
     },
+    {
+      title: "Portfolio Value",
+      dataIndex: "portfolioValue",
+      key: "portfolioValue",
+      width: 70
+    }
   ];
 };
 

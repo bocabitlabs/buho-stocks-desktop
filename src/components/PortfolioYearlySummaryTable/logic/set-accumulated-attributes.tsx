@@ -1,8 +1,7 @@
-import { PortfolioYearlyProps } from "../../../types/company";
-
-export interface YearlyTotalDictProps {
-  [year: string]: PortfolioYearlyProps | {};
-}
+import {
+  PortfolioYearlyProps,
+  YearlyTotalDictProps
+} from "../../../types/company";
 
 /**
  * Get all the accumulated values for all the years
@@ -30,12 +29,6 @@ function setAccumulatedShares(
   secondaryYear: PortfolioYearlyProps,
   currentYear: PortfolioYearlyProps
 ) {
-  if (secondaryYear.sharesBought === undefined) {
-    secondaryYear.sharesNumber = 0;
-  }
-  if (secondaryYear.sharesSold === undefined) {
-    secondaryYear.sharesSold = 0;
-  }
   if (currentYear.accumulatedSharesNumber === undefined) {
     currentYear.accumulatedSharesNumber = 0;
   }
@@ -52,5 +45,6 @@ function setAccumulatedInvestment(
   if (currentYear.accumulatedInvestmentWithCommission === undefined) {
     currentYear.accumulatedInvestmentWithCommission = 0;
   }
-  currentYear.accumulatedInvestmentWithCommission += secondaryYear.investedWithCommission;
+  currentYear.accumulatedInvestmentWithCommission +=
+    secondaryYear.investedWithCommission;
 }

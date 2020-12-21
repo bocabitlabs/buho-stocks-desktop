@@ -14,6 +14,14 @@ export default class CompanyService {
     return new CompanyDAO().getCompany(companyId);
   };
 
+  getAccumulatedShares = (companyId: string, year: string) => {
+    return new CompanyDAO().getAccumulatedShares(companyId, year);
+  };
+
+  getCompaniesFromPortfolio = (portfolioId: string) => {
+    return new CompanyDAO().getCompaniesFromPortfolio(portfolioId);
+  };
+
   deleteById = (companyId: string) => {
     return new CompanyDAO().deleteById(companyId);
   };

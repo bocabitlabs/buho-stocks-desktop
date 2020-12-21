@@ -80,6 +80,34 @@ export default class CompanyDAO {
     return results;
   };
 
+  getAccumulatedShares = (companyId: string, year: string) => {
+    const sql = `
+    SELECT
+      strftime('%Y', operationDate) as 'year'
+      , companies.id
+      , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) - sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as shares
+      FROM  "shares", "companies"
+      WHERE companies.id='${companyId}' AND year <= '${year}'
+      ORDER BY strftime('%Y', operationDate)
+      ;`;
+    const result = sendIpcSql(sql, "get");
+    console.log(result);
+    return result;
+  };
+
+  getCompaniesFromPortfolio = (portfolioId: string) => {
+    const sql = `
+    SELECT
+      id, name
+      FROM  "companies"
+      WHERE companies.portfolioId='${portfolioId}'
+      ;
+    `;
+    const results = sendIpcSql(sql);
+    console.log(results);
+    return results;
+  };
+
   deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("companies", id);

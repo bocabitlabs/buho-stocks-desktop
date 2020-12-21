@@ -48,7 +48,8 @@ export default function PortfolioYearlySummaryTable({
       commissionPercentage: yearData.commissionPercentage,
       investedWithCommission: yearData.investedWithCommission,
       accumulatedSharesNumber: yearData.accumulatedSharesNumber,
-      accumulatedInvestmentWithCommission: yearData.accumulatedInvestmentWithCommission
+      accumulatedInvestmentWithCommission: yearData.accumulatedInvestmentWithCommission,
+      portfolioValue: yearData.portfolioValue
     }));
     return columnData;
   };

@@ -135,6 +135,10 @@ export interface PortfolioYearlyProps {
   */
   accumulatedSharesNumber: number;
   accumulatedInvestmentWithCommission: number;
+  /*
+  Calculated
+  */
+  portfolioValue: number;
 }
 
 export interface PortfolioYearlyFields {
@@ -158,4 +162,12 @@ export interface PortfolioYearlyFields {
   */
   accumulatedSharesNumber: number;
   accumulatedInvestmentWithCommission: number;
+  /*
+  Calculated
+  */
+  portfolioValue: number;
+}
+
+export interface YearlyTotalDictProps {
+  [year: string]: PortfolioYearlyProps | {};
 }

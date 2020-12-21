@@ -53,7 +53,7 @@ export function calculatePortfolioValueWithStockPrices(
   }
   return yearlyOperationsDict;
 }
-function getPortfolioValue(
+export function getPortfolioValue(
   accumulatedSharesNumber: number,
   priceShare: number
 ) {
