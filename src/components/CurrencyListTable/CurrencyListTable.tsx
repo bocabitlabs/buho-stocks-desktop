@@ -10,7 +10,7 @@ export default function CurrencyListTable() {
 
   function confirm(recordId: string) {
     const result = new CurrencyService().deleteById(recordId);
-    if (result === "OK") {
+    if (result.changes) {
       fetchCurrencies();
       message.success({
         content: "Currency has been deleted",

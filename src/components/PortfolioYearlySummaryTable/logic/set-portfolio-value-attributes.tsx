@@ -10,13 +10,28 @@ import { getPortfolioValue } from "../../CompanyDetailsTable/logic/stock-prices/
 export function setPortfolioValueAttributes(
   modifiedYears: YearlyTotalDictProps
 ): YearlyTotalDictProps {
+  let previousYearPortfolioValueWithInflation = 0;
+  let previousYearPortfolioValue = 0;
+  let previousYearNetDividends = 0;
+
+  let companyPortfolioValue = 0;
+
+  // Iterate all the portfolio years
   Object.entries(modifiedYears).forEach(([year, currentValues]) => {
     const currentYear = currentValues as PortfolioYearlyProps;
+    // For each year, get the companies in the portfolio
     const companies = new CompanyService().getCompaniesFromPortfolio(
       currentYear.portfolioId
     );
+    // Initialize the portfolio value
+    if (isNaN(currentYear.portfolioValue)) {
+      currentYear.portfolioValue = 0;
+    }
+    companyPortfolioValue = 0;
 
+    // Iterate all companies in the portfolio
     companies.forEach((company: any) => {
+      // Obtain the accumulated shares and the stock price for a given year
       const accumulatedShares = new CompanyService().getAccumulatedShares(
         company.id,
         year
@@ -25,43 +40,59 @@ export function setPortfolioValueAttributes(
         company.id,
         year
       );
-
-      const portfolioValue = getPortfolioValue(
-        accumulatedShares.shares,
-        latestYearStockPrice.priceShare
-      );
-
-      currentYear.portfolioValue = portfolioValue;
-
-      const accumulatedInflation = calculateInflationForYear(year);
-
-      currentYear.portfolioValueWithInflation =
-      currentYear.portfolioValue /
-      (1 + accumulatedInflation);
-
+      if (accumulatedShares && latestYearStockPrice) {
+        companyPortfolioValue += getPortfolioValue(
+          accumulatedShares.shares,
+          latestYearStockPrice.priceShare
+        );
+      }
     });
 
-    // Object.entries(modifiedYears).forEach(([year2, currentValues2]) => {
-    //   const secondaryYear = currentValues2 as PortfolioYearlyProps;
-    //   if (parseInt(year2) <= parseInt(year)) {
-    // Shares number
-    // Get companies from portfolio (portfolioId)
-    // For each company
-    // getPortfolioValueByCompanyAndyear(companyId, year)
-    // // const latestYearStockPrice = new StockPriceService().getLastStockPricePerYearByCompanyId(
-    //   currentYearElement.companyId,
-    //   year
-    // );
-    /*
-           getAccumulatedSharesNumber(companyId, year)
-           portfolioValue = getPortfolioValue(
-            currentYearElement.accumulatedSharesNumber,
-            latestYearStockPrice.priceShare
-          );
-        */
+    currentYear.portfolioValue += companyPortfolioValue;
 
-    //   }
-    // });
+    const accumulatedInflation = calculateInflationForYear(year);
+
+    currentYear.portfolioValueWithInflation =
+      currentYear.portfolioValue / (1 + accumulatedInflation);
+
+    // Set previous year value
+    currentYear.previousYearPortfolioValueWithInflation = previousYearPortfolioValueWithInflation;
+
+    currentYear.yearlyReturnPercentage =
+      ((currentYear.portfolioValue -
+        (previousYearPortfolioValue + currentYear.investedWithCommission)) /
+        (previousYearPortfolioValue + currentYear.investedWithCommission)) *
+      100;
+
+    currentYear.accumulatedReturnPercentage =
+      ((currentYear.portfolioValue -
+        currentYear.accumulatedInvestmentWithCommission) /
+        currentYear.accumulatedInvestmentWithCommission) *
+      100;
+
+    currentYear.returnWithDividendPercentage =
+      ((currentYear.portfolioValue +
+        (currentYear.dividendsNet + previousYearNetDividends) -
+        currentYear.accumulatedInvestmentWithCommission) /
+        currentYear.accumulatedInvestmentWithCommission) *
+      100;
+
+    currentYear.returnPerDividend =
+      (currentYear.dividendsGross / currentYear.portfolioValue) * 100;
+
+    currentYear.returnPerDividendNet =
+      (currentYear.dividendsNet / currentYear.portfolioValue) * 100;
+
+    currentYear.yoc =
+      (currentYear.dividendsGross /
+        currentYear.accumulatedInvestmentWithCommission) *
+      100;
+
+    // Set previous year values
+    previousYearPortfolioValueWithInflation =
+      currentYear.portfolioValueWithInflation;
+    previousYearPortfolioValue = companyPortfolioValue;
+    previousYearNetDividends = currentYear.dividendsNet;
   });
 
   return modifiedYears;

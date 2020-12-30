@@ -43,7 +43,7 @@ export default class PortfolioDAO {
     return results;
   };
 
-  getYearlyDataById = (portfolioId: string): PortfolioYearlyProps[] => {
+  getYearlySharesDataById = (portfolioId: string): PortfolioYearlyProps[] => {
     console.log("Getting yearly data by company ID");
     const sql = `
     SELECT
@@ -58,6 +58,32 @@ export default class PortfolioDAO {
       FROM  "shares"
       LEFT JOIN "companies"
         ON companies.id = shares.companyId
+      LEFT JOIN "portfolios"
+        ON companies.portfolioId = portfolios.id
+      WHERE portfolios.id = '${portfolioId}'
+      GROUP BY strftime('%Y', operationDate)
+      ORDER BY strftime('%Y', operationDate)
+      ;
+    `;
+    console.log(sql);
+    const results = sendIpcSql(sql);
+    console.log(results)
+    return results;
+  };
+
+  getYearlyDividendsDataById = (portfolioId: string): PortfolioYearlyProps[] => {
+    console.log("Getting yearly dividends data by company ID");
+    const sql = `
+    SELECT
+      strftime('%Y', operationDate) as 'year'
+      , portfolios.id as portfolioId
+	    , sum(dividends.priceShare * dividends.sharesNumber - dividends.commission) as dividendsNet
+      , sum((dividends.priceShare * dividends.sharesNumber - dividends.commission) * dividends.exchangeRate) as dividendsNetBaseCurrency
+      , sum(dividends.priceShare * dividends.sharesNumber) as dividendsGross
+      , sum(dividends.priceShare * dividends.sharesNumber * dividends.exchangeRate) as dividendsGrossBaseCurrency
+      FROM  "dividends"
+      LEFT JOIN "companies"
+        ON companies.id = dividends.companyId
       LEFT JOIN "portfolios"
         ON companies.portfolioId = portfolios.id
       WHERE portfolios.id = '${portfolioId}'

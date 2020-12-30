@@ -25,6 +25,7 @@ export function setAccumulatedAttributes(
 
   return modifiedYears;
 }
+
 function setAccumulatedShares(
   secondaryYear: PortfolioYearlyProps,
   currentYear: PortfolioYearlyProps
@@ -34,6 +35,7 @@ function setAccumulatedShares(
   }
   currentYear.accumulatedSharesNumber += secondaryYear.sharesNumber;
 }
+
 function setAccumulatedInvestment(
   secondaryYear: PortfolioYearlyProps,
   currentYear: PortfolioYearlyProps

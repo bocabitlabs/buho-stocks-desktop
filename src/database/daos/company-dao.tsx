@@ -81,15 +81,17 @@ export default class CompanyDAO {
   };
 
   getAccumulatedShares = (companyId: string, year: string) => {
+    console.log(`getAccumulatedSharesDAO`);
     const sql = `
     SELECT
       strftime('%Y', operationDate) as 'year'
       , companies.id
       , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) - sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as shares
       FROM  "shares", "companies"
-      WHERE companies.id='${companyId}' AND year <= '${year}'
+      WHERE companies.id='${companyId}' AND shares.companyId='${companyId}' AND year <= '${year}'
       ORDER BY strftime('%Y', operationDate)
       ;`;
+    console.log(sql);
     const result = sendIpcSql(sql, "get");
     console.log(result);
     return result;

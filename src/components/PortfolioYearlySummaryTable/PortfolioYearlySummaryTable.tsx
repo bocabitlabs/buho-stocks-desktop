@@ -21,10 +21,17 @@ export default function PortfolioYearlySummaryTable({
   const [yearlyData, setYearlyData] = useState<PortfolioYearlyProps[]>([]);
 
   useEffect(() => {
-    const yearlyPortfolioData = new PortfolioService().getYearlyData(
+    const yearlyPortfolioSharesData = new PortfolioService().getYearlySharesData(
       portfolioId
     );
-    const results = computeYearlyData(yearlyPortfolioData);
+    const yearlyPortfolioDividendsData = new PortfolioService().getYearlyDividendsData(
+      portfolioId
+    );
+
+    const results = computeYearlyData(
+      yearlyPortfolioSharesData,
+      yearlyPortfolioDividendsData
+    );
     console.log(results);
     setYearlyData(results);
   }, [setYearlyData, portfolioId]);
@@ -48,9 +55,22 @@ export default function PortfolioYearlySummaryTable({
       commissionPercentage: yearData.commissionPercentage,
       investedWithCommission: yearData.investedWithCommission,
       accumulatedSharesNumber: yearData.accumulatedSharesNumber,
-      accumulatedInvestmentWithCommission: yearData.accumulatedInvestmentWithCommission,
+      accumulatedInvestmentWithCommission:
+        yearData.accumulatedInvestmentWithCommission,
       portfolioValue: yearData.portfolioValue,
-      portfolioValueWithInflation: yearData.portfolioValueWithInflation
+      portfolioValueWithInflation: yearData.portfolioValueWithInflation,
+      yearReturn: yearData.yearReturn,
+      accumulatedReturn: yearData.accumulatedReturn,
+      dividendsGross: yearData.dividendsGross,
+      dividendsNet: yearData.dividendsNet,
+      returnWithDividends: yearData.returnWithDividends,
+      dividendsPerShare: yearData.dividendsPerShare,
+      yearlyReturnPercentage: yearData.yearlyReturnPercentage,
+      accumulatedReturnPercentage: yearData.accumulatedReturnPercentage,
+      returnWithDividendPercentage: yearData.returnWithDividendPercentage,
+      returnPerDividend: yearData.returnPerDividend,
+      returnPerDividendNet: yearData.returnPerDividendNet,
+      yoc: yearData.yoc
     }));
     return columnData;
   };

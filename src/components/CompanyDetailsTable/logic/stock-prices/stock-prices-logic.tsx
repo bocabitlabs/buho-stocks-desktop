@@ -35,14 +35,15 @@ export function calculatePortfolioValueWithStockPrices(
         currentYearElement.portfolioValue /
         (1 + currentYearElement.accumulatedInflation);
 
-        console.log(`PortfolioValueWithInflation =
+      console.log(`PortfolioValueWithInflation =
         currentYearElement.portfolioValue ${currentYearElement.portfolioValue}
         /
-        (1 + currentYearElement.accumulatedInflation) ${(1 + currentYearElement.accumulatedInflation)}
+        (1 + currentYearElement.accumulatedInflation) ${
+          1 + currentYearElement.accumulatedInflation
+        }
         =
         ${currentYearElement.portfolioValueWithInflation}
-        `)
-
+        `);
     } else {
       currentYearElement.portfolioValue = 0;
       currentYearElement.portfolioValueWithInflation = 0;
@@ -60,6 +61,9 @@ export function getPortfolioValue(
   let portfolioValue = 0;
   if (!isNaN(accumulatedSharesNumber)) {
     portfolioValue = accumulatedSharesNumber * priceShare;
+    console.log(
+      `getPortfolioValue: accumShares * priceShare = ${accumulatedSharesNumber} * ${priceShare} = ${portfolioValue}`
+    );
   }
   return portfolioValue;
 }

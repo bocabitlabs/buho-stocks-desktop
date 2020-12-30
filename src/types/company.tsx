@@ -140,6 +140,22 @@ export interface PortfolioYearlyProps {
   */
   portfolioValue: number;
   portfolioValueWithInflation: number;
+  previousYearPortfolioValueWithInflation: number;
+  yearReturn: number;
+  accumulatedReturn: number;
+  returnWithDividends: number;
+  yearlyReturnPercentage: number;
+  accumulatedReturnPercentage: number;
+  returnWithDividendPercentage: number;
+  returnPerDividend: number;
+  returnPerDividendNet: number;
+  yoc: number;
+  /**
+   * Dividends
+   */
+  dividendsNet: number;
+  dividendsGross: number;
+  dividendsPerShare: number;
 }
 
 export interface PortfolioYearlyFields {
@@ -168,6 +184,22 @@ export interface PortfolioYearlyFields {
   */
   portfolioValue: number;
   portfolioValueWithInflation: number;
+  previousYearPortfolioValueWithInflation: number;
+  yearReturn: number;
+  accumulatedReturn: number;
+  returnWithDividends: number;
+  yearlyReturnPercentage: number;
+  accumulatedReturnPercentage: number;
+  returnWithDividendPercentage: number;
+  returnPerDividend: number;
+  returnPerDividendNet: number;
+  yoc: number;
+  /**
+   * Dividends
+   */
+  dividendsNet: number;
+  dividendsGross: number;
+  dividendsPerShare: number;
 }
 
 export interface YearlyTotalDictProps {

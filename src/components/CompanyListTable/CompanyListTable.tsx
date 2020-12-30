@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { message, Table } from "antd";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "../../contexts/companies";
@@ -12,10 +12,10 @@ interface IProps {
 }
 
 export default function CompanyListTable({ portfolioId }: IProps) {
-  const { companies } = useContext(CompaniesContext);
+  const { companies, fetchCompanies } = useContext(CompaniesContext);
   const [width, setWidth] = useState(window.innerWidth);
   const [companyData, setCompanyData] = useState<CompanyTotalProps[]>([]);
-
+  const key = "updatable";
 
   const history = useHistory();
 
@@ -35,12 +35,19 @@ export default function CompanyListTable({ portfolioId }: IProps) {
 
   function confirm(recordId: string) {
     const result = new CompanyService().deleteById(recordId);
-    if (result === "OK") {
-      history.push({
-        pathname: `/portfolios/:portfolioId`,
-        state: {
-          message: { type: "success", text: "Company has been deleted" }
-        }
+    console.log(result);
+    if (result.changes) {
+      fetchCompanies(portfolioId);
+      message.success({
+        content: "Company has been deleted",
+        key,
+        duration: 2
+      });
+    } else {
+      message.error({
+        content: "Unable to delete the selected company",
+        key,
+        duration: 2
       });
     }
   }
@@ -74,16 +81,16 @@ export default function CompanyListTable({ portfolioId }: IProps) {
     }));
     return columnData;
   };
-  console.log(companies.length)
+  console.log(companies.length);
   return (
     <Table
-        size="small"
-        style={{ maxWidth: `max(500px, ${width - 300}px)` }}
-        className={'company-table'}
-        scroll={{ x: 800 }}
-        bordered
-        columns={getColumns({portfolioId, confirm})}
-        dataSource={getData()}
-      />
+      size="small"
+      style={{ maxWidth: `max(500px, ${width - 300}px)` }}
+      className={"company-table"}
+      scroll={{ x: 800 }}
+      bordered
+      columns={getColumns({ portfolioId, confirm })}
+      dataSource={getData()}
+    />
   );
 }

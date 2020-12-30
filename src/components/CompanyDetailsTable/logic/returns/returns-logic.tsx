@@ -155,7 +155,7 @@ function getCurrenYearRpdEmp(
   return rpdEmp;
 }
 
-function getAccumulatedReturn(
+export function getAccumulatedReturn(
   portfolioValueWithInflation: number,
   accumulatedInvestment: number
 ) {
@@ -166,7 +166,7 @@ function getAccumulatedReturn(
   return acumReturn;
 }
 
-function getCurrentYearReturn(
+export function getCurrentYearReturn(
   portfolioValueWithInflation: number,
   totalInvestedWithCommission: number,
   previousYearPortfolioValueWithInflation: number

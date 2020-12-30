@@ -5,23 +5,35 @@ import {
 } from "../../../types/company";
 import { setAccumulatedAttributes } from "./set-accumulated-attributes";
 import { setCalculatedAttributes } from "./set-calculated-attributes";
+import { setDividendsAttributes } from "./set-dividend-attributes";
 import { setPortfolioValueAttributes } from "./set-portfolio-value-attributes";
+import { setReturnAttributes } from "./set-return-attributes";
 
 export const computeYearlyData = (
-  portfolioDataYears: PortfolioYearlyProps[]
+  yearlyPortfolioSharesData: PortfolioYearlyProps[],
+  yearlyPortfolioDividendsData: PortfolioYearlyProps[]
 ): PortfolioYearlyProps[] => {
   let modifiedTotal: YearlyTotalDictProps = {};
   // Iterate all years
-  portfolioDataYears.forEach((yearData) => {
+  yearlyPortfolioSharesData.forEach((yearData) => {
     // Create the year if it doesn't exist
     let currentYear = initializeYear(modifiedTotal, yearData);
     console.log(yearData);
     setCalculatedAttributes(currentYear, yearData);
   });
-  console.log(modifiedTotal);
 
   setAccumulatedAttributes(modifiedTotal);
+
+  //TODO Add dividends stuff
+  yearlyPortfolioDividendsData.forEach((yearData) => {
+    // Create the year if it doesn't exist
+    let currentYear = initializeYear(modifiedTotal, yearData);
+    console.log(yearData);
+    setDividendsAttributes(currentYear, yearData);
+  });
+
   setPortfolioValueAttributes(modifiedTotal);
+  setReturnAttributes(modifiedTotal);
 
   // Convert from Dict to Array
   let resultArray: PortfolioYearlyFields[] = [];

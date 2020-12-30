@@ -20,9 +20,15 @@ export default class PortfolioService {
     return new PortfolioDAO().getById(portfolioId);
   };
 
-  getYearlyData = (portfolioId: string): PortfolioYearlyProps[] => {
-    const result =  new PortfolioDAO().getYearlyDataById(portfolioId);
+  getYearlySharesData = (portfolioId: string): PortfolioYearlyProps[] => {
+    const result =  new PortfolioDAO().getYearlySharesDataById(portfolioId);
     console.log(result)
+    return result;
+  }
+
+  getYearlyDividendsData = (portfolioId: string): PortfolioYearlyProps[] => {
+    const result = new PortfolioDAO().getYearlyDividendsDataById(portfolioId);
+    console.log(result);
     return result;
   }
 

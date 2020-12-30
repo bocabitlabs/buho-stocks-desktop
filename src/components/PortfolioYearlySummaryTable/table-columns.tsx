@@ -53,6 +53,78 @@ const getColumns = () => {
       dataIndex: "portfolioValueWithInflation",
       key: "portfolioValueWithInflation",
       width: 70
+    },
+    {
+      title: "Return",
+      dataIndex: "yearReturn",
+      key: "yearReturn",
+      width: 70
+    },
+    {
+      title: "Accum. Return",
+      dataIndex: "accumulatedReturn",
+      key: "accumulatedReturn",
+      width: 70
+    },
+    {
+      title: "Return + Dividends",
+      dataIndex: "returnWithDividends",
+      key: "returnWithDividends",
+      width: 70
+    },
+    {
+      title: "Gross Dividends",
+      dataIndex: "dividendsGross",
+      key: "dividendsGross",
+      width: 70
+    },
+    {
+      title: "Net Dividends",
+      dataIndex: "dividendsNet",
+      key: "dividendsNet",
+      width: 70
+    },
+    {
+      title: "DPS Gross",
+      dataIndex: "dividendsPerShare",
+      key: "dividendsPerShare",
+      width: 70
+    },
+    {
+      title: "Yearly Return %",
+      dataIndex: "yearlyReturnPercentage",
+      key: "yearlyReturnPercentage",
+      width: 70
+    },
+    {
+      title: "Accum. Return %",
+      dataIndex: "accumulatedReturnPercentage",
+      key: "accumulatedReturnPercentage",
+      width: 70
+    },
+    {
+      title: "Return + Div. %",
+      dataIndex: "returnWithDividendPercentage",
+      key: "returnWithDividendPercentage",
+      width: 70
+    },
+    {
+      title: "RPD",
+      dataIndex: "returnPerDividend",
+      key: "returnPerDividend",
+      width: 70
+    },
+    {
+      title: "Net RPD",
+      dataIndex: "returnPerDividendNet",
+      key: "returnPerDividendNet",
+      width: 70
+    },
+    {
+      title: "YOC",
+      dataIndex: "yoc",
+      key: "yoc",
+      width: 70
     }
   ];
 };
