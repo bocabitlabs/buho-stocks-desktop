@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	"portfolioId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("sectorId") REFERENCES "sectors" ("id"),
-	FOREIGN KEY ("portfolioId") REFERENCES "portfolios" ("id"),
+	FOREIGN KEY ("portfolioId") REFERENCES "portfolios" ("id") ON DELETE CASCADE,
 	FOREIGN KEY ("currencyId") REFERENCES "currencies" ("id"),
 	FOREIGN KEY ("marketId") REFERENCES "markets" ("id")
 );
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS "stockPrices" (
 	"priceShare" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("companyId") REFERENCES "companies"
+	FOREIGN KEY ("companyId") REFERENCES "companies" ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS "dividends" (
 	"id" INTEGER NOT NULL UNIQUE,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS "dividends" (
 	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("companyId") REFERENCES "companies"
+	FOREIGN KEY ("companyId") REFERENCES "companies" ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS "rights" (
 	"id" INTEGER NOT NULL UNIQUE,
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS "rights" (
 	"notes" TEXT,
 	"companyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("companyId") REFERENCES "companies" ("id")
+	FOREIGN KEY ("companyId") REFERENCES "companies" ("id") ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS "shares" (
 	"id" INTEGER NOT NULL UNIQUE,
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS "shares" (
 	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
-	FOREIGN KEY ("companyId") REFERENCES "companies" ("id")
+	FOREIGN KEY ("companyId") REFERENCES "companies" ("id") ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS "settings" (
 	"id" INTEGER NOT NULL UNIQUE,
