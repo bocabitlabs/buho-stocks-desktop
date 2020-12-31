@@ -1,5 +1,3 @@
-import CompanyService from "../../../services/company-service";
-import StockPriceService from "../../../services/stock-price-service";
 import {
   PortfolioYearlyProps,
   YearlyTotalDictProps

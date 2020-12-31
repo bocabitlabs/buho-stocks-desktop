@@ -18,7 +18,7 @@ import { IsCollapsedContext } from "./contexts/is-collapsed";
 import AppSidebar from "./components/AppSidebar/AppSidebar";
 import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
-import CompanyAddRoute from "./routes/CompanyAddRoute/CompanyAddRoute";
+import CompanyAdd from "./routes/CompanyAdd/CompanyAdd";
 import PortfolioAddRoute from "./routes/PortfolioAddRoute/PortfolioAddRoute";
 import CurrencyAddRoute from "./routes/CurrencyAddRoute/CurrencyAddRoute";
 import MarketAddRoute from "./routes/MarketAddRoute/MarketAddRoute";
@@ -94,7 +94,7 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:id/add-company"
-                component={CompanyAddRoute}
+                component={CompanyAdd}
               />
               <Route
                 exact
