@@ -4,6 +4,9 @@
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
+  "config": {
+    "forge": "forge.config.js"
+  },
   "db": {
     "requiredVersion": 2
   },
@@ -41,9 +44,14 @@
     "test": "react-scripts test",
     "coverage": "CI=true react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "package": "react-scripts build && electron-forge package",
     "make": "react-scripts build && electron-forge make",
+    "make-windows": "react-scripts build && electron-forge make --verbose --platform win32",
+    "make-linux": "react-scripts build && electron-forge make --verbose --platform linux",
+    "package": "react-scripts build && electron-forge package",
+    "package-windows": "react-scripts build && electron-forge package --verbose --platform win32",
+    "package-linux": "react-scripts build && electron-forge package --verbose --platform linux",
     "forge-publish": "react-scripts build && electron-forge publish"
+
   },
   "eslintConfig": {
     "extends": [

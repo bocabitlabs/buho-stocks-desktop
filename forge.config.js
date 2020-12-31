@@ -24,25 +24,19 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       config: {
-        name: "buho_stocks"
+        name: "buho_stocks",
+        authors: "BocabitLabs",
+        description: "Long time investment stock manager app"
       }
-    },
-    {
-      name: "@electron-forge/maker-zip",
-      platforms: ['darwin', 'linux']
     },
     {
       name: "@electron-forge/maker-deb",
       config: {
         options: {
-          maintainer: 'Bocabitlabs',
+          maintainer: 'BocabitLabs',
           homepage: 'https://bocabit.com'
         }
       }
-    },
-    {
-      name: "@electron-forge/maker-rpm",
-      config: {}
     }
   ]
 };
