@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 
 
-export default function CurrencyAddRouteHeader(): ReactElement {
+export default function CurrencyAddHeader(): ReactElement {
   const routes = [
     {
       path: "/home",

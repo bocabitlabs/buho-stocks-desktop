@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import { Button, Form, Input, message } from "antd";
 import { CirclePicker } from "react-color";
 
-import CurrencyService from "../../services/currency-service";
 import { useHistory } from "react-router-dom";
+import CurrencyService from "../../../../services/currency-service";
 
 /**
  * Add a new Currency
