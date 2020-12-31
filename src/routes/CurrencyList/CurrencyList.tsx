@@ -2,17 +2,17 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import CurrencyListTable from "../../components/CurrencyListTable/CurrencyListTable";
 import { useCurrenciesContext } from "../../hooks/currencies";
 import { CurrenciesContext } from "../../contexts/currencies";
-import CurrencyListRouteHeader from "./CurrencyListRouteHeader";
+import CurrencyListHeader from "./components/CurrencyListHeader/CurrencyListHeader";
+import CurrencyListTable from "./components/CurrencyListTable/CurrencyListTable";
 
-const CurrencyListRoute = () => {
+const CurrencyList = () => {
   const currenciesContext = useCurrenciesContext();
 
   return (
     <>
-      <CurrencyListRouteHeader/>
+      <CurrencyListHeader/>
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
         <CurrenciesContext.Provider value={currenciesContext}>
           <CurrencyListTable />
@@ -22,4 +22,4 @@ const CurrencyListRoute = () => {
   );
 };
 
-export default CurrencyListRoute;
+export default CurrencyList;

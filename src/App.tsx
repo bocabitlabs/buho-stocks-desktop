@@ -8,7 +8,6 @@ import { Layout } from "antd";
 import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute/PortfolioDetailsRoute";
 import MarketListRoute from "./routes/MarketListRoute/MarketListRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
-import CurrencyListRoute from "./routes/CurrencyListRoute/CurrencyListRoute";
 import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
 
 import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
@@ -20,13 +19,14 @@ import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
 import CompanyAdd from "./routes/CompanyAdd/CompanyAdd";
 import PortfolioAddRoute from "./routes/PortfolioAddRoute/PortfolioAddRoute";
-import CurrencyAddRoute from "./routes/CurrencyAddRoute/CurrencyAddRoute";
+import CurrencyAdd from "./routes/CurrencyAdd/CurrencyAdd";
 import MarketAddRoute from "./routes/MarketAddRoute/MarketAddRoute";
 import SectorAddRoute from "./routes/SectorAddRoute/SectorAddRoute";
 import ShareAddRoute from "./routes/ShareAddRoute/ShareAddRoute";
 import DividendAddRoute from "./routes/DividendAddRoute/DividendAddRoute";
 import InflationAddRoute from "./routes/InflationAddRoute/InflationAddRoute";
 import InflationListRoute from "./routes/InflationListRoute/InflationListRoute";
+import CurrencyList from "./routes/CurrencyList/CurrencyList";
 
 function App() {
   /**
@@ -76,8 +76,8 @@ function App() {
                 path="/add/portfolio"
                 component={PortfolioAddRoute}
               />
-              <Route exact path="/add/currency" component={CurrencyAddRoute} />
-              <Route exact path="/currencies" component={CurrencyListRoute} />
+              <Route exact path="/add/currency" component={CurrencyAdd} />
+              <Route exact path="/currencies" component={CurrencyList} />
 
               <Route exact path="/add/market" component={MarketAddRoute} />
               <Route exact path="/markets" component={MarketListRoute} />

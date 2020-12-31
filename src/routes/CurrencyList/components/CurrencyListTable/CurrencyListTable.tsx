@@ -1,12 +1,12 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
-import { CurrenciesContext } from "../../contexts/currencies";
-import CurrencyService from "../../services/currency-service";
-import { CurrencyItemProps } from "../../types/currency";
+import { CurrenciesContext } from "../../../../contexts/currencies";
+import CurrencyService from "../../../../services/currency-service";
+import { CurrencyItemProps } from "../../../../types/currency";
 
 export default function CurrencyListTable() {
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
-  const key = "updatable"
+  const key = "updatable";
 
   function confirm(recordId: string) {
     const result = new CurrencyService().deleteById(recordId);

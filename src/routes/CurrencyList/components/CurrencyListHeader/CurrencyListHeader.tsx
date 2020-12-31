@@ -2,7 +2,7 @@ import { Button, PageHeader } from "antd";
 import React, { ReactElement } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-export default function CurrencyListRouteHeader(): ReactElement {
+export default function CurrencyListHeader(): ReactElement {
   const history = useHistory();
 
   const routes = [
