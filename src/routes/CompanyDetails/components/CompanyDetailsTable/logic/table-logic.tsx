@@ -1,6 +1,6 @@
-import { YearlyOperationsFields } from "../../../types/company";
-import { YearlyDividendFields } from "../../../types/dividend";
-import { YearlyShareFields } from "../../../types/share";
+import { YearlyOperationsFields } from "types/company";
+import { YearlyDividendFields } from "types/dividend";
+import { YearlyShareFields } from "types/share";
 import { setAccumulatedYearlyDividendsAttributes } from "./dividends/yearly-dividends-accumulated-logic";
 import { setYearlyDividendsAttributes } from "./dividends/yearly-dividends-logic";
 import { calculateInflationForYears } from "./inflation/inflation-logic";

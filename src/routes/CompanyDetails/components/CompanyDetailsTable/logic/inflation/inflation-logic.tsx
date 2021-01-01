@@ -1,6 +1,6 @@
-import InflationService from "../../../../services/inflation/inflation-service";
-import { YearlyOperationsFields } from "../../../../types/company";
-import { InflationItemProps } from "../../../../types/inflation";
+import InflationService from "services/inflation/inflation-service";
+import { YearlyOperationsFields } from "types/company";
+import { InflationItemProps } from "types/inflation";
 import { YearlyOperationsDictProps } from "../table-logic";
 
 /**

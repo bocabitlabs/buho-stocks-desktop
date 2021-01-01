@@ -1,27 +1,22 @@
 import InflationDAO from "../../database/daos/inflation-dao";
 import { InflationItemProps } from "../../types/inflation";
 
-const add = (inflation: InflationItemProps) => {
-  return InflationDAO.addInflation(inflation);
-};
+class InflationService {
+  static add = (inflation: InflationItemProps) => {
+    return InflationDAO.addInflation(inflation);
+  };
+  static deleteById = (inflationId: string) => {
+    return InflationDAO.deleteById(inflationId);
+  };
 
-const deleteById = (inflationId: string) => {
-  return InflationDAO.deleteById(inflationId);
-};
+  static getAll = () => {
+    return InflationDAO.getAll();
+  };
 
-const getAll = () => {
-  return InflationDAO.getAll();
-};
+  static getInflationsForYear = (year: number) => {
+    return InflationDAO.getInflationsForYear(year);
+  };
 
-const getInflationsForYear = (year: number) => {
-  return InflationDAO.getInflationsForYear(year);
-};
+}
 
-const exportedModule = {
-  add,
-  deleteById,
-  getAll,
-  getInflationsForYear
-};
-
-export default exportedModule;
+export default InflationService;

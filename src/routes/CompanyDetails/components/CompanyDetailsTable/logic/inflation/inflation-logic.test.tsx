@@ -1,5 +1,5 @@
 import { mocked } from "ts-jest/utils";
-import InflationService from "../../../../services/inflation/inflation-service";
+import InflationService from "services/inflation/inflation-service";
 import { YearlyOperationsDictProps } from "../table-logic";
 import { calculateInflationForYear } from "./inflation-logic";
 

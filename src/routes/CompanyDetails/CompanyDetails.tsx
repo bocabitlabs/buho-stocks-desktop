@@ -1,23 +1,23 @@
 import { Layout } from "antd";
 import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
-import { CompaniesContext } from "../../contexts/companies";
-import { useCompaniesContext } from "../../hooks/companies";
-import CompanyDetailsContent from "./CompanyDetailsContent";
-import CompanyDetailsRouteHeader from "./CompanyDetailsRouteHeader";
+import { CompaniesContext } from "contexts/companies";
+import { useCompaniesContext } from "hooks/companies";
+import CompanyDetailsContent from "./components/CompanyDetailsContent/CompanyDetailsContent";
+import CompanyDetailsHeader from "./components/CompanyDetailsHeader/CompanyDetailsHeader";
 
 export interface Props {
   portfolioId: string;
   companyId: string;
 }
 
-export default function CompanyDetailsRoute(): ReactElement {
+export default function CompanyDetails(): ReactElement {
   const { portfolioId, companyId } = useParams<Props>();
   const companiesContext = useCompaniesContext(companyId);
 
   return (
     <CompaniesContext.Provider value={companiesContext}>
-      <CompanyDetailsRouteHeader
+      <CompanyDetailsHeader
         companyId={companyId}
         portfolioId={portfolioId}
       />

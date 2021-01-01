@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { DividendsContext } from "../../contexts/dividends";
 import DividendService from "../../services/dividend-service";
 import { DividendItemProps } from "../../types/dividend";
-import DividendUtils from "../../utils/dividend-utils";
+import { DividendUtils } from "../../utils/dividend-utils";
 
 interface IProps {
   portfolioId: string;

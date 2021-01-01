@@ -1,4 +1,4 @@
-import DividendUtils from "../../utils/dividend-utils";
+import { DividendUtils } from "utils/dividend-utils";
 
 export const columns = [
   {

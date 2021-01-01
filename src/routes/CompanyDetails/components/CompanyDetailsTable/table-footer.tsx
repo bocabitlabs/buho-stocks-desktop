@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import DividendUtils from "../../utils/dividend-utils";
+import { DividendUtils } from "utils/dividend-utils";
 
 interface FooterProps {
   id: string;

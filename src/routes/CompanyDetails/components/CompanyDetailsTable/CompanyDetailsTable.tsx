@@ -1,11 +1,11 @@
 import { Table } from "antd";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import DividendService from "../../services/dividend-service";
-import ShareService from "../../services/share-service";
-import { YearlyOperationsFields } from "../../types/company";
 import { columns } from "./table-columns";
 import { computeYearlyData } from "./logic/table-logic";
 import getTableFooter from "./table-footer";
+import { YearlyOperationsFields } from "types/company";
+import ShareService from "services/share-service";
+import DividendService from "services/dividend-service";
 
 interface IProps {
   companyId: string;

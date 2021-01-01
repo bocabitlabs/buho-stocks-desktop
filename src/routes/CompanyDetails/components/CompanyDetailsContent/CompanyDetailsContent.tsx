@@ -1,14 +1,14 @@
 import { Button, Tabs, Typography } from "antd";
 import React, { ReactElement, useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import CompanyDetailsTable from "../../components/CompanyDetailsTable/CompanyDetailsTable";
-import DividendListTable from "../../components/DividendListTable/DividendListTable";
-import ShareListTable from "../../components/ShareListTable/ShareListTable";
-import { CompaniesContext } from "../../contexts/companies";
-import { DividendsContext } from "../../contexts/dividends";
-import { SharesContext } from "../../contexts/shares";
-import { useDividendsContext } from "../../hooks/dividends";
-import { useSharesContext } from "../../hooks/shares";
+import DividendListTable from "../../../../components/DividendListTable/DividendListTable";
+import ShareListTable from "../../../../components/ShareListTable/ShareListTable";
+import { CompaniesContext } from "../../../../contexts/companies";
+import { DividendsContext } from "../../../../contexts/dividends";
+import { SharesContext } from "../../../../contexts/shares";
+import { useDividendsContext } from "../../../../hooks/dividends";
+import { useSharesContext } from "../../../../hooks/shares";
+import CompanyDetailsTable from "../CompanyDetailsTable/CompanyDetailsTable";
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.

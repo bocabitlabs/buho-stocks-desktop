@@ -1,14 +1,20 @@
-export const getAmountWithSymbol = (priceShare: string, symbol: string = "?") => {
-  return `${priceShare} ${symbol}`;
-};
+// export const getAmountWithSymbol = (priceShare: string, symbol: string = "?") => {
+//   return `${priceShare} ${symbol}`;
+// };
 
-const exportedModule = {
-  getAmountWithSymbol
-}
+// const exportedModule = {
+//   getAmountWithSymbol
+// }
 
-export default exportedModule;
+// export default exportedModule;
 
-// export class DividendUtils {
+export class DividendUtils {
+
+  static getAmountWithSymbol = (priceShare: string, symbol: string = "?") => {
+    return `${priceShare} ${symbol}`;
+  };
+
+
 //   getAmount = (amount: number) => {
 //     return amount;
 //   };
@@ -41,4 +47,4 @@ export default exportedModule;
 //       commission
 //     )} ${currencySymbol}`;
 //   };
-// }
+}

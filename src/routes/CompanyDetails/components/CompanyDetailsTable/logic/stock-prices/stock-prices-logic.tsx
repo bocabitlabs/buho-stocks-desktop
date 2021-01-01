@@ -1,5 +1,5 @@
-import StockPriceService from "../../../../services/stock-price-service";
-import { YearlyOperationsFields } from "../../../../types/company";
+import StockPriceService from "services/stock-price-service";
+import { YearlyOperationsFields } from "types/company";
 import { YearlyOperationsDictProps } from "../table-logic";
 
 export function calculatePortfolioValueWithStockPrices(

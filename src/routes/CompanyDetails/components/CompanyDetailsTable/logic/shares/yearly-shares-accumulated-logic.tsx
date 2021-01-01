@@ -1,4 +1,4 @@
-import { YearlyOperationsFields } from "../../../../types/company";
+import { YearlyOperationsFields } from "types/company";
 import { YearlyOperationsDictProps } from "../table-logic";
 
 /**

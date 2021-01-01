@@ -1,5 +1,5 @@
-import { YearlyShareFields } from "../../../../types/share";
-import { YearlyOperationsFields } from "../../../../types/company";
+import { YearlyShareFields } from "types/share";
+import { YearlyOperationsFields } from "types/company";
 import { setYearlySharesAttributes } from "./yearly-shares-logic";
 import { setAccumulatedYearlySharesAttributes } from "./yearly-shares-accumulated-logic";
 

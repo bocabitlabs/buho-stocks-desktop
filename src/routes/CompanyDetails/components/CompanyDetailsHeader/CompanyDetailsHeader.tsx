@@ -2,9 +2,9 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu, PageHeader, Tag } from "antd";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import StockPriceAddModal from "../../components/StockPriceAddModal/StockPriceAddModal";
-import StockPriceListModal from "../../components/StockPriceListModal/StockPriceListModal";
-import { CompaniesContext } from "../../contexts/companies";
+import StockPriceAddModal from "../../../../components/StockPriceAddModal/StockPriceAddModal";
+import StockPriceListModal from "../../../../components/StockPriceListModal/StockPriceListModal";
+import { CompaniesContext } from "../../../../contexts/companies";
 
 interface Props {
   portfolioId: string;

@@ -10,7 +10,6 @@ import MarketListRoute from "./routes/MarketListRoute/MarketListRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
 import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
 
-import CompanyDetailsRoute from "./routes/CompanyDetailsRoute/CompanyDetailsRoute";
 import TopNavbar from "./components/TopNavbar/TopNavbar";
 import { useIsCollapsedContext } from "./hooks/is-collapsed";
 import { IsCollapsedContext } from "./contexts/is-collapsed";
@@ -27,6 +26,7 @@ import DividendAddRoute from "./routes/DividendAddRoute/DividendAddRoute";
 import InflationAddRoute from "./routes/InflationAddRoute/InflationAddRoute";
 import InflationListRoute from "./routes/InflationListRoute/InflationListRoute";
 import CurrencyList from "./routes/CurrencyList/CurrencyList";
+import CompanyDetails from "./routes/CompanyDetails/CompanyDetails";
 
 function App() {
   /**
@@ -99,7 +99,7 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId"
-                component={CompanyDetailsRoute}
+                component={CompanyDetails}
               />
               <Route
                 exact
