@@ -2,14 +2,14 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import MarketAddForm from "../../components/MarketAddForm/MarketAddForm";
-import MarketAddRouteHeader from "./MarketAddRouteHeader";
+import MarketAddHeader from "./components/MarketAddHeader/MarketAddHeader";
+import MarketAddForm from "./components/MarketAddForm/MarketAddForm";
 
 const AddMarketRoute = () => {
 
   return (
     <>
-      <MarketAddRouteHeader/>
+      <MarketAddHeader/>
       <Layout style={{ padding: "0 24px 24px", backgroundColor: '#fff' }}>
         <MarketAddForm />
       </Layout>

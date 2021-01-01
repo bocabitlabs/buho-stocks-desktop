@@ -18,7 +18,6 @@ import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
 import CompanyAdd from "./routes/CompanyAdd/CompanyAdd";
 import PortfolioAddRoute from "./routes/PortfolioAddRoute/PortfolioAddRoute";
 import CurrencyAdd from "./routes/CurrencyAdd/CurrencyAdd";
-import MarketAddRoute from "./routes/MarketAddRoute/MarketAddRoute";
 import SectorAddRoute from "./routes/SectorAddRoute/SectorAddRoute";
 import ShareAddRoute from "./routes/ShareAddRoute/ShareAddRoute";
 import CurrencyList from "./routes/CurrencyList/CurrencyList";
@@ -27,6 +26,7 @@ import Home from "routes/Home/Home";
 import DividendAdd from "routes/DividendAdd/DividendAdd";
 import InflationAdd from "routes/InflationAdd/InflationAdd";
 import InflationList from "routes/InflationList/InflationList";
+import MarketAdd from "routes/MarketAdd/MarketAdd";
 
 function App() {
   /**
@@ -79,7 +79,7 @@ function App() {
               <Route exact path="/add/currency" component={CurrencyAdd} />
               <Route exact path="/currencies" component={CurrencyList} />
 
-              <Route exact path="/add/market" component={MarketAddRoute} />
+              <Route exact path="/add/market" component={MarketAdd} />
               <Route exact path="/markets" component={MarketListRoute} />
               <Route exact path="/add/inflation" component={InflationAdd} />
               <Route exact path="/inflations" component={InflationList} />
