@@ -1,8 +1,9 @@
 import React, { ReactElement } from "react";
 import { Button, Form, Input, message } from "antd";
 import { CirclePicker } from "react-color";
-import SectorService from "../../services/sector-service";
 import { useHistory } from "react-router-dom";
+
+import SectorService from "services/sector-service";
 
 /**
  * Add a new Currency

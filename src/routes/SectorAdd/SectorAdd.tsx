@@ -2,8 +2,8 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import SectorAddForm from "../../components/SectorAddForm/SectorAddForm";
 import SectorAddHeader from "./components/SectorAddHeader/SectorAddHeader";
+import SectorAddForm from "./components/SectorAddForm/SectorAddForm";
 
 const AddSector = () => {
   return (

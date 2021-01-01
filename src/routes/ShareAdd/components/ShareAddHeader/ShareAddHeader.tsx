@@ -1,14 +1,14 @@
 import { PageHeader } from 'antd';
 import React, { ReactElement, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { CompaniesContext } from '../../contexts/companies';
+import { CompaniesContext } from 'contexts/companies';
 
 interface Props {
   companyId: string;
   portfolioId: string;
 }
 
-export default function ShareAddRouteHeader({companyId, portfolioId}: Props): ReactElement {
+export default function ShareAddHeader({companyId, portfolioId}: Props): ReactElement {
   const { company, fetchCompany } = useContext(CompaniesContext);
 
   useEffect(() => {
