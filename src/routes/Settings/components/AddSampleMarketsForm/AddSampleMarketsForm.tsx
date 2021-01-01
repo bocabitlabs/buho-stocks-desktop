@@ -1,8 +1,8 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form } from "antd";
-import MarketService from "../../services/market-service";
+import MarketService from "services/market-service";
 import sampleMarkets from "./sample-markets";
-import { MarketItemProps } from "../../types/market";
+import { MarketItemProps } from "types/market";
 /**
  * Add a new Currency
  */

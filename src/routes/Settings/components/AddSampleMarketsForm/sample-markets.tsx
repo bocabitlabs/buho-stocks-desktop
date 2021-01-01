@@ -1,4 +1,4 @@
-import { MarketItemProps } from "../../types/market";
+import { MarketItemProps } from "types/market";
 
 const sampleMarkets: MarketItemProps[] = [
   {

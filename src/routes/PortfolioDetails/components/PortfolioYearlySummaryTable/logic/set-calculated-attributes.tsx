@@ -1,4 +1,4 @@
-import { PortfolioYearlyProps } from "../../../types/company";
+import { PortfolioYearlyProps } from "types/company";
 
 export function setCalculatedAttributes(
   currentYear: PortfolioYearlyProps,

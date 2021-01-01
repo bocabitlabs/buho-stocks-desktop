@@ -1,14 +1,14 @@
 import { Button, Tabs, Typography } from "antd";
 import React, { ReactElement, useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import DividendListTable from "../../../../components/DividendListTable/DividendListTable";
-import ShareListTable from "../../../../components/ShareListTable/ShareListTable";
-import { CompaniesContext } from "../../../../contexts/companies";
-import { DividendsContext } from "../../../../contexts/dividends";
-import { SharesContext } from "../../../../contexts/shares";
-import { useDividendsContext } from "../../../../hooks/dividends";
-import { useSharesContext } from "../../../../hooks/shares";
+import { CompaniesContext } from "contexts/companies";
+import { DividendsContext } from "contexts/dividends";
+import { SharesContext } from "contexts/shares";
+import { useDividendsContext } from "hooks/dividends";
+import { useSharesContext } from "hooks/shares";
 import CompanyDetailsTable from "../CompanyDetailsTable/CompanyDetailsTable";
+import ShareListTable from "../ShareListTable/ShareListTable";
+import DividendListTable from "../DividendListTable/DividendListTable";
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
@@ -33,7 +33,7 @@ export default function CompanyDetailsContent({
 
   useEffect(() => {
     fetchCompany(companyId);
-  }, [companyId, fetchCompany])
+  }, [companyId, fetchCompany]);
 
   return (
     <>
@@ -43,13 +43,9 @@ export default function CompanyDetailsContent({
             {company.description}
           </Typography.Text> */}
 
-          <Typography.Paragraph>
-          {company.description}
-          </Typography.Paragraph>
+          <Typography.Paragraph>{company.description}</Typography.Paragraph>
 
-          <CompanyDetailsTable
-            companyId={companyId}
-          />
+          <CompanyDetailsTable companyId={companyId} />
 
           <Tabs
             defaultActiveKey={query.get("tab") || "shares"}

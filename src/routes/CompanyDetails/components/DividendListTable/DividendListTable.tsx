@@ -1,23 +1,22 @@
-import { Button, message, Popconfirm, Space, Table } from "antd";
+import { Button, Popconfirm, Space, Table } from "antd";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { SharesContext } from "../../contexts/shares";
-import ShareService from "../../services/share-service";
-import { ShareItemProps } from "../../types/share";
-import { buySellFormatter } from "../../utils/table-formatters";
+import { DividendsContext } from "contexts/dividends";
+import DividendService from "services/dividend-service";
+import { DividendItemProps } from "types/dividend";
+import { DividendUtils } from "utils/dividend-utils";
 
 interface IProps {
   portfolioId: string;
   companyId: string;
 }
 
-export default function ShareListTable({ portfolioId, companyId }: IProps) {
-  const { shares, fetchShares } = useContext(SharesContext);
+export default function DividendListTable({ portfolioId, companyId }: IProps) {
+  const { dividends } = useContext(DividendsContext);
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
-  const key = "updatable";
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -29,44 +28,18 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
   }, []);
 
   function confirm(recordId: string) {
-    const result = new ShareService().deleteById(recordId);
+    const result = new DividendService().deleteById(recordId);
     if (result === "OK") {
       history.push({
         pathname: `/portfolios/${portfolioId}/companies/${companyId}`,
         state: {
-          message: { type: "success", text: "Share has been deleted" }
+          message: { type: "success", text: "Dividend has been deleted" }
         }
       });
-    }
-
-    if (result.changes) {
-      setTimeout(() => {
-        message.success({
-          content: "Share has been deleted",
-          key,
-          duration: 2
-        });
-      }, 1000);
-      fetchShares();
-    } else {
-      setTimeout(() => {
-        message.error({
-          content: "Unable to remove shares",
-          key,
-          duration: 2
-        });
-      }, 1000);
     }
   }
 
   const columns = [
-    {
-      title: "#",
-      dataIndex: "type",
-      key: "type",
-      width: 70,
-      render: (text: string, record: any) => buySellFormatter(text)
-    },
     {
       title: "Date",
       dataIndex: "operationDate",
@@ -80,37 +53,37 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
       dataIndex: "sharesNumber",
       key: "sharesNumber",
       width: 70,
-      render: (text: string, record: any) => text
+      render: (text: string, record: any) => record.sharesNumber
     },
     {
       title: "Price",
       dataIndex: "priceShare",
       key: "priceShare",
       width: 70,
-      render: (text: number, record: any) =>
-        `${text.toFixed(2)} ${record.currencySymbol}`
+      render: (text: string, record: any) =>
+        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
     },
     {
       title: "Commission",
       dataIndex: "commission",
       key: "commission",
       width: 70,
-      render: (text: number, record: any) =>
-        `${text.toFixed(2)} ${record.currencySymbol}`
+      render: (text: string, record: any) =>
+        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
     },
     {
       title: "Total",
       dataIndex: "total",
       key: "total",
       width: 70,
-      render: (text: number, record: any) =>
-        `${text.toFixed(2)} ${record.currencySymbol}`
+      render: (text: string, record: any) =>
+        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
     },
     {
       title: "Action",
       key: "action",
       render: (text: string, record: any) => (
-        <Space>
+        <Space size="middle">
           <Popconfirm
             key={`sector-delete-${record.key}`}
             title={`Delete sector ${record.name}?`}
@@ -126,18 +99,17 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
   ];
 
   const getData = () => {
-    const shares2 = shares.map((share: ShareItemProps) => ({
-      id: share.id,
-      key: share.id,
-      name: "share",
-      sharesNumber: share.sharesNumber.toString(),
-      type: share.type,
-      operationDate: share.operationDate,
-      priceShare: share.priceShare,
-      commission: share.commission,
-      total: share.sharesNumber * share.priceShare + share.commission,
-      notes: share.notes,
-      currencySymbol: share.currencySymbol
+    const shares2 = dividends.map((dividend: DividendItemProps) => ({
+      id: dividend.id,
+      key: dividend.id,
+      name: "dividend",
+      sharesNumber: dividend.sharesNumber.toString(),
+      operationDate: dividend.operationDate,
+      priceShare: dividend.priceShare,
+      commission: dividend.commission,
+      total: dividend.sharesNumber * dividend.priceShare + dividend.commission,
+      notes: dividend.notes,
+      currencySymbol: dividend.currencySymbol
     }));
     return shares2;
   };

@@ -1,8 +1,8 @@
 import { Button, DatePicker, Form, InputNumber, message } from "antd";
 import moment from "moment";
 import React, { ReactElement } from "react";
-import StockPriceService from "../../services/stock-price-service";
-import { StockPriceItemProps } from "../../types/stock-price";
+import StockPriceService from "services/stock-price-service";
+import { StockPriceItemProps } from "types/stock-price";
 
 interface Props {
   companyId: string;

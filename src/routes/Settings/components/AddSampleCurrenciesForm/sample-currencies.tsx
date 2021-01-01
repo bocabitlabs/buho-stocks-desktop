@@ -1,4 +1,4 @@
-import { CurrencyItemProps } from "../../types/currency";
+import { CurrencyItemProps } from "types/currency";
 
 const sampleCurrencies: CurrencyItemProps[] = [
   {

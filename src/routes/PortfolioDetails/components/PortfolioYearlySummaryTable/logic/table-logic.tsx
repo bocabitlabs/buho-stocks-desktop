@@ -2,7 +2,7 @@ import {
   PortfolioYearlyFields,
   PortfolioYearlyProps,
   YearlyTotalDictProps
-} from "../../../types/company";
+} from "types/company";
 import { setAccumulatedAttributes } from "./set-accumulated-attributes";
 import { setCalculatedAttributes } from "./set-calculated-attributes";
 import { setDividendsAttributes } from "./set-dividend-attributes";

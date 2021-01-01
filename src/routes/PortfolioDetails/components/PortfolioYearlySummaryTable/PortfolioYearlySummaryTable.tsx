@@ -5,8 +5,8 @@ import React, {
   useLayoutEffect,
   useState
 } from "react";
-import PortfolioService from "../../services/portfolio-service";
-import { PortfolioYearlyProps } from "../../types/company";
+import PortfolioService from "services/portfolio-service";
+import { PortfolioYearlyProps } from "types/company";
 import { computeYearlyData } from "./logic/table-logic";
 import getColumns from "./table-columns";
 

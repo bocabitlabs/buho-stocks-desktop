@@ -1,8 +1,8 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import moment from "moment";
 import React, { ReactElement, useEffect, useState } from "react";
-import StockPriceService from "../../services/stock-price-service";
-import { StockPriceFields } from "../../types/stock-price";
+import StockPriceService from "services/stock-price-service";
+import { StockPriceFields } from "types/stock-price";
 
 interface Props {
   companyId: string;

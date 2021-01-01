@@ -1,9 +1,8 @@
 import { message, Table } from "antd";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { CompaniesContext } from "../../contexts/companies";
-import CompanyService from "../../services/company-service";
-import { CompanyTotalProps } from "../../types/company";
+import { CompaniesContext } from "contexts/companies";
+import CompanyService from "services/company-service";
+import { CompanyTotalProps } from "types/company";
 import computeCompanyData from "./logic/table-logic";
 import getColumns from "./table-columns";
 
@@ -16,8 +15,6 @@ export default function CompanyListTable({ portfolioId }: IProps) {
   const [width, setWidth] = useState(window.innerWidth);
   const [companyData, setCompanyData] = useState<CompanyTotalProps[]>([]);
   const key = "updatable";
-
-  const history = useHistory();
 
   useEffect(() => {
     const results = computeCompanyData(companies);

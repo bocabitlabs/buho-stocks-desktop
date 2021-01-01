@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { Button, Form, Input, message, TimePicker } from "antd";
 import { CirclePicker } from "react-color";
 
-import MarketService from "../../services/market-service";
+import MarketService from "services/market-service";
 import { useHistory } from "react-router-dom";
 
 /**

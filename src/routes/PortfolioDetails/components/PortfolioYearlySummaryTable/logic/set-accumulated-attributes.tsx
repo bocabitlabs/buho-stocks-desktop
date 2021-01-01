@@ -1,7 +1,7 @@
 import {
   PortfolioYearlyProps,
   YearlyTotalDictProps
-} from "../../../types/company";
+} from "types/company";
 
 /**
  * Get all the accumulated values for all the years
