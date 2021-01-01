@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react'
 import { Button, PageHeader } from "antd";
 import { Link, useHistory } from "react-router-dom";
 
-export default function InflationListRouteHeader(): ReactElement {
+export default function InflationListHeader(): ReactElement {
   const history = useHistory();
 
   const routes = [

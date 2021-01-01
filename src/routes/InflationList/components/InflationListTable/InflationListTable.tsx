@@ -1,8 +1,8 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
-import { InflationsContext } from "../../contexts/inflations";
-import InflationService from "../../services/inflation/inflation-service";
-import { InflationItemProps } from "../../types/inflation";
+import { InflationsContext } from "contexts/inflations";
+import InflationService from "services/inflation/inflation-service";
+import { InflationItemProps } from "types/inflation";
 
 export default function InflationListTable() {
   const { inflations, fetchInflations } = useContext(InflationsContext);

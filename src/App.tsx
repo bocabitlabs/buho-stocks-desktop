@@ -21,12 +21,12 @@ import CurrencyAdd from "./routes/CurrencyAdd/CurrencyAdd";
 import MarketAddRoute from "./routes/MarketAddRoute/MarketAddRoute";
 import SectorAddRoute from "./routes/SectorAddRoute/SectorAddRoute";
 import ShareAddRoute from "./routes/ShareAddRoute/ShareAddRoute";
-import InflationAddRoute from "./routes/InflationAddRoute/InflationAddRoute";
-import InflationListRoute from "./routes/InflationListRoute/InflationListRoute";
 import CurrencyList from "./routes/CurrencyList/CurrencyList";
 import CompanyDetails from "./routes/CompanyDetails/CompanyDetails";
 import Home from "routes/Home/Home";
 import DividendAdd from "routes/DividendAdd/DividendAdd";
+import InflationAdd from "routes/InflationAdd/InflationAdd";
+import InflationList from "routes/InflationList/InflationList";
 
 function App() {
   /**
@@ -81,8 +81,8 @@ function App() {
 
               <Route exact path="/add/market" component={MarketAddRoute} />
               <Route exact path="/markets" component={MarketListRoute} />
-              <Route exact path="/add/inflation" component={InflationAddRoute} />
-              <Route exact path="/inflations" component={InflationListRoute} />
+              <Route exact path="/add/inflation" component={InflationAdd} />
+              <Route exact path="/inflations" component={InflationList} />
 
               <Route exact path="/sectors" component={SectorListRoute} />
               <Route exact path="/add/sector" component={SectorAddRoute} />
