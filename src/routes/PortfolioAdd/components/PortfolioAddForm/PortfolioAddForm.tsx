@@ -1,11 +1,11 @@
 import React, { ReactElement, useContext, useState } from "react";
 import { Button, Form, Input, message, Select } from "antd";
 import { CirclePicker } from "react-color";
-
-import { CurrencyFields } from "../../types/currency";
-import { CurrenciesContext } from "../../contexts/currencies";
-import PortfolioService from "../../services/portfolio-service";
 import { useHistory } from "react-router-dom";
+
+import { CurrenciesContext } from "contexts/currencies";
+import PortfolioService from "services/portfolio-service";
+import { CurrencyFields } from "types/currency";
 
 /**
  * Add a new Currency
@@ -15,7 +15,7 @@ function PortfolioAddForm(): ReactElement {
   const history = useHistory();
 
   const { currencies } = useContext(CurrenciesContext);
-  const [color, setColor] = useState("#607d8b")
+  const [color, setColor] = useState("#607d8b");
   const key = "updatable";
 
   const handleAdd = (values: any) => {
