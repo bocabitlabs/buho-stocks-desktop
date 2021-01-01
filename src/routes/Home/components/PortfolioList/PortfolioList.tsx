@@ -1,8 +1,8 @@
 import { Card, Col, Row } from "antd";
 import React, { ReactElement, useContext } from "react";
 import { Link } from "react-router-dom";
-import { PortfoliosContext } from "../../contexts/portfolios";
-import { PortfolioFields } from "../../types/portfolio";
+import { PortfoliosContext } from "contexts/portfolios";
+import { PortfolioFields } from "types/portfolio";
 
 export default function PortfolioList(): ReactElement {
   const { portfolios } = useContext(PortfoliosContext);

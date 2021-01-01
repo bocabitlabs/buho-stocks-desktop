@@ -16,9 +16,9 @@ import moment from "moment";
 import { CirclePicker } from "react-color";
 
 import { useHistory } from "react-router-dom";
-import DividendService from "../../services/dividend-service";
-import { DividendItemProps } from "../../types/dividend";
-import { CompaniesContext } from "../../contexts/companies";
+import DividendService from "services/dividend-service";
+import { DividendItemProps } from "types/dividend";
+import { CompaniesContext } from "contexts/companies";
 
 interface Props {
   companyId: string;

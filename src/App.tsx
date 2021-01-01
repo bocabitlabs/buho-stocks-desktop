@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import { Redirect, Route } from "react-router-dom";
 
-import HomeRoute from "./routes/HomeRoute/HomeRoute";
 import { Layout } from "antd";
 
 import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute/PortfolioDetailsRoute";
@@ -22,11 +21,12 @@ import CurrencyAdd from "./routes/CurrencyAdd/CurrencyAdd";
 import MarketAddRoute from "./routes/MarketAddRoute/MarketAddRoute";
 import SectorAddRoute from "./routes/SectorAddRoute/SectorAddRoute";
 import ShareAddRoute from "./routes/ShareAddRoute/ShareAddRoute";
-import DividendAddRoute from "./routes/DividendAddRoute/DividendAddRoute";
 import InflationAddRoute from "./routes/InflationAddRoute/InflationAddRoute";
 import InflationListRoute from "./routes/InflationListRoute/InflationListRoute";
 import CurrencyList from "./routes/CurrencyList/CurrencyList";
 import CompanyDetails from "./routes/CompanyDetails/CompanyDetails";
+import Home from "routes/Home/Home";
+import DividendAdd from "routes/DividendAdd/DividendAdd";
 
 function App() {
   /**
@@ -69,7 +69,7 @@ function App() {
                   return <Redirect to="/home" />;
                 }}
               />
-              <Route exact path="/home" component={HomeRoute} />
+              <Route exact path="/home" component={Home} />
               <Route exact path="/settings" component={SettingsRoute} />
               <Route
                 exact
@@ -109,7 +109,7 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
-                component={DividendAddRoute}
+                component={DividendAdd}
               />
             </Layout.Content>
           </Layout>

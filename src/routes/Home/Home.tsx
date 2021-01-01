@@ -2,10 +2,10 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import PortfolioList from "../../components/PortfolioList/PortfolioList";
-import { PortfoliosContext } from "../../contexts/portfolios";
-import { usePortfoliosContext } from "../../hooks/portfolios";
-import HomeRouteHeader from "./HomeRouteHeader";
+import { PortfoliosContext } from "contexts/portfolios";
+import { usePortfoliosContext } from "hooks/portfolios";
+import HomeRouteHeader from "./components/HomeHeader/HomeHeader";
+import PortfolioList from "./components/PortfolioList/PortfolioList";
 
 const Home = () => {
   const portfoliosContext = usePortfoliosContext();

@@ -1,14 +1,14 @@
 import { PageHeader } from 'antd';
 import React, { ReactElement, useContext } from 'react'
 import { Link } from 'react-router-dom';
-import { CompaniesContext } from '../../contexts/companies';
+import { CompaniesContext } from 'contexts/companies';
 
 interface Props {
   companyId: string;
   portfolioId: string;
 }
 
-export default function DividendAddRouteHeader({companyId, portfolioId}: Props): ReactElement {
+export default function DividendAddHeader({companyId, portfolioId}: Props): ReactElement {
   const { company } = useContext(CompaniesContext);
 
   const routes = [
