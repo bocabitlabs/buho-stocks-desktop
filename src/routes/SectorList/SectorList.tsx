@@ -2,17 +2,17 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import SectorListTable from "../../components/SectorListTable/SectorListTable";
-import SectorListRouteHeader from "./SectorListRouteHeader";
 import { useSectorsContext } from "../../hooks/sectors";
 import { SectorsContext } from "../../contexts/sectors";
+import SectorListHeader from "./components/SectorListHeader/SectorListHeader";
+import SectorListTable from "./components/SectorListTable/SectorListTable";
 
-const SectorListRoute = () => {
+const SectorList = () => {
   const sectorsContext = useSectorsContext();
 
   return (
     <>
-      <SectorListRouteHeader />
+      <SectorListHeader />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
         <SectorsContext.Provider value={sectorsContext}>
           <SectorListTable />
@@ -22,4 +22,4 @@ const SectorListRoute = () => {
   );
 };
 
-export default SectorListRoute;
+export default SectorList;

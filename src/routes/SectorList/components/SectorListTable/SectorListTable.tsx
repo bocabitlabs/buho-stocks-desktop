@@ -1,8 +1,8 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
-import { SectorsContext } from "../../contexts/sectors";
-import SectorService from "../../services/sector-service";
-import { SectorItemProps } from "../../types/sector";
+import { SectorsContext } from "contexts/sectors";
+import SectorService from "services/sector-service";
+import { SectorItemProps } from "types/sector";
 
 export default function SectorListTable() {
   const { sectors, fetchSectors } = useContext(SectorsContext);

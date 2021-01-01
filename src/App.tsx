@@ -5,7 +5,6 @@ import { Redirect, Route } from "react-router-dom";
 import { Layout } from "antd";
 
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
-import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
 
 import TopNavbar from "./components/TopNavbar/TopNavbar";
 import { useIsCollapsedContext } from "./hooks/is-collapsed";
@@ -27,6 +26,7 @@ import MarketList from "routes/MarketList/MarketList";
 import PortfolioAdd from "routes/PortfolioAdd/PortfolioAdd";
 import PortfolioDetails from "routes/PortfolioDetails/PortfolioDetails";
 import SectorAdd from "routes/SectorAdd/SectorAdd";
+import SectorList from "routes/SectorList/SectorList";
 
 function App() {
   /**
@@ -80,7 +80,7 @@ function App() {
               <Route exact path="/add/inflation" component={InflationAdd} />
               <Route exact path="/inflations" component={InflationList} />
 
-              <Route exact path="/sectors" component={SectorListRoute} />
+              <Route exact path="/sectors" component={SectorList} />
               <Route exact path="/add/sector" component={SectorAdd} />
               <Route
                 exact
