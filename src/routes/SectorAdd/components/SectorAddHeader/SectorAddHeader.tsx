@@ -2,7 +2,7 @@ import { PageHeader } from "antd";
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 
-export default function SectorAddRouteHeader(): ReactElement {
+export default function SectorAddHeader(): ReactElement {
   const routes = [
     {
       path: "/home",

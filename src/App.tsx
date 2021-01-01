@@ -15,7 +15,6 @@ import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
 import CompanyAdd from "./routes/CompanyAdd/CompanyAdd";
 import CurrencyAdd from "./routes/CurrencyAdd/CurrencyAdd";
-import SectorAddRoute from "./routes/SectorAddRoute/SectorAddRoute";
 import ShareAddRoute from "./routes/ShareAddRoute/ShareAddRoute";
 import CurrencyList from "./routes/CurrencyList/CurrencyList";
 import CompanyDetails from "./routes/CompanyDetails/CompanyDetails";
@@ -27,6 +26,7 @@ import MarketAdd from "routes/MarketAdd/MarketAdd";
 import MarketList from "routes/MarketList/MarketList";
 import PortfolioAdd from "routes/PortfolioAdd/PortfolioAdd";
 import PortfolioDetails from "routes/PortfolioDetails/PortfolioDetails";
+import SectorAdd from "routes/SectorAdd/SectorAdd";
 
 function App() {
   /**
@@ -81,7 +81,7 @@ function App() {
               <Route exact path="/inflations" component={InflationList} />
 
               <Route exact path="/sectors" component={SectorListRoute} />
-              <Route exact path="/add/sector" component={SectorAddRoute} />
+              <Route exact path="/add/sector" component={SectorAdd} />
               <Route
                 exact
                 path="/portfolios/:id"

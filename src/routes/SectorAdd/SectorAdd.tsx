@@ -3,12 +3,12 @@ import React from "react";
 import { Layout } from "antd";
 
 import SectorAddForm from "../../components/SectorAddForm/SectorAddForm";
-import SectorAddRouteHeader from "./SectorAddRouteHeader";
+import SectorAddHeader from "./components/SectorAddHeader/SectorAddHeader";
 
-const AddSectorRoute = () => {
+const AddSector = () => {
   return (
     <>
-      <SectorAddRouteHeader />
+      <SectorAddHeader />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
         <SectorAddForm />
       </Layout>
@@ -16,4 +16,4 @@ const AddSectorRoute = () => {
   );
 };
 
-export default AddSectorRoute;
+export default AddSector;

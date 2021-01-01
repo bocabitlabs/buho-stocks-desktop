@@ -1,8 +1,4 @@
-import React, {
-  ReactElement,
-  useContext,
-  useEffect
-} from "react";
+import React, { ReactElement, useContext, useEffect } from "react";
 import {
   Button,
   DatePicker,
@@ -15,12 +11,11 @@ import {
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import { CirclePicker } from "react-color";
-
-import { ShareItemProps } from "../../types/share";
-import ShareService from "../../services/share-service";
 import { useHistory } from "react-router-dom";
-import { CompaniesContext } from "../../contexts/companies";
 
+import { CompaniesContext } from "contexts/companies";
+import { ShareItemProps } from "types/share";
+import ShareService from "services/share-service";
 
 interface Props {
   companyId: string;
@@ -37,8 +32,8 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
   const key = "updatable";
 
   useEffect(() => {
-    fetchCompany(companyId)
-  }, [companyId, fetchCompany])
+    fetchCompany(companyId);
+  }, [companyId, fetchCompany]);
 
   const handleAdd = (values: any) => {
     const {
@@ -65,7 +60,9 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
     console.log(values);
     const added = new ShareService().addShare(share);
     if (added.changes) {
-      history.push(`/portfolios/${company?.portfolio}/companies/${companyId}?tab=shares`);
+      history.push(
+        `/portfolios/${company?.portfolio}/companies/${companyId}?tab=shares`
+      );
       message.success({ content: "Shares has been added", key });
     } else {
       message.error({ content: "Unable to add the shares", key });
@@ -162,9 +159,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
           { required: true, message: "Please input the date of the operation" }
         ]}
       >
-        <DatePicker
-          format={dateFormat}
-        />
+        <DatePicker format={dateFormat} />
       </Form.Item>
       <Form.Item
         name="exchangeRate"
