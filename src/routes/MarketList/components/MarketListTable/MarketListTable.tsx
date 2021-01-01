@@ -1,8 +1,8 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
-import { MarketsContext } from "../../contexts/markets";
-import MarketService from "../../services/market-service";
-import { MarketItemProps } from "../../types/market";
+import { MarketsContext } from "contexts/markets";
+import MarketService from "services/market-service";
+import { MarketItemProps } from "types/market";
 
 export default function MarketListTable() {
   const { markets, fetchMarkets } = useContext(MarketsContext);

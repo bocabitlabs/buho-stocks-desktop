@@ -5,7 +5,6 @@ import { Redirect, Route } from "react-router-dom";
 import { Layout } from "antd";
 
 import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute/PortfolioDetailsRoute";
-import MarketListRoute from "./routes/MarketListRoute/MarketListRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
 import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
 
@@ -27,6 +26,7 @@ import DividendAdd from "routes/DividendAdd/DividendAdd";
 import InflationAdd from "routes/InflationAdd/InflationAdd";
 import InflationList from "routes/InflationList/InflationList";
 import MarketAdd from "routes/MarketAdd/MarketAdd";
+import MarketList from "routes/MarketList/MarketList";
 
 function App() {
   /**
@@ -80,7 +80,7 @@ function App() {
               <Route exact path="/currencies" component={CurrencyList} />
 
               <Route exact path="/add/market" component={MarketAdd} />
-              <Route exact path="/markets" component={MarketListRoute} />
+              <Route exact path="/markets" component={MarketList} />
               <Route exact path="/add/inflation" component={InflationAdd} />
               <Route exact path="/inflations" component={InflationList} />
 
