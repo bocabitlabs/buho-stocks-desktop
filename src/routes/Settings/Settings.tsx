@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { Layout, PageHeader } from "antd";
 
 import { Link } from "react-router-dom";
-import SettingsForm from "../../components/SettingsForm/SettingsForm";
+import SettingsForm from "./components/SettingsForm/SettingsForm";
 
-const SettingsRoute = () => {
+const Settings = () => {
   const routes = [
     {
       path: "/home",
@@ -41,4 +41,4 @@ const SettingsRoute = () => {
   );
 };
 
-export default SettingsRoute;
+export default Settings;

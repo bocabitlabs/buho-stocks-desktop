@@ -1,8 +1,9 @@
 import React, { ReactElement, useCallback, useContext } from "react";
 import { Button, Form } from "antd";
+
+import { SettingsContext } from "contexts/settings";
 import AddSampleCurrenciesForm from "../AddSampleCurrenciesForm/AddSampleCurrenciesForm";
 import AddSampleMarketsForm from "../AddSampleMarketsForm/AddSampleMarketsForm";
-import { SettingsContext } from "../../contexts/settings";
 
 /**
  * Add a new Currency
@@ -12,9 +13,7 @@ function SettingsForm(): ReactElement {
 
   const { settings } = useContext(SettingsContext);
 
-  const handleUpdate = useCallback(async (values) => {
-
-  }, []);
+  const handleUpdate = useCallback(async (values) => {}, []);
 
   return (
     <>

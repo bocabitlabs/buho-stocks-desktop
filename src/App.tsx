@@ -4,8 +4,6 @@ import { Redirect, Route } from "react-router-dom";
 
 import { Layout } from "antd";
 
-import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
-
 import TopNavbar from "./components/TopNavbar/TopNavbar";
 import { useIsCollapsedContext } from "./hooks/is-collapsed";
 import { IsCollapsedContext } from "./contexts/is-collapsed";
@@ -14,7 +12,6 @@ import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
 import CompanyAdd from "./routes/CompanyAdd/CompanyAdd";
 import CurrencyAdd from "./routes/CurrencyAdd/CurrencyAdd";
-import ShareAddRoute from "./routes/ShareAddRoute/ShareAddRoute";
 import CurrencyList from "./routes/CurrencyList/CurrencyList";
 import CompanyDetails from "./routes/CompanyDetails/CompanyDetails";
 import Home from "routes/Home/Home";
@@ -27,6 +24,8 @@ import PortfolioAdd from "routes/PortfolioAdd/PortfolioAdd";
 import PortfolioDetails from "routes/PortfolioDetails/PortfolioDetails";
 import SectorAdd from "routes/SectorAdd/SectorAdd";
 import SectorList from "routes/SectorList/SectorList";
+import Settings from "routes/Settings/Settings";
+import ShareAdd from "routes/ShareAdd/ShareAdd";
 
 function App() {
   /**
@@ -70,7 +69,7 @@ function App() {
                 }}
               />
               <Route exact path="/home" component={Home} />
-              <Route exact path="/settings" component={SettingsRoute} />
+              <Route exact path="/settings" component={Settings} />
               <Route exact path="/add/portfolio" component={PortfolioAdd} />
               <Route exact path="/add/currency" component={CurrencyAdd} />
               <Route exact path="/currencies" component={CurrencyList} />
@@ -100,7 +99,7 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-shares"
-                component={ShareAddRoute}
+                component={ShareAdd}
               />
               <Route
                 exact
