@@ -4,14 +4,15 @@ import PageHeader from "antd/lib/page-header";
 import Popconfirm from "antd/lib/popconfirm";
 import React, { ReactElement, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { PortfoliosContext } from "../../contexts/portfolios";
-import PortfolioService from "../../services/portfolio-service";
+
+import { PortfoliosContext } from "contexts/portfolios";
+import PortfolioService from "services/portfolio-service";
 
 interface Props {
   portfolioId: string;
 }
 
-export default function PortfolioDetailsRouteHeader({
+export default function PortfolioDetailsHeader({
   portfolioId
 }: Props): ReactElement {
   const history = useHistory();

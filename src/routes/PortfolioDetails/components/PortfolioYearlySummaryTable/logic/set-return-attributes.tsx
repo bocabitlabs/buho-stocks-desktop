@@ -1,8 +1,5 @@
-import { getCurrentYearReturn } from "../../../routes/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
-import {
-  PortfolioYearlyProps,
-  YearlyTotalDictProps
-} from "../../../types/company";
+import { getCurrentYearReturn } from "routes/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
+import { PortfolioYearlyProps, YearlyTotalDictProps } from "types/company";
 
 export function setReturnAttributes(
   modifiedYears: YearlyTotalDictProps
@@ -28,7 +25,6 @@ export function setReturnAttributes(
 
     currentYear.returnWithDividends =
       currentYear.accumulatedReturn + currentYear.dividendsNet;
-
   });
 
   return modifiedYears;

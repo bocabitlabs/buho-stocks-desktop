@@ -4,7 +4,6 @@ import { Redirect, Route } from "react-router-dom";
 
 import { Layout } from "antd";
 
-import PortfolioDetailsRoute from "./routes/PortfolioDetailsRoute/PortfolioDetailsRoute";
 import SettingsRoute from "./routes/SettingsRoute/SettingsRoute";
 import SectorListRoute from "./routes/SectorListRoute/SectorListRoute";
 
@@ -27,6 +26,7 @@ import InflationList from "routes/InflationList/InflationList";
 import MarketAdd from "routes/MarketAdd/MarketAdd";
 import MarketList from "routes/MarketList/MarketList";
 import PortfolioAdd from "routes/PortfolioAdd/PortfolioAdd";
+import PortfolioDetails from "routes/PortfolioDetails/PortfolioDetails";
 
 function App() {
   /**
@@ -71,11 +71,7 @@ function App() {
               />
               <Route exact path="/home" component={Home} />
               <Route exact path="/settings" component={SettingsRoute} />
-              <Route
-                exact
-                path="/add/portfolio"
-                component={PortfolioAdd}
-              />
+              <Route exact path="/add/portfolio" component={PortfolioAdd} />
               <Route exact path="/add/currency" component={CurrencyAdd} />
               <Route exact path="/currencies" component={CurrencyList} />
 
@@ -89,7 +85,7 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:id"
-                component={PortfolioDetailsRoute}
+                component={PortfolioDetails}
               />
               <Route
                 exact

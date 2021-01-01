@@ -3,19 +3,19 @@ import React from "react";
 import { Layout, PageHeader } from "antd";
 
 import { useParams } from "react-router-dom";
-import CompanyListTable from "../../components/CompanyListTable/CompanyListTable";
 import { useCompaniesContext } from "../../hooks/companies";
 import { CompaniesContext } from "../../contexts/companies";
-import PortfolioDetailsRouteHeader from "./PortfolioDetailsRouteHeader";
 import { PortfoliosContext } from "../../contexts/portfolios";
 import { usePortfoliosContext } from "../../hooks/portfolios";
-import PortfolioYearlySummaryTable from "../../components/PortfolioYearlySummaryTable/PortfolioYearlySummaryTable";
+import PortfolioDetailsHeader from "./components/PortfolioDetailsHeader/PortfolioDetailsHeader";
+import CompanyListTable from "./components/CompanyListTable/CompanyListTable";
+import PortfolioYearlySummaryTable from "./components/PortfolioYearlySummaryTable/PortfolioYearlySummaryTable";
 
 export interface IPortfolioRouteParams {
   id: string;
 }
 
-const PortfolioDetailsRoute = () => {
+const PortfolioDetails = () => {
   const { id } = useParams<IPortfolioRouteParams>();
 
   const companiesContext = useCompaniesContext(id);
@@ -24,7 +24,7 @@ const PortfolioDetailsRoute = () => {
   return (
     <>
       <PortfoliosContext.Provider value={portfoliosContext}>
-        <PortfolioDetailsRouteHeader portfolioId={id} />
+        <PortfolioDetailsHeader portfolioId={id} />
       </PortfoliosContext.Provider>
 
       <CompaniesContext.Provider value={companiesContext}>
@@ -40,4 +40,4 @@ const PortfolioDetailsRoute = () => {
   );
 };
 
-export default PortfolioDetailsRoute;
+export default PortfolioDetails;

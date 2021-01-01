@@ -1,8 +1,8 @@
-import { calculateInflationForYear } from "../../../routes/CompanyDetails/components/CompanyDetailsTable/logic/inflation/inflation-logic";
-import { getDividendsReturnPercentage, getYoc } from "../../../routes/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
-import DividendService from "../../../services/dividend-service";
-import StockPriceService from "../../../services/stock-price-service";
-import { CompanyItemProps, CompanyTotalProps } from "../../../types/company";
+import { calculateInflationForYear } from "routes/CompanyDetails/components/CompanyDetailsTable/logic/inflation/inflation-logic";
+import { getDividendsReturnPercentage, getYoc } from "routes/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
+import DividendService from "services/dividend-service";
+import StockPriceService from "services/stock-price-service";
+import { CompanyItemProps, CompanyTotalProps } from "types/company";
 
 export interface CompanyTotalDictProps {
   [year: string]: CompanyTotalProps | {};

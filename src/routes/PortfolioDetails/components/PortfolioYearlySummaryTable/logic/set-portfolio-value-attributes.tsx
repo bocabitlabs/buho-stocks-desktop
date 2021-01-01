@@ -1,11 +1,11 @@
-import { calculateInflationForYear } from "../../../routes/CompanyDetails/components/CompanyDetailsTable/logic/inflation/inflation-logic";
-import { getPortfolioValue } from "../../../routes/CompanyDetails/components/CompanyDetailsTable/logic/stock-prices/stock-prices-logic";
-import CompanyService from "../../../services/company-service";
-import StockPriceService from "../../../services/stock-price-service";
+import { calculateInflationForYear } from "routes/CompanyDetails/components/CompanyDetailsTable/logic/inflation/inflation-logic";
+import { getPortfolioValue } from "routes/CompanyDetails/components/CompanyDetailsTable/logic/stock-prices/stock-prices-logic";
+import CompanyService from "services/company-service";
+import StockPriceService from "services/stock-price-service";
 import {
   PortfolioYearlyProps,
   YearlyTotalDictProps
-} from "../../../types/company";
+} from "types/company";
 
 export function setPortfolioValueAttributes(
   modifiedYears: YearlyTotalDictProps
