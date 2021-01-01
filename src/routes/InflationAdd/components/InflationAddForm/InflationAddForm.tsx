@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Button, Form, InputNumber, message } from "antd";
 import { useHistory } from "react-router-dom";
-import InflationService from "../../services/inflation/inflation-service";
+import InflationService from "services/inflation/inflation-service";
 
 /**
  * Add a new Currency

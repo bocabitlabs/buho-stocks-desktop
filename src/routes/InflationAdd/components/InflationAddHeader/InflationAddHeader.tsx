@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 
 
-export default function InflationAddRouteHeader(): ReactElement {
+export default function InflationAddHeader(): ReactElement {
   const routes = [
     {
       path: "/home",
