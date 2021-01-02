@@ -1,20 +1,13 @@
 import { Button, Tabs, Typography } from "antd";
 import React, { ReactElement, useContext, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import { CompaniesContext } from "contexts/companies";
-import { DividendsContext } from "contexts/dividends";
-import { SharesContext } from "contexts/shares";
-import { useDividendsContext } from "hooks/dividends";
-import { useSharesContext } from "hooks/shares";
+import { useQuery } from "hooks/use-query";
+
 import CompanyDetailsTable from "../CompanyDetailsTable/CompanyDetailsTable";
 import ShareListTable from "../ShareListTable/ShareListTable";
 import DividendListTable from "../DividendListTable/DividendListTable";
-
-// A custom hook that builds on useLocation to parse
-// the query string for you.
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
 interface Props {
   companyId: string;
@@ -28,8 +21,6 @@ export default function CompanyDetailsContent({
   const history = useHistory();
   let query = useQuery();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const sharesContext = useSharesContext(companyId);
-  const dividendsContext = useDividendsContext(companyId);
 
   useEffect(() => {
     fetchCompany(companyId);
@@ -39,14 +30,8 @@ export default function CompanyDetailsContent({
     <>
       {company && (
         <>
-          {/* <Typography.Text type="secondary">
-            {company.description}
-          </Typography.Text> */}
-
           <Typography.Paragraph>{company.description}</Typography.Paragraph>
-
           <CompanyDetailsTable companyId={companyId} />
-
           <Tabs
             defaultActiveKey={query.get("tab") || "shares"}
             onChange={() => {
@@ -76,20 +61,22 @@ export default function CompanyDetailsContent({
             ]}
           >
             <Tabs.TabPane tab="Shares" key="shares">
-              <SharesContext.Provider value={sharesContext}>
-                <ShareListTable
-                  portfolioId={company.portfolio}
-                  companyId={companyId}
-                />
-              </SharesContext.Provider>
+              <ShareListTable
+                portfolioId={company.portfolio}
+                companyId={companyId}
+              />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Dividends" key="dividends">
-              <DividendsContext.Provider value={dividendsContext}>
-                <DividendListTable
-                  portfolioId={company.portfolio}
-                  companyId={companyId}
-                />
-              </DividendsContext.Provider>
+              <DividendListTable
+                portfolioId={company.portfolio}
+                companyId={companyId}
+              />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="Share rights" key="share-rights">
+              <DividendListTable
+                portfolioId={company.portfolio}
+                companyId={companyId}
+              />
             </Tabs.TabPane>
           </Tabs>
         </>

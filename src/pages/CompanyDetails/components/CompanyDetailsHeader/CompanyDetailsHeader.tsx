@@ -2,6 +2,7 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu, PageHeader, Tag } from "antd";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+
 import { CompaniesContext } from "contexts/companies";
 import StockPriceAddModal from "../StockPriceAddModal/StockPriceAddModal";
 import StockPriceListModal from "../StockPriceListModal/StockPriceListModal";
