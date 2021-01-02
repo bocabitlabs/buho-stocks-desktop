@@ -1,9 +1,10 @@
 import { Select } from "antd";
 import React, { ReactElement, useContext } from "react";
-import { PortfoliosContext } from "../../contexts/portfolios";
-import { SelectedPortfolioContext } from "../../contexts/selected-portfolio";
-import SettingsService from "../../services/settings-service";
-import { PortfolioFields } from "../../types/portfolio";
+
+import { PortfoliosContext } from "contexts/portfolios";
+import { SelectedPortfolioContext } from "contexts/selected-portfolio";
+import SettingsService from "services/settings-service";
+import { PortfolioFields } from "types/portfolio";
 
 export default function PortfolioSelector(): ReactElement {
   const { selectedPortfolio } = useContext(SelectedPortfolioContext);
