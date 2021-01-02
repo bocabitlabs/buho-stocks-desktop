@@ -10,22 +10,22 @@ import { IsCollapsedContext } from "./contexts/is-collapsed";
 import AppSidebar from "./components/AppSidebar/AppSidebar";
 import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
-import CompanyAdd from "./routes/CompanyAdd/CompanyAdd";
-import CurrencyAdd from "./routes/CurrencyAdd/CurrencyAdd";
-import CurrencyList from "./routes/CurrencyList/CurrencyList";
-import CompanyDetails from "./routes/CompanyDetails/CompanyDetails";
-import Home from "routes/Home/Home";
-import DividendAdd from "routes/DividendAdd/DividendAdd";
-import InflationAdd from "routes/InflationAdd/InflationAdd";
-import InflationList from "routes/InflationList/InflationList";
-import MarketAdd from "routes/MarketAdd/MarketAdd";
-import MarketList from "routes/MarketList/MarketList";
-import PortfolioAdd from "routes/PortfolioAdd/PortfolioAdd";
-import PortfolioDetails from "routes/PortfolioDetails/PortfolioDetails";
-import SectorAdd from "routes/SectorAdd/SectorAdd";
-import SectorList from "routes/SectorList/SectorList";
-import Settings from "routes/Settings/Settings";
-import ShareAdd from "routes/ShareAdd/ShareAdd";
+import CompanyAdd from "./pages/CompanyAdd/CompanyAdd";
+import CurrencyAdd from "./pages/CurrencyAdd/CurrencyAdd";
+import CurrencyList from "./pages/CurrencyList/CurrencyList";
+import CompanyDetails from "./pages/CompanyDetails/CompanyDetails";
+import Home from "pages/Home/Home";
+import DividendAdd from "pages/DividendAdd/DividendAdd";
+import InflationAdd from "pages/InflationAdd/InflationAdd";
+import InflationList from "pages/InflationList/InflationList";
+import MarketAdd from "pages/MarketAdd/MarketAdd";
+import MarketList from "pages/MarketList/MarketList";
+import PortfolioAdd from "pages/PortfolioAdd/PortfolioAdd";
+import PortfolioDetails from "pages/PortfolioDetails/PortfolioDetails";
+import SectorAdd from "pages/SectorAdd/SectorAdd";
+import SectorList from "pages/SectorList/SectorList";
+import Settings from "pages/Settings/Settings";
+import ShareAdd from "pages/ShareAdd/ShareAdd";
 
 function App() {
   /**

@@ -1,4 +1,4 @@
-import { getCurrentYearReturn } from "routes/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
+import { getCurrentYearReturn } from "pages/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
 import { PortfolioYearlyProps, YearlyTotalDictProps } from "types/company";
 
 export function setReturnAttributes(

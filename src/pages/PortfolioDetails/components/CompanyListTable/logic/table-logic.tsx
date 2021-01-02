@@ -1,5 +1,5 @@
-import { calculateInflationForYear } from "routes/CompanyDetails/components/CompanyDetailsTable/logic/inflation/inflation-logic";
-import { getDividendsReturnPercentage, getYoc } from "routes/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
+import { calculateInflationForYear } from "pages/CompanyDetails/components/CompanyDetailsTable/logic/inflation/inflation-logic";
+import { getDividendsReturnPercentage, getYoc } from "pages/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
 import DividendService from "services/dividend-service";
 import StockPriceService from "services/stock-price-service";
 import { CompanyItemProps, CompanyTotalProps } from "types/company";
