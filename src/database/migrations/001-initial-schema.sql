@@ -64,23 +64,24 @@ CREATE TABLE IF NOT EXISTS "stockPrices" (
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ON DELETE CASCADE
 );
-CREATE TABLE IF NOT EXISTS "dividends" (
+CREATE TABLE IF NOT EXISTS "dividendTransactions" (
 	"id" INTEGER NOT NULL UNIQUE,
+	"count" INTEGER NOT NULL,
+	"price" NUMERIC NOT NULL,
+	"commission" NUMERIC NOT NULL,
 	"operationDate" TEXT NOT NULL,
-	"priceShare" NUMERIC NOT NULL,
 	"exchangeRate" NUMERIC NOT NULL,
 	"color" TEXT,
-	"sharesNumber" INTEGER NOT NULL,
-	"commission" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ON DELETE CASCADE
 );
-CREATE TABLE IF NOT EXISTS "rights" (
+CREATE TABLE IF NOT EXISTS "rightTransactions" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"rightsNumber" INTEGER NOT NULL,
-	"priceRight" NUMERIC NOT NULL,
+	"rights" INTEGER NOT NULL,
+	"shares" INTEGER NOT NULL,
+	"price" NUMERIC NOT NULL,
 	"commission" NUMERIC NOT NULL,
 	"color" TEXT,
 	"type" TEXT NOT NULL,
@@ -91,10 +92,10 @@ CREATE TABLE IF NOT EXISTS "rights" (
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ("id") ON DELETE CASCADE
 );
-CREATE TABLE IF NOT EXISTS "shares" (
+CREATE TABLE IF NOT EXISTS "shareTransactions" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"sharesNumber" INTEGER NOT NULL,
-	"priceShare" NUMERIC NOT NULL,
+	"count" INTEGER NOT NULL,
+	"price" NUMERIC NOT NULL,
 	"commission" NUMERIC NOT NULL,
 	"color" TEXT,
 	"type" TEXT NOT NULL,
@@ -118,11 +119,11 @@ VALUES ('1', 1);
 DROP TABLE currencies;
 DROP TABLE portfolios;
 DROP TABLE markets;
-DROP TABLE dividends;
+DROP TABLE dividendTransactions;
 DROP TABLE companies;
 DROP TABLE inflation;
-DROP TABLE shares;
-DROP TABLE rights;
+DROP TABLE shareTransactions;
+DROP TABLE rightTransactions;
 DROP TABLE shares;
 DROP TABLE settings;
 DROP TABLE stockPrices;
