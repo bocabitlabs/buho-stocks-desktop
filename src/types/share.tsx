@@ -1,14 +1,11 @@
-enum OperationType {
-  Buy,
-  Sell
-}
+import { TransactionType } from "./transaction-type";
 
 export interface ShareItemProps {
   id?: string;
   sharesNumber: number;
   priceShare: number;
   commission: number;
-  type: OperationType;
+  type: TransactionType;
   exchangeRate: number;
   operationDate: string;
   companyId: string;
@@ -23,7 +20,7 @@ export interface ShareFields {
   sharesNumber: number;
   priceShare: number;
   commission: number;
-  type: OperationType;
+  type: TransactionType;
   exchangeRate: number;
   color: string;
   operationDate: string;
