@@ -14,8 +14,8 @@ import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
-import { ShareItemProps } from "types/share";
-import ShareService from "services/share-service";
+import ShareService from "services/shares-transactions-service";
+import { SharesTransactionFormProps } from "types/shares-transaction";
 
 interface Props {
   companyId: string;
@@ -37,8 +37,8 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
 
   const handleAdd = (values: any) => {
     const {
-      sharesNumber,
-      priceShare,
+      count,
+      price,
       type,
       commission,
       operationDate,
@@ -46,19 +46,19 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
       notes
     } = values;
 
-    const share: ShareItemProps = {
-      sharesNumber,
-      priceShare,
+    const share: SharesTransactionFormProps = {
+      count,
+      price,
       type,
       commission,
-      operationDate: moment(new Date(operationDate)).format("YYYY-MM-DD"),
+      transactionDate: moment(new Date(operationDate)).format("YYYY-MM-DD"),
       exchangeRate,
       notes,
       color,
       companyId
     };
     console.log(values);
-    const added = new ShareService().addShare(share);
+    const added = new ShareService().addSharesTransaction(share);
     if (added.changes) {
       history.push(
         `/portfolios/${company?.portfolio}/companies/${companyId}?tab=shares`
@@ -96,7 +96,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
       }}
     >
       <Form.Item
-        name="sharesNumber"
+        name="count"
         label="Number of Shares"
         rules={[
           { required: true, message: "Please input the number of shares" }
@@ -109,7 +109,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
         <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item
-        name="priceShare"
+        name="price"
         label="Price per share"
         rules={[
           { required: true, message: "Please input the price per share" }
@@ -153,7 +153,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
         />
       </Form.Item>
       <Form.Item
-        name="operationDate"
+        name="transactionDate"
         label="Operation's date"
         rules={[
           { required: true, message: "Please input the date of the operation" }

@@ -16,9 +16,9 @@ import moment from "moment";
 import { CirclePicker } from "react-color";
 
 import { useHistory } from "react-router-dom";
-import DividendService from "services/dividend-service";
-import { DividendItemProps } from "types/dividend";
 import { CompaniesContext } from "contexts/companies";
+import { DividendsTransactionFormProps } from "types/dividends-transaction";
+import DividendsTransactionsService from "services/dividends-transactions-service";
 
 interface Props {
   companyId: string;
@@ -38,26 +38,26 @@ export default function DividendAddForm({ companyId }: Props): ReactElement {
 
   const handleAdd = (values: any) => {
     const {
-      sharesNumber,
-      priceShare,
+      count,
+      price,
       commission,
-      operationDate,
+      transactionDate,
       exchangeRate,
       notes
     } = values;
 
-    const dividend: DividendItemProps = {
-      sharesNumber,
-      priceShare,
+    const dividend: DividendsTransactionFormProps = {
+      count,
+      price,
       commission,
-      operationDate: moment(new Date(operationDate)).format("YYYY-MM-DD"),
+      transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       exchangeRate,
       notes,
       color,
       companyId
     };
     console.log(values);
-    const added = new DividendService().addDividend(dividend);
+    const added = new DividendsTransactionsService().addDividendsTransaction(dividend);
     if (added.changes) {
       history.push(`/portfolios/${company?.portfolio}/companies/${companyId}?tab=dividends`);
       message.success({ content: "Dividend has been added", key });

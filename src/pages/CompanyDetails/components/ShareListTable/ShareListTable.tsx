@@ -1,10 +1,10 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
+import { SharesTransactionsContext } from "contexts/shares-transactions";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { SharesContext } from "contexts/shares";
-import ShareService from "services/share-service";
-import { ShareItemProps } from "types/share";
+import ShareService from "services/shares-transactions-service";
+import { SharesTransaction } from "types/shares-transaction";
 import { buySellFormatter } from "utils/table-formatters";
 
 interface IProps {
@@ -13,7 +13,9 @@ interface IProps {
 }
 
 export default function ShareListTable({ portfolioId, companyId }: IProps) {
-  const { shares, fetchShares } = useContext(SharesContext);
+  const { sharesTransactions, fetchSharesTransactions } = useContext(
+    SharesTransactionsContext
+  );
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -47,7 +49,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
           duration: 2
         });
       }, 1000);
-      fetchShares();
+      fetchSharesTransactions();
     } else {
       setTimeout(() => {
         message.error({
@@ -126,16 +128,16 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
   ];
 
   const getData = () => {
-    const shares2 = shares.map((share: ShareItemProps) => ({
+    const shares2 = sharesTransactions.map((share: SharesTransaction) => ({
       id: share.id,
       key: share.id,
       name: "share",
-      sharesNumber: share.sharesNumber.toString(),
+      sharesNumber: share.count.toString(),
       type: share.type,
-      operationDate: share.operationDate,
-      priceShare: share.priceShare,
+      operationDate: share.transactionDate,
+      priceShare: share.price,
       commission: share.commission,
-      total: share.sharesNumber * share.priceShare + share.commission,
+      total: share.count * share.price + share.commission,
       notes: share.notes,
       currencySymbol: share.currencySymbol
     }));

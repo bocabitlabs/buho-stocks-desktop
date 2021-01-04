@@ -47,22 +47,22 @@ export default class PortfolioDAO {
     console.log("Getting yearly data by company ID");
     const sql = `
     SELECT
-      strftime('%Y', operationDate) as 'year'
+      strftime('%Y', transactionDate) as 'year'
       , portfolios.id as portfolioId
-      , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) as sharesBought
-      , sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as sharesSold
-      , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as buyTotal
-      , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as sellTotal
-      , sum(CASE WHEN shares.type='BUY' THEN shares.commission ELSE 0 END) as buyCommission
-      , sum(CASE WHEN shares.type='SELL' THEN shares.commission ELSE 0 END) as sellCommission
-      FROM  "shares"
+      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.count ELSE 0 END) as sharesBought
+      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.count ELSE 0 END) as sharesSold
+      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.price * sharesTransactions.count ELSE 0 END) as buyTotal
+      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.price * sharesTransactions.count ELSE 0 END) as sellTotal
+      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.commission ELSE 0 END) as buyCommission
+      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.commission ELSE 0 END) as sellCommission
+      FROM  "sharesTransactions"
       LEFT JOIN "companies"
-        ON companies.id = shares.companyId
+        ON companies.id = sharesTransactions.companyId
       LEFT JOIN "portfolios"
         ON companies.portfolioId = portfolios.id
       WHERE portfolios.id = '${portfolioId}'
-      GROUP BY strftime('%Y', operationDate)
-      ORDER BY strftime('%Y', operationDate)
+      GROUP BY strftime('%Y', transactionDate)
+      ORDER BY strftime('%Y', transactionDate)
       ;
     `;
     console.log(sql);
@@ -75,20 +75,20 @@ export default class PortfolioDAO {
     console.log("Getting yearly dividends data by company ID");
     const sql = `
     SELECT
-      strftime('%Y', operationDate) as 'year'
+      strftime('%Y', transactionDate) as 'year'
       , portfolios.id as portfolioId
-	    , sum(dividends.priceShare * dividends.sharesNumber - dividends.commission) as dividendsNet
-      , sum((dividends.priceShare * dividends.sharesNumber - dividends.commission) * dividends.exchangeRate) as dividendsNetBaseCurrency
-      , sum(dividends.priceShare * dividends.sharesNumber) as dividendsGross
-      , sum(dividends.priceShare * dividends.sharesNumber * dividends.exchangeRate) as dividendsGrossBaseCurrency
-      FROM  "dividends"
+	    , sum(dividendsTransactions.price * dividendsTransactions.count - dividendsTransactions.commission) as dividendsNet
+      , sum((dividendsTransactions.price * dividendsTransactions.count - dividendsTransactions.commission) * dividendsTransactions.exchangeRate) as dividendsNetBaseCurrency
+      , sum(dividendsTransactions.price * dividendsTransactions.count) as dividendsGross
+      , sum(dividendsTransactions.price * dividendsTransactions.count * dividendsTransactions.exchangeRate) as dividendsGrossBaseCurrency
+      FROM  "dividendsTransactions"
       LEFT JOIN "companies"
-        ON companies.id = dividends.companyId
+        ON companies.id = dividendsTransactions.companyId
       LEFT JOIN "portfolios"
         ON companies.portfolioId = portfolios.id
       WHERE portfolios.id = '${portfolioId}'
-      GROUP BY strftime('%Y', operationDate)
-      ORDER BY strftime('%Y', operationDate)
+      GROUP BY strftime('%Y', transactionDate)
+      ORDER BY strftime('%Y', transactionDate)
       ;
     `;
     console.log(sql);

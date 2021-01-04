@@ -4,20 +4,20 @@ import {
   RightsTransactionFormProps
 } from "types/rights-transaction";
 
-export type RightTransactionsContextType = {
-  rigthTransactions: RightsTransaction[];
+export type RightsTransactionsContextType = {
+  rigthsTransactions: RightsTransaction[];
   isLoading: boolean;
-  fetchRightTransactions: () => void;
+  fetchRightsTransactions: () => void;
   addRightsTransaction: (rigthTransaction: RightsTransactionFormProps) => void;
 };
 
-export const rightTransactionDefaultValue: RightTransactionsContextType = {
-  rigthTransactions: [],
+export const rightsTransactionsDefaultValue: RightsTransactionsContextType = {
+  rigthsTransactions: [],
   isLoading: false,
-  fetchRightTransactions: () => null,
+  fetchRightsTransactions: () => null,
   addRightsTransaction: () => null
 };
 
-export const SharesContext = createContext<RightTransactionsContextType>(
-  rightTransactionDefaultValue
+export const RightsTransactionContext = createContext<RightsTransactionsContextType>(
+  rightsTransactionsDefaultValue
 );

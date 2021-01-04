@@ -15,26 +15,28 @@ export const computeYearlyData = (
 ): PortfolioYearlyProps[] => {
   let modifiedTotal: YearlyTotalDictProps = {};
   // Iterate all years
-  yearlyPortfolioSharesData.forEach((yearData) => {
-    // Create the year if it doesn't exist
-    let currentYear = initializeYear(modifiedTotal, yearData);
-    console.log(yearData);
-    setCalculatedAttributes(currentYear, yearData);
-  });
+  if (yearlyPortfolioSharesData.length > 0) {
+    alert(yearlyPortfolioSharesData)
+    yearlyPortfolioSharesData.forEach((yearData) => {
+      // Create the year if it doesn't exist
+      let currentYear = initializeYear(modifiedTotal, yearData);
+      console.log(yearData);
+      setCalculatedAttributes(currentYear, yearData);
+    });
 
-  setAccumulatedAttributes(modifiedTotal);
+    setAccumulatedAttributes(modifiedTotal);
 
-  //TODO Add dividends stuff
-  yearlyPortfolioDividendsData.forEach((yearData) => {
-    // Create the year if it doesn't exist
-    let currentYear = initializeYear(modifiedTotal, yearData);
-    console.log(yearData);
-    setDividendsAttributes(currentYear, yearData);
-  });
+    //TODO Add dividends stuff
+    yearlyPortfolioDividendsData.forEach((yearData) => {
+      // Create the year if it doesn't exist
+      let currentYear = initializeYear(modifiedTotal, yearData);
+      console.log(yearData);
+      setDividendsAttributes(currentYear, yearData);
+    });
 
-  setPortfolioValueAttributes(modifiedTotal);
-  setReturnAttributes(modifiedTotal);
-
+    setPortfolioValueAttributes(modifiedTotal);
+    setReturnAttributes(modifiedTotal);
+  }
   // Convert from Dict to Array
   let resultArray: PortfolioYearlyFields[] = [];
   for (var year in modifiedTotal) {

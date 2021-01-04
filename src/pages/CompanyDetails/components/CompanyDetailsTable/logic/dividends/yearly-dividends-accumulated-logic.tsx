@@ -1,5 +1,5 @@
 import { YearlyOperationsFields } from "types/company";
-import { YearlyDividendFields } from "types/dividend";
+import { YearlyDividendFields } from "types/dividends-transaction";
 import { YearlyOperationsDictProps } from "../table-logic";
 
 export function setAccumulatedYearlyDividendsAttributes(

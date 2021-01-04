@@ -1,15 +1,8 @@
-import { TransactionType } from "./transaction-type";
+import { Transaction, TransactionType } from "./transaction";
 
-export interface RightsTransactionFormProps {
-  count: number;
-  price: number;
-  operationCommission: number;
+export interface RightsTransactionFormProps extends Transaction {
+  shares: number;
   type: TransactionType;
-  exchangeRate: number;
-  operationDate: string;
-  companyId: string;
-  color: string;
-  notes: string;
 }
 
 export interface RightsTransaction extends RightsTransactionFormProps {

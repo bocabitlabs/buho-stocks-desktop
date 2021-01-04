@@ -2,10 +2,10 @@ import { Button, Popconfirm, Space, Table } from "antd";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { DividendsContext } from "contexts/dividends";
-import DividendService from "services/dividend-service";
-import { DividendItemProps } from "types/dividend";
+import { DividendsTransactionsContext } from "contexts/dividends-transactions";
+import DividendService from "services/dividends-transactions-service";
 import { DividendUtils } from "utils/dividend-utils";
+import { DividendsTransaction } from "types/dividends-transaction";
 
 interface IProps {
   portfolioId: string;
@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default function DividendListTable({ portfolioId, companyId }: IProps) {
-  const { dividends } = useContext(DividendsContext);
+  const { dividendsTransactions } = useContext(DividendsTransactionsContext);
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -99,15 +99,15 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   ];
 
   const getData = () => {
-    const shares2 = dividends.map((dividend: DividendItemProps) => ({
+    const shares2 = dividendsTransactions.map((dividend: DividendsTransaction) => ({
       id: dividend.id,
       key: dividend.id,
       name: "dividend",
-      sharesNumber: dividend.sharesNumber.toString(),
-      operationDate: dividend.operationDate,
-      priceShare: dividend.priceShare,
+      sharesNumber: dividend.count.toString(),
+      operationDate: dividend.transactionDate,
+      priceShare: dividend.price,
       commission: dividend.commission,
-      total: dividend.sharesNumber * dividend.priceShare + dividend.commission,
+      total: dividend.count * dividend.price + dividend.commission,
       notes: dividend.notes,
       currencySymbol: dividend.currencySymbol
     }));

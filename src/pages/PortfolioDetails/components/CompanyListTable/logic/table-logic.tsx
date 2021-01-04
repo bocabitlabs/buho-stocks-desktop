@@ -1,6 +1,6 @@
 import { calculateInflationForYear } from "pages/CompanyDetails/components/CompanyDetailsTable/logic/inflation/inflation-logic";
 import { getDividendsReturnPercentage, getYoc } from "pages/CompanyDetails/components/CompanyDetailsTable/logic/returns/returns-logic";
-import DividendService from "services/dividend-service";
+import DividendsTransactionsService from "services/dividends-transactions-service";
 import StockPriceService from "services/stock-price-service";
 import { CompanyItemProps, CompanyTotalProps } from "types/company";
 
@@ -90,7 +90,7 @@ export const computeCompanyData = (companies: CompanyItemProps[]) => {
     }
 
     if (company.id !== undefined) {
-      const dividends = new DividendService().getDividendsByCompanyId(
+      const dividends = new DividendsTransactionsService().getDividendsTransactionsByCompanyId(
         company.id
       );
       console.log(dividends);

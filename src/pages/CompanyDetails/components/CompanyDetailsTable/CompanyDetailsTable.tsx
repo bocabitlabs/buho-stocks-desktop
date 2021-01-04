@@ -4,8 +4,8 @@ import { columns } from "./table-columns";
 import { computeYearlyData } from "./logic/table-logic";
 import getTableFooter from "./table-footer";
 import { YearlyOperationsFields } from "types/company";
-import ShareService from "services/share-service";
-import DividendService from "services/dividend-service";
+import SharesTransactionsService from "services/shares-transactions-service";
+import DividendsTransactionsService from "services/dividends-transactions-service";
 
 interface IProps {
   companyId: string;
@@ -16,10 +16,10 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    const sharesResults = new ShareService().getSharesPerYearByCompanyId(
+    const sharesResults = new SharesTransactionsService().getSharesTransactionsPerYearByCompanyId(
       companyId
     );
-    const dividendsResults = new DividendService().getDividendsPerYearByCompanyId(
+    const dividendsResults = new DividendsTransactionsService().getDividendsTransactionsPerYearByCompanyId(
       companyId
     );
 
@@ -81,7 +81,7 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
         returnPercentage: share.returnPercentage,
         accumulatedReturnPercentage: share.accumulatedReturnPercentage,
         dividendsReturnPercentage: share.dividendsReturnPercentage,
-        yoc: share.yoc,
+        yoc: share.yoc
         // currencySymbol: share.currencySymbol
       })
     );
@@ -91,7 +91,7 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
     <Table
       size="small"
       style={{ maxWidth: `max(500px, ${width - 300}px)` }}
-      className={'company-table'}
+      className={"company-table"}
       scroll={{ x: 800 }}
       bordered
       columns={columns}

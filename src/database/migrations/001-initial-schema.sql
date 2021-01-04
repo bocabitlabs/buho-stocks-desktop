@@ -58,18 +58,18 @@ CREATE TABLE IF NOT EXISTS "companies" (
 );
 CREATE TABLE IF NOT EXISTS "stockPrices" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"operationDate" TEXT NOT NULL,
-	"priceShare" NUMERIC NOT NULL,
+	"transactionDate" TEXT NOT NULL,
+	"price" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ON DELETE CASCADE
 );
-CREATE TABLE IF NOT EXISTS "dividendTransactions" (
+CREATE TABLE IF NOT EXISTS "dividendsTransactions" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"count" INTEGER NOT NULL,
 	"price" NUMERIC NOT NULL,
 	"commission" NUMERIC NOT NULL,
-	"operationDate" TEXT NOT NULL,
+	"transactionDate" TEXT NOT NULL,
 	"exchangeRate" NUMERIC NOT NULL,
 	"color" TEXT,
 	"companyId" INTEGER NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS "dividendTransactions" (
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ON DELETE CASCADE
 );
-CREATE TABLE IF NOT EXISTS "rightTransactions" (
+CREATE TABLE IF NOT EXISTS "rightsTransactions" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"rights" INTEGER NOT NULL,
 	"shares" INTEGER NOT NULL,
@@ -85,21 +85,21 @@ CREATE TABLE IF NOT EXISTS "rightTransactions" (
 	"commission" NUMERIC NOT NULL,
 	"color" TEXT,
 	"type" TEXT NOT NULL,
-	"operationDate" TEXT NOT NULL,
+	"transactionDate" TEXT NOT NULL,
 	"exchangeRate" INTEGER NOT NULL,
 	"notes" TEXT,
 	"companyId" INTEGER NOT NULL,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ("id") ON DELETE CASCADE
 );
-CREATE TABLE IF NOT EXISTS "shareTransactions" (
+CREATE TABLE IF NOT EXISTS "sharesTransactions" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"count" INTEGER NOT NULL,
 	"price" NUMERIC NOT NULL,
 	"commission" NUMERIC NOT NULL,
 	"color" TEXT,
 	"type" TEXT NOT NULL,
-	"operationDate" TEXT NOT NULL,
+	"transactionDate" TEXT NOT NULL,
 	"exchangeRate" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
@@ -119,11 +119,10 @@ VALUES ('1', 1);
 DROP TABLE currencies;
 DROP TABLE portfolios;
 DROP TABLE markets;
-DROP TABLE dividendTransactions;
 DROP TABLE companies;
 DROP TABLE inflation;
-DROP TABLE shareTransactions;
-DROP TABLE rightTransactions;
-DROP TABLE shares;
+DROP TABLE dividendsTransactions;
+DROP TABLE sharesTransactions;
+DROP TABLE rightsTransactions;
 DROP TABLE settings;
 DROP TABLE stockPrices;

@@ -1,5 +1,5 @@
 import { YearlyOperationsFields } from "types/company";
-import { YearlyShareFields } from "types/share";
+import { YearlyShareFields } from "types/shares-transaction";
 import { YearlyOperationsDictProps } from "../table-logic";
 
 /**

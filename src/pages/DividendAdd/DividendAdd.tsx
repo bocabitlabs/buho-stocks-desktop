@@ -3,8 +3,8 @@ import { Layout } from "antd";
 import { useParams } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
-import { DividendsContext } from "contexts/dividends";
-import { useDividendsContext } from "hooks/dividends";
+import { DividendsTransactionsContext } from "contexts/dividends-transactions";
+import { useDividendsTransactionsContext } from "hooks/dividends-transactions";
 import { useCompaniesContext } from "hooks/companies";
 
 import DividendAddHeader from "./components/DividendAddHeader/DividendAddHeader";
@@ -17,16 +17,16 @@ export interface Props {
 
 const DividendAdd = () => {
   const { portfolioId, companyId } = useParams<Props>();
-  const dividendsContext = useDividendsContext(companyId);
+  const dividendsContext = useDividendsTransactionsContext(companyId);
   const companyContext = useCompaniesContext(companyId);
 
   return (
     <CompaniesContext.Provider value={companyContext}>
       <DividendAddHeader companyId={companyId} portfolioId={portfolioId} />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <DividendsContext.Provider value={dividendsContext}>
+        <DividendsTransactionsContext.Provider value={dividendsContext}>
           <DividendAddForm companyId={companyId} />
-        </DividendsContext.Provider>
+        </DividendsTransactionsContext.Provider>
       </Layout>
     </CompaniesContext.Provider>
   );
