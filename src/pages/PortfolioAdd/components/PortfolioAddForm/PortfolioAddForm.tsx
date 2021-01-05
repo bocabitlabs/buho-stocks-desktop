@@ -28,7 +28,7 @@ function PortfolioAddForm(): ReactElement {
       currencyId,
       color
     };
-    const added = new PortfolioService().addPortfolio(portfolio);
+    const added = PortfolioService.addPortfolio(portfolio);
     if (added.changes) {
       history.push("/home");
       message.success({ content: "Portfolio has been added", key });

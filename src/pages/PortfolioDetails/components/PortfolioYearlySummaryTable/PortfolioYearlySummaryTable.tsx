@@ -21,10 +21,10 @@ export default function PortfolioYearlySummaryTable({
   const [yearlyData, setYearlyData] = useState<PortfolioYearlyProps[]>([]);
 
   useEffect(() => {
-    const yearlyPortfolioSharesData = new PortfolioService().getYearlySharesData(
+    const yearlyPortfolioSharesData = PortfolioService.getYearlySharesData(
       portfolioId
     );
-    const yearlyPortfolioDividendsData = new PortfolioService().getYearlyDividendsData(
+    const yearlyPortfolioDividendsData = PortfolioService.getYearlyDividendsData(
       portfolioId
     );
 

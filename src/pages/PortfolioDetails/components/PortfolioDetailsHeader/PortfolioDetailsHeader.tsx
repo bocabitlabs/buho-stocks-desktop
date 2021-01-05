@@ -42,7 +42,7 @@ export default function PortfolioDetailsHeader({
 
   function confirm(e: any) {
     console.log(e);
-    const result = new PortfolioService().deleteById(portfolioId);
+    const result = PortfolioService.deleteById(portfolioId);
     if (result.changes) {
       fetchPortfolios();
       message.success({
