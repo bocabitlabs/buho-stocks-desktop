@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { SelectedPortfolioContextType } from "../contexts/selected-portfolio";
-import SettingsService from "../services/settings-service";
+import { SelectedPortfolioContextType } from "contexts/selected-portfolio";
+import SettingsService from "services/settings-service";
 
 export function useSelectedPortfolioContext(): SelectedPortfolioContextType {
   const [selectedPortfolio, setSelectedPortfolio] = useState<string>("");
 
   useEffect(() => {
-    const result = new SettingsService().getSelectedPortfolio();
+    const result = SettingsService.getSelectedPortfolio();
     setSelectedPortfolio(result);
   }, []);
 

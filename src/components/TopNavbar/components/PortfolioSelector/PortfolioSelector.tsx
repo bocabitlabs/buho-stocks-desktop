@@ -8,13 +8,11 @@ import { PortfolioFields } from "types/portfolio";
 
 export default function PortfolioSelector(): ReactElement {
   const { selectedPortfolio } = useContext(SelectedPortfolioContext);
-
   const { portfolios } = useContext(PortfoliosContext);
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
-
-    new SettingsService().updateSelectedPortfolio(value);
+    SettingsService.updateSelectedPortfolio(value);
   }
 
   console.log(`Portfolios length=${portfolios.length}`);
