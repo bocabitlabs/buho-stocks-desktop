@@ -1,6 +1,6 @@
-import { MarketItemProps } from "types/market";
+import { MarketFormProps } from "types/market";
 
-const sampleMarkets: MarketItemProps[] = [
+const sampleMarkets: MarketFormProps[] = [
   {
     name: "AMS",
     description: "Amsterdam stock exchange (AMS)",

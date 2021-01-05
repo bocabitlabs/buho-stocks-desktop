@@ -1,5 +1,4 @@
-export interface MarketItemProps {
-  id?: string;
+export interface MarketFormProps {
   name: string;
   description: string;
   region: string;
@@ -8,12 +7,6 @@ export interface MarketItemProps {
   closeTime: string;
 }
 
-export interface MarketFields {
+export interface Market extends MarketFormProps{
   id: string;
-  name: string;
-  description: string;
-  region: string;
-  color: string;
-  openTime: string;
-  closeTime: string;
 }

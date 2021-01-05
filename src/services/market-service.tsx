@@ -1,8 +1,8 @@
-import MarketDAO from "../database/daos/market-dao";
-import { MarketItemProps } from "../types/market";
+import MarketDAO from "database/daos/market-dao";
+import { MarketFormProps } from "types/market";
 
 export default class MarketService {
-  addMarket = (market: MarketItemProps) => {
+  addMarket = (market: MarketFormProps) => {
     return new MarketDAO().addMarket(market);
   };
 

@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import { MarketFields, MarketItemProps } from "../types/market";
+import { Market, MarketFormProps } from "types/market";
 
 export type MarketsContextType = {
-  markets: MarketFields[];
+  markets: Market[];
   isLoading: boolean;
   fetchMarkets: () => void;
-  addMarket: (sector: MarketItemProps) => void;
+  addMarket: (sector: MarketFormProps) => void;
 };
 
 export const marketsDefaultValue: MarketsContextType = {

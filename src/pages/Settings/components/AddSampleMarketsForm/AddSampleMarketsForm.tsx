@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useState } from "react";
 import { Button, Form } from "antd";
 import MarketService from "services/market-service";
 import sampleMarkets from "./sample-markets";
-import { MarketItemProps } from "types/market";
+import { Market } from "types/market";
 /**
  * Add a new Currency
  */
@@ -12,7 +12,7 @@ function AddSampleMarketsForm(): ReactElement {
   const [markets] = useState(sampleMarkets);
 
   const handleAddMarkets = useCallback(async () => {
-    markets.forEach((market: MarketItemProps) => {
+    markets.forEach((market: Market) => {
       new MarketService().addMarket(market);
     });
   }, [markets]);

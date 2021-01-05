@@ -1,9 +1,9 @@
-import sendIpcSql from "../../message-control/renderer";
-import { MarketItemProps } from "../../types/market";
+import sendIpcSql from "message-control/renderer";
+import { MarketFormProps } from "types/market";
 import { deleteById } from "./operations";
 
 export default class MarketOperations {
-  addMarket = (market: MarketItemProps) => {
+  addMarket = (market: MarketFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO "markets"

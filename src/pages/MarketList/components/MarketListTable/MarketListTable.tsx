@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { MarketsContext } from "contexts/markets";
 import MarketService from "services/market-service";
-import { MarketItemProps } from "types/market";
+import { Market } from "types/market";
 
 export default function MarketListTable() {
   const { markets, fetchMarkets } = useContext(MarketsContext);
@@ -67,7 +67,7 @@ export default function MarketListTable() {
   ];
 
   const getData = () => {
-    return markets.map((market: MarketItemProps) => ({
+    return markets.map((market: Market) => ({
       key: market.id,
       name: market.name,
       description: market.description,
