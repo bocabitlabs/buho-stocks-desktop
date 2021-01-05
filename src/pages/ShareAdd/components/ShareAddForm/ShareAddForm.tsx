@@ -41,7 +41,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
       price,
       type,
       commission,
-      operationDate,
+      transactionDate,
       exchangeRate,
       notes
     } = values;
@@ -51,7 +51,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
       price,
       type,
       commission,
-      transactionDate: moment(new Date(operationDate)).format("YYYY-MM-DD"),
+      transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       exchangeRate,
       notes,
       color,
@@ -92,7 +92,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
       onFinish={handleAdd}
       initialValues={{
         type: "BUY",
-        operationDate: moment(new Date(), dateFormat)
+        transactionDate: moment(new Date(), dateFormat)
       }}
     >
       <Form.Item

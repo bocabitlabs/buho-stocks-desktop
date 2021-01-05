@@ -88,11 +88,11 @@ export default function DividendAddForm({ companyId }: Props): ReactElement {
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        operationDate: moment(new Date(), dateFormat)
+        transactionDate: moment(new Date(), dateFormat)
       }}
     >
       <Form.Item
-        name="sharesNumber"
+        name="count"
         label="Number of Shares"
         rules={[
           { required: true, message: "Please input the number of shares" }
@@ -105,7 +105,7 @@ export default function DividendAddForm({ companyId }: Props): ReactElement {
         <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item
-        name="priceShare"
+        name="price"
         label="Dividend per share"
         rules={[
           { required: true, message: "Please input the price per share" }
@@ -115,7 +115,6 @@ export default function DividendAddForm({ companyId }: Props): ReactElement {
           style={{ width: "20em" }}
           decimalSeparator="."
           formatter={(value) => `${company?.currencySymbol} ${value}`}
-          // parser={(value) => (value ? value.replace(/\$\s?|(,*)/g, "") : "")}
           min={0}
           step={0.001}
         />
@@ -131,13 +130,12 @@ export default function DividendAddForm({ companyId }: Props): ReactElement {
           style={{ width: "20em" }}
           decimalSeparator="."
           formatter={(value) => `${company?.currencySymbol} ${value}`}
-          // parser={(value) => (value ? value.replace(/\$\s?|(,*)/g, "") : "")}
           min={0}
           step={0.001}
         />
       </Form.Item>
       <Form.Item
-        name="operationDate"
+        name="transactionDate"
         label="Operation's date"
         rules={[
           { required: true, message: "Please input the date of the operation" }
@@ -169,7 +167,7 @@ export default function DividendAddForm({ companyId }: Props): ReactElement {
 
       <Form.Item {...buttonItemLayout}>
         <Button type="primary" htmlType="submit">
-          Add shares
+          Add dividend
         </Button>
       </Form.Item>
     </Form>

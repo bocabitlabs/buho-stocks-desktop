@@ -15,8 +15,7 @@ export const computeYearlyData = (
 ): PortfolioYearlyProps[] => {
   let modifiedTotal: YearlyTotalDictProps = {};
   // Iterate all years
-  if (yearlyPortfolioSharesData.length > 0) {
-    alert(yearlyPortfolioSharesData)
+  if (Array.isArray(yearlyPortfolioSharesData)) {
     yearlyPortfolioSharesData.forEach((yearData) => {
       // Create the year if it doesn't exist
       let currentYear = initializeYear(modifiedTotal, yearData);

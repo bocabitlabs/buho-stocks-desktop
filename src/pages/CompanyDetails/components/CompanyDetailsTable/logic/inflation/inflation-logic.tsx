@@ -32,18 +32,20 @@ export function calculateInflationForYear(year: string) {
   );
   let accumulatedInflation = 0;
   let count = 0;
-  inflationsForYear.forEach((inflation: InflationItemProps) => {
-    if (inflation.year <= parseInt(year)) {
-      if (count === 0) {
-        accumulatedInflation = inflation.percentage / 100;
-      } else {
-        let currentInflation = inflation.percentage / 100;
-        accumulatedInflation += currentInflation * (1 + accumulatedInflation);
+  if (Array.isArray(inflationsForYear)) {
+    inflationsForYear.forEach((inflation: InflationItemProps) => {
+      if (inflation.year <= parseInt(year)) {
+        if (count === 0) {
+          accumulatedInflation = inflation.percentage / 100;
+        } else {
+          let currentInflation = inflation.percentage / 100;
+          accumulatedInflation += currentInflation * (1 + accumulatedInflation);
+        }
       }
-    }
-    // console.log(`Inflation for year ${inflation.year}=${accumulatedInflation}`)
-    count++;
-  });
+      // console.log(`Inflation for year ${inflation.year}=${accumulatedInflation}`)
+      count++;
+    });
+  }
 
   return accumulatedInflation;
 }

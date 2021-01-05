@@ -42,23 +42,23 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   const columns = [
     {
       title: "Date",
-      dataIndex: "operationDate",
-      key: "operationDate",
+      dataIndex: "transactionDate",
+      key: "transactionDate",
       width: 70,
       render: (text: string, record: any) =>
-        moment(new Date(record.operationDate)).format("DD/MM/YYYY")
+        moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
       title: "Number of Shares",
-      dataIndex: "sharesNumber",
-      key: "sharesNumber",
+      dataIndex: "count",
+      key: "count",
       width: 70,
       render: (text: string, record: any) => record.sharesNumber
     },
     {
       title: "Price",
-      dataIndex: "priceShare",
-      key: "priceShare",
+      dataIndex: "price",
+      key: "price",
       width: 70,
       render: (text: string, record: any) =>
         DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
@@ -103,9 +103,9 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       id: dividend.id,
       key: dividend.id,
       name: "dividend",
-      sharesNumber: dividend.count.toString(),
-      operationDate: dividend.transactionDate,
-      priceShare: dividend.price,
+      count: dividend.count.toString(),
+      transactionDate: dividend.transactionDate,
+      price: dividend.price,
       commission: dividend.commission,
       total: dividend.count * dividend.price + dividend.commission,
       notes: dividend.notes,

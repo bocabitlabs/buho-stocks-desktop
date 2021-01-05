@@ -71,11 +71,11 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
     },
     {
       title: "Date",
-      dataIndex: "operationDate",
-      key: "operationDate",
+      dataIndex: "transactionDate",
+      key: "transactionDate",
       width: 70,
       render: (text: string, record: any) =>
-        moment(new Date(record.operationDate)).format("DD/MM/YYYY")
+        moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
       title: "Number of Shares",
@@ -134,7 +134,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
       name: "share",
       sharesNumber: share.count.toString(),
       type: share.type,
-      operationDate: share.transactionDate,
+      transactionDate: share.transactionDate,
       priceShare: share.price,
       commission: share.commission,
       total: share.count * share.price + share.commission,

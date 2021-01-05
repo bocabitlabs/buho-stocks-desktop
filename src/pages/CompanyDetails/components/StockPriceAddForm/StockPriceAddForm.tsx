@@ -21,11 +21,11 @@ export default function StockPriceAddForm({
   const key = "updatable";
 
   const handleAdd = (values: any) => {
-    const { priceShare, operationDate } = values;
+    const { priceShare, transactionDate } = values;
 
     const stockPrice: StockPriceItemProps = {
       priceShare,
-      operationDate: moment(new Date(operationDate)).format("YYYY-MM-DD"),
+      transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       companyId
     };
     console.log(values);
@@ -53,7 +53,7 @@ export default function StockPriceAddForm({
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        operationDate: moment(new Date(), dateFormat)
+        transactionDate: moment(new Date(), dateFormat)
       }}
     >
       <Form.Item
@@ -73,7 +73,7 @@ export default function StockPriceAddForm({
       </Form.Item>
 
       <Form.Item
-        name="operationDate"
+        name="transactionDate"
         label="Operation's date"
         rules={[
           { required: true, message: "Please input the date of the operation" }

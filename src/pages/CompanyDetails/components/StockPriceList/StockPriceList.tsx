@@ -24,11 +24,11 @@ export default function StockPriceList({
   const columns = [
     {
       title: "Date",
-      dataIndex: "operationDate",
-      key: "operationDate",
+      dataIndex: "transactionDate",
+      key: "transactionDate",
       width: 70,
       render: (text: string, record: any) =>
-        moment(new Date(record.operationDate)).format("DD/MM/YYYY")
+        moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
       title: "Stock Price",
@@ -81,7 +81,7 @@ export default function StockPriceList({
   const getData = () => {
     const shares2 = stockPrices.map((stock: StockPriceFields) => ({
       key: stock.id,
-      operationDate: stock.operationDate,
+      transactionDate: stock.transactionDate,
       priceShare: stock.priceShare
     }));
 

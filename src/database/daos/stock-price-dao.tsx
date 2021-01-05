@@ -9,13 +9,13 @@ export default class StockPriceDAO {
     INSERT INTO stockPrices
     (
       "priceShare"
-      , "operationDate"
+      , "transactionDate"
       , "companyId"
     )
     VALUES
     (
         '${stockPrice.priceShare}'
-      , '${stockPrice.operationDate}'
+      , '${stockPrice.transactionDate}'
       , '${stockPrice.companyId}'
     );
     `;
@@ -31,7 +31,7 @@ export default class StockPriceDAO {
     SELECT *
     FROM stockPrices
     WHERE companyId = '${companyId}'
-    ORDER BY strftime(stockPrices.operationDate) DESC
+    ORDER BY strftime(stockPrices.transactionDate) DESC
     ;
     `;
     const results = sendIpcSql(sql);
@@ -42,8 +42,8 @@ export default class StockPriceDAO {
     const sql = `
     SELECT *
     FROM stockPrices
-    WHERE companyId = '${companyId}' AND strftime('%Y', stockPrices.operationDate) = '${year}'
-    ORDER BY strftime(stockPrices.operationDate) DESC
+    WHERE companyId = '${companyId}' AND strftime('%Y', stockPrices.transactionDate) = '${year}'
+    ORDER BY strftime(stockPrices.transactionDate) DESC
     LIMIT 1;
       `;
     const results = sendIpcSql(sql, 'get');
@@ -56,7 +56,7 @@ export default class StockPriceDAO {
     SELECT *
     FROM stockPrices
     WHERE companyId = '${companyId}'
-    ORDER BY strftime(stockPrices.operationDate) DESC
+    ORDER BY strftime(stockPrices.transactionDate) DESC
     LIMIT 1;
       `;
     const results = sendIpcSql(sql, 'get');

@@ -17,24 +17,16 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    const companyShareTransactions = new SharesTransactionsService().getShares(
+    const sharesResults = new SharesTransactionsService().getSharesTransactionsPerYearByCompanyId(
+      companyId
+    );
+    const dividendsResults = new DividendsTransactionsService().getDividendsTransactionsPerYearByCompanyId(
       companyId
     );
 
-    const groupedMap = companyShareTransactions.reduce(
-      (entryMap: any, e: any) => entryMap.set(e.id, [...(entryMap.get(e.id) || []), e]),
-      new Map()
-    );
-    // const sharesResults = new SharesTransactionsService().getSharesTransactionsPerYearByCompanyId(
-    //   companyId
-    // );
-    // const dividendsResults = new DividendsTransactionsService().getDividendsTransactionsPerYearByCompanyId(
-    //   companyId
-    // );
-
-    // const results = computeYearlyData(sharesResults, dividendsResults);
-    // console.log(results);
-    // setYearlyData(results);
+    const results = computeYearlyData(sharesResults, dividendsResults);
+    console.log(results);
+    setYearlyData(results);
   }, [setYearlyData, companyId]);
 
   useLayoutEffect(() => {
@@ -47,6 +39,7 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
   }, []);
 
   const getData = () => {
+    console.log(yearlyData);
     const parsedYearlyData = yearlyData.map(
       (share: YearlyOperationsFields, index: number) => ({
         id: index.toString(),
