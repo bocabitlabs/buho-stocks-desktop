@@ -11,14 +11,20 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
 
   const fetchCompanies = useCallback((portfolioId: string) => {
     setIsLoading(true);
+    console.log("Loading companies on CompaniesHook...")
     const result = new CompanyService().getCompanies(portfolioId);
     setCompanies(result);
+    console.log(result)
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
+    console.log("Loading companies on CompaniesHook...")
+
     const result = new CompanyService().getCompanies(portfolioId);
+    console.log(result)
+
     setCompanies(result);
     setIsLoading(false);
   }, [portfolioId]);

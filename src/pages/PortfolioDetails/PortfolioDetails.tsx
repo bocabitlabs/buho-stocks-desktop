@@ -32,9 +32,9 @@ const PortfolioDetails = () => {
           <CompanyListTable portfolioId={id} />
         </Layout>
         <PageHeader className="site-page-header" title="Yearly" />
-        <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
+        {/* <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
           <PortfolioYearlySummaryTable portfolioId={id} />
-        </Layout>
+        </Layout> */}
       </CompaniesContext.Provider>
     </>
   );

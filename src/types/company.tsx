@@ -35,7 +35,7 @@ export interface CompanyItemProps {
   sellSharesNumber?: number;
   sellTotal?: number;
   sellCommission?: number;
-  lastOperationDate?: string;
+  lastTransactionDate?: string;
 }
 
 export interface YearlyOperationsFields {
@@ -103,7 +103,7 @@ export interface CompanyTotalProps {
   lastStockPrice: number;
   portfolioValue: number;
   portfolioValueWithInflation: number;
-  lastOperationDate: number;
+  lastTransactionDate: number;
   accumReturn: number;
   accumReturnPercentage: number;
   accumulatedDividendsGross: number;

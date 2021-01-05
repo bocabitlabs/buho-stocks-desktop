@@ -1,5 +1,6 @@
 import { Table } from "antd";
 import React, { useEffect, useLayoutEffect, useState } from "react";
+
 import { columns } from "./table-columns";
 import { computeYearlyData } from "./logic/table-logic";
 import getTableFooter from "./table-footer";
@@ -16,16 +17,24 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    const sharesResults = new SharesTransactionsService().getSharesTransactionsPerYearByCompanyId(
-      companyId
-    );
-    const dividendsResults = new DividendsTransactionsService().getDividendsTransactionsPerYearByCompanyId(
+    const companyShareTransactions = new SharesTransactionsService().getShares(
       companyId
     );
 
-    const results = computeYearlyData(sharesResults, dividendsResults);
-    console.log(results);
-    setYearlyData(results);
+    const groupedMap = companyShareTransactions.reduce(
+      (entryMap: any, e: any) => entryMap.set(e.id, [...(entryMap.get(e.id) || []), e]),
+      new Map()
+    );
+    // const sharesResults = new SharesTransactionsService().getSharesTransactionsPerYearByCompanyId(
+    //   companyId
+    // );
+    // const dividendsResults = new DividendsTransactionsService().getDividendsTransactionsPerYearByCompanyId(
+    //   companyId
+    // );
+
+    // const results = computeYearlyData(sharesResults, dividendsResults);
+    // console.log(results);
+    // setYearlyData(results);
   }, [setYearlyData, companyId]);
 
   useLayoutEffect(() => {

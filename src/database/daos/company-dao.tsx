@@ -27,7 +27,7 @@ export default class CompanyDAO {
       , S.sellTotal
       , S.sellCommission
       , S.buyCommission
-      , S.lastOperationDate
+      , S.lastTransactionDate
       , portfolios.name as portfolioName
 
     FROM "companies"
@@ -38,19 +38,19 @@ export default class CompanyDAO {
     LEFT JOIN "sectors"
       ON sectors.id = companies.sectorId
     LEFT JOIN (SELECT companyId
-      , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) as buySharesNumber
-      , sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as sellSharesNumber
-      , sum(CASE WHEN shares.type='BUY' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as buyTotal
-      , sum(CASE WHEN shares.type='SELL' THEN shares.priceShare * shares.sharesNumber ELSE 0 END) as sellTotal
-      , sum(CASE WHEN shares.type='BUY' THEN shares.commission ELSE 0 END) as buyCommission
-      , sum(CASE WHEN shares.type='SELL' THEN shares.commission ELSE 0 END) as sellCommission
-      , max(operationDate) as lastOperationDate
-    FROM "shares"
-      GROUP BY shares.companyId) AS S
+      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.count ELSE 0 END) as buySharesNumber
+      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.count ELSE 0 END) as sellSharesNumber
+      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.price * sharesTransactions.count ELSE 0 END) as buyTotal
+      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.price * sharesTransactions.count ELSE 0 END) as sellTotal
+      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.commission ELSE 0 END) as buyCommission
+      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.commission ELSE 0 END) as sellCommission
+      , max(transactionDate) as lastTransactionDate
+    FROM "sharesTransactions"
+      GROUP BY sharesTransactions.companyId) AS S
       ON companies.id = S.companyId
     WHERE companies.portfolioId = '${portfolioId}';
     `;
-
+    console.log(sql)
     const results = sendIpcSql(sql);
     if (results.length > 0 && results[0].id == null) {
       return [];
@@ -84,12 +84,12 @@ export default class CompanyDAO {
     console.log(`getAccumulatedSharesDAO`);
     const sql = `
     SELECT
-      strftime('%Y', operationDate) as 'year'
+      strftime('%Y', transactionDate) as 'year'
       , companies.id
-      , sum(CASE WHEN shares.type='BUY' THEN shares.sharesNumber ELSE 0 END) - sum(CASE WHEN shares.type='SELL' THEN shares.sharesNumber ELSE 0 END) as shares
-      FROM  "shares", "companies"
-      WHERE companies.id='${companyId}' AND shares.companyId='${companyId}' AND year <= '${year}'
-      ORDER BY strftime('%Y', operationDate)
+      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.count ELSE 0 END) - sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.count ELSE 0 END) as shares
+      FROM  "sharesTransactions", "companies"
+      WHERE companies.id='${companyId}' AND sharesTransactions.companyId='${companyId}' AND year <= '${year}'
+      ORDER BY strftime('%Y', transactionDate)
       ;`;
     console.log(sql);
     const result = sendIpcSql(sql, "get");

@@ -57,6 +57,16 @@ export default function CompanyDetailsContent({
                 }}
               >
                 + Dividends
+              </Button>,
+              <Button
+                key={"add-rights-button"}
+                onClick={() => {
+                  history.push(
+                    `/portfolios/${portfolioId}/companies/${company?.id}/add-rights`
+                  );
+                }}
+              >
+                + Rights
               </Button>
             ]}
           >
@@ -72,12 +82,7 @@ export default function CompanyDetailsContent({
                 companyId={companyId}
               />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Share rights" key="share-rights">
-              <DividendListTable
-                portfolioId={company.portfolio}
-                companyId={companyId}
-              />
-            </Tabs.TabPane>
+            <Tabs.TabPane tab="Rights" key="rights"></Tabs.TabPane>
           </Tabs>
         </>
       )}

@@ -72,9 +72,9 @@ export const computeCompanyData = (companies: CompanyItemProps[]) => {
     currentTotalElement.portfolioValue =
       lastPrice * currentTotalElement.sharesNumber;
 
-    console.log(`Last operation date: ${company.lastOperationDate}`);
+    console.log(`Last operation date: ${company.lastTransactionDate}`);
 
-    if (company.lastOperationDate) {
+    if (company.lastTransactionDate) {
       const year = new Date().getFullYear();
       console.log(`Full year is ${year}`);
       const inflation = calculateInflationForYear(year.toString());
