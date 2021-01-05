@@ -1,8 +1,8 @@
 import SectorDAO from "database/daos/sector-dao";
-import { SectorItemProps } from "types/sector";
+import { SectorFormFields } from "types/sector";
 
 export default class SectorService {
-  static addSector = (company: SectorItemProps) => {
+  static addSector = (company: SectorFormFields) => {
     return SectorDAO.addSector(company);
   };
 

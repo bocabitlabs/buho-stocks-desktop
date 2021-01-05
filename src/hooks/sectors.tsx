@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { SectorsContextType } from "contexts/sectors";
 import SectorService from "services/sector-service";
-import { SectorFields, SectorItemProps } from "types/sector";
+import { Sector, SectorFormFields } from "types/sector";
 
 export function useSectorsContext(): SectorsContextType {
-  const [sectors, setSectors] = useState<SectorFields[]>([]);
+  const [sectors, setSectors] = useState<Sector[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function useSectorsContext(): SectorsContextType {
   }, []);
 
   const addSector = useCallback(
-    (sector: SectorItemProps) => {
+    (sector: SectorFormFields) => {
       setIsLoading(true);
       const results = SectorService.getSectors();
       setSectors(results);

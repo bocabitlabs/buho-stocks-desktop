@@ -1,5 +1,5 @@
-import sendIpcSql from "../../message-control/renderer";
-import { SectorItemProps } from "../../types/sector";
+import sendIpcSql from "message-control/renderer";
+import { SectorFormFields } from "types/sector";
 import { deleteById, getById } from "./operations";
 
 export default class SectorDAO {
@@ -18,7 +18,7 @@ export default class SectorDAO {
     return results;
   };
 
-  static addSector = (sector: SectorItemProps) => {
+  static addSector = (sector: SectorFormFields) => {
     //Call the DB
     const sql = `
     INSERT INTO "sectors"

@@ -1,14 +1,10 @@
-export interface PortfolioFields {
-  id: string;
+export interface PortfolioFormFields {
   name: string;
   description: string;
   color: string;
   currencyId: number;
 }
 
-export interface PortfolioItemProps {
-  name: string;
-  description: string;
-  color: string;
-  currencyId: number;
+export interface Portfolio extends PortfolioFormFields {
+  id: string;
 }

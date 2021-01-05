@@ -1,10 +1,10 @@
 import sendIpcSql from "message-control/renderer";
 import { PortfolioYearlyProps } from "types/company";
-import { PortfolioItemProps } from "types/portfolio";
+import { PortfolioFormFields } from "types/portfolio";
 import { deleteById, getById } from "./operations";
 
 export default class PortfolioDAO {
-  static addPortfolio = (portfolio: PortfolioItemProps) => {
+  static addPortfolio = (portfolio: PortfolioFormFields) => {
     //Call the DB
 
     const sql = `

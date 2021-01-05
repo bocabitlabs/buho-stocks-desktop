@@ -1,11 +1,8 @@
-export interface SectorItemProps {
-  id?: string;
+export interface SectorFormFields {
   name: string;
   color: string;
 }
 
-export interface SectorFields {
+export interface Sector extends SectorFormFields {
   id: string;
-  name: string;
-  color: string;
 }

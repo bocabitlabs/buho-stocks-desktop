@@ -9,7 +9,7 @@ export function calculatePortfolioValueWithStockPrices(
     const currentYearElement = yearlyOperationsDict[
       year
     ] as YearlyOperationsFields;
-    const latestYearStockPrice = new StockPriceService().getLastStockPricePerYearByCompanyId(
+    const latestYearStockPrice = StockPriceService.getLastStockPricePerYearByCompanyId(
       currentYearElement.companyId,
       year
     );

@@ -1,13 +1,13 @@
 import { createContext } from "react";
-import { PortfolioFields, PortfolioItemProps } from "../types/portfolio";
+import { Portfolio, PortfolioFormFields } from "types/portfolio";
 
 export type PortfoliosContextType = {
-  portfolios: PortfolioFields[];
-  portfolio: PortfolioFields|null,
+  portfolios: Portfolio[];
+  portfolio: Portfolio|null,
   isLoading: boolean;
   fetchPortfolios: () => void;
   fetchPortfolio: (portfolioId: string) => void,
-  addPortfolio: (portfolio: PortfolioItemProps) => void;
+  addPortfolio: (portfolio: PortfolioFormFields) => void;
 };
 
 export const portfoliosDefaultValue: PortfoliosContextType = {

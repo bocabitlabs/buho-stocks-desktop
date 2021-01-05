@@ -1,13 +1,13 @@
 import PortfolioDAO from "database/daos/portfolio-dao";
 import { PortfolioYearlyProps } from "types/company";
-import { PortfolioItemProps } from "types/portfolio";
+import { PortfolioFormFields } from "types/portfolio";
 
 export default class PortfolioService {
   /**
    * Add a new portfolio
    * @param portfolio
    */
-  static addPortfolio = (portfolio: PortfolioItemProps) => {
+  static addPortfolio = (portfolio: PortfolioFormFields) => {
     const result = PortfolioDAO.addPortfolio(portfolio);
     return result;
   };

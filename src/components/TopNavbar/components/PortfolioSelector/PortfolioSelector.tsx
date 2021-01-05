@@ -4,7 +4,7 @@ import React, { ReactElement, useContext } from "react";
 import { PortfoliosContext } from "contexts/portfolios";
 import { SelectedPortfolioContext } from "contexts/selected-portfolio";
 import SettingsService from "services/settings-service";
-import { PortfolioFields } from "types/portfolio";
+import { Portfolio } from "types/portfolio";
 
 export default function PortfolioSelector(): ReactElement {
   const { selectedPortfolio } = useContext(SelectedPortfolioContext);
@@ -24,7 +24,7 @@ export default function PortfolioSelector(): ReactElement {
       onChange={handleChange}
       value={selectedPortfolio}
     >
-      {portfolios.map((item: PortfolioFields) => (
+      {portfolios.map((item: Portfolio) => (
         <Select.Option key={item.id} value={item.id.toString()}>
           {item.name}
         </Select.Option>

@@ -10,7 +10,7 @@ import { SectorsContext } from "contexts/sectors";
 import CompanyService from "services/company-service";
 
 import { CompanyItemProps } from "types/company";
-import { SectorFields } from "types/sector";
+import { Sector } from "types/sector";
 import { Currency } from "types/currency";
 import { Market } from "types/market";
 
@@ -96,7 +96,7 @@ function CompanyAddForm({ portfolioID }: CompanyAddFormProps): ReactElement {
           allowClear
         >
           {sectors &&
-            sectors.map((sector: SectorFields, index: number) => (
+            sectors.map((sector: Sector, index: number) => (
               <Select.Option
                 value={sector.id}
                 key={`currency-${sector.id}-${index}`}

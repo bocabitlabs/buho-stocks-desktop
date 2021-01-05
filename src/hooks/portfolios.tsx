@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { PortfoliosContextType } from "contexts/portfolios";
 import PortfolioService from "services/portfolio-service";
-import { PortfolioFields, PortfolioItemProps } from "types/portfolio";
+import { Portfolio, PortfolioFormFields } from "types/portfolio";
 
 export function usePortfoliosContext(): PortfoliosContextType {
-  const [portfolios, setPortFolios] = useState<PortfolioFields[]>([]);
-  const [portfolio, setPortFolio] = useState<PortfolioFields|null>(null);
+  const [portfolios, setPortFolios] = useState<Portfolio[]>([]);
+  const [portfolio, setPortFolio] = useState<Portfolio|null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export function usePortfoliosContext(): PortfoliosContextType {
     setIsLoading(false);
   }, []);
 
-  const addPortfolio = useCallback((portfolio: PortfolioItemProps) => {
+  const addPortfolio = useCallback((portfolio: PortfolioFormFields) => {
     setIsLoading(true);
     const result = PortfolioService.addPortfolio(portfolio);
     setIsLoading(false);

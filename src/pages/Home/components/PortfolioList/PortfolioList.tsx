@@ -2,7 +2,7 @@ import { Card, Col, Row } from "antd";
 import React, { ReactElement, useContext } from "react";
 import { Link } from "react-router-dom";
 import { PortfoliosContext } from "contexts/portfolios";
-import { PortfolioFields } from "types/portfolio";
+import { Portfolio } from "types/portfolio";
 
 export default function PortfolioList(): ReactElement {
   const { portfolios } = useContext(PortfoliosContext);
@@ -10,7 +10,7 @@ export default function PortfolioList(): ReactElement {
   return (
     <Row gutter={16}>
       {portfolios &&
-        portfolios.map((portfolio: PortfolioFields, index) => (
+        portfolios.map((portfolio: Portfolio, index) => (
           <Col span={8} key={`portfolio-card-${index}`}>
             <Link to={`/portfolios/${portfolio.id}`}>
               <Card

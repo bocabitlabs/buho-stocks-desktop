@@ -7,7 +7,7 @@ const returnAllExample: Inflation[] = [
   { id: "3", year: 2021, percentage: 4 }
 ];
 
-jest.mock("../../database/daos/inflation-dao", () => ({
+jest.mock("database/daos/inflation-dao", () => ({
   getAll: () => returnAllExample,
   getInflationsForYear: () => returnAllExample,
   addInflation: () => ({changes: 1}),
