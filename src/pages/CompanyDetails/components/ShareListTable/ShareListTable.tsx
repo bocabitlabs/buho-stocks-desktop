@@ -31,7 +31,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
   }, []);
 
   function confirm(recordId: string) {
-    const result = new ShareService().deleteById(recordId);
+    const result = ShareService.deleteById(recordId);
     if (result === "OK") {
       history.push({
         pathname: `/portfolios/${portfolioId}/companies/${companyId}`,

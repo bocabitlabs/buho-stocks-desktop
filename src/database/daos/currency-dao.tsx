@@ -1,9 +1,9 @@
-import sendIpcSql from "../../message-control/renderer";
-import { CurrencyItemProps } from "../../types/currency";
+import sendIpcSql from "message-control/renderer";
+import { CurrencyFormFields } from "types/currency";
 import { deleteById } from "./operations";
 
 export default class CurrencyDAO {
-  addCurrency = (currency: CurrencyItemProps) => {
+  static addCurrency = (currency: CurrencyFormFields) => {
     //Call the DB
     const sql = `
     INSERT INTO "currencies"
@@ -25,7 +25,7 @@ export default class CurrencyDAO {
     const result = sendIpcSql(sql, "insert");
     return result;
   };
-  getCurrencies = () => {
+  static getCurrencies = () => {
     //Call the DB
     console.log("Get all currencies");
     const sql = `
@@ -35,7 +35,7 @@ export default class CurrencyDAO {
     const currencies = sendIpcSql(sql);
     return currencies;
   };
-  deleteById = (id: string) => {
+  static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("currencies", id);
     return results;

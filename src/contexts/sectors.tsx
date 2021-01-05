@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import { SectorFields, SectorItemProps } from "../types/sector";
+import { Sector, SectorFormFields } from "types/sector";
 
 export type SectorsContextType = {
-  sectors: SectorFields[];
+  sectors: Sector[];
   isLoading: boolean;
   fetchSectors: () => void;
-  addSector: (sector: SectorItemProps) => void;
+  addSector: (sector: SectorFormFields) => void;
 };
 
 export const sectorsDefaultValue: SectorsContextType = {

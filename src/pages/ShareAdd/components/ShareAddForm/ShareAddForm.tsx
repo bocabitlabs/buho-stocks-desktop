@@ -58,7 +58,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
       companyId
     };
     console.log(values);
-    const added = new ShareService().addSharesTransaction(share);
+    const added = ShareService.addSharesTransaction(share);
     if (added.changes) {
       history.push(
         `/portfolios/${company?.portfolio}/companies/${companyId}?tab=shares`

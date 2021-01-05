@@ -1,16 +1,16 @@
-import CurrencyDAO from "../database/daos/currency-dao";
-import { CurrencyItemProps } from "../types/currency";
+import CurrencyDAO from "database/daos/currency-dao";
+import { CurrencyFormFields } from "types/currency";
 
 export default class CurrencyService {
-  addCurrency = (currency: CurrencyItemProps) => {
-    return new CurrencyDAO().addCurrency(currency);
+  addCurrency = (currency: CurrencyFormFields) => {
+    return CurrencyDAO.addCurrency(currency);
   };
 
   getCurrencies = () => {
-    return new CurrencyDAO().getCurrencies();
+    return CurrencyDAO.getCurrencies();
   };
 
   deleteById = (currencyId: string) => {
-    return new CurrencyDAO().deleteById(currencyId);
+    return CurrencyDAO.deleteById(currencyId);
   };
 }
