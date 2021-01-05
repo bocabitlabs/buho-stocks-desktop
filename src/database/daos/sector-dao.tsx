@@ -3,7 +3,7 @@ import { SectorItemProps } from "../../types/sector";
 import { deleteById, getById } from "./operations";
 
 export default class SectorDAO {
-  getSectors = () => {
+  static getSectors = () => {
     //Call the DB
     console.log("Get all sectors");
     const sql = `
@@ -13,12 +13,12 @@ export default class SectorDAO {
     return results;
   };
 
-  getById = (id: string) => {
+  static getById = (id: string) => {
     const results = getById("sectors", id);
     return results;
   };
 
-  addSector = (sector: SectorItemProps) => {
+  static addSector = (sector: SectorItemProps) => {
     //Call the DB
     const sql = `
     INSERT INTO "sectors"
@@ -35,7 +35,7 @@ export default class SectorDAO {
     return results;
   };
 
-  deleteById = (id: string) => {
+  static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("sectors", id);
     return results;

@@ -22,7 +22,7 @@ function SectorAddForm(): ReactElement {
       name,
       color
     };
-    const added = new SectorService().addSector(sector);
+    const added = SectorService.addSector(sector);
     if (added.changes) {
       history.push("/sectors");
       message.success({ content: "Sector has been added", key });

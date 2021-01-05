@@ -9,7 +9,7 @@ export default function SectorListTable() {
   const key = "updatable";
 
   function confirm(recordId: string) {
-    const result = new SectorService().deleteById(recordId);
+    const result = SectorService.deleteById(recordId);
     if (result.changes) {
       fetchSectors();
       message.success({

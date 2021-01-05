@@ -1,10 +1,10 @@
-import sendIpcSql from "../../message-control/renderer";
-import { PortfolioYearlyProps } from "../../types/company";
-import { PortfolioItemProps } from "../../types/portfolio";
+import sendIpcSql from "message-control/renderer";
+import { PortfolioYearlyProps } from "types/company";
+import { PortfolioItemProps } from "types/portfolio";
 import { deleteById, getById } from "./operations";
 
 export default class PortfolioDAO {
-  addPortfolio = (portfolio: PortfolioItemProps) => {
+  static addPortfolio = (portfolio: PortfolioItemProps) => {
     //Call the DB
 
     const sql = `
@@ -26,7 +26,7 @@ export default class PortfolioDAO {
     const result = sendIpcSql(sql, "insert");
     return result;
   };
-  getPortfolios = () => {
+  static getPortfolios = () => {
     //Call the DB
     console.log("Get all portfolios");
     const sql = `
@@ -37,13 +37,13 @@ export default class PortfolioDAO {
     return results;
   };
 
-  getById = (id: string) => {
+  static getById = (id: string) => {
     //Call the DB
     const results = getById("portfolios", id);
     return results;
   };
 
-  getYearlySharesDataById = (portfolioId: string): PortfolioYearlyProps[] => {
+  static getYearlySharesDataById = (portfolioId: string): PortfolioYearlyProps[] => {
     console.log("Getting yearly data by company ID");
     const sql = `
     SELECT
@@ -71,7 +71,7 @@ export default class PortfolioDAO {
     return results;
   };
 
-  getYearlyDividendsDataById = (portfolioId: string): PortfolioYearlyProps[] => {
+  static getYearlyDividendsDataById = (portfolioId: string): PortfolioYearlyProps[] => {
     console.log("Getting yearly dividends data by company ID");
     const sql = `
     SELECT
@@ -97,7 +97,7 @@ export default class PortfolioDAO {
     return results;
   };
 
-  deleteById = (id: string) => {
+  static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("portfolios", id);
     return results;

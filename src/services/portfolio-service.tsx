@@ -8,31 +8,31 @@ export default class PortfolioService {
    * @param portfolio
    */
   static addPortfolio = (portfolio: PortfolioItemProps) => {
-    const result = new PortfolioDAO().addPortfolio(portfolio);
+    const result = PortfolioDAO.addPortfolio(portfolio);
     return result;
   };
 
   static getPortfolios = () => {
-    return new PortfolioDAO().getPortfolios();
+    return PortfolioDAO.getPortfolios();
   };
 
   static getById = (portfolioId: string) => {
-    return new PortfolioDAO().getById(portfolioId);
+    return PortfolioDAO.getById(portfolioId);
   };
 
   static getYearlySharesData = (portfolioId: string): PortfolioYearlyProps[] => {
-    const result =  new PortfolioDAO().getYearlySharesDataById(portfolioId);
+    const result =  PortfolioDAO.getYearlySharesDataById(portfolioId);
     console.log(result)
     return result;
   }
 
   static getYearlyDividendsData = (portfolioId: string): PortfolioYearlyProps[] => {
-    const result = new PortfolioDAO().getYearlyDividendsDataById(portfolioId);
+    const result = PortfolioDAO.getYearlyDividendsDataById(portfolioId);
     console.log(result);
     return result;
   }
 
   static deleteById = (portfolioId: string) => {
-    return new PortfolioDAO().deleteById(portfolioId);
+    return PortfolioDAO.deleteById(portfolioId);
   };
 }

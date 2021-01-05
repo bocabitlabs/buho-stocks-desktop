@@ -1,20 +1,20 @@
-import SectorDAO from "../database/daos/sector-dao";
-import { SectorItemProps } from "../types/sector";
+import SectorDAO from "database/daos/sector-dao";
+import { SectorItemProps } from "types/sector";
 
 export default class SectorService {
-  addSector = (company: SectorItemProps) => {
-    return new SectorDAO().addSector(company);
+  static addSector = (company: SectorItemProps) => {
+    return SectorDAO.addSector(company);
   };
 
-  getSectors = () => {
-    return new SectorDAO().getSectors();
+  static getSectors = () => {
+    return SectorDAO.getSectors();
   };
 
-  getById = (sectorId: string) => {
-    return new SectorDAO().getById(sectorId);
+  static getById = (sectorId: string) => {
+    return SectorDAO.getById(sectorId);
   };
 
-  deleteById = (sectorId: string) => {
-    return new SectorDAO().deleteById(sectorId);
+  static deleteById = (sectorId: string) => {
+    return SectorDAO.deleteById(sectorId);
   };
 }
