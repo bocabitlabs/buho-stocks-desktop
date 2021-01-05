@@ -3,14 +3,14 @@ import { MarketFormProps } from "types/market";
 
 export default class MarketService {
   static addMarket = (market: MarketFormProps) => {
-    return new MarketDAO().addMarket(market);
+    return MarketDAO.addMarket(market);
   };
 
   static getMarkets = () => {
-    return new MarketDAO().getMarkets();
+    return MarketDAO.getMarkets();
   };
 
   static deleteById = (marketId: string) => {
-    return new MarketDAO().deleteById(marketId);
+    return MarketDAO.deleteById(marketId);
   };
 }

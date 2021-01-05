@@ -2,8 +2,8 @@ import sendIpcSql from "message-control/renderer";
 import { MarketFormProps } from "types/market";
 import { deleteById } from "./operations";
 
-export default class MarketOperations {
-  addMarket = (market: MarketFormProps) => {
+export default class MarketDAO {
+  static addMarket = (market: MarketFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO "markets"
@@ -27,7 +27,7 @@ export default class MarketOperations {
     const results = sendIpcSql(sql, "insert");
     return results;
   };
-  getMarkets = () => {
+  static getMarkets = () => {
     //Call the DB
     console.log("Get all markets");
     const sql = `
@@ -37,7 +37,7 @@ export default class MarketOperations {
     const results = sendIpcSql(sql);
     return results;
   };
-  deleteById = (id: string) => {
+  static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("markets", id);
     return results;
