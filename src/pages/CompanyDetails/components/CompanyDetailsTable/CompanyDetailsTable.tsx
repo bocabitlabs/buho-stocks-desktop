@@ -17,7 +17,7 @@ export default function CompanyDetailsTable({ companyId }: IProps) {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    const sharesResults = new SharesTransactionsService().getSharesTransactionsPerYearByCompanyId(
+    const sharesResults = SharesTransactionsService.getSharesTransactionsPerYearByCompanyId(
       companyId
     );
     const dividendsResults = new DividendsTransactionsService().getDividendsTransactionsPerYearByCompanyId(

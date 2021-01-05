@@ -1,22 +1,22 @@
 import { SharesTransactionFormProps } from "types/shares-transaction";
-import SharesTransactionsDAO from "../database/daos/shares-transactions-dao";
+import SharesTransactionsDAO from "database/daos/shares-transactions-dao";
 
 export default class SharesTransactionsService {
-  addSharesTransaction = (share: SharesTransactionFormProps) => {
-    return new SharesTransactionsDAO().addSharesTransaction(share);
+  static addSharesTransaction = (share: SharesTransactionFormProps) => {
+    return SharesTransactionsDAO.addSharesTransaction(share);
   };
 
-  getShares = (companyId: string) => {
-    return new SharesTransactionsDAO().getSharesTransactions(companyId);
+  static getShares = (companyId: string) => {
+    return SharesTransactionsDAO.getSharesTransactions(companyId);
   };
 
-  getSharesTransactionsPerYearByCompanyId = (companyId: string) => {
-    return new SharesTransactionsDAO().getSharesTransactionsPerYearByCompanyId(
+  static getSharesTransactionsPerYearByCompanyId = (companyId: string) => {
+    return SharesTransactionsDAO.getSharesTransactionsPerYearByCompanyId(
       companyId
     );
   };
 
-  deleteById = (shareId: string) => {
-    return new SharesTransactionsDAO().deleteById(shareId);
+  static deleteById = (shareId: string) => {
+    return SharesTransactionsDAO.deleteById(shareId);
   };
 }

@@ -3,8 +3,8 @@ import {
   SharesTransaction,
   SharesTransactionFormProps
 } from "types/shares-transaction";
-import { SharesTransactionsContextType } from "../contexts/shares-transactions";
-import SharesTransactionsService from "../services/shares-transactions-service";
+import { SharesTransactionsContextType } from "contexts/shares-transactions";
+import SharesTransactionsService from "services/shares-transactions-service";
 
 export function useSharesTransactionsContext(
   companyId: string
@@ -15,20 +15,20 @@ export function useSharesTransactionsContext(
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const results = new SharesTransactionsService().getShares(companyId);
+    const results = SharesTransactionsService.getShares(companyId);
     setSharesTransactions(results);
   }, [companyId]);
 
   const fetchSharesTransactions = useCallback(() => {
     setIsLoading(true);
-    const results = new SharesTransactionsService().getShares(companyId);
+    const results = SharesTransactionsService.getShares(companyId);
     setSharesTransactions(results);
   }, [companyId]);
 
   const addSharesTransaction = useCallback(
     (sector: SharesTransactionFormProps) => {
       setIsLoading(true);
-      const results = new SharesTransactionsService().getShares(companyId);
+      const results = SharesTransactionsService.getShares(companyId);
       setSharesTransactions(results);
     },
     [companyId]

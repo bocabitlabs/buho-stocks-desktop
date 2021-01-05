@@ -1,9 +1,9 @@
+import sendIpcSql from "message-control/renderer";
 import { SharesTransactionFormProps } from "types/shares-transaction";
-import sendIpcSql from "../../message-control/renderer";
 import { deleteById } from "./operations";
 
 export default class SharesTransactionsDAO {
-  addSharesTransaction = (sharesTransaction: SharesTransactionFormProps) => {
+  static addSharesTransaction = (sharesTransaction: SharesTransactionFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO "sharesTransactions"
@@ -36,7 +36,7 @@ export default class SharesTransactionsDAO {
     return results;
   };
 
-  getSharesTransactions = (companyId: string) => {
+  static getSharesTransactions = (companyId: string) => {
     //Call the DB
     console.log("Get all shares");
     const sql = `
@@ -55,7 +55,7 @@ export default class SharesTransactionsDAO {
     return results;
   };
 
-  getSharesTransactionsPerYearByCompanyId = (companyId: string) => {
+  static getSharesTransactionsPerYearByCompanyId = (companyId: string) => {
     const sql = `
     SELECT
       strftime('%Y', transactionDate) as 'year'
@@ -80,7 +80,7 @@ export default class SharesTransactionsDAO {
     return results;
   };
 
-  deleteById = (id: string) => {
+  static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("sharesTransactions", id);
     return results;
