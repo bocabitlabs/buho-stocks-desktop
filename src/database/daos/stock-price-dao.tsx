@@ -3,7 +3,7 @@ import { StockPriceItemProps } from "../../types/stock-price";
 import { deleteById } from "./operations";
 
 export default class StockPriceDAO {
-  add = (stockPrice: StockPriceItemProps) => {
+  static add = (stockPrice: StockPriceItemProps) => {
     //Call the DB
     const sql = `
     INSERT INTO stockPrices
@@ -24,7 +24,7 @@ export default class StockPriceDAO {
     return results;
   };
 
-  getStockPrices = (companyId: string) => {
+  static getStockPrices = (companyId: string) => {
     //Call the DB
     console.log("Get all price stock");
     const sql = `
@@ -38,7 +38,7 @@ export default class StockPriceDAO {
     return results;
   };
 
-  getLastStockPricePerYearByCompanyId = (companyId: string, year: string) => {
+  static getLastStockPricePerYearByCompanyId = (companyId: string, year: string) => {
     const sql = `
     SELECT *
     FROM stockPrices
@@ -51,7 +51,7 @@ export default class StockPriceDAO {
     return results;
   };
 
-  getLastStockPriceByCompanyId = (companyId: string) => {
+  static getLastStockPriceByCompanyId = (companyId: string) => {
     const sql = `
     SELECT *
     FROM stockPrices
@@ -64,7 +64,7 @@ export default class StockPriceDAO {
     return results;
   };
 
-  deleteById = (id: string) => {
+  static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("stockPrices", id);
     return results;

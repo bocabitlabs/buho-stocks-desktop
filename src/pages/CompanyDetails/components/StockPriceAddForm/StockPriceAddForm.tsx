@@ -29,7 +29,7 @@ export default function StockPriceAddForm({
       companyId
     };
     console.log(values);
-    const added = new StockPriceService().add(stockPrice);
+    const added = StockPriceService.add(stockPrice);
     if (added.changes) {
       message.success({
         content: "Stock price added",

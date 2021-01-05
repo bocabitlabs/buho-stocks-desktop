@@ -36,7 +36,7 @@ export function setPortfolioValueAttributes(
         company.id,
         year
       );
-      const latestYearStockPrice = new StockPriceService().getLastStockPricePerYearByCompanyId(
+      const latestYearStockPrice = StockPriceService.getLastStockPricePerYearByCompanyId(
         company.id,
         year
       );

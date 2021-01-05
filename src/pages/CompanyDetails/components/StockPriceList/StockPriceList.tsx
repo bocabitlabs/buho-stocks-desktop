@@ -17,7 +17,7 @@ export default function StockPriceList({
   const key = "updatable";
 
   useEffect(() => {
-    const results = new StockPriceService().getStockPrices(companyId);
+    const results = StockPriceService.getStockPrices(companyId);
     setStockPrices(results);
   }, [companyId]);
 
@@ -56,7 +56,7 @@ export default function StockPriceList({
   ];
 
   function confirm(recordId: string) {
-    const added = new StockPriceService().deleteById(recordId);
+    const added = StockPriceService.deleteById(recordId);
     if (added.changes) {
       setTimeout(() => {
         message.success({
@@ -65,7 +65,7 @@ export default function StockPriceList({
           duration: 2
         });
       }, 1000);
-      const results = new StockPriceService().getStockPrices(companyId);
+      const results = StockPriceService.getStockPrices(companyId);
       setStockPrices(results);
     } else {
       setTimeout(() => {

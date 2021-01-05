@@ -61,7 +61,7 @@ export const computeCompanyData = (companies: CompanyItemProps[]) => {
 
     let lastPrice = 0;
     if (company.id !== undefined) {
-      let lastStockPrice = new StockPriceService().getLastStockPriceByCompanyId(
+      let lastStockPrice = StockPriceService.getLastStockPriceByCompanyId(
         company.id
       );
       if (lastStockPrice) {

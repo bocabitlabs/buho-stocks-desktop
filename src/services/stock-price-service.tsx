@@ -1,27 +1,27 @@
-import StockPriceDAO from "../database/daos/stock-price-dao";
-import { StockPriceItemProps } from "../types/stock-price";
+import StockPriceDAO from "database/daos/stock-price-dao";
+import { StockPriceItemProps } from "types/stock-price";
 
 export default class StockPriceService {
-  add = (stockPrice: StockPriceItemProps) => {
-    return new StockPriceDAO().add(stockPrice);
+  static add = (stockPrice: StockPriceItemProps) => {
+    return StockPriceDAO.add(stockPrice);
   };
 
-  getStockPrices = (companyId: string) => {
-    return new StockPriceDAO().getStockPrices(companyId);
+  static getStockPrices = (companyId: string) => {
+    return StockPriceDAO.getStockPrices(companyId);
   };
 
-  getLastStockPricePerYearByCompanyId = (companyId: string, year: string) => {
-    return new StockPriceDAO().getLastStockPricePerYearByCompanyId(
+  static getLastStockPricePerYearByCompanyId = (companyId: string, year: string) => {
+    return StockPriceDAO.getLastStockPricePerYearByCompanyId(
       companyId,
       year
     );
   };
 
-  getLastStockPriceByCompanyId = (companyId: string) => {
-    return new StockPriceDAO().getLastStockPriceByCompanyId(companyId);
+  static getLastStockPriceByCompanyId = (companyId: string) => {
+    return StockPriceDAO.getLastStockPriceByCompanyId(companyId);
   };
 
-  deleteById = (shareId: string) => {
-    return new StockPriceDAO().deleteById(shareId);
+  static deleteById = (shareId: string) => {
+    return StockPriceDAO.deleteById(shareId);
   };
 }
