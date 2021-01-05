@@ -13,7 +13,7 @@ function AddSampleMarketsForm(): ReactElement {
 
   const handleAddMarkets = useCallback(async () => {
     markets.forEach((market: MarketFormProps) => {
-      new MarketService().addMarket(market);
+      MarketService.addMarket(market);
     });
   }, [markets]);
 

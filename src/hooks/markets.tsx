@@ -7,7 +7,7 @@ export function useMarketsContext(): MarketsContextType {
   const [markets, setMarkets] = useState<Market[]>([]);
 
   useEffect(() => {
-    const result = new MarketService().getMarkets();
+    const result = MarketService.getMarkets();
     setMarkets(result);
   }, []);
 
@@ -16,16 +16,16 @@ export function useMarketsContext(): MarketsContextType {
   const fetchMarkets = useCallback(() => {
     console.log("fetching markets");
     setIsLoading(true);
-    const result = new MarketService().getMarkets();
+    const result = MarketService.getMarkets();
     setMarkets(result);
     setIsLoading(false);
   }, []);
 
   const addMarket = useCallback((market: MarketFormProps) => {
     setIsLoading(true);
-    const result = new MarketService().addMarket(market);
+    const result = MarketService.addMarket(market);
     if (result.changes) {
-      const result = new MarketService().getMarkets();
+      const result = MarketService.getMarkets();
       setMarkets(result);
     }
   }, []);

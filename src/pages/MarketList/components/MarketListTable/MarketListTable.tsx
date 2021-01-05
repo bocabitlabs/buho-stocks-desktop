@@ -9,7 +9,7 @@ export default function MarketListTable() {
   const key = "updatable";
 
   function confirm(recordId: string) {
-    const result = new MarketService().deleteById(recordId);
+    const result = MarketService.deleteById(recordId);
     if (result.changes) {
       fetchMarkets();
       message.success({

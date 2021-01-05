@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import { Button, Form, Input, message, TimePicker } from "antd";
 import { CirclePicker } from "react-color";
+import { useHistory } from "react-router-dom";
 
 import MarketService from "services/market-service";
-import { useHistory } from "react-router-dom";
 
 /**
  * Add a new Currency
@@ -26,7 +26,7 @@ function MarketAddForm(): ReactElement {
       closeTime: closeTime.format("HH:mm")
     };
     //Add the currency
-    const added = new MarketService().addMarket(market);
+    const added = MarketService.addMarket(market);
     if (added.changes) {
       history.push("/markets");
       message.success({ content: "Market has been added", key });
