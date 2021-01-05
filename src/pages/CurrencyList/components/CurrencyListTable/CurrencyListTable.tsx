@@ -1,8 +1,8 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
-import { CurrenciesContext } from "../../../../contexts/currencies";
-import CurrencyService from "../../../../services/currency-service";
-import { CurrencyItemProps } from "../../../../types/currency";
+import { CurrenciesContext } from "contexts/currencies";
+import CurrencyService from "services/currency-service";
+import { Currency } from "types/currency";
 
 export default function CurrencyListTable() {
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
@@ -62,7 +62,7 @@ export default function CurrencyListTable() {
   ];
 
   const getData = () => {
-    return currencies.map((currency: CurrencyItemProps) => ({
+    return currencies.map((currency: Currency) => ({
       key: currency.id,
       name: currency.name,
       abbreviation: currency.abbreviation,

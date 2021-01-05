@@ -1,6 +1,6 @@
-import { CurrencyItemProps } from "types/currency";
+import { CurrencyFormFields } from "types/currency";
 
-const sampleCurrencies: CurrencyItemProps[] = [
+const sampleCurrencies: CurrencyFormFields[] = [
   {
     name: "Euro",
     abbreviation: "EUR",

@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import { Button, Form } from "antd";
 import sampleCurrencies from "./sample-currencies";
-import { CurrencyItemProps } from "types/currency";
+import { CurrencyFormFields } from "types/currency";
 import CurrencyService from "services/currency-service";
 /**
  * Add a new Currency
@@ -12,7 +12,7 @@ function AddSampleCurrenciesForm(): ReactElement {
   const [currencies] = useState(sampleCurrencies);
 
   const handleAddCurrencies =  () => {
-    currencies.forEach((currency: CurrencyItemProps) => {
+    currencies.forEach((currency: CurrencyFormFields) => {
       new CurrencyService().addCurrency(currency);
     });
   }
