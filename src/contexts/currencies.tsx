@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import { CurrencyFields, CurrencyItemProps } from "../types/currency";
+import { Currency, CurrencyFormFields } from "types/currency";
 
 export type CurrenciesContextType = {
-  currencies: CurrencyFields[];
+  currencies: Currency[];
   isLoading: boolean;
   fetchCurrencies: () => void;
-  addCurrency: (currency: CurrencyItemProps) => void;
+  addCurrency: (currency: CurrencyFormFields) => void;
 };
 
 export const currenciesDefaultValue: CurrenciesContextType = {

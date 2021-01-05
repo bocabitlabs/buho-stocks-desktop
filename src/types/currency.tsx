@@ -1,5 +1,4 @@
-export interface CurrencyFields {
-  id: string;
+export interface CurrencyFormFields{
   name: string;
   abbreviation: string;
   symbol: string;
@@ -7,11 +6,6 @@ export interface CurrencyFields {
   country: string;
 }
 
-export interface CurrencyItemProps {
-  id?: string;
-  name: string;
-  color: string;
-  abbreviation: string;
-  symbol: string;
-  country: string;
+export interface Currency extends CurrencyFormFields{
+  id: string;
 }

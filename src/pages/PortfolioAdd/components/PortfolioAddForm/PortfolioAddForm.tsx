@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { CurrenciesContext } from "contexts/currencies";
 import PortfolioService from "services/portfolio-service";
-import { CurrencyFields } from "types/currency";
+import { Currency } from "types/currency";
 
 /**
  * Add a new Currency
@@ -77,7 +77,7 @@ function PortfolioAddForm(): ReactElement {
           allowClear
         >
           {currencies &&
-            currencies.map((currency: CurrencyFields, index: number) => (
+            currencies.map((currency: Currency, index: number) => (
               <Select.Option
                 value={currency.id}
                 key={`currency-${currency.id}-${index}`}

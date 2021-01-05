@@ -4,14 +4,14 @@ import { CirclePicker } from "react-color";
 import TextArea from "antd/lib/input/TextArea";
 import { useHistory } from "react-router-dom";
 
-import { CurrenciesContext } from "../../../../contexts/currencies";
-import { MarketsContext } from "../../../../contexts/markets";
-import { SectorsContext } from "../../../../contexts/sectors";
-import { CompanyItemProps } from "../../../../types/company";
-import CompanyService from "../../../../services/company-service";
-import { SectorFields } from "../../../../types/sector";
-import { CurrencyFields } from "../../../../types/currency";
-import { MarketFields } from "../../../../types/market";
+import { CurrenciesContext } from "contexts/currencies";
+import { MarketsContext } from "contexts/markets";
+import { SectorsContext } from "contexts/sectors";
+import { CompanyItemProps } from "types/company";
+import CompanyService from "services/company-service";
+import { SectorFields } from "types/sector";
+import { Currency } from "types/currency";
+import { MarketFields } from "types/market";
 
 interface CompanyAddFormProps {
   portfolioID: string;
@@ -111,7 +111,7 @@ function CompanyAddForm({ portfolioID }: CompanyAddFormProps): ReactElement {
           allowClear
         >
           {currencies &&
-            currencies.map((currency: CurrencyFields, index: number) => (
+            currencies.map((currency: Currency, index: number) => (
               <Select.Option
                 value={currency.id}
                 key={`currency-${currency.id}-${index}`}

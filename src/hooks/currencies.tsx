@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import { CurrenciesContextType } from "../contexts/currencies";
-import CurrencyService from "../services/currency-service";
-import { CurrencyFields, CurrencyItemProps } from "../types/currency";
+import { CurrenciesContextType } from "contexts/currencies";
+import CurrencyService from "services/currency-service";
+import { Currency, CurrencyFormFields } from "types/currency";
 
 export function useCurrenciesContext(): CurrenciesContextType {
-  const [currencies, setCurrencies] = useState<CurrencyFields[]>([]);
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export function useCurrenciesContext(): CurrenciesContextType {
     setIsLoading(false);
   }, []);
 
-  const addCurrency = useCallback((currency: CurrencyItemProps) => {
+  const addCurrency = useCallback((currency: CurrencyFormFields) => {
     setIsLoading(true);
     const result = new CurrencyService().addCurrency(currency);
     setIsLoading(false);
