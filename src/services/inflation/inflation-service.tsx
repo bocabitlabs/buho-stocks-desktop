@@ -1,8 +1,8 @@
-import InflationDAO from "../../database/daos/inflation-dao";
-import { InflationItemProps } from "../../types/inflation";
+import InflationDAO from "database/daos/inflation-dao";
+import { InflationFormFields } from "types/inflation";
 
 class InflationService {
-  static add = (inflation: InflationItemProps) => {
+  static add = (inflation: InflationFormFields) => {
     return InflationDAO.addInflation(inflation);
   };
   static deleteById = (inflationId: string) => {

@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { InflationsContext } from "contexts/inflations";
 import InflationService from "services/inflation/inflation-service";
-import { InflationItemProps } from "types/inflation";
+import { Inflation } from "types/inflation";
 
 export default function InflationListTable() {
   const { inflations, fetchInflations } = useContext(InflationsContext);
@@ -53,7 +53,7 @@ export default function InflationListTable() {
   ];
 
   const getData = () => {
-    return inflations.map((inflation: InflationItemProps) => ({
+    return inflations.map((inflation: Inflation) => ({
       key: inflation.id,
       year: inflation.year,
       percentage: inflation.percentage

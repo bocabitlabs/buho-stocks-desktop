@@ -1,7 +1,7 @@
-import { InflationItemProps } from "../../types/inflation";
+import { Inflation, InflationFormFields } from "types/inflation";
 import InflationService from "./inflation-service";
 
-const returnAllExample: InflationItemProps[] = [
+const returnAllExample: Inflation[] = [
   { id: "1", year: 2019, percentage: 5 },
   { id: "2", year: 2020, percentage: 2 },
   { id: "3", year: 2021, percentage: 4 }
@@ -30,7 +30,7 @@ describe("InflationService tests", () => {
   });
 
   test("add inflation", () => {
-    const inflationToAdd: InflationItemProps = {
+    const inflationToAdd: InflationFormFields = {
       year: 2017,
       percentage: 5
     };

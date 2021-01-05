@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import { InflationFields, InflationItemProps } from "../types/inflation";
+import { Inflation, InflationFormFields } from "types/inflation";
 
 export type InflationsContextType = {
-  inflations: InflationFields[];
+  inflations: Inflation[];
   isLoading: boolean;
   fetchInflations: () => void;
-  addInflation: (inflation: InflationItemProps) => void;
+  addInflation: (inflation: InflationFormFields) => void;
   fetchInflationsForYear: (year: number) => void;
 };
 

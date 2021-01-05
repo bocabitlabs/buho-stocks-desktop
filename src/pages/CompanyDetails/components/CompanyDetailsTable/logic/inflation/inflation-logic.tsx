@@ -1,6 +1,6 @@
 import InflationService from "services/inflation/inflation-service";
 import { YearlyOperationsFields } from "types/company";
-import { InflationItemProps } from "types/inflation";
+import { Inflation } from "types/inflation";
 import { YearlyOperationsDictProps } from "../table-logic";
 
 /**
@@ -33,7 +33,7 @@ export function calculateInflationForYear(year: string) {
   let accumulatedInflation = 0;
   let count = 0;
   if (Array.isArray(inflationsForYear)) {
-    inflationsForYear.forEach((inflation: InflationItemProps) => {
+    inflationsForYear.forEach((inflation: Inflation) => {
       if (inflation.year <= parseInt(year)) {
         if (count === 0) {
           accumulatedInflation = inflation.percentage / 100;

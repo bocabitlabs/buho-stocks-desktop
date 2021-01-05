@@ -1,11 +1,8 @@
-export interface InflationItemProps {
-  id?: string;
+export interface InflationFormFields {
   year: number;
   percentage: number;
 }
 
-export interface InflationFields {
+export interface Inflation extends InflationFormFields {
   id: string;
-  year: number;
-  percentage: number;
 }

@@ -1,11 +1,11 @@
+import { Inflation, InflationFormFields } from "types/inflation";
 import sendIpcSql from "../../message-control/renderer";
-import { InflationFields, InflationItemProps } from "../../types/inflation";
 import {
   deleteById as deleteByIdOperation,
   getById as getByIdOperation
 } from "./operations";
 
-const addInflation = (inflation: InflationItemProps) => {
+const addInflation = (inflation: InflationFormFields) => {
   //Call the DB
   const sql = `
   INSERT INTO "inflations"
@@ -28,7 +28,7 @@ const deleteById = (id: string) => {
   return results;
 };
 
-const getAll = (): InflationFields[] => {
+const getAll = (): Inflation[] => {
   //Call the DB
   const sql = `
   SELECT * FROM inflations
@@ -37,12 +37,12 @@ const getAll = (): InflationFields[] => {
   return results;
 };
 
-const getById = (id: string): InflationFields => {
+const getById = (id: string): Inflation => {
   const results = getByIdOperation("inflations", id);
   return results;
 };
 
-const getInflationsForYear = (year: number): InflationFields[] => {
+const getInflationsForYear = (year: number): Inflation[] => {
   const sql = `
   SELECT *
   FROM inflations

@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { InflationsContextType } from "../contexts/inflations";
 import InflationService from "../services/inflation/inflation-service";
-import { InflationFields, InflationItemProps } from "../types/inflation";
+import { Inflation, InflationFormFields } from "types/inflation";
 
 export function useInflationsContext(): InflationsContextType {
-  const [inflations, setInflations] = useState<InflationFields[]>([]);
-  // const [inflation, setInflation] = useState<InflationFields[]|null>(null);
+  const [inflations, setInflations] = useState<Inflation[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -22,7 +21,7 @@ export function useInflationsContext(): InflationsContextType {
   }, []);
 
   const addInflation = useCallback(
-    (inflation: InflationItemProps) => {
+    (inflation: InflationFormFields) => {
 
       setIsLoading(true);
       const result = InflationService.add(inflation);
