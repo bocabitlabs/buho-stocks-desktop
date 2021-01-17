@@ -1,5 +1,6 @@
 import { Table } from "antd";
 import { DividendUtils } from "utils/dividend-utils";
+import Text from "antd/lib/typography/Text";
 
 interface FooterProps {
   id: string;
@@ -110,7 +111,6 @@ export default function getTableFooter(): (
       <Table.Summary.Row>
         <Table.Summary.Cell index={0}>Total</Table.Summary.Cell>
         <Table.Summary.Cell index={1}>{totalSharesSummary}</Table.Summary.Cell>
-        <Table.Summary.Cell index={2}></Table.Summary.Cell>
         <Table.Summary.Cell index={3}>
           {DividendUtils.getAmountWithSymbol(
             investedAmountSummary.toFixed(2).toString(),
@@ -118,19 +118,9 @@ export default function getTableFooter(): (
             "$"
           )}
         </Table.Summary.Cell>
-        <Table.Summary.Cell index={4}></Table.Summary.Cell>
-
         <Table.Summary.Cell index={5}>
           {DividendUtils.getAmountWithSymbol(
             investmentCommissionSummary.toFixed(2).toString(),
-            // record.currencySymbol
-            "$"
-          )}
-        </Table.Summary.Cell>
-        <Table.Summary.Cell index={6}></Table.Summary.Cell>
-        <Table.Summary.Cell index={7}>
-          {DividendUtils.getAmountWithSymbol(
-            totalInvestedWithCommissionSummary.toFixed(2).toString(),
             // record.currencySymbol
             "$"
           )}
@@ -144,53 +134,60 @@ export default function getTableFooter(): (
         </Table.Summary.Cell>
 
         <Table.Summary.Cell index={9}>
-          {DividendUtils.getAmountWithSymbol(
-            dividendsGrossSummary.toFixed(2).toString(),
-            // record.currencySymbol
-            "$"
-          )}
+          <Text>
+            {DividendUtils.getAmountWithSymbol(
+              dividendsGrossSummary.toFixed(2).toString(),
+              // record.currencySymbol
+              "$"
+            )}
+          </Text>
+          <br />
+          <Text type="secondary">
+            {DividendUtils.getAmountWithSymbol(
+              dividendsNetSummary.toFixed(2).toString(),
+              // record.currencySymbol
+              "$"
+            )}
+          </Text>
         </Table.Summary.Cell>
-        <Table.Summary.Cell index={10}>
-          {DividendUtils.getAmountWithSymbol(
-            dividendsNetSummary.toFixed(2).toString(),
-            // record.currencySymbol
-            "$"
-          )}
-        </Table.Summary.Cell>
-        <Table.Summary.Cell index={11}></Table.Summary.Cell>
-        <Table.Summary.Cell index={12}></Table.Summary.Cell>
-        <Table.Summary.Cell index={13}></Table.Summary.Cell>
+
         <Table.Summary.Cell index={14}></Table.Summary.Cell>
         <Table.Summary.Cell index={15}>
-          {DividendUtils.getAmountWithSymbol(
-            portfolioValueSummary.toFixed(2).toString(),
-            // record.currencySymbol
-            "$"
-          )}
-        </Table.Summary.Cell>
-        <Table.Summary.Cell index={16}>
-          {DividendUtils.getAmountWithSymbol(
-            portfolioValueInflationSummary.toFixed(2).toString(),
-            // record.currencySymbol
-            "$"
-          )}
+          <Text>
+            {DividendUtils.getAmountWithSymbol(
+              portfolioValueSummary.toFixed(2).toString(),
+              // record.currencySymbol
+              "$"
+            )}
+          </Text>
+          <br />
+          <Text type="secondary">
+            {DividendUtils.getAmountWithSymbol(
+              portfolioValueInflationSummary.toFixed(2).toString(),
+              // record.currencySymbol
+              "$"
+            )}
+          </Text>
         </Table.Summary.Cell>
         <Table.Summary.Cell index={17}>
+        <Text>
           {DividendUtils.getAmountWithSymbol(
             accumulatedReturnSummary.toFixed(2).toString(),
             // record.currencySymbol
             "$"
           )}
-        </Table.Summary.Cell>
-        <Table.Summary.Cell index={18}></Table.Summary.Cell>
-        <Table.Summary.Cell index={19}>
+          </Text>
+          <br/>
+          <Text type="secondary">
           {DividendUtils.getAmountWithSymbol(
             returnPercentageSummary.toFixed(2).toString(),
             // record.currencySymbol
             "%"
           )}
+          </Text>
         </Table.Summary.Cell>
-        <Table.Summary.Cell index={20}></Table.Summary.Cell>
+        <Table.Summary.Cell index={14}></Table.Summary.Cell>
+
         <Table.Summary.Cell index={21}>
           {DividendUtils.getAmountWithSymbol(
             dividendsReturnPercentageSummary.toFixed(2).toString(),
