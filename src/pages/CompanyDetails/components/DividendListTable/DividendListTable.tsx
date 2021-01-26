@@ -53,7 +53,6 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       dataIndex: "count",
       key: "count",
       width: 70,
-      render: (text: string, record: any) => record.sharesNumber
     },
     {
       title: "Price",
