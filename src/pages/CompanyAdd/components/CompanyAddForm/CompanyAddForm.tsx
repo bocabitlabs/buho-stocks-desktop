@@ -9,7 +9,7 @@ import { MarketsContext } from "contexts/markets";
 import { SectorsContext } from "contexts/sectors";
 import CompanyService from "services/company-service";
 
-import { CompanyItemProps } from "types/company";
+import { CompanyFormFields } from "types/company";
 import { Sector } from "types/sector";
 import { Currency } from "types/currency";
 import { Market } from "types/market";
@@ -32,7 +32,7 @@ function CompanyAddForm({ portfolioID }: CompanyAddFormProps): ReactElement {
 
   const handleAddCompany = (values: any) => {
     const { url, name, ticker, market, sector, currency, description } = values;
-    const company: CompanyItemProps = {
+    const company: CompanyFormFields = {
       url,
       name,
       ticker,

@@ -15,7 +15,6 @@ import CurrencyAdd from "./pages/CurrencyAdd/CurrencyAdd";
 import CurrencyList from "./pages/CurrencyList/CurrencyList";
 import CompanyDetails from "./pages/CompanyDetails/CompanyDetails";
 import Home from "pages/Home/Home";
-import DividendAdd from "pages/DividendAdd/DividendAdd";
 import InflationAdd from "pages/InflationAdd/InflationAdd";
 import InflationList from "pages/InflationList/InflationList";
 import MarketAdd from "pages/MarketAdd/MarketAdd";
@@ -25,13 +24,14 @@ import PortfolioDetails from "pages/PortfolioDetails/PortfolioDetails";
 import SectorAdd from "pages/SectorAdd/SectorAdd";
 import SectorList from "pages/SectorList/SectorList";
 import Settings from "pages/Settings/Settings";
-import ShareAdd from "pages/ShareAdd/ShareAdd";
+import RightsTransactionAdd from "pages/RightsTransactionAdd/RightsTransactionAdd";
+import SharesTransactionAdd from "pages/SharesTransactionAdd/SharesTransactionAdd";
+import DividendsTransactionAdd from "pages/DividendsTransactionAdd/DividendsTransactionAdd";
 
 function App() {
   /**
    * Main
    */
-  console.log("App Rendered");
   const isCollapsedContext = useIsCollapsedContext();
   const selectedPortfolioContext = useSelectedPortfolioContext();
 
@@ -99,12 +99,17 @@ function App() {
               <Route
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-shares"
-                component={ShareAdd}
+                component={SharesTransactionAdd}
               />
               <Route
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
-                component={DividendAdd}
+                component={DividendsTransactionAdd}
+              />
+              <Route
+                exact
+                path="/portfolios/:portfolioId/companies/:companyId/add-rights-transaction"
+                component={RightsTransactionAdd}
               />
             </Layout.Content>
           </Layout>

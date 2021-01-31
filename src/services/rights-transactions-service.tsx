@@ -2,18 +2,12 @@ import RightsTransactionsDAO from "database/daos/rights-transactions-dao";
 import { RightsTransactionFormProps } from "types/rights-transaction";
 
 export default class RightsTransactionsService {
-  static addRightsTransaction = (share: RightsTransactionFormProps) => {
-    return new RightsTransactionsDAO().addRightsTransaction(share);
+  static addRightsTransaction = (transaction: RightsTransactionFormProps) => {
+    return new RightsTransactionsDAO().addRightsTransaction(transaction);
   };
 
-  static getRights = (companyId: string) => {
+  static getRightsTransactions = (companyId: string) => {
     return new RightsTransactionsDAO().getRightsTransactions(companyId);
-  };
-
-  static getRightsTransactionsPerYearByCompanyId = (companyId: string) => {
-    return new RightsTransactionsDAO().getRightsTransactionsPerYearByCompanyId(
-      companyId
-    );
   };
 
   static deleteById = (shareId: string) => {

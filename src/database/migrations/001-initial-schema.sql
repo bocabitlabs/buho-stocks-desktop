@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS "dividendsTransactions" (
 );
 CREATE TABLE IF NOT EXISTS "rightsTransactions" (
 	"id" INTEGER NOT NULL UNIQUE,
-	"rights" INTEGER NOT NULL,
+	"count" INTEGER NOT NULL,
 	"shares" INTEGER NOT NULL,
 	"price" NUMERIC NOT NULL,
 	"commission" NUMERIC NOT NULL,

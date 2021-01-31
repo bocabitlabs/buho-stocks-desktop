@@ -1,13 +1,13 @@
 import { createContext } from "react";
-import { CompanyFields, CompanyItemProps } from "../types/company";
+import { CompanyFormFields, ICompany } from "../types/company";
 
 export type CompaniesContextType = {
-  companies: CompanyFields[];
-  company: CompanyFields|null,
+  companies: ICompany[];
+  company: ICompany|null,
   isLoading: boolean;
   fetchCompanies: (portfolioId: string) => void;
   fetchCompany: (companyId: string) => void;
-  addCompany: (currency: CompanyItemProps) => void;
+  addCompany: (company: CompanyFormFields) => void;
 };
 
 export const companiesDefaultValue: CompaniesContextType = {

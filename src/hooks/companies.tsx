@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { CompaniesContextType } from "../contexts/companies";
 import CompanyService from "../services/company-service";
-import { CompanyFields, CompanyItemProps } from "../types/company";
+import { CompanyFormFields, ICompany } from "../types/company";
 
 export function useCompaniesContext(portfolioId: string): CompaniesContextType {
-  const [companies, setCompanies] = useState<CompanyFields[]>([]);
-  const [company, setCompany] = useState<CompanyFields | null>(null);
+  const [companies, setCompanies] = useState<ICompany[]>([]);
+  const [company, setCompany] = useState<ICompany | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,12 +31,12 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
 
   const fetchCompany = useCallback((companyId: string) => {
     setIsLoading(true);
-    const result = new CompanyService().getCompany(companyId);
+    const result = new CompanyService().getCompanyDetails(companyId);
     setCompany(result);
     setIsLoading(false);
   }, []);
 
-  const addCompany = useCallback((company: CompanyItemProps) => {
+  const addCompany = useCallback((company: CompanyFormFields) => {
     setIsLoading(true);
     const result = new CompanyService().addCompany(company);
     setIsLoading(false);

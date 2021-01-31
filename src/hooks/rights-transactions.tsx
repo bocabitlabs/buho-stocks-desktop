@@ -12,20 +12,25 @@ export function useRightsTransactionsContext(
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const results = RightsTransactionsService.getRights(companyId);
+    const results = RightsTransactionsService.getRightsTransactions(companyId);
     setRightsTransactions(results);
   }, [companyId]);
 
   const fetchRightsTransactions = useCallback(() => {
     setIsLoading(true);
-    const results = RightsTransactionsService.getRights(companyId);
+    const results = RightsTransactionsService.getRightsTransactions(companyId);
+    console.log("LOOK HERE");
+    console.log(results);
     setRightsTransactions(results);
+    setIsLoading(false);
   }, [companyId]);
 
   const addRightsTransaction = useCallback(
     (transaction: RightsTransaction) => {
       setIsLoading(true);
-      const results = RightsTransactionsService.getRights(companyId);
+      const results = RightsTransactionsService.getRightsTransactions(
+        companyId
+      );
       setRightsTransactions(results);
     },
     [companyId]

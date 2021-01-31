@@ -15,7 +15,7 @@ export interface Props {
   companyId: string;
 }
 
-const DividendAdd = () => {
+const DividendsTransactionAdd = () => {
   const { portfolioId, companyId } = useParams<Props>();
   const dividendsContext = useDividendsTransactionsContext(companyId);
   const companyContext = useCompaniesContext(companyId);
@@ -32,4 +32,4 @@ const DividendAdd = () => {
   );
 };
 
-export default DividendAdd;
+export default DividendsTransactionAdd;

@@ -1,9 +1,9 @@
 import sendIpcSql from "../../message-control/renderer";
-import { CompanyItemProps } from "../../types/company";
+import { ICompany, CompanyFormFields } from "../../types/company";
 import { deleteById } from "./operations";
 
 export default class CompanyDAO {
-  addCompany = (company: CompanyItemProps) => {
+  addCompany = (company: CompanyFormFields) => {
     //Call the DB
     const sql = `INSERT INTO "companies"
     ("name", "ticker", "description", "sectorId", "marketId", "currencyId", "portfolioId", "url", "color")
@@ -57,7 +57,7 @@ export default class CompanyDAO {
     }
     return results;
   };
-  getCompany = (companyId: string) => {
+  getCompany = (companyId: string): ICompany => {
     //Call the DB
     console.log("Get company");
     const sql = `
@@ -65,12 +65,14 @@ export default class CompanyDAO {
       , portfolios.name as portfolioName
       , currencies.name as currencyName
       , currencies.symbol as currencySymbol
-
+	  , sectors.name as sectorName
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId
     LEFT JOIN "currencies"
       ON currencies.id = companies.currencyId
+    LEFT JOIN "sectors"
+      ON sectors.id = companies.sectorId
     WHERE companies.id = '${companyId}';
     `;
 
@@ -78,23 +80,6 @@ export default class CompanyDAO {
     console.log(results);
 
     return results;
-  };
-
-  getAccumulatedShares = (companyId: string, year: string) => {
-    console.log(`getAccumulatedSharesDAO`);
-    const sql = `
-    SELECT
-      strftime('%Y', transactionDate) as 'year'
-      , companies.id
-      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.count ELSE 0 END) - sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.count ELSE 0 END) as shares
-      FROM  "sharesTransactions", "companies"
-      WHERE companies.id='${companyId}' AND sharesTransactions.companyId='${companyId}' AND year <= '${year}'
-      ORDER BY strftime('%Y', transactionDate)
-      ;`;
-    console.log(sql);
-    const result = sendIpcSql(sql, "get");
-    console.log(result);
-    return result;
   };
 
   getCompaniesFromPortfolio = (portfolioId: string) => {

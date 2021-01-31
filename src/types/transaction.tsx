@@ -10,6 +10,6 @@ export interface Transaction {
 }
 
 export enum TransactionType {
-  Buy,
-  Sell
+  BUY = "BUY",
+  SELL = "SELL"
 }

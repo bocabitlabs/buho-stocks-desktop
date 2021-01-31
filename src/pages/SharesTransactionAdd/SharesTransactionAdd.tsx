@@ -15,7 +15,7 @@ export interface Props {
   companyId: string;
 }
 
-const ShareAddRoute = () => {
+const SharesTransactionAdd = () => {
   const { portfolioId, companyId } = useParams<Props>();
   const sharesContext = useSharesTransactionsContext(companyId);
   const companiesContext = useCompaniesContext(companyId);
@@ -32,4 +32,4 @@ const ShareAddRoute = () => {
   );
 };
 
-export default ShareAddRoute;
+export default SharesTransactionAdd;

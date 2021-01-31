@@ -4,26 +4,58 @@ import { deleteById } from "./operations";
 
 export default class RightsTransactionsDAO {
   addRightsTransaction = (rightsTransaction: RightsTransactionFormProps) => {
-    const sql = ``;
-
+    const sql = `
+    INSERT INTO "rightsTransactions"
+    (
+        "count"
+      , "price"
+      , "commission"
+      , "shares"
+      , "type"
+      , "exchangeRate"
+      , "notes"
+      , "transactionDate"
+      , "companyId"
+      , "color"
+    )
+    VALUES
+    (
+        '${rightsTransaction.count}'
+      , '${rightsTransaction.price}'
+      , '${rightsTransaction.commission}'
+      , '${rightsTransaction.shares}'
+      , '${rightsTransaction.type}'
+      , '${rightsTransaction.exchangeRate}'
+      , '${rightsTransaction.notes}'
+      , '${rightsTransaction.transactionDate}'
+      , '${rightsTransaction.companyId}'
+      , '${rightsTransaction.color}'
+    );
+    `;
+    console.log(sql);
     const results = sendIpcSql(sql, "insert");
+    console.log(results);
     return results;
   };
 
   getRightsTransactions = (companyId: string) => {
     //Call the DB
-    console.log("Get all shares");
-    const sql = ``;
+    console.log("Get all rights");
+    const sql = `
+    SELECT
+    rightsTransactions.*
+      , currencies.symbol as currencySymbol
+      , currencies.name as currencyName
+    FROM  rightsTransactions
+    LEFT JOIN "companies"
+      ON companies.id = rightsTransactions.companyId
+    LEFT JOIN "currencies"
+      ON currencies.id = companies.currencyId
+    WHERE rightsTransactions.companyId = '${companyId}';
+    `;
 
     const results = sendIpcSql(sql);
-    return results;
-  };
-
-  getRightsTransactionsPerYearByCompanyId = (companyId: string) => {
-    const sql = ``;
-
-    const results = sendIpcSql(sql);
-    console.log(results);
+    console.log(results)
     return results;
   };
 

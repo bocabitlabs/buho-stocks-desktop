@@ -1,37 +1,32 @@
-import { Card, Col, Row } from "antd";
+import { Card, List } from "antd";
 import React, { ReactElement, useContext } from "react";
 import { Link } from "react-router-dom";
 import { PortfoliosContext } from "contexts/portfolios";
-import { Portfolio } from "types/portfolio";
 
 export default function PortfolioList(): ReactElement {
   const { portfolios } = useContext(PortfoliosContext);
 
   return (
-    <Row gutter={16}>
-      {portfolios &&
-        portfolios.map((portfolio: Portfolio, index) => (
-          <Col span={8} key={`portfolio-card-${index}`}>
-            <Link to={`/portfolios/${portfolio.id}`}>
-              <Card
-                title={portfolio.name}
-                hoverable
-                extra={
-                  <svg height="20" width="20">
-                    <circle
-                      cx="10"
-                      cy="10"
-                      r="10"
-                      fill={portfolio.color}
-                    />
-                  </svg>
-                }
-              >
-                {portfolio.description}
-              </Card>
-            </Link>
-          </Col>
-        ))}
-    </Row>
+    <List
+      grid={{ gutter: 16, column: 4 }}
+      dataSource={portfolios}
+      renderItem={(item) => (
+        <Link to={`/portfolios/${item.id}`}>
+          <List.Item>
+            <Card
+              title={item.name}
+              hoverable
+              extra={
+                <svg height="20" width="20">
+                  <circle cx="10" cy="10" r="10" fill={item.color} />
+                </svg>
+              }
+            >
+              {item.description}
+            </Card>
+          </List.Item>
+        </Link>
+      )}
+    />
   );
 }

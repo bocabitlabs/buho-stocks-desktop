@@ -5,9 +5,9 @@ import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 import { useQuery } from "hooks/use-query";
 
-import CompanyDetailsTable from "../CompanyDetailsTable/CompanyDetailsTable";
 import ShareListTable from "../ShareListTable/ShareListTable";
 import DividendListTable from "../DividendListTable/DividendListTable";
+import RightsTransactionsTable from "../RightsTransactionsTable/RightsTransactionsTable";
 
 interface Props {
   companyId: string;
@@ -31,58 +31,66 @@ export default function CompanyDetailsContent({
       {company && (
         <>
           <Typography.Paragraph>{company.description}</Typography.Paragraph>
-          <CompanyDetailsTable companyId={companyId} />
           <Tabs
             defaultActiveKey={query.get("tab") || "shares"}
             onChange={() => {
               console.log("Tab click");
             }}
-            tabBarExtraContent={[
-              <Button
-                key={"add-shares-button"}
-                onClick={() => {
-                  history.push(
-                    `/portfolios/${portfolioId}/companies/${company?.id}/add-shares`
-                  );
-                }}
-              >
-                + Shares
-              </Button>,
-              <Button
-                key={"add-dividends-button"}
-                onClick={() => {
-                  history.push(
-                    `/portfolios/${portfolioId}/companies/${company?.id}/add-dividends`
-                  );
-                }}
-              >
-                + Dividends
-              </Button>,
-              <Button
-                key={"add-rights-button"}
-                onClick={() => {
-                  history.push(
-                    `/portfolios/${portfolioId}/companies/${company?.id}/add-rights`
-                  );
-                }}
-              >
-                + Rights
-              </Button>
-            ]}
           >
             <Tabs.TabPane tab="Shares" key="shares">
+              <Button
+                key={"add-shares-button"}
+                type={"primary"}
+                onClick={() => {
+                  history.push(
+                    `/portfolios/${portfolioId}/companies/${company.id}/add-shares`
+                  );
+                }}
+                style={{ marginBottom: 16 }}
+              >
+                + Shares
+              </Button>
               <ShareListTable
                 portfolioId={company.portfolio}
                 companyId={companyId}
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Dividends" key="dividends">
+              <Button
+                key={"add-dividends-button"}
+                type={"primary"}
+                onClick={() => {
+                  history.push(
+                    `/portfolios/${portfolioId}/companies/${company.id}/add-dividends`
+                  );
+                }}
+                style={{ marginBottom: 16 }}
+              >
+                + Dividends
+              </Button>
               <DividendListTable
                 portfolioId={company.portfolio}
                 companyId={companyId}
               />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Rights" key="rights"></Tabs.TabPane>
+            <Tabs.TabPane tab="Rights" key="rights">
+              <Button
+                key={"add-rights-button"}
+                type={"primary"}
+                onClick={() => {
+                  history.push(
+                    `/portfolios/${portfolioId}/companies/${company.id}/add-rights-transaction`
+                  );
+                }}
+                style={{ marginBottom: 16 }}
+              >
+                + Rights
+              </Button>
+              <RightsTransactionsTable
+                portfolioId={company.portfolio}
+                companyId={companyId}
+              />
+            </Tabs.TabPane>
           </Tabs>
         </>
       )}

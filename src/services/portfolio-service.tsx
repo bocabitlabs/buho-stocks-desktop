@@ -1,5 +1,4 @@
 import PortfolioDAO from "database/daos/portfolio-dao";
-import { PortfolioYearlyProps } from "types/company";
 import { PortfolioFormFields } from "types/portfolio";
 
 export default class PortfolioService {
@@ -19,18 +18,6 @@ export default class PortfolioService {
   static getById = (portfolioId: string) => {
     return PortfolioDAO.getById(portfolioId);
   };
-
-  static getYearlySharesData = (portfolioId: string): PortfolioYearlyProps[] => {
-    const result =  PortfolioDAO.getYearlySharesDataById(portfolioId);
-    console.log(result)
-    return result;
-  }
-
-  static getYearlyDividendsData = (portfolioId: string): PortfolioYearlyProps[] => {
-    const result = PortfolioDAO.getYearlyDividendsDataById(portfolioId);
-    console.log(result);
-    return result;
-  }
 
   static deleteById = (portfolioId: string) => {
     return PortfolioDAO.deleteById(portfolioId);
