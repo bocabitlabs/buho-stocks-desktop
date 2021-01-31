@@ -8,6 +8,7 @@ import { useQuery } from "hooks/use-query";
 import ShareListTable from "../ShareListTable/ShareListTable";
 import DividendListTable from "../DividendListTable/DividendListTable";
 import RightsTransactionsTable from "../RightsTransactionsTable/RightsTransactionsTable";
+import Stats from "../Stats/Stats";
 
 interface Props {
   companyId: string;
@@ -31,6 +32,7 @@ export default function CompanyDetailsContent({
       {company && (
         <>
           <Typography.Paragraph>{company.description}</Typography.Paragraph>
+          <Stats company={company}/>
           <Tabs
             defaultActiveKey={query.get("tab") || "shares"}
             onChange={() => {

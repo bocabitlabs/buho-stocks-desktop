@@ -1,20 +1,20 @@
 import sendIpcSql from "../../message-control/renderer";
-import { StockPriceItemProps } from "../../types/stock-price";
+import { StockPriceFormProps } from "../../types/stock-price";
 import { deleteById } from "./operations";
 
 export default class StockPriceDAO {
-  static add = (stockPrice: StockPriceItemProps) => {
+  static add = (stockPrice: StockPriceFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO stockPrices
     (
-      "priceShare"
+      "price"
       , "transactionDate"
       , "companyId"
     )
     VALUES
     (
-        '${stockPrice.priceShare}'
+        '${stockPrice.price}'
       , '${stockPrice.transactionDate}'
       , '${stockPrice.companyId}'
     );

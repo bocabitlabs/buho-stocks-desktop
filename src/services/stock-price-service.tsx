@@ -1,8 +1,8 @@
 import StockPriceDAO from "database/daos/stock-price-dao";
-import { StockPriceItemProps } from "types/stock-price";
+import { StockPriceFormProps } from "types/stock-price";
 
 export default class StockPriceService {
-  static add = (stockPrice: StockPriceItemProps) => {
+  static add = (stockPrice: StockPriceFormProps) => {
     return StockPriceDAO.add(stockPrice);
   };
 

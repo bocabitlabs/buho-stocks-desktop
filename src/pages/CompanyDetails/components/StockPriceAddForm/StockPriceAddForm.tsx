@@ -2,7 +2,7 @@ import { Button, DatePicker, Form, InputNumber, message } from "antd";
 import moment from "moment";
 import React, { ReactElement } from "react";
 import StockPriceService from "services/stock-price-service";
-import { StockPriceItemProps } from "types/stock-price";
+import { StockPriceFormProps } from "types/stock-price";
 
 interface Props {
   companyId: string;
@@ -21,10 +21,10 @@ export default function StockPriceAddForm({
   const key = "updatable";
 
   const handleAdd = (values: any) => {
-    const { priceShare, transactionDate } = values;
+    const { price, transactionDate } = values;
 
-    const stockPrice: StockPriceItemProps = {
-      priceShare,
+    const stockPrice: StockPriceFormProps = {
+      price,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       companyId
     };
@@ -57,7 +57,7 @@ export default function StockPriceAddForm({
       }}
     >
       <Form.Item
-        name="priceShare"
+        name="price"
         label="Price per share"
         rules={[
           { required: true, message: "Please input the price per share" }

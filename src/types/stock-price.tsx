@@ -1,13 +1,9 @@
-export interface StockPriceItemProps {
-  id?: string;
-  priceShare: number;
+export interface StockPriceFormProps {
+  price: number;
   transactionDate: string;
   companyId: string;
 }
 
-export interface StockPriceFields {
+export interface IStockPrice extends StockPriceFormProps {
   id: string;
-  priceShare: number;
-  transactionDate: string;
-  companyId: string;
 }

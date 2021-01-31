@@ -1,7 +1,10 @@
+import moment from "moment";
+import InflationService from "services/inflation/inflation-service";
 import { ICompany } from "types/company";
 import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
 import { SharesTransaction } from "types/shares-transaction";
+import { IStockPrice } from "types/stock-price";
 import { TransactionType } from "types/transaction";
 
 export class Company implements ICompany {
@@ -13,6 +16,7 @@ export class Company implements ICompany {
   sharesTransactions: SharesTransaction[];
   dividendsTransactions: DividendsTransaction[];
   rightsTransactions: RightsTransaction[];
+  stockPrices: IStockPrice[];
   name: string;
   ticker: string;
   url: string;
@@ -38,6 +42,7 @@ export class Company implements ICompany {
     this.dividendsTransactions = parameters.dividendsTransactions;
     this.sharesTransactions = parameters.sharesTransactions;
     this.rightsTransactions = parameters.rightsTransactions;
+    this.stockPrices = parameters.stockPrices;
 
     this.name = parameters.name;
     this.ticker = parameters.ticker;
@@ -74,5 +79,76 @@ export class Company implements ICompany {
     0);
 
     return buyCount + rightsShares - sellCount;
+  }
+
+  getDividendsAmount(): number {
+    const amount = this.dividendsTransactions.reduce(function (
+      accumulator: number,
+      obj: DividendsTransaction
+    ) {
+      return accumulator + obj.price * obj.count;
+    },
+    0);
+    return amount;
+  }
+  getLatestStockPrice(): IStockPrice {
+    const max = this.stockPrices.reduce(function (prev, current) {
+      var previousDate = moment(prev.transactionDate);
+      var currentDate = moment(current.transactionDate);
+      return previousDate > currentDate ? prev : current;
+    }); //returns object
+
+    return max;
+  }
+
+  getTotalInvested(): number {
+    // yearlyShares.investedAmount + yearlyShares.investmentCommission;
+    const investedInShares = this.sharesTransactions
+      .filter(
+        (transaction: SharesTransaction) =>
+          transaction.type === TransactionType.BUY
+      )
+      .reduce(function (accumulator: number, obj: SharesTransaction) {
+        return accumulator + (obj.count * obj.price + obj.commission);
+      }, 0);
+
+    const investedInRights = this.rightsTransactions.reduce(function (
+      accumulator: number,
+      obj: RightsTransaction
+    ) {
+      return accumulator + (obj.count * obj.price + obj.commission);
+    },
+    0);
+    return investedInShares + investedInRights;
+  }
+
+  getPortfolioValue(): number {
+    // shares * last stock price
+    const sharesCount = this.getSharesCount();
+    const lastStockPrice = this.getLatestStockPrice();
+
+    if (lastStockPrice === null) {
+      return 0;
+    }
+
+    return sharesCount * lastStockPrice.price;
+  }
+
+  getPortfolioValueWithInflation(): number {
+    const lastStockPrice = this.getLatestStockPrice();
+    const portfolioValue = this.getPortfolioValue();
+    var lastDate = moment(lastStockPrice.transactionDate);
+
+    const inflationForYear = InflationService.calculateInflationForYear(
+      lastDate.year().toString()
+    );
+    return portfolioValue / (1 + inflationForYear);
+  }
+
+  getCurrentYearReturn(): number {
+    // const portfolioValueWithInflation = this.getPortfolioValueWithInflation();
+    // const acumReturn = portfolioValueWithInflation - accumulatedInvestment;
+    // return acumReturn;
+    return 0;
   }
 }

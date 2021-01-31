@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import moment from "moment";
 import React, { ReactElement, useEffect, useState } from "react";
 import StockPriceService from "services/stock-price-service";
-import { StockPriceFields } from "types/stock-price";
+import { IStockPrice } from "types/stock-price";
 
 interface Props {
   companyId: string;
@@ -13,7 +13,7 @@ export default function StockPriceList({
   companyId,
   currencySymbol
 }: Props): ReactElement {
-  const [stockPrices, setStockPrices] = useState<StockPriceFields[]>([]);
+  const [stockPrices, setStockPrices] = useState<IStockPrice[]>([]);
   const key = "updatable";
 
   useEffect(() => {
@@ -32,8 +32,8 @@ export default function StockPriceList({
     },
     {
       title: "Stock Price",
-      dataIndex: "priceShare",
-      key: "priceShare",
+      dataIndex: "price",
+      key: "price",
       render: (text: string, record: any) => `${text} ${currencySymbol}`
     },
     {
@@ -79,10 +79,10 @@ export default function StockPriceList({
   }
 
   const getData = () => {
-    const shares2 = stockPrices.map((stock: StockPriceFields) => ({
+    const shares2 = stockPrices.map((stock: IStockPrice) => ({
       key: stock.id,
       transactionDate: stock.transactionDate,
-      priceShare: stock.priceShare
+      price: stock.price
     }));
 
     return shares2;
