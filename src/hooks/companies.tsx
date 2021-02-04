@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { IAddProps } from "types/common";
 import { CompaniesContextType } from "../contexts/companies";
 import CompanyService from "../services/company-service";
 import { CompanyFormFields, ICompany } from "../types/company";
@@ -36,7 +37,7 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
     setIsLoading(false);
   }, []);
 
-  const addCompany = useCallback((company: CompanyFormFields) => {
+  const addCompany = useCallback((company: CompanyFormFields): IAddProps => {
     setIsLoading(true);
     const result = new CompanyService().addCompany(company);
     setIsLoading(false);

@@ -1,5 +1,5 @@
 import SettingsDAO from "database/daos/settings-dao";
-import { SettingsItemProps } from "types/settings";
+import { ISettings } from "types/settings";
 
 export default class SettingsService {
   static getSettings = () => {
@@ -14,12 +14,20 @@ export default class SettingsService {
     return SettingsDAO.getSelectedPortfolio();
   };
 
-  static addSettings = (settings: SettingsItemProps) => {
+  static addSettings = (settings: ISettings) => {
     return SettingsDAO.addSettings(settings);
   };
 
   static updateSelectedPortfolio = (selectedPortfolio: string) => {
     return SettingsDAO.updateSelectedPortfolio(selectedPortfolio);
+  };
+
+  static updateLanguage = (language: string) => {
+    return SettingsDAO.updateLanguage(language);
+  };
+
+  static updateDatabasePath = (path: string) => {
+    return SettingsDAO.updateDatabasePath(path);
   };
 
   static toggleCollapsed = () => {

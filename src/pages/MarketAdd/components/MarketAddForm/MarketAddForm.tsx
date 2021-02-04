@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { Button, Form, Input, message, TimePicker } from "antd";
 import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
@@ -10,9 +10,10 @@ import MarketService from "services/market-service";
  */
 function MarketAddForm(): ReactElement {
   const [form] = Form.useForm();
-  const key = "updatable";
   const history = useHistory();
-  let color = "#607d8b";
+  const [color, setColor] = useState("#607d8b");
+  const key = "updatable";
+
 
   const handleAdd = (values: any) => {
     const { name, description, region, openTime, closeTime } = values;
@@ -36,8 +37,7 @@ function MarketAddForm(): ReactElement {
   };
 
   const handleColorChange = (color: any, event: any) => {
-    console.log(color.hex);
-    color = color.hex;
+    setColor(color.hex);
   };
 
   return (

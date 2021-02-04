@@ -4,7 +4,7 @@ import React, { useContext, useLayoutEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import DividendService from "services/dividends-transactions-service";
-import { DividendUtils } from "utils/dividend-utils";
+import { StringUtils } from "utils/string-utils";
 import { DividendsTransaction } from "types/dividends-transaction";
 
 interface IProps {
@@ -52,31 +52,31 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       title: "Number of Shares",
       dataIndex: "count",
       key: "count",
-      width: 70,
+      width: 70
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
       width: 70,
-      render: (text: string, record: any) =>
-        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
+      render: (text: number, record: any) =>
+        StringUtils.getAmountWithSymbol(text, 2, record.currencySymbol)
     },
     {
       title: "Commission",
       dataIndex: "commission",
       key: "commission",
       width: 70,
-      render: (text: string, record: any) =>
-        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
+      render: (text: number, record: any) =>
+        StringUtils.getAmountWithSymbol(text, 2, record.currencySymbol)
     },
     {
       title: "Total",
       dataIndex: "total",
       key: "total",
       width: 70,
-      render: (text: string, record: any) =>
-        DividendUtils.getAmountWithSymbol(text, record.currencySymbol)
+      render: (text: number, record: any) =>
+        StringUtils.getAmountWithSymbol(text, 2, record.currencySymbol)
     },
     {
       title: "Action",
@@ -98,18 +98,20 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   ];
 
   const getData = () => {
-    const shares2 = dividendsTransactions.map((dividend: DividendsTransaction) => ({
-      id: dividend.id,
-      key: dividend.id,
-      name: "dividend",
-      count: dividend.count.toString(),
-      transactionDate: dividend.transactionDate,
-      price: dividend.price,
-      commission: dividend.commission,
-      total: dividend.count * dividend.price + dividend.commission,
-      notes: dividend.notes,
-      currencySymbol: dividend.currencySymbol
-    }));
+    const shares2 = dividendsTransactions.map(
+      (dividend: DividendsTransaction) => ({
+        id: dividend.id,
+        key: dividend.id,
+        name: "dividend",
+        count: dividend.count.toString(),
+        transactionDate: dividend.transactionDate,
+        price: dividend.price,
+        commission: dividend.commission,
+        total: dividend.count * dividend.price + dividend.commission,
+        notes: dividend.notes,
+        currencySymbol: dividend.currencySymbol
+      })
+    );
     return shares2;
   };
   return (

@@ -1,15 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import { PortfoliosContextType } from "contexts/portfolios";
 import PortfolioService from "services/portfolio-service";
-import { Portfolio, PortfolioFormFields } from "types/portfolio";
+import { IPortfolio, PortfolioFormFields } from "types/portfolio";
 
 export function usePortfoliosContext(): PortfoliosContextType {
-  const [portfolios, setPortFolios] = useState<Portfolio[]>([]);
-  const [portfolio, setPortFolio] = useState<Portfolio|null>(null);
+  const [portfolios, setPortFolios] = useState<IPortfolio[]>([]);
+  const [portfolio, setPortFolio] = useState<IPortfolio|null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
+    console.log("Fetching portfolios from hook useEffect")
     const result = PortfolioService.getPortfolios();
     setPortFolios(result);
     setIsLoading(false);
@@ -17,6 +18,7 @@ export function usePortfoliosContext(): PortfoliosContextType {
 
   const fetchPortfolios = useCallback(() => {
     setIsLoading(true);
+    console.log("Fetching portfolios from hook")
     const result = PortfolioService.getPortfolios();
     setPortFolios(result);
     setIsLoading(false);

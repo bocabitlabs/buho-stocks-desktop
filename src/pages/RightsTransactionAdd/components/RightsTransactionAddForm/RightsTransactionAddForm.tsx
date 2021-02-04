@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import {
   Button,
   DatePicker,
@@ -30,7 +30,8 @@ export default function RightsTransactionAddForm({
   const [form] = Form.useForm();
   const { company, fetchCompany } = useContext(CompaniesContext);
   const history = useHistory();
-  let color = "#607d8b";
+  const [color, setColor] = useState("#607d8b");
+
   const key = "updatable";
 
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function RightsTransactionAddForm({
     );
     if (added.changes) {
       history.push(
-        `/portfolios/${company?.portfolio}/companies/${companyId}?tab=rights`
+        `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=rights`
       );
       message.success({ content: "Transaction has been added", key });
     } else {
@@ -76,8 +77,7 @@ export default function RightsTransactionAddForm({
   };
 
   const handleColorChange = (color: any, event: any) => {
-    console.log(color.hex);
-    color = color.hex;
+    setColor(color.hex);
   };
 
   const dateFormat = "DD/MM/YYYY";

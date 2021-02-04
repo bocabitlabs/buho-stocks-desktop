@@ -25,7 +25,7 @@ const createDBandMigrate = (loadingEvents) => {
   try {
     // The first call creates the global instance with your settings
     DB({
-      path: path.join(appPath, "db.sqlite3"), // this is the default
+      path: path.join(appPath, "buho-stocks.sqlite3"), // this is the default
       fileMustExist: false, // throw error if database not exists
       migrate: {
         // disable completely by setting `migrate: false`

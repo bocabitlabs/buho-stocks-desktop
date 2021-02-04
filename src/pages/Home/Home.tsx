@@ -13,14 +13,12 @@ const Home = () => {
   console.log("Home rendered");
 
   return (
-    <>
-      <HomeRouteHeader/>
+    <PortfoliosContext.Provider value={portfoliosContext}>
+      <HomeRouteHeader />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <PortfoliosContext.Provider value={portfoliosContext}>
-          <PortfolioList />
-        </PortfoliosContext.Provider>
+        <PortfolioList />
       </Layout>
-    </>
+    </PortfoliosContext.Provider>
   );
 };
 

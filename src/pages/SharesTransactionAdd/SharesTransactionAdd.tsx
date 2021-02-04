@@ -22,12 +22,12 @@ const SharesTransactionAdd = () => {
 
   return (
     <CompaniesContext.Provider value={companiesContext}>
-      <ShareAddHeader companyId={companyId} portfolioId={portfolioId} />
-      <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <SharesTransactionsContext.Provider value={sharesContext}>
+      <SharesTransactionsContext.Provider value={sharesContext}>
+        <ShareAddHeader companyId={companyId} portfolioId={portfolioId} />
+        <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
           <ShareAddForm companyId={companyId} />
-        </SharesTransactionsContext.Provider>
-      </Layout>
+        </Layout>
+      </SharesTransactionsContext.Provider>
     </CompaniesContext.Provider>
   );
 };

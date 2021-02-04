@@ -3,8 +3,11 @@ import { SharesTransactionFormProps } from "types/shares-transaction";
 import { deleteById } from "./operations";
 
 export default class SharesTransactionsDAO {
-  static addSharesTransaction = (sharesTransaction: SharesTransactionFormProps) => {
+  static addSharesTransaction = (
+    sharesTransaction: SharesTransactionFormProps
+  ) => {
     //Call the DB
+    console.log("SharesTransactionsDAO addSharesTransaction")
     const sql = `
     INSERT INTO "sharesTransactions"
     (
@@ -31,7 +34,7 @@ export default class SharesTransactionsDAO {
       , '${sharesTransaction.color}'
     );
     `;
-
+    console.log(sql);
     const results = sendIpcSql(sql, "insert");
     return results;
   };

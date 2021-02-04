@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
@@ -11,8 +11,9 @@ import SectorService from "services/sector-service";
 function SectorAddForm(): ReactElement {
   const [form] = Form.useForm();
   const history = useHistory();
+  const [color, setColor] = useState("#607d8b");
+
   const key = "updatable";
-  let color = "#607d8b";
 
   const handleAdd = (values: any) => {
     message.loading({ content: "Adding sector...", key });
@@ -32,8 +33,7 @@ function SectorAddForm(): ReactElement {
   };
 
   const handleColorChange = (color: any, event: any) => {
-    console.log(color.hex);
-    color = color.hex;
+    setColor(color.hex);
   };
 
   return (

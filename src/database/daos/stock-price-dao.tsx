@@ -1,5 +1,5 @@
-import sendIpcSql from "../../message-control/renderer";
-import { StockPriceFormProps } from "../../types/stock-price";
+import sendIpcSql from "message-control/renderer";
+import { StockPriceFormProps } from "types/stock-price";
 import { deleteById } from "./operations";
 
 export default class StockPriceDAO {
@@ -11,12 +11,14 @@ export default class StockPriceDAO {
       "price"
       , "transactionDate"
       , "companyId"
+      , "exchangeRate"
     )
     VALUES
     (
         '${stockPrice.price}'
       , '${stockPrice.transactionDate}'
       , '${stockPrice.companyId}'
+      , '${stockPrice.exchangeRate}'
     );
     `;
 

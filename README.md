@@ -17,6 +17,7 @@ Application to manage a stocks portfolio for Buy & Hold investment.
 
 - Node 13
 - Yarn 1.22
+- Mac OS Big Sur (Developed on)
 
 ## Development
 
@@ -31,22 +32,24 @@ the [CONTRIBUTING file](/docs/CONTRIBUTING.md) as it includes information about 
 brew install node && brew install yarn
 ```
 
-### 3. Install the dependencies
+### 2. Install the node dependencies
 
 ```bash
 yarn
 ```
 
-### 4. Configure the application settings
+### 3. Configure the application settings
+
+> Only if the application will be distributed on Github.
 
 ```bash
 cp utils/config.sample.tsx utils/config.tsx
 ```
 
-### 3. Start the application
+### 4. Start the application
 
 ```bash
-yarn start
+yarn dev
 ```
 
 ### Testing
@@ -55,10 +58,17 @@ yarn start
 yarn test
 ```
 
+## Paths
+
+- Application data (Mac): ~/Library/Application Support/buho-stocks
+- Logs (Mac): ~/Library/Logs/Buho-Stocks/main.log
+
 ## Links
 
 - UI docs: https://ant.design/components/overview/
+- ECB: https://sdw.ecb.europa.eu/quickview.do?SERIES_KEY=120.EXR.D.CHF.EUR.SP00.A
 
 ## Attributions
 
 - Icons by [lavarmsg](https://www.vecteezy.com/members/lavarmsg)
+

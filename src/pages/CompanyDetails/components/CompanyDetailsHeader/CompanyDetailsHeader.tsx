@@ -15,7 +15,7 @@ interface Props {
 export default function CompanyDetailsRouteHeader({
   portfolioId,
   companyId
-}: Props): ReactElement {
+}: Props): ReactElement | null {
   const history = useHistory();
   const { company, fetchCompany } = useContext(CompaniesContext);
   const [addStockModalVisible, setAddStockModalVisible] = useState(false);
@@ -25,6 +25,10 @@ export default function CompanyDetailsRouteHeader({
     fetchCompany(companyId);
   }, [companyId, fetchCompany]);
 
+  if (company === null) {
+    return null;
+  }
+
   const routes = [
     {
       path: "/home",
@@ -32,14 +36,14 @@ export default function CompanyDetailsRouteHeader({
       breadcrumbName: "Home"
     },
     {
-      path: `/portfolios/${portfolioId}`,
+      path: `/portfolios/${company.portfolioId}`,
       name: "portfolio-details",
-      breadcrumbName: company ? company.portfolioName : ""
+      breadcrumbName: company.portfolioName
     },
     {
-      path: `/portfolios/${portfolioId}/companies/${companyId}`,
+      path: `/portfolios/${company.portfolioId}/companies/${company.id}`,
       name: "company-details",
-      breadcrumbName: company ? company.name : ""
+      breadcrumbName: company.name
     }
   ];
 

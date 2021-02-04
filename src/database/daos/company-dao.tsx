@@ -7,7 +7,7 @@ export default class CompanyDAO {
     //Call the DB
     const sql = `INSERT INTO "companies"
     ("name", "ticker", "description", "sectorId", "marketId", "currencyId", "portfolioId", "url", "color")
-    VALUES ('${company.name}', '${company.ticker}', '${company.description}', '${company.sector}', '${company.market}', '${company.currency}', '${company.portfolio}', '${company.url}', '${company.color}');`;
+    VALUES ('${company.name}', '${company.ticker}', '${company.description}', '${company.sector}', '${company.market}', '${company.currency}', '${company.portfolioId}', '${company.url}', '${company.color}');`;
 
     const result = sendIpcSql(sql, "insert");
     return result;
@@ -50,7 +50,6 @@ export default class CompanyDAO {
       ON companies.id = S.companyId
     WHERE companies.portfolioId = '${portfolioId}';
     `;
-    console.log(sql)
     const results = sendIpcSql(sql);
     if (results.length > 0 && results[0].id == null) {
       return [];
@@ -66,6 +65,7 @@ export default class CompanyDAO {
       , currencies.name as currencyName
       , currencies.symbol as currencySymbol
 	  , sectors.name as sectorName
+	  , currencies2.symbol as portfolioCurrencySymbol
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId
@@ -73,6 +73,8 @@ export default class CompanyDAO {
       ON currencies.id = companies.currencyId
     LEFT JOIN "sectors"
       ON sectors.id = companies.sectorId
+    LEFT JOIN "currencies" as currencies2
+      ON portfolios.currencyId = currencies2.id
     WHERE companies.id = '${companyId}';
     `;
 

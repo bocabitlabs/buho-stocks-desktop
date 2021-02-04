@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { IAddProps } from "types/common";
 import { CompanyFormFields, ICompany } from "../types/company";
 
 export type CompaniesContextType = {
@@ -7,7 +8,7 @@ export type CompaniesContextType = {
   isLoading: boolean;
   fetchCompanies: (portfolioId: string) => void;
   fetchCompany: (companyId: string) => void;
-  addCompany: (company: CompanyFormFields) => void;
+  addCompany: (company: CompanyFormFields) => IAddProps;
 };
 
 export const companiesDefaultValue: CompaniesContextType = {
@@ -16,7 +17,7 @@ export const companiesDefaultValue: CompaniesContextType = {
   isLoading: false,
   fetchCompanies: () => null,
   fetchCompany: () => null,
-  addCompany: () => null
+  addCompany: () : IAddProps => ({ changes: false })
 };
 
 export const CompaniesContext = createContext<CompaniesContextType>(

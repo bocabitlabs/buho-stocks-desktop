@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import { Form, Input, Button, Select, message } from "antd";
 import { CirclePicker } from "react-color";
 import TextArea from "antd/lib/input/TextArea";
@@ -7,28 +7,31 @@ import { useHistory } from "react-router-dom";
 import { CurrenciesContext } from "contexts/currencies";
 import { MarketsContext } from "contexts/markets";
 import { SectorsContext } from "contexts/sectors";
-import CompanyService from "services/company-service";
 
 import { CompanyFormFields } from "types/company";
 import { Sector } from "types/sector";
 import { Currency } from "types/currency";
 import { Market } from "types/market";
+import { CompaniesContext } from "contexts/companies";
 
 interface CompanyAddFormProps {
-  portfolioID: string;
+  portfolioId: string;
 }
 
 /**
  * Add a new Currency
  */
-function CompanyAddForm({ portfolioID }: CompanyAddFormProps): ReactElement {
+function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
   const [form] = Form.useForm();
   const { currencies } = useContext(CurrenciesContext);
   const { markets } = useContext(MarketsContext);
   const { sectors } = useContext(SectorsContext);
+  const { addCompany } = useContext(CompaniesContext);
+
   const history = useHistory();
+  const [color, setColor] = useState("#607d8b");
+
   const key = "updatable";
-  let color = "#607d8b";
 
   const handleAddCompany = (values: any) => {
     const { url, name, ticker, market, sector, currency, description } = values;
@@ -41,11 +44,11 @@ function CompanyAddForm({ portfolioID }: CompanyAddFormProps): ReactElement {
       color,
       description,
       currency,
-      portfolio: portfolioID
+      portfolioId
     };
-    const added = new CompanyService().addCompany(company);
+    const added = addCompany(company);
     if (added.changes) {
-      history.push(`/portfolios/${portfolioID}`);
+      history.push(`/portfolios/${portfolioId}`);
       message.success({ content: "Company has been added", key });
     } else {
       message.error({ content: "Unable to add the  company", key });
@@ -63,7 +66,7 @@ function CompanyAddForm({ portfolioID }: CompanyAddFormProps): ReactElement {
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
-    color = color.hex;
+    setColor(color.hex);
   };
 
   return (

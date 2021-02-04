@@ -26,18 +26,28 @@ export function useSharesTransactionsContext(
   }, [companyId]);
 
   const addSharesTransaction = useCallback(
-    (sector: SharesTransactionFormProps) => {
+    (sharesTransaction: SharesTransactionFormProps) => {
       setIsLoading(true);
-      const results = SharesTransactionsService.getShares(companyId);
-      setSharesTransactions(results);
+      const results = SharesTransactionsService.addSharesTransaction(
+        sharesTransaction
+      );
+      setIsLoading(false);
+      return results;
     },
-    [companyId]
+    []
   );
+
+  const deleteById = useCallback((transactionId: string) => {
+    setIsLoading(true);
+    const results = SharesTransactionsService.deleteById(transactionId);
+    return results;
+  }, []);
 
   return {
     sharesTransactions,
     isLoading,
     fetchSharesTransactions,
-    addSharesTransaction
+    addSharesTransaction,
+    deleteById
   };
 }

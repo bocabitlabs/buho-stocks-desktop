@@ -1,7 +1,8 @@
-import { Card, List } from "antd";
+import { List } from "antd";
 import React, { ReactElement, useContext } from "react";
 import { Link } from "react-router-dom";
 import { PortfoliosContext } from "contexts/portfolios";
+import PortfolioCard from "../PortfolioCard/PortfolioCard";
 
 export default function PortfolioList(): ReactElement {
   const { portfolios } = useContext(PortfoliosContext);
@@ -13,17 +14,7 @@ export default function PortfolioList(): ReactElement {
       renderItem={(item) => (
         <Link to={`/portfolios/${item.id}`}>
           <List.Item>
-            <Card
-              title={item.name}
-              hoverable
-              extra={
-                <svg height="20" width="20">
-                  <circle cx="10" cy="10" r="10" fill={item.color} />
-                </svg>
-              }
-            >
-              {item.description}
-            </Card>
+            <PortfolioCard portfolio={item} />
           </List.Item>
         </Link>
       )}

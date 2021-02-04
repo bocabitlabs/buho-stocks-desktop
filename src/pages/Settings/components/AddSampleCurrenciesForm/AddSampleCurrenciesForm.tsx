@@ -11,14 +11,19 @@ function AddSampleCurrenciesForm(): ReactElement {
 
   const [currencies] = useState(sampleCurrencies);
 
-  const handleAddCurrencies =  () => {
+  const handleAddCurrencies = () => {
     currencies.forEach((currency: CurrencyFormFields) => {
       new CurrencyService().addCurrency(currency);
     });
-  }
+  };
 
   return (
-    <Form form={form} name="basic" onFinish={handleAddCurrencies}>
+    <Form
+      form={form}
+      layout="vertical"
+      name="basic"
+      onFinish={handleAddCurrencies}
+    >
       <Form.Item label="Add sample currencies">
         <Button type="primary" htmlType="submit">
           Add Sample Currencies

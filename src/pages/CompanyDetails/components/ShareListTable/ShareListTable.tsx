@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default function ShareListTable({ portfolioId, companyId }: IProps) {
-  const { sharesTransactions, fetchSharesTransactions } = useContext(
+  const { sharesTransactions, fetchSharesTransactions, deleteById } = useContext(
     SharesTransactionsContext
   );
   const [width, setWidth] = useState(window.innerWidth);
@@ -31,8 +31,8 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
   }, []);
 
   function confirm(recordId: string) {
-    const result = ShareService.deleteById(recordId);
-    if (result === "OK") {
+    const result = deleteById(recordId);
+    if (result.changes) {
       history.push({
         pathname: `/portfolios/${portfolioId}/companies/${companyId}`,
         state: {

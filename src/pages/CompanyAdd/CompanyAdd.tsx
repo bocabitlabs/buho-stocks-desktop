@@ -20,7 +20,6 @@ export interface IAddCompanyRouteParams {
   id: string;
 }
 
-
 const CompanyAdd = () => {
   const { id } = useParams<IAddCompanyRouteParams>();
   const companiesContext = useCompaniesContext(id);
@@ -36,11 +35,13 @@ const CompanyAdd = () => {
         <MarketsContext.Provider value={marketsContext}>
           <PortfoliosContext.Provider value={portfoliosContext}>
             <CompanyAddHeader portfolioId={id} />
-            <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-              <CompaniesContext.Provider value={companiesContext}>
-                <CompanyAddForm portfolioID={id} />
-              </CompaniesContext.Provider>
-            </Layout>
+            <CompaniesContext.Provider value={companiesContext}>
+              <Layout
+                style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}
+              >
+                <CompanyAddForm portfolioId={id} />
+              </Layout>
+            </CompaniesContext.Provider>
           </PortfoliosContext.Provider>
         </MarketsContext.Provider>
       </CurrenciesContext.Provider>

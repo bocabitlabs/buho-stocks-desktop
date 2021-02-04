@@ -11,6 +11,8 @@ import { useDividendsTransactionsContext } from "hooks/dividends-transactions";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import { RightsTransactionContext } from "contexts/right-transactions";
 import { useRightsTransactionsContext } from "hooks/rights-transactions";
+import { PortfoliosContext } from "contexts/portfolios";
+import { usePortfoliosContext } from "hooks/portfolios";
 
 export interface Props {
   portfolioId: string;
@@ -25,11 +27,12 @@ export default function CompanyDetails(): ReactElement {
     companyId
   );
   const rightsTransactionsContext = useRightsTransactionsContext(companyId);
+  const portfoliosContext = usePortfoliosContext();
 
   return (
-    <CompaniesContext.Provider value={companiesContext}>
-      <CompanyDetailsHeader companyId={companyId} portfolioId={portfolioId} />
-      <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
+    <PortfoliosContext.Provider value={portfoliosContext}>
+      <CompaniesContext.Provider value={companiesContext}>
+        <CompanyDetailsHeader companyId={companyId} portfolioId={portfolioId} />
         <SharesTransactionsContext.Provider value={sharesContext}>
           <DividendsTransactionsContext.Provider
             value={dividendsTransactionsContext}
@@ -37,14 +40,18 @@ export default function CompanyDetails(): ReactElement {
             <RightsTransactionContext.Provider
               value={rightsTransactionsContext}
             >
-              <CompanyDetailsContent
-                companyId={companyId}
-                portfolioId={portfolioId}
-              />
+              <Layout
+                style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}
+              >
+                <CompanyDetailsContent
+                  companyId={companyId}
+                  portfolioId={portfolioId}
+                />
+              </Layout>
             </RightsTransactionContext.Provider>
           </DividendsTransactionsContext.Provider>
         </SharesTransactionsContext.Provider>
-      </Layout>
-    </CompaniesContext.Provider>
+      </CompaniesContext.Provider>
+    </PortfoliosContext.Provider>
   );
 }

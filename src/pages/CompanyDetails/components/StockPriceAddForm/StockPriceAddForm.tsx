@@ -21,10 +21,11 @@ export default function StockPriceAddForm({
   const key = "updatable";
 
   const handleAdd = (values: any) => {
-    const { price, transactionDate } = values;
+    const { price, transactionDate, exchangeRate } = values;
 
     const stockPrice: StockPriceFormProps = {
       price,
+      exchangeRate,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       companyId
     };
@@ -80,6 +81,21 @@ export default function StockPriceAddForm({
         ]}
       >
         <DatePicker format={dateFormat} />
+      </Form.Item>
+
+      <Form.Item
+        name="exchangeRate"
+        label="Exchange Rate"
+        rules={[
+          { required: true, message: "Please input the exchange rate for the given day" }
+        ]}
+      >
+        <InputNumber
+          style={{ width: "20em" }}
+          decimalSeparator="."
+          min={0}
+          step={0.001}
+        />
       </Form.Item>
 
       <Form.Item>

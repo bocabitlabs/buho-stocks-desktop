@@ -1,6 +1,6 @@
 import sendIpcSql from "message-control/renderer";
 import { PortfolioFormFields } from "types/portfolio";
-import { deleteById, getById } from "./operations";
+import { deleteById } from "./operations";
 
 export default class PortfolioDAO {
   static addPortfolio = (portfolio: PortfolioFormFields) => {
@@ -26,24 +26,33 @@ export default class PortfolioDAO {
     return result;
   };
   static getPortfolios = () => {
-    //Call the DB
-    console.log("Get all portfolios");
     const sql = `
-    SELECT * FROM portfolios
+    SELECT portfolios.*
+	  , currencies.symbol as currencySymbol
+	  , currencies.name as currencyName
+    FROM "portfolios"
+      LEFT JOIN "currencies"
+    ON currencies.id = portfolios.currencyId
     `;
-
     const results = sendIpcSql(sql);
+    console.log("results", results)
     return results;
   };
 
-  static getById = (id: string) => {
-    //Call the DB
-    const results = getById("portfolios", id);
+  static getById = (companyId: string) => {
+    const sql = `
+    SELECT portfolios.*
+	  , currencies.symbol as currencySymbol
+	  , currencies.name as currencyName
+    FROM "portfolios"
+      LEFT JOIN "currencies"
+    ON currencies.id = portfolios.currencyId
+    WHERE portfolios.id = '${companyId}'`;
+    const results = sendIpcSql(sql, "get");
     return results;
   };
 
   static deleteById = (id: string) => {
-    //Call the DB
     const results = deleteById("portfolios", id);
     return results;
   };

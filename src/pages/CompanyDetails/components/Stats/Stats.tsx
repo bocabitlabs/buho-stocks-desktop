@@ -1,48 +1,123 @@
-import { Col, Row, Statistic } from "antd";
-import React, { ReactElement } from "react";
+import { Col, Row, Statistic, Typography } from "antd";
+import { BaseType } from "antd/lib/typography/Base";
+import moment from "moment";
+import React, { ReactElement} from "react";
 import { ICompany } from "types/company";
+import { IStockPrice } from "types/stock-price";
+import { StringUtils } from "utils/string-utils";
 
 interface Props {
   company: ICompany;
 }
 
-export default function Stats({ company }: Props): ReactElement {
+export default function Stats({ company }: Props): ReactElement | null {
+  let latestStockPrice: IStockPrice = company.getLatestStockPrice();
+  const sharesCount = company.getSharesCount();
+  const dividendsAmount = company.getDividendsAmount(true);
+  const totalInvested = company.getTotalInvested(true);
+  const portfolioValue = company.getPortfolioValueWithInflation(true);
+  const companyReturn = company.getReturn(true);
+  const returnPercentage = company.getReturnWithDividendsPercentage(true);
+  const companyRpd = company.getRpd(true);
+  const companyYoc = company.getYoc(true);
+
+  let positive: BaseType = "success";
+  if (returnPercentage < 0) {
+    positive = "danger";
+  }
+  if (returnPercentage === 0) {
+    positive = "secondary";
+  }
+
+  const formattedReturnPercentage = StringUtils.getAmountWithSymbol(
+    returnPercentage,
+    2,
+    "%"
+  );
+
   return (
     <div style={{ marginBottom: 16 }}>
       <Row gutter={24}>
         <Col span={6}>
-          <Statistic title="Shares" value={company.getSharesCount()} />
+          <Statistic title="Shares" value={sharesCount} />
         </Col>
         <Col span={6}>
           <Statistic
             title="Dividends"
-            value={company.getDividendsAmount()}
+            value={dividendsAmount}
+            suffix={company.portfolioCurrencySymbol}
             precision={2}
           />
         </Col>
         <Col span={6}>
           <Statistic
             title="Invested"
-            value={company.getTotalInvested()}
+            value={totalInvested}
+            suffix={company.portfolioCurrencySymbol}
+            precision={2}
+          />
+        </Col>
+        {latestStockPrice ? (
+          <Col span={6}>
+            <Statistic
+              title="Stock Price"
+              value={latestStockPrice.price}
+              suffix={company.portfolioCurrencySymbol}
+              precision={2}
+            />
+            <Typography.Text type="secondary">
+              {moment(new Date(latestStockPrice.transactionDate)).format(
+                "DD/MM/YYYY"
+              )}
+            </Typography.Text>
+          </Col>
+        ) : (
+          <Col span={6}>
+            <Statistic title="Stock Price" value={"Not set"} />
+          </Col>
+        )}
+        <Col span={6}>
+          <Statistic
+            title="Portfolio Value"
+            value={portfolioValue}
+            suffix={company.portfolioCurrencySymbol}
             precision={2}
           />
         </Col>
         <Col span={6}>
           <Statistic
-            title="Portfolio Value"
-            value={company.getPortfolioValue()}
+            title="Return"
+            value={companyReturn}
+            suffix={company.portfolioCurrencySymbol}
             precision={2}
           />
+          <Typography.Text type={positive}>
+            {formattedReturnPercentage}
+          </Typography.Text>
         </Col>
         <Col span={6}>
-          <Statistic
-            title="Portfolio Value"
-            value={company.getPortfolioValueWithInflation()}
-            precision={2}
-          />
+          {isNaN(companyRpd) ? (
+            <Statistic title="RPD" value={"Not set"} />
+          ) : (
+            <Statistic
+              title="RPD"
+              value={companyRpd}
+              suffix="%"
+              precision={2}
+            />
+          )}
         </Col>
         <Col span={6}>
-          <Statistic title="Return" value={112893} precision={2} />
+          {isNaN(companyYoc) ? (
+            <Statistic title="YOC" value={"Not set"} />
+          ) : (
+            <Statistic
+              title="YOC"
+              value={companyYoc}
+              suffix="%"
+              precision={2}
+            />
+          )}
         </Col>
       </Row>
     </div>

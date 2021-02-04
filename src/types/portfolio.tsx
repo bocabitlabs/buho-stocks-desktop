@@ -1,3 +1,5 @@
+import { ICompany } from "./company";
+
 export interface PortfolioFormFields {
   name: string;
   description: string;
@@ -5,6 +7,10 @@ export interface PortfolioFormFields {
   currencyId: number;
 }
 
-export interface Portfolio extends PortfolioFormFields {
+export interface IPortfolio extends PortfolioFormFields {
   id: string;
+  currencySymbol: string;
+  currencyName: string;
+  companies: ICompany[];
+  getPortfolioValueWithInflation(inBaseCurrency?: boolean): number;
 }

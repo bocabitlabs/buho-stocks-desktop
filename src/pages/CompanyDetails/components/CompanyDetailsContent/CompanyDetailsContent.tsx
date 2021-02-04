@@ -25,14 +25,14 @@ export default function CompanyDetailsContent({
 
   useEffect(() => {
     fetchCompany(companyId);
-  }, [companyId, fetchCompany]);
+  }, [companyId, fetchCompany, portfolioId]);
 
   return (
     <>
       {company && (
         <>
           <Typography.Paragraph>{company.description}</Typography.Paragraph>
-          <Stats company={company}/>
+          <Stats company={company} />
           <Tabs
             defaultActiveKey={query.get("tab") || "shares"}
             onChange={() => {
@@ -53,7 +53,7 @@ export default function CompanyDetailsContent({
                 + Shares
               </Button>
               <ShareListTable
-                portfolioId={company.portfolio}
+                portfolioId={company.portfolioId}
                 companyId={companyId}
               />
             </Tabs.TabPane>
@@ -71,7 +71,7 @@ export default function CompanyDetailsContent({
                 + Dividends
               </Button>
               <DividendListTable
-                portfolioId={company.portfolio}
+                portfolioId={company.portfolioId}
                 companyId={companyId}
               />
             </Tabs.TabPane>
@@ -89,7 +89,7 @@ export default function CompanyDetailsContent({
                 + Rights
               </Button>
               <RightsTransactionsTable
-                portfolioId={company.portfolio}
+                portfolioId={company.portfolioId}
                 companyId={companyId}
               />
             </Tabs.TabPane>

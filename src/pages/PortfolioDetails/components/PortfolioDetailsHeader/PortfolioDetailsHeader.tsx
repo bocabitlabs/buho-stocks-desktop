@@ -16,12 +16,18 @@ export default function PortfolioDetailsHeader({
   portfolioId
 }: Props): ReactElement {
   const history = useHistory();
-  const { portfolio, fetchPortfolios, fetchPortfolio } = useContext(PortfoliosContext);
+  const { portfolio, fetchPortfolios, fetchPortfolio } = useContext(
+    PortfoliosContext
+  );
   const key = "updatable";
 
   useEffect(() => {
-    fetchPortfolio(portfolioId)
-  }, [portfolioId, fetchPortfolio])
+    if(portfolioId === undefined || portfolioId === null){
+      console.error("portfolioId is undefined. This will lead to errors")
+    }
+    console.log("Fetching portfolio", portfolioId)
+    fetchPortfolio(portfolioId);
+  }, [portfolioId, fetchPortfolio]);
 
   const routes = [
     {
@@ -58,6 +64,8 @@ export default function PortfolioDetailsHeader({
     console.log(e);
     message.error("Click on No");
   }
+
+  console.log("PortfolioDetailsHeader: portfolio=", portfolio);
 
   return (
     <PageHeader

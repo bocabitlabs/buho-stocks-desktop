@@ -59,7 +59,7 @@ export default function DividendAddForm({ companyId }: Props): ReactElement {
     console.log(values);
     const added = new DividendsTransactionsService().addDividendsTransaction(dividend);
     if (added.changes) {
-      history.push(`/portfolios/${company?.portfolio}/companies/${companyId}?tab=dividends`);
+      history.push(`/portfolios/${company?.portfolioId}/companies/${companyId}?tab=dividends`);
       message.success({ content: "Dividend has been added", key });
     } else {
       message.error({ content: "Unable to add the dividend", key });

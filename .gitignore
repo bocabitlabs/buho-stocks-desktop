@@ -32,3 +32,6 @@ public/db.sqlite3-wal
 data/db.sqlite3
 data/db.sqlite3-shm
 data/db.sqlite3-wal
+data/buho-stocks.sqlite3
+data/buho-stocks.sqlite3-shm
+.gitignore

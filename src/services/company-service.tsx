@@ -1,6 +1,7 @@
 import DividendsTransactionsDAO from "database/daos/dividends-transactions-dao";
 import SharesTransactionsDAO from "database/daos/shares-transactions-dao";
 import { Company } from "models/company";
+import { IAddProps } from "types/common";
 import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
 import { SharesTransaction } from "types/shares-transaction";
@@ -11,12 +12,23 @@ import RightsTransactionsService from "./rights-transactions-service";
 import StockPriceService from "./stock-price-service";
 
 export default class CompanyService {
-  addCompany = (company: CompanyFormFields) => {
+  addCompany = (company: CompanyFormFields) : IAddProps => {
     return new CompanyDAO().addCompany(company);
   };
 
   getCompanies = (portfolioId: string): ICompany[] => {
-    return new CompanyDAO().getCompanies(portfolioId);
+    console.log("CompanyService: getCompanies for portfolio=", portfolioId)
+    if(portfolioId === "undefined"){
+      console.log("portfolioId is undefined")
+      return [];
+    }
+    const companies = new CompanyDAO().getCompanies(portfolioId);
+    let companiesWithDetails: ICompany[] = []
+    companies.forEach((element: ICompany) => {
+      const company = this.getCompanyDetails(element.id);
+      companiesWithDetails.push(company)
+    });
+    return companiesWithDetails;
   };
 
   getCompanyDetails = (companyId: string): Company => {
@@ -39,10 +51,6 @@ export default class CompanyService {
       rightsTransactions,
       stockPrices
     );
-  };
-
-  getCompaniesFromPortfolio = (portfolioId: string) => {
-    return new CompanyDAO().getCompaniesFromPortfolio(portfolioId);
   };
 
   deleteById = (companyId: string) => {

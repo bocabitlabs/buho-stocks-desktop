@@ -12,12 +12,13 @@ export interface CompanyFormFields {
   market: string;
   sector: string;
   color: string;
-  portfolio: string;
+  portfolioId: string;
 }
 
 export interface ICompany extends CompanyFormFields {
   id: string;
   portfolioName: string;
+  portfolioCurrencySymbol: string;
   currencyName: string;
   sectorName: string;
   currencySymbol: string;
@@ -26,10 +27,15 @@ export interface ICompany extends CompanyFormFields {
   dividendsTransactions: DividendsTransaction[];
   rightsTransactions: RightsTransaction[];
   getSharesCount: Function;
-  getDividendsAmount: Function;
+  getDividendsAmount(inBaseCurrency?: boolean): number;
   getLatestStockPrice: Function;
-  getTotalInvested: Function;
-  getPortfolioValue: Function;
-  getPortfolioValueWithInflation: Function;
-  getCurrentYearReturn: Function
+  getTotalInvested(inBaseCurrency?: boolean): number;
+  getPortfolioValue(inBaseCurrency?: boolean): number;
+  getPortfolioValueWithInflation(inBaseCurrency?: boolean): number;
+  getReturn(inBaseCurrency?: boolean): number;
+  getYoc(inBaseCurrency?: boolean): number;
+  getRpd(inBaseCurrency?: boolean): number;
+  getReturnPercentage(inBaseCurrency?: boolean): number;
+  getReturnWithDividends(inBaseCurrency?: boolean): number;
+  getReturnWithDividendsPercentage(inBaseCurrency?: boolean): number;
 }

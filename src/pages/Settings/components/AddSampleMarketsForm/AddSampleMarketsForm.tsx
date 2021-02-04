@@ -18,7 +18,12 @@ function AddSampleMarketsForm(): ReactElement {
   }, [markets]);
 
   return (
-    <Form form={form} name="basic" onFinish={handleAddMarkets}>
+    <Form
+      form={form}
+      layout="vertical"
+      name="basic"
+      onFinish={handleAddMarkets}
+    >
       <Form.Item label="Add sample markets">
         <Button type="primary" htmlType="submit">
           Add Sample Markets

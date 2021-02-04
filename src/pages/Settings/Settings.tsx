@@ -4,8 +4,12 @@ import { Layout, PageHeader } from "antd";
 
 import { Link } from "react-router-dom";
 import SettingsForm from "./components/SettingsForm/SettingsForm";
+import { useSettingsContext } from "hooks/settings";
+import { SettingsContext } from "contexts/settings";
 
 const Settings = () => {
+  const settingsContext = useSettingsContext();
+
   const routes = [
     {
       path: "/home",
@@ -25,7 +29,7 @@ const Settings = () => {
     return <Link to={route.path}>{route.breadcrumbName}</Link>;
   }
   return (
-    <>
+    <SettingsContext.Provider value={settingsContext}>
       <PageHeader
         className="site-page-header"
         title="Settings"
@@ -35,9 +39,9 @@ const Settings = () => {
         }}
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <SettingsForm/>
+        <SettingsForm />
       </Layout>
-    </>
+    </SettingsContext.Provider>
   );
 };
 

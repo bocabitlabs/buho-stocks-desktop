@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import {
   Button,
   DatePicker,
@@ -14,8 +14,8 @@ import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
-import ShareService from "services/shares-transactions-service";
 import { SharesTransactionFormProps } from "types/shares-transaction";
+import { SharesTransactionsContext } from "contexts/shares-transactions";
 
 interface Props {
   companyId: string;
@@ -24,16 +24,25 @@ interface Props {
 /**
  * Add a new Currency
  */
-export default function ShareAddForm({ companyId }: Props): ReactElement {
+export default function ShareAddForm({
+  companyId
+}: Props): ReactElement | null {
   const [form] = Form.useForm();
   const { company, fetchCompany } = useContext(CompaniesContext);
+  const { addSharesTransaction } = useContext(SharesTransactionsContext);
+
   const history = useHistory();
-  let color = "#607d8b";
+  const [color, setColor] = useState("#607d8b");
+
   const key = "updatable";
 
   useEffect(() => {
     fetchCompany(companyId);
   }, [companyId, fetchCompany]);
+
+  if (company === null) {
+    return null;
+  }
 
   const handleAdd = (values: any) => {
     const {
@@ -58,12 +67,14 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
       companyId
     };
     console.log(values);
-    const added = ShareService.addSharesTransaction(share);
+    console.log("Adding the shares transaction")
+    const added = addSharesTransaction(share);
+    console.log(added);
     if (added.changes) {
       history.push(
-        `/portfolios/${company?.portfolio}/companies/${companyId}?tab=shares`
+        `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
       );
-      message.success({ content: "Shares has been added", key });
+      message.success({ content: `Shares has been added: ${company.portfolioId}` , key });
     } else {
       message.error({ content: "Unable to add the shares", key });
     }
@@ -71,22 +82,14 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
 
   const handleColorChange = (color: any, event: any) => {
     console.log(color.hex);
-    color = color.hex;
+    setColor(color.hex);
   };
 
-  const layout = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 13 }
-  };
-
-  const buttonItemLayout = {
-    wrapperCol: { span: 14, offset: 0 }
-  };
   const dateFormat = "DD/MM/YYYY";
 
   return (
     <Form
-      {...layout}
+      layout="vertical"
       form={form}
       name="basic"
       onFinish={handleAdd}
@@ -102,7 +105,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
           { required: true, message: "Please input the number of shares" }
         ]}
       >
-        <InputNumber style={{ width: "20em" }} min={0} step={1} />
+        <InputNumber min={0} step={1} />
       </Form.Item>
       <Form.Item label="Color">
         <CirclePicker onChange={handleColorChange} />
@@ -116,10 +119,8 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
         ]}
       >
         <InputNumber
-          style={{ width: "20em" }}
           decimalSeparator="."
           formatter={(value) => `${company?.currencySymbol} ${value}`}
-          // parser={(value) => (value ? value.replace(/\$\s?|(,*)/g, "") : "")}
           min={0}
           step={0.001}
         />
@@ -144,10 +145,8 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
         ]}
       >
         <InputNumber
-          style={{ width: "20em" }}
           decimalSeparator="."
           formatter={(value) => `${company?.currencySymbol} ${value}`}
-          // parser={(value) => (value ? value.replace(/\$\s?|(,*)/g, "") : "")}
           min={0}
           step={0.001}
         />
@@ -169,7 +168,6 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
         ]}
       >
         <InputNumber
-          style={{ width: "20em" }}
           decimalSeparator="."
           // formatter={(value) => `${company?.currencySymbol} ${value}`}
           // parser={(value) => (value ? value.replace(/\$\s?|(,*)/g, "") : "")}
@@ -181,7 +179,7 @@ export default function ShareAddForm({ companyId }: Props): ReactElement {
         <TextArea rows={4} />
       </Form.Item>
 
-      <Form.Item {...buttonItemLayout}>
+      <Form.Item>
         <Button type="primary" htmlType="submit">
           Add shares
         </Button>
