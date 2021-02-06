@@ -12,21 +12,21 @@ import RightsTransactionsService from "./rights-transactions-service";
 import StockPriceService from "./stock-price-service";
 
 export default class CompanyService {
-  addCompany = (company: CompanyFormFields) : IAddProps => {
+  addCompany = (company: CompanyFormFields): IAddProps => {
     return new CompanyDAO().addCompany(company);
   };
 
   getCompanies = (portfolioId: string): ICompany[] => {
-    console.log("CompanyService: getCompanies for portfolio=", portfolioId)
-    if(portfolioId === "undefined"){
-      console.log("portfolioId is undefined")
+    console.log("CompanyService: getCompanies for portfolio=", portfolioId);
+    if (portfolioId === "undefined") {
+      console.log("portfolioId is undefined");
       return [];
     }
     const companies = new CompanyDAO().getCompanies(portfolioId);
-    let companiesWithDetails: ICompany[] = []
+    let companiesWithDetails: ICompany[] = [];
     companies.forEach((element: ICompany) => {
       const company = this.getCompanyDetails(element.id);
-      companiesWithDetails.push(company)
+      companiesWithDetails.push(company);
     });
     return companiesWithDetails;
   };
@@ -36,9 +36,7 @@ export default class CompanyService {
     const sharesTransactions = SharesTransactionsDAO.getSharesTransactions(
       companyId
     );
-    const dividendsTransactions = new DividendsTransactionsDAO().getDividendsTransactions(
-      companyId
-    );
+    const dividendsTransactions = DividendsTransactionsDAO.getAll(companyId);
     const rightsTransactions = RightsTransactionsService.getRightsTransactions(
       companyId
     );

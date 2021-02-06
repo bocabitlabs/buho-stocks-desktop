@@ -3,7 +3,7 @@ import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { deleteById } from "./operations";
 
 export default class DividendsTransactionsDAO {
-  addDividendsTransaction = (dividend: DividendsTransactionFormProps) => {
+  static add = (dividend: DividendsTransactionFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO "dividendsTransactions"
@@ -34,7 +34,7 @@ export default class DividendsTransactionsDAO {
     return results;
   };
 
-  getDividendsTransactions = (companyId: string) => {
+  static getAll = (companyId: string) => {
     //Call the DB
     console.log("Get all dividends");
     const sql = `
@@ -54,28 +54,7 @@ export default class DividendsTransactionsDAO {
     return results;
   };
 
-  getDividendsTransactionsPerYearByCompanyId = (companyId: string) => {
-    const sql = `
-    SELECT
-      strftime('%Y', dividendsTransactions.transactionDate) as year
-      , count(dividendsTransactions.companyId) as dividendsOperationsCount
-      , sum(dividendsTransactions.commission) as dividendsCommission
-      , sum(dividendsTransactions.count) as sharesNumber
-      , sum(dividendsTransactions.price * dividendsTransactions.count - dividendsTransactions.commission) as dividendsNet
-      , sum((dividendsTransactions.price * dividendsTransactions.count - dividendsTransactions.commission) * dividendsTransactions.exchangeRate) as dividendsNetBaseCurrency
-      , sum(dividendsTransactions.price * dividendsTransactions.count) as dividendsGross
-      , sum(dividendsTransactions.price * dividendsTransactions.count * dividendsTransactions.exchangeRate) as dividendsGrossBaseCurrency
-	  FROM dividendsTransactions
-    WHERE dividendsTransactions.companyId = '${companyId}'
-    GROUP BY strftime('%Y', transactionDate)
-    ORDER BY strftime('%Y', transactionDate)
-    ;
-    `;
-    const results = sendIpcSql(sql);
-    return results;
-  };
-
-  getDividendsTransactionsByCompanyId = (companyId: string) => {
+  static getByCompanyId = (companyId: string) => {
     const sql = `
       SELECT
       sum(dividendsTransactions.price * dividendsTransactions.count - dividendsTransactions.commission) as dividendsNet
@@ -89,7 +68,7 @@ export default class DividendsTransactionsDAO {
     return results;
   };
 
-  deleteById = (id: string) => {
+  static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("dividendsTransactions", id);
     return results;

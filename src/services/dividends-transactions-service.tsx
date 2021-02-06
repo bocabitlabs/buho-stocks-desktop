@@ -2,23 +2,19 @@ import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import DividendDAO from "../database/daos/dividends-transactions-dao";
 
 export default class DividendsTransactionsService {
-  addDividendsTransaction = (dividend: DividendsTransactionFormProps) => {
-    return new DividendDAO().addDividendsTransaction(dividend);
+  static add = (dividend: DividendsTransactionFormProps) => {
+    return DividendDAO.add(dividend);
   };
 
-  getAll = (companyId: string) => {
-    return new DividendDAO().getDividendsTransactions(companyId);
+  static getAll = (companyId: string) => {
+    return DividendDAO.getAll(companyId);
   };
 
-  getDividendsTransactionsPerYearByCompanyId = (companyId: string) => {
-    return new DividendDAO().getDividendsTransactionsPerYearByCompanyId(companyId);
+  static getDividendsTransactionsByCompanyId = (companyId: string) => {
+    return DividendDAO.getByCompanyId(companyId);
   };
 
-  getDividendsTransactionsByCompanyId = (companyId: string) => {
-    return new DividendDAO().getDividendsTransactionsByCompanyId(companyId);
-  }
-
-  deleteById = (shareId: string) => {
-    return new DividendDAO().deleteById(shareId);
+  static deleteById = (shareId: string) => {
+    return DividendDAO.deleteById(shareId);
   };
 }

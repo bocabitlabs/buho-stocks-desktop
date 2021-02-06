@@ -13,11 +13,13 @@ interface Props {
   companyId: string;
 }
 
-export default function DividendAddForm({ companyId }: Props): ReactElement| null {
+export default function DividendAddForm({
+  companyId
+}: Props): ReactElement | null {
   const [form] = Form.useForm();
   const { company, fetchCompany } = useContext(CompaniesContext);
   const history = useHistory();
-  const [color,] = useState("#607d8b");
+  const [color] = useState("#607d8b");
   const key = "updatable";
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
@@ -54,9 +56,7 @@ export default function DividendAddForm({ companyId }: Props): ReactElement| nul
       companyId
     };
     console.log(values);
-    const added = new DividendsTransactionsService().addDividendsTransaction(
-      dividend
-    );
+    const added = DividendsTransactionsService.add(dividend);
     if (added.changes) {
       history.push(
         `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=dividends`

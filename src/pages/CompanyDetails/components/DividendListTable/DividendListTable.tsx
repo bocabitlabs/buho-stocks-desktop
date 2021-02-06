@@ -3,7 +3,6 @@ import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
-import DividendService from "services/dividends-transactions-service";
 import { StringUtils } from "utils/string-utils";
 import { DividendsTransaction } from "types/dividends-transaction";
 
@@ -13,7 +12,9 @@ interface IProps {
 }
 
 export default function DividendListTable({ portfolioId, companyId }: IProps) {
-  const { dividendsTransactions } = useContext(DividendsTransactionsContext);
+  const { dividendsTransactions, deleteById, fetchAll } = useContext(
+    DividendsTransactionsContext
+  );
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -28,8 +29,9 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   }, []);
 
   function confirm(recordId: string) {
-    const result = new DividendService().deleteById(recordId);
-    if (result === "OK") {
+    const result = deleteById(recordId);
+    if (result.changes) {
+      fetchAll();
       history.push({
         pathname: `/portfolios/${portfolioId}/companies/${companyId}`,
         state: {
