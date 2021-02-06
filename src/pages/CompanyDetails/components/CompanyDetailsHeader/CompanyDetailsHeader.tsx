@@ -116,7 +116,6 @@ export default function CompanyDetailsRouteHeader({
       />
       {company && (
         <StockPriceAddModal
-          companyId={companyId}
           currencySymbol={company.currencySymbol}
           visible={addStockModalVisible}
           setVisible={setAddStockModalVisible}
@@ -124,7 +123,6 @@ export default function CompanyDetailsRouteHeader({
       )}
       {company && (
         <StockPriceListModal
-          companyId={companyId}
           currencySymbol={company.currencySymbol}
           visible={listStockModalVisible}
           setVisible={setListStockModalVisible}

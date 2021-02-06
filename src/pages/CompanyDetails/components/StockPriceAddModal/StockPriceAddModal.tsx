@@ -3,14 +3,12 @@ import React, { ReactElement } from "react";
 import StockPriceAddForm from "../StockPriceAddForm/StockPriceAddForm";
 
 interface Props {
-  companyId: string;
   currencySymbol: string;
   visible: boolean;
   setVisible: Function;
 }
 
 export default function StockPriceAddModal({
-  companyId,
   currencySymbol,
   visible,
   setVisible
@@ -31,7 +29,6 @@ export default function StockPriceAddModal({
       onCancel={handleCancel}
     >
       <StockPriceAddForm
-        companyId={companyId}
         currencySymbol={currencySymbol}
         onSuccess={handleOk}
       />

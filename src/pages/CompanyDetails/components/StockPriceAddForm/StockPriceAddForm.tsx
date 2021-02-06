@@ -1,24 +1,33 @@
 import { Button, DatePicker, Form, InputNumber, message } from "antd";
+import { CompaniesContext } from "contexts/companies";
+import { useExchangeRate } from "hooks/use-exchange-rate";
 import moment from "moment";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import StockPriceService from "services/stock-price-service";
 import { StockPriceFormProps } from "types/stock-price";
 
 interface Props {
-  companyId: string;
   currencySymbol: string;
   onSuccess: Function;
 }
 
 export default function StockPriceAddForm({
-  companyId,
   currencySymbol,
   onSuccess
-}: Props): ReactElement {
+}: Props): ReactElement | null {
   const [form] = Form.useForm();
-
   const dateFormat = "DD/MM/YYYY";
   const key = "updatable";
+  const { company } = useContext(CompaniesContext);
+  const [transactionDate, setTransactionDate] = useState<string>(
+    moment(new Date()).format("DD-MM-YYYY")
+  );
+  const [exchangeName, setExchangeName] = useState<string>("");
+  const exchangeRate = useExchangeRate(exchangeName, transactionDate);
+
+  if (company === null) {
+    return null;
+  }
 
   const handleAdd = (values: any) => {
     const { price, transactionDate, exchangeRate } = values;
@@ -27,7 +36,7 @@ export default function StockPriceAddForm({
       price,
       exchangeRate,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
-      companyId
+      companyId: company.id
     };
     console.log(values);
     const added = StockPriceService.add(stockPrice);
@@ -45,6 +54,32 @@ export default function StockPriceAddForm({
         duration: 2
       });
     }
+  };
+
+  const transactionDateChange = (
+    value: moment.Moment | null,
+    dateString: string
+  ) => {
+    const newDate = dateString.replace(/\//g, "-");
+    setTransactionDate(newDate);
+    if (
+      company.currencyAbbreviation !== undefined &&
+      company.portfolioCurrencyAbbreviation !== undefined
+    ) {
+      setExchangeName(
+        company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
+      );
+    }
+  };
+
+  const getExchangeRate = () => {
+    let exchangeValue = 0;
+    if (exchangeRate !== null && exchangeRate !== undefined) {
+      exchangeValue = exchangeRate.exchangeValue;
+    }
+    form.setFieldsValue({
+      exchangeRate: exchangeValue
+    });
   };
 
   return (
@@ -80,14 +115,17 @@ export default function StockPriceAddForm({
           { required: true, message: "Please input the date of the operation" }
         ]}
       >
-        <DatePicker format={dateFormat} />
+        <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
 
       <Form.Item
         name="exchangeRate"
         label="Exchange Rate"
         rules={[
-          { required: true, message: "Please input the exchange rate for the given day" }
+          {
+            required: true,
+            message: "Please input the exchange rate for the given day"
+          }
         ]}
       >
         <InputNumber
@@ -97,7 +135,12 @@ export default function StockPriceAddForm({
           step={0.001}
         />
       </Form.Item>
-
+      <Button
+        disabled={transactionDate === null || exchangeName === null}
+        onClick={getExchangeRate}
+      >
+        Get exchange rate ({exchangeName})
+      </Button>
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Add stock price

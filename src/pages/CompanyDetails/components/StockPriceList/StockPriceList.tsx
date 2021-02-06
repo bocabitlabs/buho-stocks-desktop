@@ -1,25 +1,32 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
+import { CompaniesContext } from "contexts/companies";
 import moment from "moment";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import StockPriceService from "services/stock-price-service";
 import { IStockPrice } from "types/stock-price";
 
 interface Props {
-  companyId: string;
   currencySymbol: string;
 }
 
 export default function StockPriceList({
-  companyId,
   currencySymbol
-}: Props): ReactElement {
+}: Props): ReactElement | null {
+  const { company } = useContext(CompaniesContext);
+
   const [stockPrices, setStockPrices] = useState<IStockPrice[]>([]);
   const key = "updatable";
 
   useEffect(() => {
-    const results = StockPriceService.getStockPrices(companyId);
-    setStockPrices(results);
-  }, [companyId]);
+    if (company !== null) {
+      const results = StockPriceService.getStockPrices(company.id);
+      setStockPrices(results);
+    }
+  }, [company]);
+
+  if (company == null) {
+    return null;
+  }
 
   const columns = [
     {
@@ -65,8 +72,10 @@ export default function StockPriceList({
           duration: 2
         });
       }, 1000);
-      const results = StockPriceService.getStockPrices(companyId);
-      setStockPrices(results);
+      if (company !== null) {
+        const results = StockPriceService.getStockPrices(company.id);
+        setStockPrices(results);
+      }
     } else {
       setTimeout(() => {
         message.error({

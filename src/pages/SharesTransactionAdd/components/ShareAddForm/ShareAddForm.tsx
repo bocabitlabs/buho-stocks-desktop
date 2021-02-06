@@ -3,19 +3,18 @@ import {
   Button,
   DatePicker,
   Form,
-  Input,
   InputNumber,
   message,
   Select
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionFormProps } from "types/shares-transaction";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
+import { useExchangeRate } from "hooks/use-exchange-rate";
 
 interface Props {
   companyId: string;
@@ -28,16 +27,30 @@ export default function ShareAddForm({
   companyId
 }: Props): ReactElement | null {
   const [form] = Form.useForm();
+  const history = useHistory();
   const { company, fetchCompany } = useContext(CompaniesContext);
   const { addSharesTransaction } = useContext(SharesTransactionsContext);
-
-  const history = useHistory();
-  const [color, setColor] = useState("#607d8b");
+  const [color,] = useState("#607d8b");
+  const [transactionDate, setTransactionDate] = useState<string>(
+    moment(new Date()).format("DD-MM-YYYY")
+  );
+  const [exchangeName, setExchangeName] = useState<string>("");
+  const exchangeRate = useExchangeRate(exchangeName, transactionDate);
 
   const key = "updatable";
 
   useEffect(() => {
-    fetchCompany(companyId);
+    const newCompany = fetchCompany(companyId);
+    if (newCompany)
+      if (
+        newCompany.currencyAbbreviation !== undefined &&
+        newCompany.portfolioCurrencyAbbreviation !== undefined
+      ) {
+        setExchangeName(
+          newCompany.currencyAbbreviation +
+            newCompany.portfolioCurrencyAbbreviation
+        );
+      }
   }, [companyId, fetchCompany]);
 
   if (company === null) {
@@ -67,25 +80,49 @@ export default function ShareAddForm({
       companyId
     };
     console.log(values);
-    console.log("Adding the shares transaction")
+    console.log("Adding the shares transaction");
     const added = addSharesTransaction(share);
     console.log(added);
     if (added.changes) {
       history.push(
         `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
       );
-      message.success({ content: `Shares has been added: ${company.portfolioId}` , key });
+      message.success({
+        content: `Shares has been added: ${company.portfolioId}`,
+        key
+      });
     } else {
       message.error({ content: "Unable to add the shares", key });
     }
   };
 
-  const handleColorChange = (color: any, event: any) => {
-    console.log(color.hex);
-    setColor(color.hex);
+  const dateFormat = "DD/MM/YYYY";
+
+  const transactionDateChange = (
+    value: moment.Moment | null,
+    dateString: string
+  ) => {
+    const newDate = dateString.replace(/\//g, "-");
+    setTransactionDate(newDate);
+    if (
+      company.currencyAbbreviation !== undefined &&
+      company.portfolioCurrencyAbbreviation !== undefined
+    ) {
+      setExchangeName(
+        company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
+      );
+    }
   };
 
-  const dateFormat = "DD/MM/YYYY";
+  const getExchangeRate = () => {
+    let exchangeValue = 0;
+    if (exchangeRate !== null && exchangeRate !== undefined) {
+      exchangeValue = exchangeRate.exchangeValue;
+    }
+    form.setFieldsValue({
+      exchangeRate: exchangeValue
+    });
+  };
 
   return (
     <Form
@@ -106,10 +143,6 @@ export default function ShareAddForm({
         ]}
       >
         <InputNumber min={0} step={1} />
-      </Form.Item>
-      <Form.Item label="Color">
-        <CirclePicker onChange={handleColorChange} />
-        <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item
         name="price"
@@ -132,7 +165,7 @@ export default function ShareAddForm({
           { required: true, message: "Please input the type of operation" }
         ]}
       >
-        <Select placeholder="Select a option" style={{ width: "20em" }}>
+        <Select placeholder="Select a option">
           <Select.Option value="BUY">Buy</Select.Option>
           <Select.Option value="SELL">Sell</Select.Option>
         </Select>
@@ -158,23 +191,22 @@ export default function ShareAddForm({
           { required: true, message: "Please input the date of the operation" }
         ]}
       >
-        <DatePicker format={dateFormat} />
+        <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
+
       <Form.Item
         name="exchangeRate"
         label="Exchange rate"
-        rules={[
-          { required: true, message: "Please input the price per share" }
-        ]}
+        rules={[{ required: true, message: "Please input the exchange rate" }]}
       >
-        <InputNumber
-          decimalSeparator="."
-          // formatter={(value) => `${company?.currencySymbol} ${value}`}
-          // parser={(value) => (value ? value.replace(/\$\s?|(,*)/g, "") : "")}
-          min={0}
-          step={0.001}
-        />
+        <InputNumber decimalSeparator="." min={0} step={0.001} />
       </Form.Item>
+      <Button
+        disabled={transactionDate === null || exchangeName === null}
+        onClick={getExchangeRate}
+      >
+        Get exchange rate ({exchangeName})
+      </Button>
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />
       </Form.Item>

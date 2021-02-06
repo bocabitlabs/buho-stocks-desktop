@@ -5,13 +5,13 @@ import { Market, MarketFormProps } from "types/market";
 
 export function useMarketsContext(): MarketsContextType {
   const [markets, setMarkets] = useState<Market[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const result = MarketService.getMarkets();
     setMarkets(result);
   }, []);
 
-  const [isLoading, setIsLoading] = useState(false);
 
   const fetchMarkets = useCallback(() => {
     console.log("fetching markets");

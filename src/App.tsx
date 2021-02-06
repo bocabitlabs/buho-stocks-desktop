@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, useLocation } from "react-router-dom";
 
 import { Layout } from "antd";
 
@@ -32,9 +32,12 @@ function App() {
   /**
    * Main
    */
+  const location = useLocation();
   const isCollapsedContext = useIsCollapsedContext();
   const selectedPortfolioContext = useSelectedPortfolioContext();
 
+
+  console.log(location.pathname)
   return (
     <Layout>
       <IsCollapsedContext.Provider value={isCollapsedContext}>
@@ -61,13 +64,9 @@ function App() {
                 marginTop: 80
               }}
             >
-              <Route
-                exact
-                path="/"
-                render={() => {
-                  return <Redirect to="/home" />;
-                }}
-              />
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
               <Route exact path="/home" component={Home} />
               <Route exact path="/settings" component={Settings} />
               <Route exact path="/add/portfolio" component={PortfolioAdd} />

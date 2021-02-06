@@ -27,6 +27,8 @@ export class Company implements ICompany {
   portfolioId: string;
   portfolioName: string;
   portfolioCurrencySymbol: string;
+  portfolioCurrencyAbbreviation: string;
+  currencyAbbreviation: string;
 
   constructor(parameters: ICompany) {
     this.id = parameters.id;
@@ -35,6 +37,7 @@ export class Company implements ICompany {
 
     this.currencyName = parameters.currencyName;
     this.currencySymbol = parameters.currencySymbol;
+    this.currencyAbbreviation = parameters.currencyAbbreviation;
     this.currency = parameters.currency;
 
     this.sectorName = parameters.sectorName;
@@ -52,6 +55,7 @@ export class Company implements ICompany {
     this.color = parameters.color;
     this.description = parameters.description;
     this.portfolioCurrencySymbol = parameters.portfolioCurrencySymbol;
+    this.portfolioCurrencyAbbreviation = parameters.portfolioCurrencyAbbreviation;
   }
 
   getSharesCount(): number {

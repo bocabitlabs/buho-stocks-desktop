@@ -64,8 +64,10 @@ export default class CompanyDAO {
       , portfolios.name as portfolioName
       , currencies.name as currencyName
       , currencies.symbol as currencySymbol
+      , currencies.abbreviation as currencyAbbreviation
 	  , sectors.name as sectorName
 	  , currencies2.symbol as portfolioCurrencySymbol
+    , currencies2.abbreviation as portfolioCurrencyAbbreviation
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId

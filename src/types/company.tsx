@@ -19,7 +19,9 @@ export interface ICompany extends CompanyFormFields {
   id: string;
   portfolioName: string;
   portfolioCurrencySymbol: string;
+  portfolioCurrencyAbbreviation: string;
   currencyName: string;
+  currencyAbbreviation: string;
   sectorName: string;
   currencySymbol: string;
   stockPrices: IStockPrice[];

@@ -3,14 +3,12 @@ import React, { ReactElement } from "react";
 import StockPriceList from "../StockPriceList/StockPriceList";
 
 interface Props {
-  companyId: string;
   currencySymbol: string;
   visible: boolean;
   setVisible: Function;
 }
 
 export default function StockPriceListModal({
-  companyId,
   currencySymbol,
   visible,
   setVisible
@@ -30,7 +28,7 @@ export default function StockPriceListModal({
       onOk={handleOk}
       onCancel={handleCancel}
     >
-      <StockPriceList companyId={companyId} currencySymbol={currencySymbol} />
+      <StockPriceList currencySymbol={currencySymbol} />
     </Modal>
   );
 }

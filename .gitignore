@@ -34,4 +34,4 @@ data/db.sqlite3-shm
 data/db.sqlite3-wal
 data/buho-stocks.sqlite3
 data/buho-stocks.sqlite3-shm
-.gitignore
+data/buho-stocks.sqlite3-wal

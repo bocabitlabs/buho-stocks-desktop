@@ -3,19 +3,18 @@ import {
   Button,
   DatePicker,
   Form,
-  Input,
   InputNumber,
   message,
   Select
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
 import { RightsTransactionFormProps } from "types/rights-transaction";
 import RightsTransactionsService from "services/rights-transactions-service";
+import { useExchangeRate } from "hooks/use-exchange-rate";
 
 interface Props {
   companyId: string;
@@ -26,17 +25,35 @@ interface Props {
  */
 export default function RightsTransactionAddForm({
   companyId
-}: Props): ReactElement {
+}: Props): ReactElement | null {
   const [form] = Form.useForm();
   const { company, fetchCompany } = useContext(CompaniesContext);
   const history = useHistory();
-  const [color, setColor] = useState("#607d8b");
-
+  const [color,] = useState("#607d8b");
   const key = "updatable";
+  const [transactionDate, setTransactionDate] = useState<string>(
+    moment(new Date()).format("DD-MM-YYYY")
+  );
+  const [exchangeName, setExchangeName] = useState<string>("");
+  const exchangeRate = useExchangeRate(exchangeName, transactionDate);
 
   useEffect(() => {
-    fetchCompany(companyId);
+    const newCompany = fetchCompany(companyId);
+    if (newCompany)
+      if (
+        newCompany.currencyAbbreviation !== undefined &&
+        newCompany.portfolioCurrencyAbbreviation !== undefined
+      ) {
+        setExchangeName(
+          newCompany.currencyAbbreviation +
+            newCompany.portfolioCurrencyAbbreviation
+        );
+      }
   }, [companyId, fetchCompany]);
+
+  if (company === null) {
+    return null;
+  }
 
   const handleAdd = (values: any) => {
     const {
@@ -76,11 +93,33 @@ export default function RightsTransactionAddForm({
     }
   };
 
-  const handleColorChange = (color: any, event: any) => {
-    setColor(color.hex);
+  const dateFormat = "DD/MM/YYYY";
+
+  const transactionDateChange = (
+    value: moment.Moment | null,
+    dateString: string
+  ) => {
+    const newDate = dateString.replace(/\//g, "-");
+    setTransactionDate(newDate);
+    if (
+      company.currencyAbbreviation !== undefined &&
+      company.portfolioCurrencyAbbreviation !== undefined
+    ) {
+      setExchangeName(
+        company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
+      );
+    }
   };
 
-  const dateFormat = "DD/MM/YYYY";
+  const getExchangeRate = () => {
+    let exchangeValue = 0;
+    if (exchangeRate !== null && exchangeRate !== undefined) {
+      exchangeValue = exchangeRate.exchangeValue;
+    }
+    form.setFieldsValue({
+      exchangeRate: exchangeValue
+    });
+  };
 
   return (
     <Form
@@ -101,10 +140,6 @@ export default function RightsTransactionAddForm({
         ]}
       >
         <InputNumber style={{ width: "20em" }} min={0} step={1} />
-      </Form.Item>
-      <Form.Item label="Color">
-        <CirclePicker onChange={handleColorChange} />
-        <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item
         name="price"
@@ -132,9 +167,7 @@ export default function RightsTransactionAddForm({
           }
         ]}
       >
-        <InputNumber
-          style={{ width: "20em" }}
-        />
+        <InputNumber style={{ width: "20em" }} />
       </Form.Item>
       <Form.Item
         name="type"
@@ -170,7 +203,7 @@ export default function RightsTransactionAddForm({
           { required: true, message: "Please input the date of the operation" }
         ]}
       >
-        <DatePicker format={dateFormat} />
+        <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
       <Form.Item
         name="exchangeRate"
@@ -182,12 +215,16 @@ export default function RightsTransactionAddForm({
         <InputNumber
           style={{ width: "20em" }}
           decimalSeparator="."
-          // formatter={(value) => `${company?.currencySymbol} ${value}`}
-          // parser={(value) => (value ? value.replace(/\$\s?|(,*)/g, "") : "")}
           min={0}
           step={0.001}
         />
       </Form.Item>
+      <Button
+        disabled={transactionDate === null || exchangeName === null}
+        onClick={getExchangeRate}
+      >
+        Get exchange rate ({exchangeName})
+      </Button>
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />
       </Form.Item>

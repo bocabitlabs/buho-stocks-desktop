@@ -7,7 +7,7 @@ export type CompaniesContextType = {
   company: ICompany|null,
   isLoading: boolean;
   fetchCompanies: (portfolioId: string) => void;
-  fetchCompany: (companyId: string) => void;
+  fetchCompany: (companyId: string) => ICompany|null;
   addCompany: (company: CompanyFormFields) => IAddProps;
 };
 
@@ -16,7 +16,7 @@ export const companiesDefaultValue: CompaniesContextType = {
   company: null,
   isLoading: false,
   fetchCompanies: () => null,
-  fetchCompany: () => null,
+  fetchCompany: (): ICompany|null => null,
   addCompany: () : IAddProps => ({ changes: false })
 };
 
