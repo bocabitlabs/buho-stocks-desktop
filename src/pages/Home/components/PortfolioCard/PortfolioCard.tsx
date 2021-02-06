@@ -1,4 +1,3 @@
-import { Card, Statistic } from "antd";
 import { CompaniesContext } from "contexts/companies";
 import { useCompaniesContext } from "hooks/companies";
 import React, { ReactElement } from "react";
