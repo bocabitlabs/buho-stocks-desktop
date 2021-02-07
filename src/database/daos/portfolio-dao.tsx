@@ -3,7 +3,7 @@ import { PortfolioFormFields } from "types/portfolio";
 import { deleteById } from "./operations";
 
 export default class PortfolioDAO {
-  static addPortfolio = (portfolio: PortfolioFormFields) => {
+  static create = (portfolio: PortfolioFormFields) => {
     //Call the DB
 
     const sql = `
@@ -25,7 +25,7 @@ export default class PortfolioDAO {
     const result = sendIpcSql(sql, "insert");
     return result;
   };
-  static getPortfolios = () => {
+  static getAll = () => {
     const sql = `
     SELECT portfolios.*
 	  , currencies.symbol as currencySymbol

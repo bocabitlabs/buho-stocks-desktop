@@ -16,7 +16,7 @@ export default function PortfolioDetailsHeader({
   portfolioId
 }: Props): ReactElement {
   const history = useHistory();
-  const { portfolio, fetchPortfolios, fetchPortfolio } = useContext(
+  const { portfolio, getAll, getById } = useContext(
     PortfoliosContext
   );
   const key = "updatable";
@@ -26,8 +26,8 @@ export default function PortfolioDetailsHeader({
       console.error("portfolioId is undefined. This will lead to errors")
     }
     console.log("Fetching portfolio", portfolioId)
-    fetchPortfolio(portfolioId);
-  }, [portfolioId, fetchPortfolio]);
+    getById(portfolioId);
+  }, [portfolioId, getById]);
 
   const routes = [
     {
@@ -47,10 +47,9 @@ export default function PortfolioDetailsHeader({
   }
 
   function confirm(e: any) {
-    console.log(e);
     const result = PortfolioService.deleteById(portfolioId);
     if (result.changes) {
-      fetchPortfolios();
+      getAll();
       message.success({
         content: "Portfolio has been deleted",
         key,

@@ -4,8 +4,8 @@ import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
 
 import { CurrenciesContext } from "contexts/currencies";
-import PortfolioService from "services/portfolio-service";
 import { Currency } from "types/currency";
+import { PortfoliosContext } from "contexts/portfolios";
 
 /**
  * Add a new Currency
@@ -15,6 +15,8 @@ function PortfolioAddForm(): ReactElement {
   const history = useHistory();
 
   const { currencies } = useContext(CurrenciesContext);
+  const { create } = useContext(PortfoliosContext);
+
   const [color, setColor] = useState("#607d8b");
   const key = "updatable";
 
@@ -28,7 +30,7 @@ function PortfolioAddForm(): ReactElement {
       currencyId,
       color
     };
-    const added = PortfolioService.addPortfolio(portfolio);
+    const added = create(portfolio);
     if (added.changes) {
       history.push("/home");
       message.success({ content: "Portfolio has been added", key });

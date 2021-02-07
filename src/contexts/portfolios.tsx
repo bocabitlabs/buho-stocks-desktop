@@ -1,22 +1,25 @@
 import { createContext } from "react";
+import { IAddProps } from "types/common";
 import { IPortfolio, PortfolioFormFields } from "types/portfolio";
 
 export type PortfoliosContextType = {
   portfolios: IPortfolio[];
-  portfolio: IPortfolio|null,
+  portfolio: IPortfolio | null;
   isLoading: boolean;
-  fetchPortfolios: () => void;
-  fetchPortfolio: (portfolioId: string) => void,
-  addPortfolio: (portfolio: PortfolioFormFields) => void;
+  create: (portfolio: PortfolioFormFields) => IAddProps;
+  deleteById: (transactionId: string) => IAddProps;
+  getAll: () => void;
+  getById: (portfolioId: string) => IPortfolio|null;
 };
 
 export const portfoliosDefaultValue: PortfoliosContextType = {
   portfolios: [],
   portfolio: null,
   isLoading: false,
-  fetchPortfolios: () => null,
-  fetchPortfolio: () => null,
-  addPortfolio: () => null
+  create: () => ({ changes: false }),
+  deleteById: () => ({ changes: false }),
+  getAll: () => null,
+  getById: () => null
 };
 
 export const PortfoliosContext = createContext<PortfoliosContextType>(

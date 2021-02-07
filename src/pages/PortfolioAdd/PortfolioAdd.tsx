@@ -15,16 +15,14 @@ const PortfolioAdd = () => {
 
   console.log("AddPortfoliosRoute rendered");
   return (
-    <>
-      <PortfolioAddHeader />
-      <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <PortfoliosContext.Provider value={portfoliosContext}>
-          <CurrenciesContext.Provider value={currenciesContext}>
-            <PortfolioAddForm />
-          </CurrenciesContext.Provider>
-        </PortfoliosContext.Provider>
-      </Layout>
-    </>
+    <PortfoliosContext.Provider value={portfoliosContext}>
+      <CurrenciesContext.Provider value={currenciesContext}>
+        <PortfolioAddHeader />
+        <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
+          <PortfolioAddForm />
+        </Layout>
+      </CurrenciesContext.Provider>
+    </PortfoliosContext.Provider>
   );
 };
 

@@ -9,14 +9,14 @@ export default class PortfolioService {
    * Add a new portfolio
    * @param portfolio
    */
-  static addPortfolio = (portfolio: PortfolioFormFields) => {
-    const result = PortfolioDAO.addPortfolio(portfolio);
+  static create = (portfolio: PortfolioFormFields) => {
+    const result = PortfolioDAO.create(portfolio);
     return result;
   };
 
-  static getPortfolios = (): IPortfolio[] => {
+  static getAll = (): IPortfolio[] => {
     console.log("Portfolio Service: getPortfolios");
-    const portfoliosData = PortfolioDAO.getPortfolios();
+    const portfoliosData = PortfolioDAO.getAll();
     let portfoliosWithDetails: IPortfolio[] = [];
     if (portfoliosData === undefined) {
       return portfoliosWithDetails;
@@ -44,7 +44,7 @@ export default class PortfolioService {
       data,
       companiesData
     );
-    const portfolio = createPortfolio(data, companiesData);
+    const portfolio = createPortfolioObject(data, companiesData);
     return portfolio;
   };
 
@@ -53,7 +53,7 @@ export default class PortfolioService {
   };
 }
 
-function createPortfolio(result: IPortfolio, companies: ICompany[]) {
+function createPortfolioObject(result: IPortfolio, companies: ICompany[]) {
   if (result === undefined) {
     return null;
   }

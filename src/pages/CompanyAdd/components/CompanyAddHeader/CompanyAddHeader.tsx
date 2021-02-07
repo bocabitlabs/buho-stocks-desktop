@@ -7,14 +7,12 @@ interface Props {
   portfolioId: string;
 }
 
-export default function CompanyAddHeader({
-  portfolioId
-}: Props): ReactElement {
-  const { portfolio, fetchPortfolio } = useContext(PortfoliosContext);
+export default function CompanyAddHeader({ portfolioId }: Props): ReactElement {
+  const { portfolio, getById } = useContext(PortfoliosContext);
 
   useEffect(() => {
-    fetchPortfolio(portfolioId)
-  }, [portfolioId, fetchPortfolio])
+    getById(portfolioId);
+  }, [portfolioId, getById]);
 
   const routes = [
     {
