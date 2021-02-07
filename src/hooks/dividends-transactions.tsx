@@ -10,6 +10,10 @@ import DividendService from "../services/dividends-transactions-service";
 export function useDividendsTransactionsContext(
   companyId: string
 ): DividendsTransactionsContextType {
+  const [
+    dividendsTransaction,
+    setDividendsTransaction
+  ] = useState<DividendsTransaction | null>(null);
   const [dividendsTransactions, setDividendsTransactions] = useState<
     DividendsTransaction[]
   >([]);
@@ -28,10 +32,10 @@ export function useDividendsTransactionsContext(
     return results;
   }, [companyId]);
 
-  const add = useCallback(
-    (sharesTransaction: DividendsTransactionFormProps) => {
+  const create = useCallback(
+    (transaction: DividendsTransactionFormProps) => {
       setIsLoading(true);
-      const results = DividendsTransactionsService.add(sharesTransaction);
+      const results = DividendsTransactionsService.create(transaction);
       setIsLoading(false);
       return results;
     },
@@ -42,15 +46,33 @@ export function useDividendsTransactionsContext(
     setIsLoading(true);
     const results = DividendsTransactionsService.deleteById(transactionId);
     setIsLoading(false);
-
     return results;
   }, []);
 
+  const getById = useCallback((transactionId: string) => {
+    setIsLoading(true);
+    const result = DividendsTransactionsService.getById(transactionId);
+    setDividendsTransaction(result);
+    setIsLoading(false);
+    return result;
+  }, []);
+
+  const update = useCallback((transactionId: string, transaction: DividendsTransactionFormProps) => {
+    setIsLoading(true);
+    const result = DividendsTransactionsService.update(transactionId, transaction);
+    // setDividendsTransaction(result);
+    setIsLoading(false);
+    return result;
+  }, []);
+
   return {
-    add,
+    create,
+    dividendsTransaction,
     dividendsTransactions,
     deleteById,
     fetchAll,
-    isLoading
+    getById,
+    isLoading,
+    update
   };
 }

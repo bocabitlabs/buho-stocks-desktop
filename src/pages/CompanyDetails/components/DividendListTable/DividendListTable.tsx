@@ -1,7 +1,7 @@
 import { Button, Popconfirm, Space, Table } from "antd";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import { StringUtils } from "utils/string-utils";
 import { DividendsTransaction } from "types/dividends-transaction";
@@ -94,6 +94,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
           >
             <Button>Delete</Button>
           </Popconfirm>
+          <Link to={`/portfolios/${portfolioId}/companies/${companyId}/dividends/${record.key}/edit`}>Edit</Link>
         </Space>
       )
     }

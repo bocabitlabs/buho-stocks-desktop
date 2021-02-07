@@ -1,9 +1,12 @@
 import sendIpcSql from "message-control/renderer";
-import { DividendsTransactionFormProps } from "types/dividends-transaction";
+import {
+  DividendsTransaction,
+  DividendsTransactionFormProps
+} from "types/dividends-transaction";
 import { deleteById } from "./operations";
 
 export default class DividendsTransactionsDAO {
-  static add = (dividend: DividendsTransactionFormProps) => {
+  static create = (transaction: DividendsTransactionFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO "dividendsTransactions"
@@ -19,20 +22,38 @@ export default class DividendsTransactionsDAO {
     )
     VALUES
     (
-       '${dividend.count}'
-     , '${dividend.price}'
-     , '${dividend.commission}'
-     , '${dividend.exchangeRate}'
-     , '${dividend.notes}'
-     , '${dividend.transactionDate}'
-     , '${dividend.companyId}'
-     , '${dividend.color}'
+       '${transaction.count}'
+     , '${transaction.price}'
+     , '${transaction.commission}'
+     , '${transaction.exchangeRate}'
+     , '${transaction.notes}'
+     , '${transaction.transactionDate}'
+     , '${transaction.companyId}'
+     , '${transaction.color}'
     );
     `;
 
     const results = sendIpcSql(sql, "insert");
     return results;
   };
+
+  static update = (transactionId: string, transaction: DividendsTransactionFormProps) => {
+    const sql = `
+    UPDATE dividendsTransactions
+    SET
+    count = '${transaction.count}'
+    , price = '${transaction.price}'
+    , commission = '${transaction.commission}'
+    , exchangeRate = '${transaction.exchangeRate}'
+    , notes = '${transaction.notes}'
+    , transactionDate = '${transaction.transactionDate}'
+    , companyId = '${transaction.companyId}'
+    , color = '${transaction.color}'
+    WHERE dividendsTransactions.id = '${transactionId}';
+    `;
+    const results = sendIpcSql(sql, "update");
+    return results;
+  }
 
   static getAll = (companyId: string) => {
     //Call the DB
@@ -54,6 +75,19 @@ export default class DividendsTransactionsDAO {
     return results;
   };
 
+  static getById = (transactionId: string): DividendsTransaction => {
+    //Call the DB
+    const sql = `
+    SELECT *
+    FROM "dividendsTransactions"
+    WHERE dividendsTransactions.id = '${transactionId}';
+    `;
+    const results = sendIpcSql(sql, "get");
+    console.log(results);
+
+    return results;
+  };
+
   static getByCompanyId = (companyId: string) => {
     const sql = `
       SELECT
@@ -68,9 +102,9 @@ export default class DividendsTransactionsDAO {
     return results;
   };
 
-  static deleteById = (id: string) => {
+  static deleteById = (transactionId: string) => {
     //Call the DB
-    const results = deleteById("dividendsTransactions", id);
+    const results = deleteById("dividendsTransactions", transactionId);
     return results;
   };
 }

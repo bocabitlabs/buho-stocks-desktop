@@ -8,7 +8,7 @@ interface Props {
   portfolioId: string;
 }
 
-export default function DividendAddHeader({companyId, portfolioId}: Props): ReactElement {
+export default function DividendsTransactionEditdHeader({companyId, portfolioId}: Props): ReactElement {
   const { company } = useContext(CompaniesContext);
 
   const routes = [
@@ -28,9 +28,9 @@ export default function DividendAddHeader({companyId, portfolioId}: Props): Reac
       breadcrumbName: company ? company.name : ""
     },
     {
-      path: `/portfolios/${portfolioId}/companies/${companyId}/add-dividends`,
-      name: "add_dividends",
-      breadcrumbName: "+ Add Dividends"
+      path: `/portfolios/${portfolioId}/companies/${companyId}/edit-dividend-transaction`,
+      name: "edit_dividends",
+      breadcrumbName: "Edit Dividend"
     }
   ];
 
@@ -41,12 +41,11 @@ export default function DividendAddHeader({companyId, portfolioId}: Props): Reac
   return (
     <PageHeader
         className="site-page-header"
-        title="Add dividends"
+        title="Edit dividend transaction"
         breadcrumb={{
           routes,
           itemRender
         }}
-        subTitle="This is a subtitle"
       />
   )
 }

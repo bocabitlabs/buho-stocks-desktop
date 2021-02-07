@@ -22,6 +22,7 @@ function handleStatement(type, statement) {
   const dbCalls = {
     select: queryAllStatement,
     insert: runStatement,
+    update: runStatement,
     delete: runStatement,
     get: getStatement
   };

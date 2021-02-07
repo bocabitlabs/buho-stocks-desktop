@@ -6,34 +6,54 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
-import DividendsTransactionsService from "services/dividends-transactions-service";
 import { useExchangeRate } from "hooks/use-exchange-rate";
+import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 
 interface Props {
   companyId: string;
+  transactionId: string;
 }
 
-export default function DividendAddForm({
-  companyId
+export default function DividendsTransactionEditForm({
+  companyId,
+  transactionId
 }: Props): ReactElement | null {
-  const [form] = Form.useForm();
-  const { company, fetchCompany } = useContext(CompaniesContext);
-  const history = useHistory();
-  const [color] = useState("#607d8b");
   const key = "updatable";
+  const [color] = useState("#607d8b");
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
   const exchangeRate = useExchangeRate(exchangeName, transactionDate);
+  const history = useHistory();
+  const [form] = Form.useForm();
+  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { dividendsTransaction, getById, update } = useContext(
+    DividendsTransactionsContext
+  );
 
   useEffect(() => {
-    fetchCompany(companyId);
-  }, [companyId, fetchCompany]);
+    const newCompany = fetchCompany(companyId);
+    if (newCompany) {
+      if (
+        newCompany.currencyAbbreviation !== undefined &&
+        newCompany.portfolioCurrencyAbbreviation !== undefined
+      ) {
+        setExchangeName(
+          newCompany.currencyAbbreviation +
+            newCompany.portfolioCurrencyAbbreviation
+        );
+      }
+    }
 
-  if (company === null) {
+    getById(transactionId);
+  }, [companyId, fetchCompany, transactionId, getById]);
+
+  if (company === null || dividendsTransaction === null) {
     return null;
   }
+
+  console.log(dividendsTransaction);
 
   const handleAdd = (values: any) => {
     const {
@@ -56,14 +76,15 @@ export default function DividendAddForm({
       companyId
     };
     console.log(values);
-    const added = DividendsTransactionsService.add(dividend);
+    const added = update(transactionId, dividend);
+    console.log(added);
     if (added.changes) {
       history.push(
-        `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=dividends`
+        `/portfolios/${company.portfolioId}/companies/${companyId}?tab=dividends`
       );
-      message.success({ content: "Dividend has been added", key });
+      message.success({ content: "Dividends transaction has been updated", key });
     } else {
-      message.error({ content: "Unable to add the dividend", key });
+      message.error({ content: "Unable to update the dividends transaction", key });
     }
   };
 
@@ -110,7 +131,12 @@ export default function DividendAddForm({
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        transactionDate: moment(new Date(), dateFormat)
+        count: dividendsTransaction.count,
+        price: dividendsTransaction.price,
+        commission: dividendsTransaction.commission,
+        exchangeRate: dividendsTransaction.exchangeRate,
+        notes: dividendsTransaction.notes,
+        transactionDate: moment(dividendsTransaction.transactionDate)
       }}
     >
       <Form.Item
@@ -187,7 +213,7 @@ export default function DividendAddForm({
 
       <Form.Item {...buttonItemLayout}>
         <Button type="primary" htmlType="submit">
-          Add dividend
+          Edit dividend
         </Button>
       </Form.Item>
     </Form>

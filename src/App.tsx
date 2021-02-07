@@ -27,6 +27,7 @@ import Settings from "pages/Settings/Settings";
 import RightsTransactionAdd from "pages/RightsTransactionAdd/RightsTransactionAdd";
 import SharesTransactionAdd from "pages/SharesTransactionAdd/SharesTransactionAdd";
 import DividendsTransactionAdd from "pages/DividendsTransactionAdd/DividendsTransactionAdd";
+import DividendsTransactionEdit from "pages/DividendsTransactionEdit/DividendsTransactionEdit";
 
 function App() {
   /**
@@ -104,6 +105,11 @@ function App() {
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
                 component={DividendsTransactionAdd}
+              />
+              <Route
+                exact
+                path="/portfolios/:portfolioId/companies/:companyId/dividends/:transactionId/edit/"
+                component={DividendsTransactionEdit}
               />
               <Route
                 exact
