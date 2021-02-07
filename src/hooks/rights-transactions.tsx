@@ -30,19 +30,19 @@ export function useRightsTransactionsContext(
     return results;
   }, []);
 
-  const getAll = useCallback(() => {
-    setIsLoading(true);
-    const results = RightsTransactionsService.getAll(companyId);
-    setRightsTransactions(results);
-    setIsLoading(false);
-  }, [companyId]);
-
   const deleteById = useCallback((transactionId: string) => {
     setIsLoading(true);
     const results = RightsTransactionsService.deleteById(transactionId);
     setIsLoading(false);
     return results;
   }, []);
+
+  const getAll = useCallback(() => {
+    setIsLoading(true);
+    const results = RightsTransactionsService.getAll(companyId);
+    setRightsTransactions(results);
+    setIsLoading(false);
+  }, [companyId]);
 
   const getById = useCallback((transactionId: string) => {
     setIsLoading(true);
