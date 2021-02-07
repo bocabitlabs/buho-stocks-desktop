@@ -20,9 +20,6 @@ interface Props {
   companyId: string;
 }
 
-/**
- * Add a new Currency
- */
 export default function ShareAddForm({
   companyId
 }: Props): ReactElement | null {

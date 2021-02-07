@@ -9,7 +9,7 @@ import { useSharesTransactionsContext } from "hooks/shares-transactions";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import { useDividendsTransactionsContext } from "hooks/dividends-transactions";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
-import { RightsTransactionContext } from "contexts/right-transactions";
+import { RightsTransactionContext } from "contexts/rights-transactions";
 import { useRightsTransactionsContext } from "hooks/rights-transactions";
 import { PortfoliosContext } from "contexts/portfolios";
 import { usePortfoliosContext } from "hooks/portfolios";

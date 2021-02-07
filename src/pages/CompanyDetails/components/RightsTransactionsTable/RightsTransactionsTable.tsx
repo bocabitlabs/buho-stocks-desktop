@@ -1,5 +1,5 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
-import { RightsTransactionContext } from "contexts/right-transactions";
+import { RightsTransactionContext } from "contexts/rights-transactions";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
