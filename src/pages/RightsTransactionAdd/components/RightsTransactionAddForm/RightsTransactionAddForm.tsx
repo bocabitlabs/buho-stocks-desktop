@@ -1,20 +1,13 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import {
-  Button,
-  DatePicker,
-  Form,
-  InputNumber,
-  message,
-  Select
-} from "antd";
+import { Button, DatePicker, Form, InputNumber, message, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
 import { RightsTransactionFormProps } from "types/rights-transaction";
-import RightsTransactionsService from "services/rights-transactions-service";
 import { useExchangeRate } from "hooks/use-exchange-rate";
+import { RightsTransactionContext } from "contexts/rights-transactions";
 
 interface Props {
   companyId: string;
@@ -28,8 +21,10 @@ export default function RightsTransactionAddForm({
 }: Props): ReactElement | null {
   const [form] = Form.useForm();
   const { company, fetchCompany } = useContext(CompaniesContext);
+  const { create } = useContext(RightsTransactionContext);
+
   const history = useHistory();
-  const [color,] = useState("#607d8b");
+  const [color] = useState("#607d8b");
   const key = "updatable";
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
@@ -80,9 +75,7 @@ export default function RightsTransactionAddForm({
       companyId
     };
     console.log(values);
-    const added = RightsTransactionsService.addRightsTransaction(
-      rightsTransaction
-    );
+    const added = create(rightsTransaction);
     if (added.changes) {
       history.push(
         `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=rights`

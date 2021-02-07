@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ShareService from "services/shares-transactions-service";
 import { RightsTransaction } from "types/rights-transaction";
 import { buySellFormatter } from "utils/table-formatters";
@@ -12,10 +12,11 @@ interface IProps {
   companyId: string;
 }
 
-export default function RightsTransactionsTable({ portfolioId, companyId }: IProps) {
-  const { rigthsTransactions, fetchRightsTransactions } = useContext(
-    RightsTransactionContext
-  );
+export default function RightsTransactionsTable({
+  portfolioId,
+  companyId
+}: IProps) {
+  const { rightsTransactions, getAll } = useContext(RightsTransactionContext);
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -49,7 +50,7 @@ export default function RightsTransactionsTable({ portfolioId, companyId }: IPro
           duration: 2
         });
       }, 1000);
-      fetchRightsTransactions();
+      getAll();
     } else {
       setTimeout(() => {
         message.error({
@@ -97,8 +98,7 @@ export default function RightsTransactionsTable({ portfolioId, companyId }: IPro
       dataIndex: "shares",
       key: "shares",
       width: 70,
-      render: (text: number, record: any) =>
-        text
+      render: (text: number, record: any) => text
     },
     {
       title: "Commission",
@@ -130,13 +130,18 @@ export default function RightsTransactionsTable({ portfolioId, companyId }: IPro
           >
             <Button>Delete</Button>
           </Popconfirm>
+          <Link
+            to={`/portfolios/${portfolioId}/companies/${companyId}/rights/${record.key}/edit`}
+          >
+            Edit
+          </Link>
         </Space>
       )
     }
   ];
 
   const getData = () => {
-    const shares2 = rigthsTransactions.map((share: RightsTransaction) => ({
+    const shares2 = rightsTransactions.map((share: RightsTransaction) => ({
       id: share.id,
       key: share.id,
       name: "right",

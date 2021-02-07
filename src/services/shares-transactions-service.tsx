@@ -12,8 +12,8 @@ export default class SharesTransactionsService {
     return SharesTransactionsDAO.deleteById(transactionId);
   };
 
-  static getShares = (companyId: string) => {
-    return SharesTransactionsDAO.getSharesTransactions(companyId);
+  static getAll = (companyId: string) => {
+    return SharesTransactionsDAO.getAll(companyId);
   };
 
   static getById = (transactionId: string) => {

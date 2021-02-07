@@ -33,13 +33,9 @@ export default class CompanyService {
 
   getCompanyDetails = (companyId: string): Company => {
     const result = new CompanyDAO().getCompany(companyId);
-    const sharesTransactions = SharesTransactionsDAO.getSharesTransactions(
-      companyId
-    );
+    const sharesTransactions = SharesTransactionsDAO.getAll(companyId);
     const dividendsTransactions = DividendsTransactionsDAO.getAll(companyId);
-    const rightsTransactions = RightsTransactionsService.getRightsTransactions(
-      companyId
-    );
+    const rightsTransactions = RightsTransactionsService.getAll(companyId);
     const stockPrices = StockPriceService.getStockPrices(companyId);
 
     return createCompany(

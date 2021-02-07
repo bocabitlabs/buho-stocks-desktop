@@ -3,36 +3,41 @@ import React from "react";
 import { Layout } from "antd";
 
 import { useParams } from "react-router-dom";
-import { useCompaniesContext } from "../../hooks/companies";
-import { CompaniesContext } from "../../contexts/companies";
-import RightsTransactionAddHeader from "./components/RightsTransactionAddHeader/RightsTransactionAddHeader";
+import { useCompaniesContext } from "hooks/companies";
+import { CompaniesContext } from "contexts/companies";
 import { useRightsTransactionsContext } from "hooks/rights-transactions";
 import { RightsTransactionContext } from "contexts/rights-transactions";
-import RightsTransactionAddForm from "./components/RightsTransactionAddForm/RightsTransactionAddForm";
+import RightsTransactionEditHeader from "./components/RightsTransactionEditHeader/RightsTransactionEditHeader";
+import RightsTransactionEditForm from "./components/RightsTransactionEditForm/RightsTransactionEditForm";
 
 export interface Props {
   portfolioId: string;
   companyId: string;
+  transactionId: string;
 }
 
-const RightsTransactionAdd = () => {
-  const { portfolioId, companyId } = useParams<Props>();
+const RightsTransactionEdit = () => {
+  const { portfolioId, companyId, transactionId } = useParams<Props>();
   const rightsTransactionContext = useRightsTransactionsContext(companyId);
   const companiesContext = useCompaniesContext(companyId);
 
   return (
     <CompaniesContext.Provider value={companiesContext}>
       <RightsTransactionContext.Provider value={rightsTransactionContext}>
-        <RightsTransactionAddHeader
+        <RightsTransactionEditHeader
           companyId={companyId}
           portfolioId={portfolioId}
+          transactionId={transactionId}
         />
         <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-          <RightsTransactionAddForm companyId={companyId} />
+          <RightsTransactionEditForm
+            companyId={companyId}
+            transactionId={transactionId}
+          />
         </Layout>
       </RightsTransactionContext.Provider>
     </CompaniesContext.Provider>
   );
 };
 
-export default RightsTransactionAdd;
+export default RightsTransactionEdit;

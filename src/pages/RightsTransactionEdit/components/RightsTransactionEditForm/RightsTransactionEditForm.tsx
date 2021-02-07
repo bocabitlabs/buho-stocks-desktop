@@ -5,33 +5,36 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
-import { SharesTransactionFormProps } from "types/shares-transaction";
-import { SharesTransactionsContext } from "contexts/shares-transactions";
+import { RightsTransactionFormProps } from "types/rights-transaction";
 import { useExchangeRate } from "hooks/use-exchange-rate";
+import { RightsTransactionContext } from "contexts/rights-transactions";
 
 interface Props {
   companyId: string;
   transactionId: string;
 }
 
-export default function SharesTransactionEditForm({
+/**
+ * Add a new Rights Transaction
+ */
+export default function RightsTransactionEditForm({
   companyId,
   transactionId
 }: Props): ReactElement | null {
   const [form] = Form.useForm();
-  const history = useHistory();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { sharesTransaction, update, getById } = useContext(
-    SharesTransactionsContext
+  const { rightsTransaction, update, getById } = useContext(
+    RightsTransactionContext
   );
+
+  const history = useHistory();
   const [color] = useState("#607d8b");
+  const key = "updatable";
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
   const exchangeRate = useExchangeRate(exchangeName, transactionDate);
-
-  const key = "updatable";
 
   useEffect(() => {
     const newCompany = fetchCompany(companyId);
@@ -49,7 +52,7 @@ export default function SharesTransactionEditForm({
     getById(transactionId);
   }, [companyId, fetchCompany, transactionId, getById]);
 
-  if (company === null || sharesTransaction === null) {
+  if (company === null || rightsTransaction === null) {
     return null;
   }
 
@@ -57,6 +60,7 @@ export default function SharesTransactionEditForm({
     const {
       count,
       price,
+      shares,
       type,
       commission,
       transactionDate,
@@ -64,9 +68,10 @@ export default function SharesTransactionEditForm({
       notes
     } = values;
 
-    const transaction: SharesTransactionFormProps = {
+    const transaction: RightsTransactionFormProps = {
       count,
       price,
+      shares,
       type,
       commission,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
@@ -76,19 +81,15 @@ export default function SharesTransactionEditForm({
       companyId
     };
     console.log(values);
-    console.log("Adding the shares transaction");
     const added = update(transactionId, transaction);
     console.log(added);
     if (added.changes) {
       history.push(
-        `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
+        `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=rights`
       );
-      message.success({
-        content: `Shares transaction has been updated`,
-        key
-      });
+      message.success({ content: "Rights transaction has been updated", key });
     } else {
-      message.error({ content: "Unable to update shares transaction", key });
+      message.error({ content: "Unable to update rights transaction", key });
     }
   };
 
@@ -122,42 +123,57 @@ export default function SharesTransactionEditForm({
 
   return (
     <Form
-      layout="vertical"
+      layout={"vertical"}
       form={form}
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        count: sharesTransaction.count,
-        price: sharesTransaction.price,
-        commission: sharesTransaction.commission,
-        exchangeRate: sharesTransaction.exchangeRate,
-        notes: sharesTransaction.notes,
-        transactionDate: moment(sharesTransaction.transactionDate),
-        type: sharesTransaction.type
+        count: rightsTransaction.count,
+        price: rightsTransaction.price,
+        commission: rightsTransaction.commission,
+        shares: rightsTransaction.shares,
+        exchangeRate: rightsTransaction.exchangeRate,
+        notes: rightsTransaction.notes,
+        transactionDate: moment(rightsTransaction.transactionDate),
+        type: rightsTransaction.type
       }}
     >
       <Form.Item
         name="count"
-        label="Number of Shares"
+        label="Number of Rights"
         rules={[
           { required: true, message: "Please input the number of shares" }
         ]}
       >
-        <InputNumber min={0} step={1} />
+        <InputNumber style={{ width: "20em" }} min={0} step={1} />
       </Form.Item>
       <Form.Item
         name="price"
-        label="Price per share"
+        label="Price per right"
         rules={[
           { required: true, message: "Please input the price per share" }
         ]}
       >
         <InputNumber
+          style={{ width: "20em" }}
           decimalSeparator="."
           formatter={(value) => `${company?.currencySymbol} ${value}`}
           min={0}
           step={0.001}
         />
+      </Form.Item>
+      <Form.Item
+        name="shares"
+        label="Number of shares bought"
+        rules={[
+          {
+            required: true,
+            message:
+              "Please input the number of shares you bought with these rights"
+          }
+        ]}
+      >
+        <InputNumber style={{ width: "20em" }} />
       </Form.Item>
       <Form.Item
         name="type"
@@ -166,7 +182,7 @@ export default function SharesTransactionEditForm({
           { required: true, message: "Please input the type of operation" }
         ]}
       >
-        <Select placeholder="Select a option">
+        <Select placeholder="Select a option" style={{ width: "20em" }}>
           <Select.Option value="BUY">Buy</Select.Option>
           <Select.Option value="SELL">Sell</Select.Option>
         </Select>
@@ -179,6 +195,7 @@ export default function SharesTransactionEditForm({
         ]}
       >
         <InputNumber
+          style={{ width: "20em" }}
           decimalSeparator="."
           formatter={(value) => `${company?.currencySymbol} ${value}`}
           min={0}
@@ -194,13 +211,19 @@ export default function SharesTransactionEditForm({
       >
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
-
       <Form.Item
         name="exchangeRate"
         label="Exchange rate"
-        rules={[{ required: true, message: "Please input the exchange rate" }]}
+        rules={[
+          { required: true, message: "Please input the price per share" }
+        ]}
       >
-        <InputNumber decimalSeparator="." min={0} step={0.001} />
+        <InputNumber
+          style={{ width: "20em" }}
+          decimalSeparator="."
+          min={0}
+          step={0.001}
+        />
       </Form.Item>
       <Button
         disabled={transactionDate === null || exchangeName === null}
@@ -214,7 +237,7 @@ export default function SharesTransactionEditForm({
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Edit
+          Update transaction
         </Button>
       </Form.Item>
     </Form>

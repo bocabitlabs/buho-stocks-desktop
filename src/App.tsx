@@ -29,6 +29,7 @@ import SharesTransactionAdd from "pages/SharesTransactionAdd/SharesTransactionAd
 import DividendsTransactionAdd from "pages/DividendsTransactionAdd/DividendsTransactionAdd";
 import DividendsTransactionEdit from "pages/DividendsTransactionEdit/DividendsTransactionEdit";
 import SharesTransactionEdit from "pages/SharesTransactionEdit/SharesTransactionEdit";
+import RightsTransactionEdit from "pages/RightsTransactionEdit/RightsTransactionEdit";
 
 function App() {
   /**
@@ -120,6 +121,11 @@ function App() {
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-rights-transaction"
                 component={RightsTransactionAdd}
+              />
+              <Route
+                exact
+                path="/portfolios/:portfolioId/companies/:companyId/rights/:transactionId/edit/"
+                component={RightsTransactionEdit}
               />
             </Layout.Content>
           </Layout>

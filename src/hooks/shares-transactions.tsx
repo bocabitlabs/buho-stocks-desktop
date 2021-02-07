@@ -19,7 +19,7 @@ export function useSharesTransactionsContext(
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const results = SharesTransactionsService.getShares(companyId);
+    const results = SharesTransactionsService.getAll(companyId);
     setSharesTransactions(results);
   }, [companyId]);
 
@@ -32,7 +32,7 @@ export function useSharesTransactionsContext(
 
   const getAll = useCallback(() => {
     setIsLoading(true);
-    const results = SharesTransactionsService.getShares(companyId);
+    const results = SharesTransactionsService.getAll(companyId);
     setSharesTransactions(results);
     setIsLoading(false);
   }, [companyId]);

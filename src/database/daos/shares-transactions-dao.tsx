@@ -43,12 +43,10 @@ export default class SharesTransactionsDAO {
     WHERE sharesTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "get");
-    console.log(results);
-
     return results;
   };
 
-  static getSharesTransactions = (companyId: string) => {
+  static getAll = (companyId: string) => {
     //Call the DB
     console.log("Get all shares");
     const sql = `

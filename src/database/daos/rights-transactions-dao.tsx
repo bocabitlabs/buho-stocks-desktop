@@ -1,9 +1,9 @@
-import { RightsTransactionFormProps } from "types/rights-transaction";
+import { RightsTransaction, RightsTransactionFormProps } from "types/rights-transaction";
 import sendIpcSql from "../../message-control/renderer";
 import { deleteById } from "./operations";
 
 export default class RightsTransactionsDAO {
-  addRightsTransaction = (rightsTransaction: RightsTransactionFormProps) => {
+  static create = (rightsTransaction: RightsTransactionFormProps) => {
     const sql = `
     INSERT INTO "rightsTransactions"
     (
@@ -38,7 +38,18 @@ export default class RightsTransactionsDAO {
     return results;
   };
 
-  getRightsTransactions = (companyId: string) => {
+  static getById = (transactionId: string): RightsTransaction => {
+    //Call the DB
+    const sql = `
+    SELECT *
+    FROM "rightsTransactions"
+    WHERE rightsTransactions.id = '${transactionId}';
+    `;
+    const results = sendIpcSql(sql, "get");
+    return results;
+  };
+
+  static getAll = (companyId: string) => {
     //Call the DB
     console.log("Get all rights");
     const sql = `
@@ -59,9 +70,32 @@ export default class RightsTransactionsDAO {
     return results;
   };
 
-  deleteById = (id: string) => {
+  static deleteById = (transactionId: string) => {
     //Call the DB
-    const results = deleteById("rightsTransactions", id);
+    const results = deleteById("rightsTransactions", transactionId);
+    return results;
+  };
+
+  static update = (
+    transactionId: string,
+    transaction: RightsTransactionFormProps
+  ) => {
+    const sql = `
+    UPDATE rightsTransactions
+    SET
+    count = '${transaction.count}'
+    , price = '${transaction.price}'
+    , commission = '${transaction.commission}'
+    , shares = '${transaction.shares}'
+    , type = '${transaction.type}'
+    , exchangeRate = '${transaction.exchangeRate}'
+    , notes = '${transaction.notes}'
+    , transactionDate = '${transaction.transactionDate}'
+    , companyId = '${transaction.companyId}'
+    , color = '${transaction.color}'
+    WHERE rightsTransactions.id = '${transactionId}';
+    `;
+    const results = sendIpcSql(sql, "update");
     return results;
   };
 }

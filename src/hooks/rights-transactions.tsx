@@ -1,45 +1,79 @@
 import { RightsTransactionsContextType } from "contexts/rights-transactions";
 import { useState, useEffect, useCallback } from "react";
 import RightsTransactionsService from "services/rights-transactions-service";
-import { RightsTransaction } from "types/rights-transaction";
+import {
+  RightsTransaction,
+  RightsTransactionFormProps
+} from "types/rights-transaction";
 
 export function useRightsTransactionsContext(
   companyId: string
 ): RightsTransactionsContextType {
-  const [rigthsTransactions, setRightsTransactions] = useState<
+  const [
+    rightsTransaction,
+    setRightsTransaction
+  ] = useState<RightsTransaction | null>(null);
+  const [rightsTransactions, setRightsTransactions] = useState<
     RightsTransaction[]
   >([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const results = RightsTransactionsService.getRightsTransactions(companyId);
+    const results = RightsTransactionsService.getAll(companyId);
     setRightsTransactions(results);
   }, [companyId]);
 
-  const fetchRightsTransactions = useCallback(() => {
+  const create = useCallback((transaction: RightsTransactionFormProps) => {
     setIsLoading(true);
-    const results = RightsTransactionsService.getRightsTransactions(companyId);
-    console.log("LOOK HERE");
-    console.log(results);
+    const results = RightsTransactionsService.create(transaction);
+    setIsLoading(false);
+    return results;
+  }, []);
+
+  const getAll = useCallback(() => {
+    setIsLoading(true);
+    const results = RightsTransactionsService.getAll(companyId);
     setRightsTransactions(results);
     setIsLoading(false);
   }, [companyId]);
 
-  const addRightsTransaction = useCallback(
-    (transaction: RightsTransaction) => {
+  const deleteById = useCallback((transactionId: string) => {
+    setIsLoading(true);
+    const results = RightsTransactionsService.deleteById(transactionId);
+    setIsLoading(false);
+    return results;
+  }, []);
+
+  const getById = useCallback((transactionId: string) => {
+    setIsLoading(true);
+    const result = RightsTransactionsService.getById(transactionId);
+    setRightsTransaction(result);
+    setIsLoading(false);
+    return result;
+  }, []);
+
+  const update = useCallback(
+    (transactionId: string, transaction: RightsTransactionFormProps) => {
       setIsLoading(true);
-      const results = RightsTransactionsService.getRightsTransactions(
-        companyId
+      console.log("Update rights transaction...");
+      const result = RightsTransactionsService.update(
+        transactionId,
+        transaction
       );
-      setRightsTransactions(results);
+      setIsLoading(false);
+      return result;
     },
-    [companyId]
+    []
   );
 
   return {
-    rigthsTransactions,
+    rightsTransaction,
+    rightsTransactions,
     isLoading,
-    fetchRightsTransactions,
-    addRightsTransaction
+    create,
+    deleteById,
+    getAll,
+    getById,
+    update
   };
 }
