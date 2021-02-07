@@ -9,6 +9,10 @@ import SharesTransactionsService from "services/shares-transactions-service";
 export function useSharesTransactionsContext(
   companyId: string
 ): SharesTransactionsContextType {
+  const [
+    sharesTransaction,
+    setSharesTransaction
+  ] = useState<SharesTransaction | null>(null);
   const [sharesTransactions, setSharesTransactions] = useState<
     SharesTransaction[]
   >([]);
@@ -19,35 +23,50 @@ export function useSharesTransactionsContext(
     setSharesTransactions(results);
   }, [companyId]);
 
-  const fetchSharesTransactions = useCallback(() => {
+  const create = useCallback((transaction: SharesTransactionFormProps) => {
+    setIsLoading(true);
+    const results = SharesTransactionsService.create(transaction);
+    setIsLoading(false);
+    return results;
+  }, []);
+
+  const getAll = useCallback(() => {
     setIsLoading(true);
     const results = SharesTransactionsService.getShares(companyId);
     setSharesTransactions(results);
+    setIsLoading(false);
   }, [companyId]);
-
-  const addSharesTransaction = useCallback(
-    (sharesTransaction: SharesTransactionFormProps) => {
-      setIsLoading(true);
-      const results = SharesTransactionsService.addSharesTransaction(
-        sharesTransaction
-      );
-      setIsLoading(false);
-      return results;
-    },
-    []
-  );
 
   const deleteById = useCallback((transactionId: string) => {
     setIsLoading(true);
     const results = SharesTransactionsService.deleteById(transactionId);
+    setIsLoading(false);
     return results;
   }, []);
 
+  const getById = useCallback((transactionId: string) => {
+    setIsLoading(true);
+    const result = SharesTransactionsService.getById(transactionId);
+    setSharesTransaction(result);
+    setIsLoading(false);
+    return result;
+  }, []);
+
+  const update = useCallback((transactionId: string, transaction: SharesTransactionFormProps) => {
+    setIsLoading(true);
+    const result = SharesTransactionsService.update(transactionId, transaction);
+    setIsLoading(false);
+    return result;
+  }, []);
+
   return {
+    sharesTransaction,
     sharesTransactions,
     isLoading,
-    fetchSharesTransactions,
-    addSharesTransaction,
-    deleteById
+    create,
+    deleteById,
+    getAll,
+    getById,
+    update
   };
 }

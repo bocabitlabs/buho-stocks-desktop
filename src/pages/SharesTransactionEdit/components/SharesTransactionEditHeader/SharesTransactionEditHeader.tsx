@@ -1,5 +1,5 @@
 import { PageHeader } from "antd";
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 
@@ -9,12 +9,16 @@ interface Props {
   transactionId: string;
 }
 
-export default function DividendsTransactionEditdHeader({
+export default function SharesTransactionEditHeader({
   companyId,
   portfolioId,
   transactionId
 }: Props): ReactElement {
-  const { company } = useContext(CompaniesContext);
+  const { company, fetchCompany } = useContext(CompaniesContext);
+
+  useEffect(() => {
+    fetchCompany(companyId);
+  }, [companyId, fetchCompany]);
 
   const routes = [
     {
@@ -33,9 +37,9 @@ export default function DividendsTransactionEditdHeader({
       breadcrumbName: company ? company.name : ""
     },
     {
-      path: `/portfolios/${portfolioId}/companies/${companyId}/dividends/${transactionId}`,
-      name: "edit_dividends",
-      breadcrumbName: "Edit Dividens transaction"
+      path: `/portfolios/${portfolioId}/companies/${companyId}/shares/${transactionId}/edit`,
+      name: "edit_shares",
+      breadcrumbName: "Edit shares transaction"
     }
   ];
 
@@ -46,7 +50,7 @@ export default function DividendsTransactionEditdHeader({
   return (
     <PageHeader
       className="site-page-header"
-      title="Edit dividends transaction"
+      title="Edit shares transaction"
       breadcrumb={{
         routes,
         itemRender

@@ -24,7 +24,7 @@ export default function DividendsTransactionEdit(): ReactElement {
   return (
     <CompaniesContext.Provider value={companyContext}>
       <DividendsTransactionsContext.Provider value={dividendsContext}>
-        <DividendsTransactionEditdHeader companyId={companyId} portfolioId={portfolioId} />
+        <DividendsTransactionEditdHeader companyId={companyId} portfolioId={portfolioId} transactionId={transactionId}  />
         <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
           <DividendsTransactionEditForm companyId={companyId} transactionId={transactionId} />
         </Layout>

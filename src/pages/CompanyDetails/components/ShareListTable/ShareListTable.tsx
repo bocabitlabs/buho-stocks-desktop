@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { SharesTransaction } from "types/shares-transaction";
 import { buySellFormatter } from "utils/table-formatters";
 
@@ -12,9 +12,11 @@ interface IProps {
 }
 
 export default function ShareListTable({ portfolioId, companyId }: IProps) {
-  const { sharesTransactions, fetchSharesTransactions, deleteById } = useContext(
-    SharesTransactionsContext
-  );
+  const {
+    sharesTransactions,
+    getAll,
+    deleteById
+  } = useContext(SharesTransactionsContext);
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -48,7 +50,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
           duration: 2
         });
       }, 1000);
-      fetchSharesTransactions();
+      getAll();
     } else {
       setTimeout(() => {
         message.error({
@@ -121,6 +123,11 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
           >
             <Button>Delete</Button>
           </Popconfirm>
+          <Link
+            to={`/portfolios/${portfolioId}/companies/${companyId}/shares/${record.key}/edit`}
+          >
+            Edit
+          </Link>
         </Space>
       )
     }

@@ -3,22 +3,27 @@ import SharesTransactionsDAO from "database/daos/shares-transactions-dao";
 import { IAddProps } from "types/common";
 
 export default class SharesTransactionsService {
-  static addSharesTransaction = (share: SharesTransactionFormProps): IAddProps => {
-    console.log("Adding share transaction: SharesTransactionService")
-    return SharesTransactionsDAO.addSharesTransaction(share);
+  static create = (transaction: SharesTransactionFormProps): IAddProps => {
+    console.log("Adding share transaction: SharesTransactionService");
+    return SharesTransactionsDAO.create(transaction);
+  };
+
+  static deleteById = (transactionId: string) => {
+    return SharesTransactionsDAO.deleteById(transactionId);
   };
 
   static getShares = (companyId: string) => {
     return SharesTransactionsDAO.getSharesTransactions(companyId);
   };
 
-  static getSharesTransactionsPerYearByCompanyId = (companyId: string) => {
-    return SharesTransactionsDAO.getSharesTransactionsPerYearByCompanyId(
-      companyId
-    );
+  static getById = (transactionId: string) => {
+    return SharesTransactionsDAO.getById(transactionId);
   };
 
-  static deleteById = (shareId: string) => {
-    return SharesTransactionsDAO.deleteById(shareId);
+  static update = (
+    transactionId: string,
+    transaction: SharesTransactionFormProps
+  ) => {
+    return SharesTransactionsDAO.update(transactionId, transaction);
   };
 }

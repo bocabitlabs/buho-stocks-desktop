@@ -1,12 +1,5 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import {
-  Button,
-  DatePicker,
-  Form,
-  InputNumber,
-  message,
-  Select
-} from "antd";
+import { Button, DatePicker, Form, InputNumber, message, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
@@ -18,19 +11,20 @@ import { useExchangeRate } from "hooks/use-exchange-rate";
 
 interface Props {
   companyId: string;
+  transactionId: string;
 }
 
-/**
- * Add a new Currency
- */
-export default function ShareAddForm({
-  companyId
+export default function SharesTransactionEditForm({
+  companyId,
+  transactionId
 }: Props): ReactElement | null {
   const [form] = Form.useForm();
   const history = useHistory();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { create } = useContext(SharesTransactionsContext);
-  const [color,] = useState("#607d8b");
+  const { sharesTransaction, update, getById } = useContext(
+    SharesTransactionsContext
+  );
+  const [color] = useState("#607d8b");
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
@@ -41,7 +35,7 @@ export default function ShareAddForm({
 
   useEffect(() => {
     const newCompany = fetchCompany(companyId);
-    if (newCompany)
+    if (newCompany) {
       if (
         newCompany.currencyAbbreviation !== undefined &&
         newCompany.portfolioCurrencyAbbreviation !== undefined
@@ -51,9 +45,11 @@ export default function ShareAddForm({
             newCompany.portfolioCurrencyAbbreviation
         );
       }
-  }, [companyId, fetchCompany]);
+    }
+    getById(transactionId);
+  }, [companyId, fetchCompany, transactionId, getById]);
 
-  if (company === null) {
+  if (company === null || sharesTransaction === null) {
     return null;
   }
 
@@ -81,18 +77,18 @@ export default function ShareAddForm({
     };
     console.log(values);
     console.log("Adding the shares transaction");
-    const added = create(transaction);
+    const added = update(transactionId, transaction);
     console.log(added);
     if (added.changes) {
       history.push(
         `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
       );
       message.success({
-        content: `Shares has been added: ${company.portfolioId}`,
+        content: `Shares transaction has been added: ${company.portfolioId}`,
         key
       });
     } else {
-      message.error({ content: "Unable to add the shares", key });
+      message.error({ content: "Unable to add shares transaction", key });
     }
   };
 
@@ -131,8 +127,13 @@ export default function ShareAddForm({
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        type: "BUY",
-        transactionDate: moment(new Date(), dateFormat)
+        count: sharesTransaction.count,
+        price: sharesTransaction.price,
+        commission: sharesTransaction.commission,
+        exchangeRate: sharesTransaction.exchangeRate,
+        notes: sharesTransaction.notes,
+        transactionDate: moment(sharesTransaction.transactionDate),
+        type: sharesTransaction.type
       }}
     >
       <Form.Item
@@ -213,7 +214,7 @@ export default function ShareAddForm({
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Add shares
+          Edit
         </Button>
       </Form.Item>
     </Form>

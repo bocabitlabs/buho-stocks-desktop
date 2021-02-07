@@ -1,13 +1,10 @@
 import sendIpcSql from "message-control/renderer";
-import { SharesTransactionFormProps } from "types/shares-transaction";
+import { SharesTransaction, SharesTransactionFormProps } from "types/shares-transaction";
 import { deleteById } from "./operations";
 
 export default class SharesTransactionsDAO {
-  static addSharesTransaction = (
-    sharesTransaction: SharesTransactionFormProps
-  ) => {
+  static create = (sharesTransaction: SharesTransactionFormProps) => {
     //Call the DB
-    console.log("SharesTransactionsDAO addSharesTransaction")
     const sql = `
     INSERT INTO "sharesTransactions"
     (
@@ -34,8 +31,20 @@ export default class SharesTransactionsDAO {
       , '${sharesTransaction.color}'
     );
     `;
-    console.log(sql);
     const results = sendIpcSql(sql, "insert");
+    return results;
+  };
+
+  static getById = (transactionId: string): SharesTransaction => {
+    //Call the DB
+    const sql = `
+    SELECT *
+    FROM "sharesTransactions"
+    WHERE sharesTransactions.id = '${transactionId}';
+    `;
+    const results = sendIpcSql(sql, "get");
+    console.log(results);
+
     return results;
   };
 
@@ -79,13 +88,34 @@ export default class SharesTransactionsDAO {
       ;
       `;
     const results = sendIpcSql(sql);
-    console.log(results);
     return results;
   };
 
   static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("sharesTransactions", id);
+    return results;
+  };
+
+  static update = (
+    transactionId: string,
+    transaction: SharesTransactionFormProps
+  ) => {
+    const sql = `
+    UPDATE sharesTransactions
+    SET
+    count = '${transaction.count}'
+    , price = '${transaction.price}'
+    , commission = '${transaction.commission}'
+    , exchangeRate = '${transaction.exchangeRate}'
+    , notes = '${transaction.notes}'
+    , transactionDate = '${transaction.transactionDate}'
+    , companyId = '${transaction.companyId}'
+    , color = '${transaction.color}'
+    , type = '${transaction.type}'
+    WHERE sharesTransactions.id = '${transactionId}';
+    `;
+    const results = sendIpcSql(sql, "update");
     return results;
   };
 }

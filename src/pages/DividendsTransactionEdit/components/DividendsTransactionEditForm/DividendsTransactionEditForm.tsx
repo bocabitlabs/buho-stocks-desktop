@@ -45,7 +45,6 @@ export default function DividendsTransactionEditForm({
         );
       }
     }
-
     getById(transactionId);
   }, [companyId, fetchCompany, transactionId, getById]);
 
@@ -82,9 +81,15 @@ export default function DividendsTransactionEditForm({
       history.push(
         `/portfolios/${company.portfolioId}/companies/${companyId}?tab=dividends`
       );
-      message.success({ content: "Dividends transaction has been updated", key });
+      message.success({
+        content: "Dividends transaction has been updated",
+        key
+      });
     } else {
-      message.error({ content: "Unable to update the dividends transaction", key });
+      message.error({
+        content: "Unable to update the dividends transaction",
+        key
+      });
     }
   };
 

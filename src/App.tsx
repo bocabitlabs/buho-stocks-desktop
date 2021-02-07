@@ -28,6 +28,7 @@ import RightsTransactionAdd from "pages/RightsTransactionAdd/RightsTransactionAd
 import SharesTransactionAdd from "pages/SharesTransactionAdd/SharesTransactionAdd";
 import DividendsTransactionAdd from "pages/DividendsTransactionAdd/DividendsTransactionAdd";
 import DividendsTransactionEdit from "pages/DividendsTransactionEdit/DividendsTransactionEdit";
+import SharesTransactionEdit from "pages/SharesTransactionEdit/SharesTransactionEdit";
 
 function App() {
   /**
@@ -37,8 +38,7 @@ function App() {
   const isCollapsedContext = useIsCollapsedContext();
   const selectedPortfolioContext = useSelectedPortfolioContext();
 
-
-  console.log(location.pathname)
+  console.log(location.pathname);
   return (
     <Layout>
       <IsCollapsedContext.Provider value={isCollapsedContext}>
@@ -100,6 +100,11 @@ function App() {
                 exact
                 path="/portfolios/:portfolioId/companies/:companyId/add-shares"
                 component={SharesTransactionAdd}
+              />
+              <Route
+                exact
+                path="/portfolios/:portfolioId/companies/:companyId/shares/:transactionId/edit/"
+                component={SharesTransactionEdit}
               />
               <Route
                 exact
