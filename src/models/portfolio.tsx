@@ -5,6 +5,7 @@ export class Portfolio implements IPortfolio {
   id: string;
   currencySymbol: string;
   currencyName: string;
+  currencyAbbreviation: string;
   name: string;
   description: string;
   color: string;
@@ -15,6 +16,7 @@ export class Portfolio implements IPortfolio {
     this.id = parameters.id;
     this.currencySymbol = parameters.currencySymbol;
     this.currencyName = parameters.currencyName;
+    this.currencyAbbreviation = parameters.currencyAbbreviation;
     this.name = parameters.name;
     this.description = parameters.description;
     this.color = parameters.color;
@@ -35,5 +37,34 @@ export class Portfolio implements IPortfolio {
     },
     0);
     return totalPortfolioValue;
+  }
+
+  getPortfolioDividends(year: string, inBaseCurrency = false): number {
+    const amount = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      if (inBaseCurrency) {
+        return accumulator + obj.getDividendsForYear(year, true);
+      }
+      return accumulator + obj.getDividendsForYear(year);
+    },
+    0);
+    return amount;
+  }
+
+  getMonthlyDividendsForYear(year: string, inBaseCurrency = false): number {
+    console.log("getMonthlyDividendsForYear");
+    const amount = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      if (inBaseCurrency) {
+        return accumulator + obj.getMonthlyDividendsForYear(year, true);
+      }
+      return accumulator + obj.getMonthlyDividendsForYear(year);
+    },
+    0);
+    return amount;
   }
 }

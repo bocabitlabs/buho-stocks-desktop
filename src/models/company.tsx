@@ -55,7 +55,8 @@ export class Company implements ICompany {
     this.color = parameters.color;
     this.description = parameters.description;
     this.portfolioCurrencySymbol = parameters.portfolioCurrencySymbol;
-    this.portfolioCurrencyAbbreviation = parameters.portfolioCurrencyAbbreviation;
+    this.portfolioCurrencyAbbreviation =
+      parameters.portfolioCurrencyAbbreviation;
   }
 
   getSharesCount(): number {
@@ -99,6 +100,25 @@ export class Company implements ICompany {
     },
     0);
     return amount;
+  }
+
+  getDividendsForYear(year: string, inBaseCurrency?: boolean): number {
+    const amount = this.dividendsTransactions
+      .filter(
+        (transaction: DividendsTransaction) =>
+          moment(transaction.transactionDate).format("YYYY") === year
+      )
+      .reduce(function (accumulator: number, obj: DividendsTransaction) {
+        if (inBaseCurrency) {
+          return accumulator + obj.price * obj.exchangeRate * obj.count;
+        }
+        return accumulator + obj.price * obj.count;
+      }, 0);
+    return amount;
+  }
+
+  getMonthlyDividendsForYear(year: string, inBaseCurrency?: boolean): number {
+    return this.getDividendsForYear(year, inBaseCurrency) / 12;
   }
 
   getLatestStockPrice(): IStockPrice | null {

@@ -52,8 +52,6 @@ export default function DividendsTransactionEditForm({
     return null;
   }
 
-  console.log(dividendsTransaction);
-
   const handleAdd = (values: any) => {
     const {
       count,

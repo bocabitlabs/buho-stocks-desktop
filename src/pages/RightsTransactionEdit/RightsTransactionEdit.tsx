@@ -8,7 +8,7 @@ import { CompaniesContext } from "contexts/companies";
 import { useRightsTransactionsContext } from "hooks/rights-transactions";
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import RightsTransactionEditHeader from "./components/RightsTransactionEditHeader/RightsTransactionEditHeader";
-import RightsTransactionEditForm from "./components/RightsTransactionEditForm/RightsTransactionEditForm";
+import RightsTransactionAddForm from "pages/RightsTransactionAdd/components/RightsTransactionAddForm/RightsTransactionAddForm";
 
 export interface Props {
   portfolioId: string;
@@ -30,7 +30,7 @@ const RightsTransactionEdit = () => {
           transactionId={transactionId}
         />
         <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-          <RightsTransactionEditForm
+          <RightsTransactionAddForm
             companyId={companyId}
             transactionId={transactionId}
           />

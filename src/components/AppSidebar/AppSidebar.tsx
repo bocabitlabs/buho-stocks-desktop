@@ -3,6 +3,7 @@ import {
   ClusterOutlined,
   DollarCircleOutlined,
   HomeOutlined,
+  ImportOutlined,
   RiseOutlined,
   SettingOutlined
 } from "@ant-design/icons";
@@ -31,9 +32,10 @@ const navLinks: RoutePathProps[] = [
   },
   { key: "-3", path: "/sectors", text: "Sectors", icon: <ClusterOutlined /> },
   { key: "-4", path: "/inflations", text: "Inflation", icon: <RiseOutlined /> },
+  { key: "-5", path: "/csv-import", text: "CSV Import", icon: <ImportOutlined /> },
 
   {
-    key: "-5",
+    key: "-6",
     path: "/settings",
     text: "Settings",
     icon: <SettingOutlined />

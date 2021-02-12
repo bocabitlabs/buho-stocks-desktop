@@ -12,11 +12,9 @@ interface IProps {
 }
 
 export default function ShareListTable({ portfolioId, companyId }: IProps) {
-  const {
-    sharesTransactions,
-    getAll,
-    deleteById
-  } = useContext(SharesTransactionsContext);
+  const { sharesTransactions, getAll, deleteById } = useContext(
+    SharesTransactionsContext
+  );
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -43,22 +41,18 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
     }
 
     if (result.changes) {
-      setTimeout(() => {
-        message.success({
-          content: "Share has been deleted",
-          key,
-          duration: 2
-        });
-      }, 1000);
       getAll();
+      message.success({
+        content: "Share has been deleted",
+        key,
+        duration: 2
+      });
     } else {
-      setTimeout(() => {
-        message.error({
-          content: "Unable to remove shares",
-          key,
-          duration: 2
-        });
-      }, 1000);
+      message.error({
+        content: "Unable to remove shares",
+        key,
+        duration: 2
+      });
     }
   }
 

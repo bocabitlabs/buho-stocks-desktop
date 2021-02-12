@@ -1,5 +1,15 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { Button, DatePicker, Form, InputNumber, message, Select } from "antd";
+import {
+  Button,
+  DatePicker,
+  Divider,
+  Form,
+  Input,
+  InputNumber,
+  message,
+  Select,
+  Typography
+} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
@@ -11,17 +21,21 @@ import { RightsTransactionContext } from "contexts/rights-transactions";
 
 interface Props {
   companyId: string;
+  transactionId?: string;
 }
 
 /**
  * Add a new Rights Transaction
  */
 export default function RightsTransactionAddForm({
-  companyId
+  companyId,
+  transactionId
 }: Props): ReactElement | null {
   const [form] = Form.useForm();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { create } = useContext(RightsTransactionContext);
+  const { create, getById, getAll, rightsTransaction, update } = useContext(
+    RightsTransactionContext
+  );
 
   const history = useHistory();
   const [color] = useState("#607d8b");
@@ -46,15 +60,20 @@ export default function RightsTransactionAddForm({
       }
   }, [companyId, fetchCompany]);
 
+  useEffect(() => {
+    if (transactionId) {
+      getById(transactionId);
+    }
+  }, [transactionId, getById]);
+
   if (company === null) {
     return null;
   }
 
-  const handleAdd = (values: any) => {
+  const handleSubmit = (values: any) => {
     const {
       count,
       price,
-      shares,
       type,
       commission,
       transactionDate,
@@ -62,10 +81,10 @@ export default function RightsTransactionAddForm({
       notes
     } = values;
 
-    const rightsTransaction: RightsTransactionFormProps = {
+    const transaction: RightsTransactionFormProps = {
       count,
       price,
-      shares,
+      shares: 0,
       type,
       commission,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
@@ -74,15 +93,35 @@ export default function RightsTransactionAddForm({
       color,
       companyId
     };
-    console.log(values);
-    const added = create(rightsTransaction);
-    if (added.changes) {
+    let changes = null;
+    let updateMessage = "";
+    if (transactionId) {
+      changes = update(transactionId, transaction);
+      updateMessage = "Rights transaction has been updated";
+    } else {
+      changes = create(transaction);
+      updateMessage = "Rights transaction has been added";
+    }
+    if (changes.changes) {
+      getAll();
       history.push(
         `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=rights`
       );
-      message.success({ content: "Transaction has been added", key });
+      message.success({
+        content: updateMessage,
+        key,
+        style: {
+          marginTop: "60px"
+        }
+      });
     } else {
-      message.error({ content: "Unable to add the rights", key });
+      message.error({
+        content: "Unable to add/edit the transaction",
+        key,
+        style: {
+          marginTop: "60px"
+        }
+      });
     }
   };
 
@@ -114,15 +153,47 @@ export default function RightsTransactionAddForm({
     });
   };
 
+  const updateFieldsForING = () => {
+    console.log("Update fields for ING");
+    const count = form.getFieldValue("count");
+    const price = form.getFieldValue("price");
+    const total = form.getFieldValue("total");
+
+    console.log(count, price, total);
+
+    const totalAmount = +total.replace("'", "");
+    console.log(totalAmount, +count * +price);
+    let newCommission = totalAmount - +count * +price;
+
+    newCommission = (+count * +price) - totalAmount;
+
+    if(newCommission<0){
+      newCommission*=-1
+    }
+
+    console.log(count, totalAmount, newCommission);
+
+    form.setFieldsValue({
+      commission: newCommission
+    });
+  };
+
   return (
     <Form
       layout={"vertical"}
       form={form}
       name="basic"
-      onFinish={handleAdd}
+      onFinish={handleSubmit}
       initialValues={{
-        type: "BUY",
-        transactionDate: moment(new Date(), dateFormat)
+        count: rightsTransaction?.count,
+        price: rightsTransaction?.price,
+        commission: rightsTransaction?.commission,
+        exchangeRate: rightsTransaction?.exchangeRate,
+        notes: rightsTransaction?.notes,
+        transactionDate: rightsTransaction
+          ? moment(rightsTransaction.transactionDate)
+          : moment(new Date(), dateFormat),
+        type: rightsTransaction ? rightsTransaction.type : "BUY"
       }}
     >
       <Form.Item
@@ -148,19 +219,6 @@ export default function RightsTransactionAddForm({
           min={0}
           step={0.001}
         />
-      </Form.Item>
-      <Form.Item
-        name="shares"
-        label="Number of shares bought"
-        rules={[
-          {
-            required: true,
-            message:
-              "Please input the number of shares you bought with these rights"
-          }
-        ]}
-      >
-        <InputNumber style={{ width: "20em" }} />
       </Form.Item>
       <Form.Item
         name="type"
@@ -212,19 +270,36 @@ export default function RightsTransactionAddForm({
           step={0.001}
         />
       </Form.Item>
-      <Button
-        disabled={transactionDate === null || exchangeName === null}
-        onClick={getExchangeRate}
-      >
-        Get exchange rate ({exchangeName})
-      </Button>
+      <Form.Item>
+        <Button
+          disabled={transactionDate === null || exchangeName === null}
+          onClick={getExchangeRate}
+        >
+          Get exchange rate ({exchangeName})
+        </Button>
+      </Form.Item>
+      <Divider plain>Only ING</Divider>
+      <Typography.Text type="secondary">
+        ING doesn't include a commission field, so it needs to be calculated.
+        Commission and price will be recalculated from total.
+      </Typography.Text>
+
+      <Form.Item name="total" label="Total:">
+        <Input style={{ width: "20em" }} />
+      </Form.Item>
+      <Form.Item>
+        <Button type="default" htmlType="button" onClick={updateFieldsForING}>
+          Update Values from total
+        </Button>
+      </Form.Item>
+      <Divider plain />
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Add rights
+          {transactionId ? "Edit Transaction" : "Add Transaction"}
         </Button>
       </Form.Item>
     </Form>

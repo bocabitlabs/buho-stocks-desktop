@@ -1,11 +1,12 @@
-import { Button, message, Popconfirm, Space, Table } from "antd";
-import { RightsTransactionContext } from "contexts/rights-transactions";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
+import { Button, message, Popconfirm, Space, Table } from "antd";
+
+import { RightsTransactionContext } from "contexts/rights-transactions";
 import { Link, useHistory } from "react-router-dom";
-import ShareService from "services/shares-transactions-service";
 import { RightsTransaction } from "types/rights-transaction";
 import { buySellFormatter } from "utils/table-formatters";
+import { TransactionType } from "types/transaction";
 
 interface IProps {
   portfolioId: string;
@@ -16,7 +17,9 @@ export default function RightsTransactionsTable({
   portfolioId,
   companyId
 }: IProps) {
-  const { rightsTransactions, getAll } = useContext(RightsTransactionContext);
+  const { rightsTransactions, getAll, deleteById } = useContext(
+    RightsTransactionContext
+  );
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -32,8 +35,8 @@ export default function RightsTransactionsTable({
   }, []);
 
   function confirm(recordId: string) {
-    const result = ShareService.deleteById(recordId);
-    if (result === "OK") {
+    const result = deleteById(recordId);
+    if (result.changes) {
       history.push({
         pathname: `/portfolios/${portfolioId}/companies/${companyId}`,
         state: {
@@ -43,22 +46,18 @@ export default function RightsTransactionsTable({
     }
 
     if (result.changes) {
-      setTimeout(() => {
-        message.success({
-          content: "Share has been deleted",
-          key,
-          duration: 2
-        });
-      }, 1000);
       getAll();
+      message.success({
+        content: "Transaction has been deleted",
+        key,
+        duration: 2
+      });
     } else {
-      setTimeout(() => {
-        message.error({
-          content: "Unable to remove shares",
-          key,
-          duration: 2
-        });
-      }, 1000);
+      message.error({
+        content: "Unable to remove transaction",
+        key,
+        duration: 2
+      });
     }
   }
 
@@ -151,7 +150,10 @@ export default function RightsTransactionsTable({
       price: share.price,
       shares: share.shares,
       commission: share.commission,
-      total: share.count * share.price + share.commission,
+      total:
+        share.type === TransactionType.BUY
+          ? share.count * share.price + share.commission
+          : share.count * share.price - share.commission,
       notes: share.notes,
       currencySymbol: share.currencySymbol
     }));

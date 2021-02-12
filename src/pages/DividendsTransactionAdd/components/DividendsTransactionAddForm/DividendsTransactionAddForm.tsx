@@ -11,10 +11,12 @@ import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 
 interface Props {
   companyId: string;
+  transactionId?: string;
 }
 
 export default function DividendsTransactionAddForm({
-  companyId
+  companyId,
+  transactionId
 }: Props): ReactElement | null {
   const key = "updatable";
   const [transactionDate, setTransactionDate] = useState<string>(
@@ -26,11 +28,31 @@ export default function DividendsTransactionAddForm({
   const history = useHistory();
   const [color] = useState("#607d8b");
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { create } = useContext(DividendsTransactionsContext);
+  const { dividendsTransaction, create, getById, update } = useContext(
+    DividendsTransactionsContext
+  );
+  const dateFormat = "DD/MM/YYYY";
 
   useEffect(() => {
-    fetchCompany(companyId);
+    const newCompany = fetchCompany(companyId);
+    if (newCompany) {
+      if (
+        newCompany.currencyAbbreviation !== undefined &&
+        newCompany.portfolioCurrencyAbbreviation !== undefined
+      ) {
+        setExchangeName(
+          newCompany.currencyAbbreviation +
+            newCompany.portfolioCurrencyAbbreviation
+        );
+      }
+    }
   }, [companyId, fetchCompany]);
+
+  useEffect(() => {
+    if (transactionId) {
+      getById(transactionId);
+    }
+  }, [transactionId, getById]);
 
   if (company === null) {
     return null;
@@ -56,27 +78,36 @@ export default function DividendsTransactionAddForm({
       color,
       companyId
     };
-    console.log(values);
-    const added = create(dividend);
-    if (added.changes) {
+    let changes = null;
+    let updateMessage = "";
+    if (transactionId) {
+      changes = update(transactionId, dividend);
+      updateMessage = "Dividends transaction has been updated";
+    } else {
+      changes = create(dividend);
+      updateMessage = "Dividends transaction has been added";
+    }
+    if (changes.changes) {
       history.push(
         `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=dividends`
       );
-      message.success({ content: "Dividend has been added", key });
+      message.success({
+        content: updateMessage,
+        key,
+        style: {
+          marginTop: "60px"
+        }
+      });
     } else {
-      message.error({ content: "Unable to add the dividend", key });
+      message.error({
+        content: updateMessage,
+        key,
+        style: {
+          marginTop: "60px"
+        }
+      });
     }
   };
-
-  const layout = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 13 }
-  };
-
-  const buttonItemLayout = {
-    wrapperCol: { span: 14, offset: 0 }
-  };
-  const dateFormat = "DD/MM/YYYY";
 
   const transactionDateChange = (
     value: moment.Moment | null,
@@ -106,12 +137,18 @@ export default function DividendsTransactionAddForm({
 
   return (
     <Form
-      {...layout}
       form={form}
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        transactionDate: moment(new Date(), dateFormat)
+        count: dividendsTransaction?.count,
+        price: dividendsTransaction?.price,
+        commission: dividendsTransaction?.commission,
+        exchangeRate: dividendsTransaction?.exchangeRate,
+        notes: dividendsTransaction?.notes,
+        transactionDate: dividendsTransaction
+          ? moment(dividendsTransaction?.transactionDate)
+          : moment(new Date(), dateFormat)
       }}
     >
       <Form.Item
@@ -176,19 +213,22 @@ export default function DividendsTransactionAddForm({
           step={0.001}
         />
       </Form.Item>
-      <Button
-        disabled={transactionDate === null || exchangeName === null}
-        onClick={getExchangeRate}
-      >
-        Get exchange rate ({exchangeName})
-      </Button>
+      <Form.Item>
+        <Button
+          disabled={transactionDate === null || exchangeName === null}
+          onClick={getExchangeRate}
+        >
+          Get exchange rate ({exchangeName})
+        </Button>
+      </Form.Item>
+
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />
       </Form.Item>
 
-      <Form.Item {...buttonItemLayout}>
+      <Form.Item>
         <Button type="primary" htmlType="submit">
-          Add dividend
+          {transactionId ? "Edit Transaction" : "Add Transaction"}
         </Button>
       </Form.Item>
     </Form>

@@ -9,7 +9,7 @@ export default class ExchangeRateDAO {
     INSERT INTO "exchanges"
     (
         "transactionDate"
-      , "transactionValue"
+      , "exchangeValue"
       , "exchangeName"
 
       )

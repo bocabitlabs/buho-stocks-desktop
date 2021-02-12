@@ -44,6 +44,7 @@ export default class PortfolioDAO {
     SELECT portfolios.*
 	  , currencies.symbol as currencySymbol
 	  , currencies.name as currencyName
+    , currencies.abbreviation as currencyAbbreviation
     FROM "portfolios"
       LEFT JOIN "currencies"
     ON currencies.id = portfolios.currencyId

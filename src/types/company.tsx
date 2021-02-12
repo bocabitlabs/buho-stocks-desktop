@@ -30,6 +30,8 @@ export interface ICompany extends CompanyFormFields {
   rightsTransactions: RightsTransaction[];
   getSharesCount: Function;
   getDividendsAmount(inBaseCurrency?: boolean): number;
+  getDividendsForYear(year:string, inBaseCurrency?: boolean): number;
+  getMonthlyDividendsForYear(year: string, inBaseCurrency?: boolean): number;
   getLatestStockPrice: Function;
   getTotalInvested(inBaseCurrency?: boolean): number;
   getPortfolioValue(inBaseCurrency?: boolean): number;

@@ -2,8 +2,10 @@ import { Button, DatePicker, Form, InputNumber, message } from "antd";
 import { CompaniesContext } from "contexts/companies";
 import { useExchangeRate } from "hooks/use-exchange-rate";
 import moment from "moment";
-import React, { ReactElement, useContext, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
+import ExchangeRateService from "services/exchange-rate";
 import StockPriceService from "services/stock-price-service";
+import { IExchangeRateForm } from "types/exchange-rate";
 import { StockPriceFormProps } from "types/stock-price";
 
 interface Props {
@@ -23,24 +25,47 @@ export default function StockPriceAddForm({
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
+  console.log("Loading exchange rate", exchangeName, transactionDate);
   const exchangeRate = useExchangeRate(exchangeName, transactionDate);
+
+  useEffect(() => {
+    if (company) {
+      if (
+        company.currencyAbbreviation !== undefined &&
+        company.portfolioCurrencyAbbreviation !== undefined
+      ) {
+        setExchangeName(
+          company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
+        );
+      }
+    }
+  }, [company]);
 
   if (company === null) {
     return null;
   }
 
   const handleAdd = (values: any) => {
-    const { price, transactionDate, exchangeRate } = values;
+    const { price, transactionDate, exchangeRateValue } = values;
 
     const stockPrice: StockPriceFormProps = {
       price,
-      exchangeRate,
+      exchangeRate: exchangeRateValue,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       companyId: company.id
     };
     console.log(values);
     const added = StockPriceService.add(stockPrice);
     if (added.changes) {
+      const newExchangeRate: IExchangeRateForm = {
+        transactionDate: transactionDate.format("DD-MM-YYYY"),
+        exchangeName: exchangeName,
+        exchangeValue: exchangeRateValue
+      };
+      console.log(newExchangeRate);
+      const result = ExchangeRateService.add(newExchangeRate);
+      console.log(result);
+
       message.success({
         content: "Stock price added",
         key,
@@ -73,12 +98,15 @@ export default function StockPriceAddForm({
   };
 
   const getExchangeRate = () => {
+    console.log("Get exchange rate", exchangeName, transactionDate);
     let exchangeValue = 0;
+    console.log(exchangeRate);
     if (exchangeRate !== null && exchangeRate !== undefined) {
       exchangeValue = exchangeRate.exchangeValue;
     }
+    console.log("Set exchange rate:", exchangeValue);
     form.setFieldsValue({
-      exchangeRate: exchangeValue
+      exchangeRateValue: exchangeValue
     });
   };
 
@@ -119,7 +147,7 @@ export default function StockPriceAddForm({
       </Form.Item>
 
       <Form.Item
-        name="exchangeRate"
+        name="exchangeRateValue"
         label="Exchange Rate"
         rules={[
           {

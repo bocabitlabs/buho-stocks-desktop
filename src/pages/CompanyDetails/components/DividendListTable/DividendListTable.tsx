@@ -110,7 +110,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
         transactionDate: dividend.transactionDate,
         price: dividend.price,
         commission: dividend.commission,
-        total: dividend.count * dividend.price + dividend.commission,
+        total: dividend.count * dividend.price - dividend.commission,
         notes: dividend.notes,
         currencySymbol: dividend.currencySymbol
       })

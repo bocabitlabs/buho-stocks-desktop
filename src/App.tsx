@@ -30,6 +30,7 @@ import DividendsTransactionAdd from "pages/DividendsTransactionAdd/DividendsTran
 import DividendsTransactionEdit from "pages/DividendsTransactionEdit/DividendsTransactionEdit";
 import SharesTransactionEdit from "pages/SharesTransactionEdit/SharesTransactionEdit";
 import RightsTransactionEdit from "pages/RightsTransactionEdit/RightsTransactionEdit";
+import CsvImport from "pages/CsvImport/CsvImport";
 
 function App() {
   /**
@@ -70,6 +71,7 @@ function App() {
                 <Redirect to="/home" />
               </Route>
               <Route exact path="/home" component={Home} />
+              <Route exact path="/csv-import" component={CsvImport} />
               <Route exact path="/settings" component={Settings} />
               <Route exact path="/add/portfolio" component={PortfolioAdd} />
               <Route exact path="/add/currency" component={CurrencyAdd} />

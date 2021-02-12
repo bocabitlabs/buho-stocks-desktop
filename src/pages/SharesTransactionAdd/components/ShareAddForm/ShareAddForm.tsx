@@ -2,10 +2,12 @@ import React, { ReactElement, useContext, useEffect, useState } from "react";
 import {
   Button,
   DatePicker,
+  Divider,
   Form,
   InputNumber,
   message,
-  Select
+  Select,
+  Typography
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
@@ -18,16 +20,20 @@ import { useExchangeRate } from "hooks/use-exchange-rate";
 
 interface Props {
   companyId: string;
+  transactionId?: string;
 }
 
 export default function ShareAddForm({
-  companyId
+  companyId,
+  transactionId
 }: Props): ReactElement | null {
   const [form] = Form.useForm();
   const history = useHistory();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { create } = useContext(SharesTransactionsContext);
-  const [color,] = useState("#607d8b");
+  const { sharesTransaction, create, getAll, getById, update } = useContext(
+    SharesTransactionsContext
+  );
+  const [color] = useState("#607d8b");
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
@@ -49,6 +55,12 @@ export default function ShareAddForm({
         );
       }
   }, [companyId, fetchCompany]);
+
+  useEffect(() => {
+    if (transactionId) {
+      getById(transactionId);
+    }
+  }, [transactionId, getById]);
 
   if (company === null) {
     return null;
@@ -76,20 +88,26 @@ export default function ShareAddForm({
       color,
       companyId
     };
-    console.log(values);
-    console.log("Adding the shares transaction");
-    const added = create(transaction);
-    console.log(added);
-    if (added.changes) {
+    let changes = null;
+    let updateMessage = "";
+    if (transactionId) {
+      changes = update(transactionId, transaction);
+      updateMessage = "Shares transaction has been updated";
+    } else {
+      changes = create(transaction);
+      updateMessage = "Shares transaction has been added";
+    }
+    if (changes.changes) {
+      getAll();
       history.push(
         `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
       );
       message.success({
-        content: `Shares has been added: ${company.portfolioId}`,
+        content: updateMessage,
         key
       });
     } else {
-      message.error({ content: "Unable to add the shares", key });
+      message.error({ content: "Unable to add/edit the transaction", key });
     }
   };
 
@@ -121,6 +139,26 @@ export default function ShareAddForm({
     });
   };
 
+  const updateFieldsForING = () => {
+    console.log("Update fields for ING");
+    const count = form.getFieldValue("count");
+    const price = form.getFieldValue("price");
+    let total = form.getFieldValue("total");
+    const exchangeRate = form.getFieldValue("exchangeRate");
+
+    total = total * (1 / exchangeRate);
+    const totalInvested = +count * +price;
+    let newCommission = total - totalInvested;
+
+    if (newCommission < 0) {
+      newCommission *= -1;
+    }
+
+    form.setFieldsValue({
+      commission: newCommission
+    });
+  };
+
   return (
     <Form
       layout="vertical"
@@ -128,8 +166,15 @@ export default function ShareAddForm({
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        type: "BUY",
-        transactionDate: moment(new Date(), dateFormat)
+        count: sharesTransaction?.count,
+        price: sharesTransaction?.price,
+        commission: sharesTransaction?.commission,
+        exchangeRate: sharesTransaction?.exchangeRate,
+        notes: sharesTransaction?.notes,
+        transactionDate: sharesTransaction
+          ? moment(sharesTransaction.transactionDate)
+          : moment(new Date(), dateFormat),
+        type: sharesTransaction ? sharesTransaction.type : "BUY"
       }}
     >
       <Form.Item
@@ -198,19 +243,43 @@ export default function ShareAddForm({
       >
         <InputNumber decimalSeparator="." min={0} step={0.001} />
       </Form.Item>
-      <Button
-        disabled={transactionDate === null || exchangeName === null}
-        onClick={getExchangeRate}
-      >
-        Get exchange rate ({exchangeName})
-      </Button>
+      <Form.Item>
+        <Button
+          disabled={transactionDate === null || exchangeName === null}
+          onClick={getExchangeRate}
+        >
+          Get exchange rate ({exchangeName})
+        </Button>
+      </Form.Item>
+
+      <Divider plain>Only ING</Divider>
+      <Typography.Text type="secondary">
+        ING doesn't include a commission field, so it needs to be calculated.
+        Commission and price will be recalculated from total.
+      </Typography.Text>
+
+      <Form.Item name="total" label="Total (€):">
+        <InputNumber
+          decimalSeparator="."
+          formatter={(value) => `€ ${value}`}
+          min={0}
+          step={0.001}
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type="default" htmlType="button" onClick={updateFieldsForING}>
+          Update Values from total
+        </Button>
+      </Form.Item>
+      <Divider plain />
+
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Add shares
+          {transactionId ? "Edit Transaction" : "Add Transaction"}
         </Button>
       </Form.Item>
     </Form>

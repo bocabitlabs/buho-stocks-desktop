@@ -9,6 +9,7 @@ import { PortfoliosContext } from "contexts/portfolios";
 import { usePortfoliosContext } from "hooks/portfolios";
 import PortfolioDetailsHeader from "./components/PortfolioDetailsHeader/PortfolioDetailsHeader";
 import CompanyCardList from "./components/CompanyCardList/CompanyCardList";
+import PortfolioStats from "./components/PortfolioStats/PortfolioStats";
 
 export interface IPortfolioRouteParams {
   id: string;
@@ -32,6 +33,7 @@ const PortfolioDetails = () => {
       <CompaniesContext.Provider value={companiesContext}>
         <PortfolioDetailsHeader portfolioId={id} />
         <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
+          <PortfolioStats/>
           <CompanyCardList portfolioId={id} />
         </Layout>
       </CompaniesContext.Provider>
