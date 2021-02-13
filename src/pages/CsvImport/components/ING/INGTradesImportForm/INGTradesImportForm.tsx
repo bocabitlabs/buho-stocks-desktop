@@ -40,7 +40,7 @@ function formatINGRowForShares(inputData: string[]) {
   const companyName = inputData[3];
   const count = +inputData[6];
   const price = +inputData[7];
-  let total = +inputData[9].replace("'", "");
+  let total = +(inputData[9].replace("'", ""));
 
   if (validTransactionTypes.includes(transactionType)) {
     transactionType =
@@ -80,9 +80,10 @@ export default function INGTradesImportForm({
   if (company) {
     total = getTotalAmountInCompanyCurrency(total, company, transactionDate);
   }
+  console.log(total);
   // Get the commission in the company's currency
   let commission = getCommission(total, count, price);
-
+  console.log(commission);
   // Get the exchange rate for the transaction
   const getExchangeRateForTransaction = () => {
     let newExchangeRate: IExchangeRate | undefined = undefined;
