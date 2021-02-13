@@ -16,13 +16,6 @@ export function usePortfoliosContext(): PortfoliosContextType {
     setIsLoading(false);
   }, []);
 
-  const create = useCallback((portfolio: PortfolioFormFields) => {
-    setIsLoading(true);
-    const result = PortfolioService.create(portfolio);
-    setIsLoading(false);
-    return result;
-  }, []);
-
   const deleteById = useCallback((portfolioId: string) => {
     setIsLoading(true);
     const results = PortfolioService.deleteById(portfolioId);
@@ -31,8 +24,8 @@ export function usePortfoliosContext(): PortfoliosContextType {
   }, []);
 
   const getAll = useCallback(() => {
+    console.log("Getting all the portfolios");
     setIsLoading(true);
-    console.log("Fetching portfolios from hook");
     const results = PortfolioService.getAll();
     setPortFolios(results);
     setIsLoading(false);
@@ -46,6 +39,20 @@ export function usePortfoliosContext(): PortfoliosContextType {
     setIsLoading(false);
     return result;
   }, []);
+
+  const create = useCallback(
+    (portfolio: PortfolioFormFields) => {
+      console.log("Creating new portfolio");
+      setIsLoading(true);
+      const result = PortfolioService.create(portfolio);
+      if (result.changes) {
+        getAll();
+      }
+      setIsLoading(false);
+      return result;
+    },
+    [getAll]
+  );
 
   return {
     isLoading,

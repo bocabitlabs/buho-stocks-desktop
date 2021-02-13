@@ -3,16 +3,15 @@ import React, { ReactElement, useContext } from "react";
 
 import { PortfoliosContext } from "contexts/portfolios";
 import { SelectedPortfolioContext } from "contexts/selected-portfolio";
-import SettingsService from "services/settings-service";
 import { IPortfolio } from "types/portfolio";
 
 export default function PortfolioSelector(): ReactElement {
-  const { selectedPortfolio } = useContext(SelectedPortfolioContext);
+  const { selectedPortfolio, update } = useContext(SelectedPortfolioContext);
   const { portfolios } = useContext(PortfoliosContext);
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
-    SettingsService.updateSelectedPortfolio(value);
+    update(value);
   }
 
   console.log(`Portfolios length=${portfolios.length}`);

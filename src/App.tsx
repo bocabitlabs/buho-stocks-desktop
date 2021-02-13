@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
 import { Layout } from "antd";
 
@@ -31,107 +31,110 @@ import DividendsTransactionEdit from "pages/DividendsTransactionEdit/DividendsTr
 import SharesTransactionEdit from "pages/SharesTransactionEdit/SharesTransactionEdit";
 import RightsTransactionEdit from "pages/RightsTransactionEdit/RightsTransactionEdit";
 import CsvImport from "pages/CsvImport/CsvImport";
+import { usePortfoliosContext } from "hooks/portfolios";
+import { PortfoliosContext } from "contexts/portfolios";
 
 function App() {
   /**
    * Main
    */
-  const location = useLocation();
   const isCollapsedContext = useIsCollapsedContext();
   const selectedPortfolioContext = useSelectedPortfolioContext();
+  const portfoliosContext = usePortfoliosContext();
 
-  console.log(location.pathname);
   return (
     <Layout>
       <IsCollapsedContext.Provider value={isCollapsedContext}>
-        <SelectedPortfolioContext.Provider value={selectedPortfolioContext}>
-          <AppSidebar />
+        <PortfoliosContext.Provider value={portfoliosContext}>
+          <SelectedPortfolioContext.Provider value={selectedPortfolioContext}>
+            <AppSidebar />
 
-          <Layout>
-            <Layout.Header
-              className="site-layout-background"
-              style={{
-                padding: 0,
-                position: "fixed",
-                zIndex: 1,
-                width: "100%"
-              }}
-            >
-              <TopNavbar />
-            </Layout.Header>
+            <Layout>
+              <Layout.Header
+                className="site-layout-background"
+                style={{
+                  padding: 0,
+                  position: "fixed",
+                  zIndex: 1,
+                  width: "100%"
+                }}
+              >
+                <TopNavbar />
+              </Layout.Header>
 
-            <Layout.Content
-              className="site-layout-background"
-              style={{
-                margin: "16px",
-                marginTop: 80
-              }}
-            >
-              <Route exact path="/">
-                <Redirect to="/home" />
-              </Route>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/csv-import" component={CsvImport} />
-              <Route exact path="/settings" component={Settings} />
-              <Route exact path="/add/portfolio" component={PortfolioAdd} />
-              <Route exact path="/add/currency" component={CurrencyAdd} />
-              <Route exact path="/currencies" component={CurrencyList} />
+              <Layout.Content
+                className="site-layout-background"
+                style={{
+                  margin: "16px",
+                  marginTop: 80
+                }}
+              >
+                <Route exact path="/">
+                  <Redirect to="/home" />
+                </Route>
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/csv-import" component={CsvImport} />
+                <Route exact path="/settings" component={Settings} />
+                <Route exact path="/add/portfolio" component={PortfolioAdd} />
+                <Route exact path="/add/currency" component={CurrencyAdd} />
+                <Route exact path="/currencies" component={CurrencyList} />
 
-              <Route exact path="/add/market" component={MarketAdd} />
-              <Route exact path="/markets" component={MarketList} />
-              <Route exact path="/add/inflation" component={InflationAdd} />
-              <Route exact path="/inflations" component={InflationList} />
+                <Route exact path="/add/market" component={MarketAdd} />
+                <Route exact path="/markets" component={MarketList} />
+                <Route exact path="/add/inflation" component={InflationAdd} />
+                <Route exact path="/inflations" component={InflationList} />
 
-              <Route exact path="/sectors" component={SectorList} />
-              <Route exact path="/add/sector" component={SectorAdd} />
-              <Route
-                exact
-                path="/portfolios/:id"
-                component={PortfolioDetails}
-              />
-              <Route
-                exact
-                path="/portfolios/:id/add-company"
-                component={CompanyAdd}
-              />
-              <Route
-                exact
-                path="/portfolios/:portfolioId/companies/:companyId"
-                component={CompanyDetails}
-              />
-              <Route
-                exact
-                path="/portfolios/:portfolioId/companies/:companyId/add-shares"
-                component={SharesTransactionAdd}
-              />
-              <Route
-                exact
-                path="/portfolios/:portfolioId/companies/:companyId/shares/:transactionId/edit/"
-                component={SharesTransactionEdit}
-              />
-              <Route
-                exact
-                path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
-                component={DividendsTransactionAdd}
-              />
-              <Route
-                exact
-                path="/portfolios/:portfolioId/companies/:companyId/dividends/:transactionId/edit/"
-                component={DividendsTransactionEdit}
-              />
-              <Route
-                exact
-                path="/portfolios/:portfolioId/companies/:companyId/add-rights-transaction"
-                component={RightsTransactionAdd}
-              />
-              <Route
-                exact
-                path="/portfolios/:portfolioId/companies/:companyId/rights/:transactionId/edit/"
-                component={RightsTransactionEdit}
-              />
-            </Layout.Content>
-          </Layout>
-        </SelectedPortfolioContext.Provider>
+                <Route exact path="/sectors" component={SectorList} />
+                <Route exact path="/add/sector" component={SectorAdd} />
+                <Route
+                  exact
+                  path="/portfolios/:id"
+                  component={PortfolioDetails}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:id/add-company"
+                  component={CompanyAdd}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId"
+                  component={CompanyDetails}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId/add-shares"
+                  component={SharesTransactionAdd}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId/shares/:transactionId/edit/"
+                  component={SharesTransactionEdit}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
+                  component={DividendsTransactionAdd}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId/dividends/:transactionId/edit/"
+                  component={DividendsTransactionEdit}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId/add-rights-transaction"
+                  component={RightsTransactionAdd}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId/rights/:transactionId/edit/"
+                  component={RightsTransactionEdit}
+                />
+              </Layout.Content>
+            </Layout>
+          </SelectedPortfolioContext.Provider>
+        </PortfoliosContext.Provider>
       </IsCollapsedContext.Provider>
     </Layout>
   );

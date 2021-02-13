@@ -11,8 +11,6 @@ import { useDividendsTransactionsContext } from "hooks/dividends-transactions";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import { useRightsTransactionsContext } from "hooks/rights-transactions";
-import { PortfoliosContext } from "contexts/portfolios";
-import { usePortfoliosContext } from "hooks/portfolios";
 
 export interface Props {
   portfolioId: string;
@@ -27,10 +25,8 @@ export default function CompanyDetails(): ReactElement {
     companyId
   );
   const rightsTransactionsContext = useRightsTransactionsContext(companyId);
-  const portfoliosContext = usePortfoliosContext();
 
   return (
-    <PortfoliosContext.Provider value={portfoliosContext}>
       <CompaniesContext.Provider value={companiesContext}>
         <CompanyDetailsHeader companyId={companyId} portfolioId={portfolioId} />
         <SharesTransactionsContext.Provider value={sharesContext}>
@@ -52,6 +48,5 @@ export default function CompanyDetails(): ReactElement {
           </DividendsTransactionsContext.Provider>
         </SharesTransactionsContext.Provider>
       </CompaniesContext.Provider>
-    </PortfoliosContext.Provider>
   );
 }

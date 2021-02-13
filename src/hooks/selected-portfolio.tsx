@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { SelectedPortfolioContextType } from "contexts/selected-portfolio";
 import SettingsService from "services/settings-service";
 
@@ -10,7 +10,15 @@ export function useSelectedPortfolioContext(): SelectedPortfolioContextType {
     setSelectedPortfolio(result);
   }, []);
 
+  const update = useCallback((selectedPortfolio: string) => {
+    const result = SettingsService.updateSelectedPortfolio(selectedPortfolio);
+    const newValue = SettingsService.getSelectedPortfolio();
+    setSelectedPortfolio(newValue);
+    return result;
+  }, []);
+
   return {
-    selectedPortfolio
+    selectedPortfolio,
+    update
   };
 }

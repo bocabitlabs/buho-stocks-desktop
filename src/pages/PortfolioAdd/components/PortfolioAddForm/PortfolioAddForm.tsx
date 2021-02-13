@@ -43,8 +43,6 @@ function PortfolioAddForm(): ReactElement {
     console.log(color.hex);
     setColor(color.hex);
   };
-  console.log("AddPortfolioForm rendered");
-  console.log(currencies);
   return (
     <Form form={form} name="basic" onFinish={handleAdd}>
       <Form.Item
