@@ -1,41 +1,50 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { Button, DatePicker, Form, InputNumber, message } from "antd";
+import {
+  Button,
+  DatePicker,
+  Divider,
+  Form,
+  InputNumber,
+  message,
+  Select,
+  Typography
+} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-
 import { useHistory } from "react-router-dom";
+
 import { CompaniesContext } from "contexts/companies";
-import { DividendsTransactionFormProps } from "types/dividends-transaction";
+import { SharesTransactionFormProps } from "types/shares-transaction";
+import { SharesTransactionsContext } from "contexts/shares-transactions";
 import { useExchangeRate } from "hooks/use-exchange-rate";
-import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 
 interface Props {
   companyId: string;
   transactionId?: string;
 }
 
-export default function DividendsTransactionAddForm({
+export default function SharesTransactionAddForm({
   companyId,
   transactionId
 }: Props): ReactElement | null {
-  const key = "updatable";
+  const [form] = Form.useForm();
+  const history = useHistory();
+  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { sharesTransaction, create, getAll, getById, update } = useContext(
+    SharesTransactionsContext
+  );
+  const [color] = useState("#607d8b");
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
   const exchangeRate = useExchangeRate(exchangeName, transactionDate);
-  const [form] = Form.useForm();
-  const history = useHistory();
-  const [color] = useState("#607d8b");
-  const { company, fetchCompany } = useContext(CompaniesContext);
-  const { dividendsTransaction, create, getById, update } = useContext(
-    DividendsTransactionsContext
-  );
   const dateFormat = "DD/MM/YYYY";
+  const key = "updatable";
 
   useEffect(() => {
     const newCompany = fetchCompany(companyId);
-    if (newCompany) {
+    if (newCompany)
       if (
         newCompany.currencyAbbreviation !== undefined &&
         newCompany.portfolioCurrencyAbbreviation !== undefined
@@ -45,7 +54,6 @@ export default function DividendsTransactionAddForm({
             newCompany.portfolioCurrencyAbbreviation
         );
       }
-    }
   }, [companyId, fetchCompany]);
 
   useEffect(() => {
@@ -62,15 +70,17 @@ export default function DividendsTransactionAddForm({
     const {
       count,
       price,
+      type,
       commission,
       transactionDate,
       exchangeRate,
       notes
     } = values;
 
-    const dividend: DividendsTransactionFormProps = {
+    const transaction: SharesTransactionFormProps = {
       count,
       price,
+      type,
       commission,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       exchangeRate,
@@ -81,31 +91,23 @@ export default function DividendsTransactionAddForm({
     let changes = null;
     let updateMessage = "";
     if (transactionId) {
-      changes = update(transactionId, dividend);
-      updateMessage = "Dividends transaction has been updated";
+      changes = update(transactionId, transaction);
+      updateMessage = "Shares transaction has been updated";
     } else {
-      changes = create(dividend);
-      updateMessage = "Dividends transaction has been added";
+      changes = create(transaction);
+      updateMessage = "Shares transaction has been added";
     }
     if (changes.changes) {
+      getAll();
       history.push(
-        `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=dividends`
+        `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
       );
       message.success({
         content: updateMessage,
-        key,
-        style: {
-          marginTop: "60px"
-        }
+        key
       });
     } else {
-      message.error({
-        content: updateMessage,
-        key,
-        style: {
-          marginTop: "60px"
-        }
-      });
+      message.error({ content: "Unable to add/edit the transaction", key });
     }
   };
 
@@ -135,82 +137,114 @@ export default function DividendsTransactionAddForm({
     });
   };
 
+  const updateFieldsForING = () => {
+    console.log("Update fields for ING");
+    const count = form.getFieldValue("count");
+    const price = form.getFieldValue("price");
+    let total = form.getFieldValue("total");
+    const exchangeRate = form.getFieldValue("exchangeRate");
+
+    total = total * (1 / exchangeRate);
+    const totalInvested = +count * +price;
+    let newCommission = total - totalInvested;
+
+    if (newCommission < 0) {
+      newCommission *= -1;
+    }
+
+    form.setFieldsValue({
+      commission: newCommission
+    });
+  };
+
   return (
     <Form
       form={form}
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        count: dividendsTransaction?.count,
-        price: dividendsTransaction?.price,
-        commission: dividendsTransaction?.commission,
-        exchangeRate: dividendsTransaction?.exchangeRate,
-        notes: dividendsTransaction?.notes,
-        transactionDate: dividendsTransaction
-          ? moment(dividendsTransaction?.transactionDate)
-          : moment(new Date(), dateFormat)
+        count: sharesTransaction?.count,
+        price: sharesTransaction?.price,
+        commission: sharesTransaction?.commission,
+        exchangeRate: sharesTransaction?.exchangeRate,
+        notes: sharesTransaction?.notes,
+        transactionDate: sharesTransaction
+          ? moment(sharesTransaction.transactionDate)
+          : moment(new Date(), dateFormat),
+        type: sharesTransaction ? sharesTransaction.type : "BUY"
       }}
     >
       <Form.Item
         name="count"
-        label="Number of Shares"
+        label="Number of Shares:"
         rules={[
           { required: true, message: "Please input the number of shares" }
         ]}
       >
-        <InputNumber style={{ width: "20em" }} min={0} step={1} />
+        <InputNumber min={0} step={1} style={{ width: "100%" }} />
       </Form.Item>
       <Form.Item
         name="price"
-        label="Dividend per share"
+        label="Price per share (Gross):"
         rules={[
           { required: true, message: "Please input the price per share" }
         ]}
       >
         <InputNumber
-          style={{ width: "20em" }}
           decimalSeparator="."
           formatter={(value) => `${company?.currencySymbol} ${value}`}
           min={0}
           step={0.001}
+          style={{ width: "100%" }}
         />
       </Form.Item>
       <Form.Item
+        name="type"
+        label="Operation's type:"
+        rules={[
+          { required: true, message: "Please input the type of operation" }
+        ]}
+      >
+        <Select placeholder="Select a option">
+          <Select.Option value="BUY">Buy</Select.Option>
+          <Select.Option value="SELL">Sell</Select.Option>
+        </Select>
+      </Form.Item>
+      <Form.Item
         name="commission"
-        label="Total commission"
+        label="Total commission:"
         rules={[
           { required: true, message: "Please input the total commission" }
         ]}
       >
         <InputNumber
-          style={{ width: "20em" }}
           decimalSeparator="."
           formatter={(value) => `${company?.currencySymbol} ${value}`}
           min={0}
           step={0.001}
+          style={{ width: "100%" }}
         />
       </Form.Item>
       <Form.Item
         name="transactionDate"
-        label="Operation's date"
+        label="Operation's date:"
         rules={[
           { required: true, message: "Please input the date of the operation" }
         ]}
       >
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
+
       <Form.Item
         name="exchangeRate"
-        label="Exchange rate"
-        rules={[
-          { required: true, message: "Please input the price per share" }
-        ]}
+        label="Exchange rate:"
+        rules={[{ required: true, message: "Please input the exchange rate" }]}
       >
         <InputNumber
-          style={{ width: "20em" }}
           decimalSeparator="."
           min={0}
           step={0.001}
+          style={{ width: "100%" }}
         />
       </Form.Item>
       <Form.Item>
@@ -221,6 +255,36 @@ export default function DividendsTransactionAddForm({
           Get exchange rate ({exchangeName})
         </Button>
       </Form.Item>
+
+      {company.broker.toLowerCase().includes("ing") && (
+        <div>
+          <Divider plain>Only ING</Divider>
+          <Typography.Text type="secondary">
+            ING doesn't include a commission field, so it needs to be
+            calculated. Commission and price will be recalculated from total.
+          </Typography.Text>
+
+          <Form.Item name="total" label="Total (€):">
+            <InputNumber
+              decimalSeparator="."
+              formatter={(value) => `€ ${value}`}
+              min={0}
+              step={0.001}
+              style={{ width: '100%' }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="default"
+              htmlType="button"
+              onClick={updateFieldsForING}
+            >
+              Update Values from total
+            </Button>
+          </Form.Item>
+          <Divider plain />
+        </div>
+      )}
 
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />

@@ -21,7 +21,10 @@ export const INGTradesImport = ({ portfolio }: Props) => {
         element.data[0],
         dateRegex.test(element.data[0])
       );
-      return dateRegex.test(element.data[0]) && validTransactionTypes.includes(element.data[1]);
+      return (
+        dateRegex.test(element.data[0]) &&
+        validTransactionTypes.includes(element.data[1])
+      );
     });
     console.log(filteredData);
 
@@ -39,18 +42,28 @@ export const INGTradesImport = ({ portfolio }: Props) => {
           <span>Click to upload.</span>
         </CSVReader>
       </div>
-      <Typography.Title level={4}>Data:</Typography.Title>
-      <ol>
-        {data &&
-          data.map((element: any) => {
-            return (
-              <INGTradesImportForm
-                inputData={element.data}
-                portfolio={portfolio}
-              />
-            );
-          })}
-      </ol>
+      {data.length > 0 && (
+        <div>
+          <Typography.Title level={4}>
+            Importing trades from ING:
+          </Typography.Title>
+          <ol>
+            {data.map((element: any) => {
+              return (
+                <INGTradesImportForm
+                  inputData={element.data}
+                  portfolio={portfolio}
+                />
+              );
+            })}
+          </ol>
+        </div>
+      )}
+      {data.length === 0 && (
+        <div>
+          <Typography.Title level={4}>No trades found</Typography.Title>
+        </div>
+      )}
     </div>
   );
 };

@@ -8,7 +8,7 @@ import { CompaniesContext } from "../../contexts/companies";
 import RightsTransactionAddHeader from "./components/RightsTransactionAddHeader/RightsTransactionAddHeader";
 import { useRightsTransactionsContext } from "hooks/rights-transactions";
 import { RightsTransactionContext } from "contexts/rights-transactions";
-import RightsTransactionAddForm from "./components/RightsTransactionAddForm/RightsTransactionAddForm";
+import RightsTransactionAddForm from "components/RightsTransactionAddForm/RightsTransactionAddForm";
 
 export interface Props {
   portfolioId: string;

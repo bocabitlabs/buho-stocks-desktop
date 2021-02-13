@@ -1,4 +1,5 @@
 import sendIpcSql from "message-control/renderer";
+import moment from "moment";
 import { SharesTransaction, SharesTransactionFormProps } from "types/shares-transaction";
 import { deleteById } from "./operations";
 
@@ -17,6 +18,8 @@ export default class SharesTransactionsDAO {
       , "transactionDate"
       , "companyId"
       , "color"
+      , "creation_date"
+      , "last_update_date"
     )
     VALUES
     (
@@ -29,6 +32,8 @@ export default class SharesTransactionsDAO {
       , '${sharesTransaction.transactionDate}'
       , '${sharesTransaction.companyId}'
       , '${sharesTransaction.color}'
+      , '${moment(new Date())}'
+      , '${moment(new Date())}'
     );
     `;
     const results = sendIpcSql(sql, "insert");
@@ -111,6 +116,7 @@ export default class SharesTransactionsDAO {
     , companyId = '${transaction.companyId}'
     , color = '${transaction.color}'
     , type = '${transaction.type}'
+    , last_update_date = '${moment(new Date())}'
     WHERE sharesTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "update");

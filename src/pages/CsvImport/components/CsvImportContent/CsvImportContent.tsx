@@ -1,11 +1,12 @@
-import { Select, Typography } from "antd";
+import { Select } from "antd";
+import { Form } from "antd";
 import React, { ReactElement, useEffect, useState } from "react";
 
 import PortfolioService from "services/portfolio-service";
 import { IPortfolio } from "types/portfolio";
 
 import { IBDividendsImport } from "../IB/IBDividendsImport/IBDividendsImport";
-import { IBTradesImport } from "../IB/IBDividendsImport/IBTradesImport/IBTradesImport";
+import { IBTradesImport } from "../IB/IBTradesImport/IBTradesImport";
 import { INGDividendsImport } from "../ING/INGDividendsImport/INGDividendsImport";
 import { INGTradesImport } from "../ING/INGTradesImport/INGTradesImport";
 
@@ -41,44 +42,48 @@ export default function CsvImportContent(): ReactElement {
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
-        <Typography.Text>
-          Select the portfolio to import the data:{" "}
-        </Typography.Text>
-        <Select placeholder="Portfolio" onChange={handlePortfolioChange}>
-          {portfolios.map((element) => (
-            <Select.Option key={element.id} value={element.id}>
-              {element.name}
-            </Select.Option>
-          ))}
-        </Select>
+        <Form>
+          <Form.Item label="Select the portfolio to import the data:">
+            <Select placeholder="Portfolio" onChange={handlePortfolioChange}>
+              {portfolios.map((element) => (
+                <Select.Option key={element.id} value={element.id}>
+                  {element.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          {portfolio && (
+            <Form.Item label="Select the broker:">
+              <Select
+                placeholder="Transaction type"
+                onChange={handleBrokerChange}
+              >
+                {brokers.map((element, key) => (
+                  <Select.Option key={key} value={element}>
+                    {element}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
+          {portfolio && selectedBroker && (
+            <Form.Item label="Select the type of the transactions:">
+              <Select
+                placeholder="Transaction type"
+                onChange={handleTypeChange}
+              >
+                <Select.Option key={"1"} value={"shares"}>
+                  Shares
+                </Select.Option>
+                <Select.Option key={"2"} value={"dividends"}>
+                  Dividends
+                </Select.Option>
+              </Select>
+            </Form.Item>
+          )}
+        </Form>
       </div>
-      {portfolio && (
-        <div style={{ marginBottom: 16 }}>
-          <Typography.Text>Select the broker :</Typography.Text>
-          <Select placeholder="Transaction type" onChange={handleBrokerChange}>
-            {brokers.map((element, key) => (
-              <Select.Option key={key} value={element}>
-                {element}
-              </Select.Option>
-            ))}
-          </Select>
-        </div>
-      )}
-      {portfolio && selectedBroker && (
-        <div style={{ marginBottom: 16 }}>
-          <Typography.Text>
-            Select the type of the transactions to :{" "}
-          </Typography.Text>
-          <Select placeholder="Transaction type" onChange={handleTypeChange}>
-            <Select.Option key={"1"} value={"shares"}>
-              Shares
-            </Select.Option>
-            <Select.Option key={"2"} value={"dividends"}>
-              Dividends
-            </Select.Option>
-          </Select>
-        </div>
-      )}
+
       {transactionType === "shares" &&
         portfolio &&
         selectedBroker === "Interactive Brokers" && (

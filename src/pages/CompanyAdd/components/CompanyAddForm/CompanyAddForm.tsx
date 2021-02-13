@@ -34,11 +34,13 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
   const key = "updatable";
 
   const handleAddCompany = (values: any) => {
-    const { url, name, ticker, market, sector, currency, description } = values;
+    const { url, name, ticker, broker, market, sector, currency, description } = values;
     const company: CompanyFormFields = {
       url,
       name,
       ticker,
+      closed: false,
+      broker,
       market,
       sector,
       color,
@@ -89,8 +91,17 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
       >
         <Input type="text" placeholder="NASDQ:MSFT, NYSE:T..." />
       </Form.Item>
+      <Form.Item
+        name="broker"
+        label="Broker"
+        rules={[
+          { required: true, message: "Please input the company's broker" }
+        ]}
+      >
+        <Input type="text"/>
+      </Form.Item>
       <Form.Item label="Color">
-        <CirclePicker onChange={handleColorChange} />
+        <CirclePicker color={color} onChange={handleColorChange} />
         <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item name="sector" label="Sector" rules={[{ required: true }]}>

@@ -1,37 +1,37 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { Button, DatePicker, Form, InputNumber, message, Select } from "antd";
+import { Button, DatePicker, Form, InputNumber, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-import { useHistory } from "react-router-dom";
 
+import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
-import { SharesTransactionFormProps } from "types/shares-transaction";
-import { SharesTransactionsContext } from "contexts/shares-transactions";
+import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { useExchangeRate } from "hooks/use-exchange-rate";
+import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 
 interface Props {
   companyId: string;
-  transactionId: string;
+  transactionId?: string;
 }
 
-export default function SharesTransactionEditForm({
+export default function DividendsTransactionAddForm({
   companyId,
   transactionId
 }: Props): ReactElement | null {
-  const [form] = Form.useForm();
-  const history = useHistory();
-  const { company, fetchCompany } = useContext(CompaniesContext);
-  const { sharesTransaction, update, getById } = useContext(
-    SharesTransactionsContext
-  );
-  const [color] = useState("#607d8b");
+  const key = "updatable";
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
   const exchangeRate = useExchangeRate(exchangeName, transactionDate);
-
-  const key = "updatable";
+  const [form] = Form.useForm();
+  const history = useHistory();
+  const [color] = useState("#607d8b");
+  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { dividendsTransaction, create, getById, update } = useContext(
+    DividendsTransactionsContext
+  );
+  const dateFormat = "DD/MM/YYYY";
 
   useEffect(() => {
     const newCompany = fetchCompany(companyId);
@@ -46,10 +46,15 @@ export default function SharesTransactionEditForm({
         );
       }
     }
-    getById(transactionId);
-  }, [companyId, fetchCompany, transactionId, getById]);
+  }, [companyId, fetchCompany]);
 
-  if (company === null || sharesTransaction === null) {
+  useEffect(() => {
+    if (transactionId) {
+      getById(transactionId);
+    }
+  }, [transactionId, getById]);
+
+  if (company === null) {
     return null;
   }
 
@@ -57,17 +62,15 @@ export default function SharesTransactionEditForm({
     const {
       count,
       price,
-      type,
       commission,
       transactionDate,
       exchangeRate,
       notes
     } = values;
 
-    const transaction: SharesTransactionFormProps = {
+    const dividend: DividendsTransactionFormProps = {
       count,
       price,
-      type,
       commission,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       exchangeRate,
@@ -75,24 +78,36 @@ export default function SharesTransactionEditForm({
       color,
       companyId
     };
-    console.log(values);
-    console.log("Adding the shares transaction");
-    const added = update(transactionId, transaction);
-    console.log(added);
-    if (added.changes) {
+    let changes = null;
+    let updateMessage = "";
+    if (transactionId) {
+      changes = update(transactionId, dividend);
+      updateMessage = "Dividends transaction has been updated";
+    } else {
+      changes = create(dividend);
+      updateMessage = "Dividends transaction has been added";
+    }
+    if (changes.changes) {
       history.push(
-        `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
+        `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=dividends`
       );
       message.success({
-        content: `Shares transaction has been updated`,
-        key
+        content: updateMessage,
+        key,
+        style: {
+          marginTop: "60px"
+        }
       });
     } else {
-      message.error({ content: "Unable to update shares transaction", key });
+      message.error({
+        content: updateMessage,
+        key,
+        style: {
+          marginTop: "60px"
+        }
+      });
     }
   };
-
-  const dateFormat = "DD/MM/YYYY";
 
   const transactionDateChange = (
     value: moment.Moment | null,
@@ -122,18 +137,18 @@ export default function SharesTransactionEditForm({
 
   return (
     <Form
-      layout="vertical"
       form={form}
       name="basic"
       onFinish={handleAdd}
       initialValues={{
-        count: sharesTransaction.count,
-        price: sharesTransaction.price,
-        commission: sharesTransaction.commission,
-        exchangeRate: sharesTransaction.exchangeRate,
-        notes: sharesTransaction.notes,
-        transactionDate: moment(sharesTransaction.transactionDate),
-        type: sharesTransaction.type
+        count: dividendsTransaction?.count,
+        price: dividendsTransaction?.price,
+        commission: dividendsTransaction?.commission,
+        exchangeRate: dividendsTransaction?.exchangeRate,
+        notes: dividendsTransaction?.notes,
+        transactionDate: dividendsTransaction
+          ? moment(dividendsTransaction?.transactionDate)
+          : moment(new Date(), dateFormat)
       }}
     >
       <Form.Item
@@ -143,11 +158,11 @@ export default function SharesTransactionEditForm({
           { required: true, message: "Please input the number of shares" }
         ]}
       >
-        <InputNumber min={0} step={1} />
+        <InputNumber min={0} step={1} style={{ width: '100%' }} />
       </Form.Item>
       <Form.Item
         name="price"
-        label="Price per share"
+        label="Dividend per share"
         rules={[
           { required: true, message: "Please input the price per share" }
         ]}
@@ -157,19 +172,8 @@ export default function SharesTransactionEditForm({
           formatter={(value) => `${company?.currencySymbol} ${value}`}
           min={0}
           step={0.001}
+          style={{ width: '100%' }}
         />
-      </Form.Item>
-      <Form.Item
-        name="type"
-        label="Operation's type"
-        rules={[
-          { required: true, message: "Please input the type of operation" }
-        ]}
-      >
-        <Select placeholder="Select a option">
-          <Select.Option value="BUY">Buy</Select.Option>
-          <Select.Option value="SELL">Sell</Select.Option>
-        </Select>
       </Form.Item>
       <Form.Item
         name="commission"
@@ -183,6 +187,7 @@ export default function SharesTransactionEditForm({
           formatter={(value) => `${company?.currencySymbol} ${value}`}
           min={0}
           step={0.001}
+          style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
@@ -194,27 +199,36 @@ export default function SharesTransactionEditForm({
       >
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
-
       <Form.Item
         name="exchangeRate"
         label="Exchange rate"
-        rules={[{ required: true, message: "Please input the exchange rate" }]}
+        rules={[
+          { required: true, message: "Please input the price per share" }
+        ]}
       >
-        <InputNumber decimalSeparator="." min={0} step={0.001} />
+        <InputNumber
+          decimalSeparator="."
+          min={0}
+          step={0.001}
+          style={{ width: '100%' }}
+        />
       </Form.Item>
-      <Button
-        disabled={transactionDate === null || exchangeName === null}
-        onClick={getExchangeRate}
-      >
-        Get exchange rate ({exchangeName})
-      </Button>
+      <Form.Item>
+        <Button
+          disabled={transactionDate === null || exchangeName === null}
+          onClick={getExchangeRate}
+        >
+          Get exchange rate ({exchangeName})
+        </Button>
+      </Form.Item>
+
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Edit
+          {transactionId ? "Edit Transaction" : "Add Transaction"}
         </Button>
       </Form.Item>
     </Form>

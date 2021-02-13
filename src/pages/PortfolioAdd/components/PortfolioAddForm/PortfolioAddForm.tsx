@@ -57,7 +57,7 @@ function PortfolioAddForm(): ReactElement {
         <Input type="text" />
       </Form.Item>
       <Form.Item name="color" label="Color">
-        <CirclePicker onChange={handleColorChange} />
+        <CirclePicker color={color} onChange={handleColorChange} />
         <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item

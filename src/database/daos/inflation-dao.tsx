@@ -1,3 +1,4 @@
+import moment from "moment";
 import { Inflation, InflationFormFields } from "types/inflation";
 import sendIpcSql from "../../message-control/renderer";
 import {
@@ -12,10 +13,14 @@ const addInflation = (inflation: InflationFormFields) => {
   (
       "year"
     , "percentage"
+    , "creation_date"
+    , "last_update_date"
     )
   VALUES (
       '${inflation.year}'
     , '${inflation.percentage}'
+    , '${moment(new Date())}'
+    , '${moment(new Date())}'
     );
   `;
   const results = sendIpcSql(sql, "insert");

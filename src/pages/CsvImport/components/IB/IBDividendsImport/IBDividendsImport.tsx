@@ -2,7 +2,7 @@ import { Typography } from "antd";
 import React, { useState } from "react";
 import { CSVReader } from "react-papaparse";
 import { IPortfolio } from "types/portfolio";
-import IBDividendsImportForm from "./IBDividendsImportForm/IBDividendsImportForm";
+import IBDividendsImportForm from "../IBDividendsImportForm/IBDividendsImportForm";
 
 interface Props {
   portfolio: IPortfolio;
@@ -90,21 +90,29 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
           <span>Click to upload.</span>
         </CSVReader>
       </div>
-      <Typography.Title level={4}>Dividends Data:</Typography.Title>
-      <ol>
-        {data &&
-          commissionsData &&
-          data.map((element: any) => {
-            // console.log(taxData);
-            return (
-              <IBDividendsImportForm
-                inputData={element.data}
-                portfolio={portfolio}
-                taxData={element.commissions}
-              />
-            );
-          })}
-      </ol>
+      {data.length > 0 && commissionsData && (
+        <div>
+          <Typography.Title level={4}>
+            Importing dividends from IB:
+          </Typography.Title>
+          <ol>
+            {data.map((element: any) => {
+              return (
+                <IBDividendsImportForm
+                  inputData={element.data}
+                  portfolio={portfolio}
+                  taxData={element.commissions}
+                />
+              );
+            })}
+          </ol>
+        </div>
+      )}
+      {data.length === 0 && (
+        <div>
+          <Typography.Title level={4}>No dividends found</Typography.Title>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import sendIpcSql from "message-control/renderer";
+import moment from "moment";
 import { MarketFormProps } from "types/market";
 import { deleteById } from "./operations";
 
@@ -14,6 +15,8 @@ export default class MarketDAO {
     , "openTime"
     , "closeTime"
     , "color"
+    , "creation_date"
+    , "last_update_date"
     )
     VALUES (
       '${market.name}'
@@ -21,7 +24,10 @@ export default class MarketDAO {
     , '${market.region}'
     , '${market.openTime}'
     , '${market.closeTime}'
-    , '${market.color}');
+    , '${market.color}'
+    , '${moment(new Date())}'
+    , '${moment(new Date())}'
+    );
     `;
 
     const results = sendIpcSql(sql, "insert");

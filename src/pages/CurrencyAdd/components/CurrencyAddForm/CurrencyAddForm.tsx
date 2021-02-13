@@ -62,7 +62,7 @@ function CurrencyAddForm(): ReactElement {
         <Input type="text" placeholder="EUR, USD, GBP..." />
       </Form.Item>
       <Form.Item label="Color">
-        <CirclePicker onChange={handleColorChange} />
+        <CirclePicker color={color} onChange={handleColorChange} />
         <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item

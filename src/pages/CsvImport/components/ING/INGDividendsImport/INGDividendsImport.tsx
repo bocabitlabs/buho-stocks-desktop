@@ -41,19 +41,29 @@ export const INGDividendsImport = ({ portfolio }: Props) => {
           <span>Click to upload.</span>
         </CSVReader>
       </div>
-      <Typography.Title level={4}>Data:</Typography.Title>
-      <ol>
-        {data &&
-          data.map((element: any, key) => {
-            return (
-              <INGDividendsImportForm
-                key={key}
-                inputData={element.data}
-                portfolio={portfolio}
-              />
-            );
-          })}
-      </ol>
+      {data.length > 0 && (
+        <div>
+          <Typography.Title level={4}>
+            Importing dividends from ING:
+          </Typography.Title>
+          <ol>
+            {data.map((element: any, key) => {
+              return (
+                <INGDividendsImportForm
+                  key={key}
+                  inputData={element.data}
+                  portfolio={portfolio}
+                />
+              );
+            })}
+          </ol>
+        </div>
+      )}
+      {data.length === 0 && (
+        <div>
+          <Typography.Title level={4}>No dividends found</Typography.Title>
+        </div>
+      )}
     </div>
   );
 };

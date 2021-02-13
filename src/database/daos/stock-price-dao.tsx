@@ -1,4 +1,5 @@
 import sendIpcSql from "message-control/renderer";
+import moment from "moment";
 import { StockPriceFormProps } from "types/stock-price";
 import { deleteById } from "./operations";
 
@@ -12,6 +13,8 @@ export default class StockPriceDAO {
       , "transactionDate"
       , "companyId"
       , "exchangeRate"
+      , "creation_date"
+      , "last_update_date"
     )
     VALUES
     (
@@ -19,6 +22,8 @@ export default class StockPriceDAO {
       , '${stockPrice.transactionDate}'
       , '${stockPrice.companyId}'
       , '${stockPrice.exchangeRate}'
+      , '${moment(new Date())}'
+      , '${moment(new Date())}'
     );
     `;
 

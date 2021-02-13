@@ -1,4 +1,5 @@
 import sendIpcSql from "message-control/renderer";
+import moment from "moment";
 import { PortfolioFormFields } from "types/portfolio";
 import { deleteById } from "./operations";
 
@@ -13,12 +14,16 @@ export default class PortfolioDAO {
       , "description"
       , "currencyId"
       , "color"
+      , "creation_date"
+      , "last_update_date"
     )
     VALUES (
       '${portfolio.name}'
     , '${portfolio.description}'
     , '${portfolio.currencyId}'
     , '${portfolio.color}'
+    , '${moment(new Date())}'
+    , '${moment(new Date())}'
     );
     `;
 

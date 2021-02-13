@@ -96,7 +96,7 @@ export default function INGDividendsImportForm({
       }}
     >
       <Row>
-        <Typography.Title level={4}>{companyName}</Typography.Title>
+        <Typography.Title level={5}>{companyName}</Typography.Title>
       </Row>
       <Row gutter={24}>
         <Col span={12}>

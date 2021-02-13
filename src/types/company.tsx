@@ -6,6 +6,8 @@ import { IStockPrice } from "./stock-price";
 export interface CompanyFormFields {
   name: string;
   ticker: string;
+  broker: string;
+  closed: boolean;
   url: string;
   description: string;
   currency: string;

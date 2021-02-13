@@ -1,4 +1,5 @@
 import sendIpcSql from "message-control/renderer";
+import moment from "moment";
 import {
   DividendsTransaction,
   DividendsTransactionFormProps
@@ -19,6 +20,8 @@ export default class DividendsTransactionsDAO {
       ,"transactionDate"
       ,"companyId"
       ,"color"
+      , "creation_date"
+      , "last_update_date"
     )
     VALUES
     (
@@ -30,6 +33,8 @@ export default class DividendsTransactionsDAO {
      , '${transaction.transactionDate}'
      , '${transaction.companyId}'
      , '${transaction.color}'
+     , '${moment(new Date())}'
+     , '${moment(new Date())}'
     );
     `;
 
@@ -49,6 +54,7 @@ export default class DividendsTransactionsDAO {
     , transactionDate = '${transaction.transactionDate}'
     , companyId = '${transaction.companyId}'
     , color = '${transaction.color}'
+    , last_update_date = '${moment(new Date())}'
     WHERE dividendsTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "update");

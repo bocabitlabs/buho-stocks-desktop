@@ -8,7 +8,7 @@ import { useCompaniesContext } from "hooks/companies";
 import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import SharesTransactionEditHeader from "./components/SharesTransactionEditHeader/SharesTransactionEditHeader";
-import ShareAddForm from "pages/SharesTransactionAdd/components/ShareAddForm/ShareAddForm";
+import SharesTransactionAddForm from "components/SharesTransactionAddForm/SharesTransactionAddForm";
 
 export interface Props {
   portfolioId: string;
@@ -30,7 +30,7 @@ const SharesTransactionAdd = () => {
           transactionId={transactionId}
         />
         <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-          <ShareAddForm companyId={companyId} transactionId={transactionId} />
+          <SharesTransactionAddForm companyId={companyId} transactionId={transactionId} />
         </Layout>
       </SharesTransactionsContext.Provider>
     </CompaniesContext.Provider>

@@ -1,3 +1,4 @@
+import moment from "moment";
 import { RightsTransaction, RightsTransactionFormProps } from "types/rights-transaction";
 import sendIpcSql from "../../message-control/renderer";
 import { deleteById } from "./operations";
@@ -17,6 +18,8 @@ export default class RightsTransactionsDAO {
       , "transactionDate"
       , "companyId"
       , "color"
+      , "creation_date"
+      , "last_update_date"
     )
     VALUES
     (
@@ -30,6 +33,8 @@ export default class RightsTransactionsDAO {
       , '${rightsTransaction.transactionDate}'
       , '${rightsTransaction.companyId}'
       , '${rightsTransaction.color}'
+      , '${moment(new Date())}'
+      , '${moment(new Date())}'
     );
     `;
     console.log(sql);
@@ -93,6 +98,7 @@ export default class RightsTransactionsDAO {
     , transactionDate = '${transaction.transactionDate}'
     , companyId = '${transaction.companyId}'
     , color = '${transaction.color}'
+    , last_update_date = '${moment(new Date())}'
     WHERE rightsTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "update");

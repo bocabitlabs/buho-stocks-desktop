@@ -4,6 +4,7 @@ import {
   DatePicker,
   Divider,
   Form,
+  Input,
   InputNumber,
   message,
   Select,
@@ -14,33 +15,36 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
-import { SharesTransactionFormProps } from "types/shares-transaction";
-import { SharesTransactionsContext } from "contexts/shares-transactions";
+import { RightsTransactionFormProps } from "types/rights-transaction";
 import { useExchangeRate } from "hooks/use-exchange-rate";
+import { RightsTransactionContext } from "contexts/rights-transactions";
 
 interface Props {
   companyId: string;
   transactionId?: string;
 }
 
-export default function ShareAddForm({
+/**
+ * Add a new Rights Transaction
+ */
+export default function RightsTransactionAddForm({
   companyId,
   transactionId
 }: Props): ReactElement | null {
   const [form] = Form.useForm();
-  const history = useHistory();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { sharesTransaction, create, getAll, getById, update } = useContext(
-    SharesTransactionsContext
+  const { create, getById, getAll, rightsTransaction, update } = useContext(
+    RightsTransactionContext
   );
+
+  const history = useHistory();
   const [color] = useState("#607d8b");
+  const key = "updatable";
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
   const exchangeRate = useExchangeRate(exchangeName, transactionDate);
-
-  const key = "updatable";
 
   useEffect(() => {
     const newCompany = fetchCompany(companyId);
@@ -66,7 +70,7 @@ export default function ShareAddForm({
     return null;
   }
 
-  const handleAdd = (values: any) => {
+  const handleSubmit = (values: any) => {
     const {
       count,
       price,
@@ -77,9 +81,10 @@ export default function ShareAddForm({
       notes
     } = values;
 
-    const transaction: SharesTransactionFormProps = {
+    const transaction: RightsTransactionFormProps = {
       count,
       price,
+      shares: 0,
       type,
       commission,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
@@ -92,22 +97,31 @@ export default function ShareAddForm({
     let updateMessage = "";
     if (transactionId) {
       changes = update(transactionId, transaction);
-      updateMessage = "Shares transaction has been updated";
+      updateMessage = "Rights transaction has been updated";
     } else {
       changes = create(transaction);
-      updateMessage = "Shares transaction has been added";
+      updateMessage = "Rights transaction has been added";
     }
     if (changes.changes) {
       getAll();
       history.push(
-        `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
+        `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=rights`
       );
       message.success({
         content: updateMessage,
-        key
+        key,
+        style: {
+          marginTop: "60px"
+        }
       });
     } else {
-      message.error({ content: "Unable to add/edit the transaction", key });
+      message.error({
+        content: "Unable to add/edit the transaction",
+        key,
+        style: {
+          marginTop: "60px"
+        }
+      });
     }
   };
 
@@ -143,16 +157,21 @@ export default function ShareAddForm({
     console.log("Update fields for ING");
     const count = form.getFieldValue("count");
     const price = form.getFieldValue("price");
-    let total = form.getFieldValue("total");
-    const exchangeRate = form.getFieldValue("exchangeRate");
+    const total = form.getFieldValue("total");
 
-    total = total * (1 / exchangeRate);
-    const totalInvested = +count * +price;
-    let newCommission = total - totalInvested;
+    console.log(count, price, total);
+
+    const totalAmount = +total.replace("'", "");
+    console.log(totalAmount, +count * +price);
+    let newCommission = totalAmount - +count * +price;
+
+    newCommission = +count * +price - totalAmount;
 
     if (newCommission < 0) {
       newCommission *= -1;
     }
+
+    console.log(count, totalAmount, newCommission);
 
     form.setFieldsValue({
       commission: newCommission
@@ -161,34 +180,33 @@ export default function ShareAddForm({
 
   return (
     <Form
-      layout="vertical"
       form={form}
       name="basic"
-      onFinish={handleAdd}
+      onFinish={handleSubmit}
       initialValues={{
-        count: sharesTransaction?.count,
-        price: sharesTransaction?.price,
-        commission: sharesTransaction?.commission,
-        exchangeRate: sharesTransaction?.exchangeRate,
-        notes: sharesTransaction?.notes,
-        transactionDate: sharesTransaction
-          ? moment(sharesTransaction.transactionDate)
+        count: rightsTransaction?.count,
+        price: rightsTransaction?.price,
+        commission: rightsTransaction?.commission,
+        exchangeRate: rightsTransaction?.exchangeRate,
+        notes: rightsTransaction?.notes,
+        transactionDate: rightsTransaction
+          ? moment(rightsTransaction.transactionDate)
           : moment(new Date(), dateFormat),
-        type: sharesTransaction ? sharesTransaction.type : "BUY"
+        type: rightsTransaction ? rightsTransaction.type : "BUY"
       }}
     >
       <Form.Item
         name="count"
-        label="Number of Shares"
+        label="Number of Rights"
         rules={[
           { required: true, message: "Please input the number of shares" }
         ]}
       >
-        <InputNumber min={0} step={1} />
+        <InputNumber min={0} step={1} style={{ width: "100%" }} />
       </Form.Item>
       <Form.Item
         name="price"
-        label="Price per share"
+        label="Price per right"
         rules={[
           { required: true, message: "Please input the price per share" }
         ]}
@@ -198,6 +216,7 @@ export default function ShareAddForm({
           formatter={(value) => `${company?.currencySymbol} ${value}`}
           min={0}
           step={0.001}
+          style={{ width: "100%" }}
         />
       </Form.Item>
       <Form.Item
@@ -207,7 +226,7 @@ export default function ShareAddForm({
           { required: true, message: "Please input the type of operation" }
         ]}
       >
-        <Select placeholder="Select a option">
+        <Select placeholder="Select a option" style={{ width: "20em" }}>
           <Select.Option value="BUY">Buy</Select.Option>
           <Select.Option value="SELL">Sell</Select.Option>
         </Select>
@@ -224,6 +243,7 @@ export default function ShareAddForm({
           formatter={(value) => `${company?.currencySymbol} ${value}`}
           min={0}
           step={0.001}
+          style={{ width: "100%" }}
         />
       </Form.Item>
       <Form.Item
@@ -235,13 +255,19 @@ export default function ShareAddForm({
       >
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
-
       <Form.Item
         name="exchangeRate"
         label="Exchange rate"
-        rules={[{ required: true, message: "Please input the exchange rate" }]}
+        rules={[
+          { required: true, message: "Please input the price per share" }
+        ]}
       >
-        <InputNumber decimalSeparator="." min={0} step={0.001} />
+        <InputNumber
+          decimalSeparator="."
+          min={0}
+          step={0.001}
+          style={{ width: '100%' }}
+        />
       </Form.Item>
       <Form.Item>
         <Button
@@ -252,27 +278,29 @@ export default function ShareAddForm({
         </Button>
       </Form.Item>
 
-      <Divider plain>Only ING</Divider>
-      <Typography.Text type="secondary">
-        ING doesn't include a commission field, so it needs to be calculated.
-        Commission and price will be recalculated from total.
-      </Typography.Text>
+      {company.broker.toLowerCase().includes("ing") && (
+        <div>
+          <Divider plain>Only ING</Divider>
+          <Typography.Text type="secondary">
+            ING doesn't include a commission field, so it needs to be
+            calculated. Commission and price will be recalculated from total.
+          </Typography.Text>
 
-      <Form.Item name="total" label="Total (€):">
-        <InputNumber
-          decimalSeparator="."
-          formatter={(value) => `€ ${value}`}
-          min={0}
-          step={0.001}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button type="default" htmlType="button" onClick={updateFieldsForING}>
-          Update Values from total
-        </Button>
-      </Form.Item>
-      <Divider plain />
-
+          <Form.Item name="total" label="Total:">
+            <Input style={{ width: "20em" }} />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="default"
+              htmlType="button"
+              onClick={updateFieldsForING}
+            >
+              Update Values from total
+            </Button>
+          </Form.Item>
+          <Divider plain />
+        </div>
+      )}
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />
       </Form.Item>

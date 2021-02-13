@@ -48,7 +48,7 @@ function SectorAddForm(): ReactElement {
         <Input type="text" />
       </Form.Item>
       <Form.Item label="Color">
-        <CirclePicker onChange={handleColorChange} />
+        <CirclePicker color={color} onChange={handleColorChange} />
         <Input type="hidden" value={color} />
       </Form.Item>
       <Form.Item>

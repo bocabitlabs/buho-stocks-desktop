@@ -1,4 +1,5 @@
 import sendIpcSql from "message-control/renderer";
+import moment from "moment";
 import { CurrencyFormFields } from "types/currency";
 import { deleteById } from "./operations";
 
@@ -13,13 +14,18 @@ export default class CurrencyDAO {
     , "symbol"
     , "country"
     , "color"
+    , "creation_date"
+    , "last_update_date"
     )
     VALUES (
         '${currency.name}'
       , '${currency.abbreviation}'
       , '${currency.symbol}'
       , '${currency.country}'
-      , '${currency.color}');
+      , '${currency.color}'
+      , '${moment(new Date())}'
+      , '${moment(new Date())}'
+      );
     `;
 
     const result = sendIpcSql(sql, "insert");

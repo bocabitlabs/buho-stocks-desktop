@@ -29,26 +29,37 @@ export const IBTradesImport = ({ portfolio }: Props) => {
           <span>Click to upload.</span>
         </CSVReader>
       </div>
-      <Typography.Title level={4}>Data:</Typography.Title>
-      <ol>
-        {data &&
-          data.map((element: any) => {
-            if (rowHeaders.includes(element.data[0])) {
-              if (rowSubHeaders.includes(element.data[1])) {
-                if (rowFilters.includes(element.data[3])) {
-                  console.log(element.data);
-                  return (
-                    <IBTradesImportForm
-                      inputData={element.data}
-                      portfolio={portfolio}
-                    />
-                  );
+      {data.length > 0 && (
+        <div>
+          <Typography.Title level={4}>
+            Importing trades from IB:
+          </Typography.Title>
+
+          <ol>
+            {data.map((element: any) => {
+              if (rowHeaders.includes(element.data[0])) {
+                if (rowSubHeaders.includes(element.data[1])) {
+                  if (rowFilters.includes(element.data[3])) {
+                    console.log(element.data);
+                    return (
+                      <IBTradesImportForm
+                        inputData={element.data}
+                        portfolio={portfolio}
+                      />
+                    );
+                  }
                 }
               }
-            }
-            return null;
-          })}
-      </ol>
+              return null;
+            })}
+          </ol>
+        </div>
+      )}
+      {data.length === 0 && (
+        <div>
+          <Typography.Title level={4}>No trades found</Typography.Title>
+        </div>
+      )}
     </div>
   );
 };

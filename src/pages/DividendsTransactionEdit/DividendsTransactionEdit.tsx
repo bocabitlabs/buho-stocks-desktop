@@ -8,7 +8,7 @@ import { useDividendsTransactionsContext } from "hooks/dividends-transactions";
 import { useCompaniesContext } from "hooks/companies";
 
 import DividendsTransactionEditdHeader from "./components/DividendsTransactionEditHeader/DividendsTransactionEditHeader";
-import DividendsTransactionAddForm from "pages/DividendsTransactionAdd/components/DividendsTransactionAddForm/DividendsTransactionAddForm";
+import DividendsTransactionAddForm from "components/DividendsTransactionAddForm/DividendsTransactionAddForm";
 
 export interface Props {
   portfolioId: string;

@@ -1,4 +1,5 @@
 import sendIpcSql from "message-control/renderer";
+import moment from "moment";
 import { IExchangeRateForm } from "types/exchange-rate";
 import { deleteById } from "./operations";
 
@@ -11,12 +12,15 @@ export default class ExchangeRateDAO {
         "transactionDate"
       , "exchangeValue"
       , "exchangeName"
-
+      , "creation_date"
+      , "last_update_date"
       )
     VALUES (
         '${exchangeRate.transactionDate}',
-        '${exchangeRate.exchangeValue}'
+      ,  '${exchangeRate.exchangeValue}'
       , '${exchangeRate.exchangeName}'
+      , '${moment(new Date())}'
+      , '${moment(new Date())}'
       );
     `;
     const results = sendIpcSql(sql, "insert");

@@ -1,3 +1,4 @@
+import moment from "moment";
 import sendIpcSql from "../../message-control/renderer";
 import { ICompany, CompanyFormFields } from "../../types/company";
 import { deleteById } from "./operations";
@@ -6,8 +7,34 @@ export default class CompanyDAO {
   addCompany = (company: CompanyFormFields) => {
     //Call the DB
     const sql = `INSERT INTO "companies"
-    ("name", "ticker", "description", "sectorId", "marketId", "currencyId", "portfolioId", "url", "color")
-    VALUES ('${company.name}', '${company.ticker}', '${company.description}', '${company.sector}', '${company.market}', '${company.currency}', '${company.portfolioId}', '${company.url}', '${company.color}');`;
+    ("name"
+    , "ticker"
+    , "broker"
+    , "closed"
+    , "description"
+    , "sectorId"
+    , "marketId"
+    , "currencyId"
+    , "portfolioId"
+    , "url"
+    , "color"
+    , "creation_date"
+    , "last_update_date"
+    )
+    VALUES ('${company.name}'
+    , '${company.ticker}'
+    , '${company.broker}'
+    , '${company.closed}'
+    , '${company.description}'
+    , '${company.sector}'
+    , '${company.market}'
+    , '${company.currency}'
+    , '${company.portfolioId}'
+    , '${company.url}'
+    , '${company.color}'
+    , '${moment(new Date())}'
+    , '${moment(new Date())}'
+    ) ;`;
 
     const result = sendIpcSql(sql, "insert");
     return result;
