@@ -15,8 +15,8 @@ export default class MarketDAO {
     , "openTime"
     , "closeTime"
     , "color"
-    , "creation_date"
-    , "last_update_date"
+    , "creationDate"
+    , "lastUpdateDate"
     )
     VALUES (
       '${market.name}'

@@ -12,8 +12,8 @@ export default class ExchangeRateDAO {
         "transactionDate"
       , "exchangeValue"
       , "exchangeName"
-      , "creation_date"
-      , "last_update_date"
+      , "creationDate"
+      , "lastUpdateDate"
       )
     VALUES (
         '${exchangeRate.transactionDate}',

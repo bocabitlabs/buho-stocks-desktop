@@ -14,8 +14,8 @@ export default class CurrencyDAO {
     , "symbol"
     , "country"
     , "color"
-    , "creation_date"
-    , "last_update_date"
+    , "creationDate"
+    , "lastUpdateDate"
     )
     VALUES (
         '${currency.name}'

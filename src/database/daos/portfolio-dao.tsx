@@ -14,8 +14,8 @@ export default class PortfolioDAO {
       , "description"
       , "currencyId"
       , "color"
-      , "creation_date"
-      , "last_update_date"
+      , "creationDate"
+      , "lastUpdateDate"
     )
     VALUES (
       '${portfolio.name}'

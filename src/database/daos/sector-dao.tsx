@@ -26,8 +26,8 @@ export default class SectorDAO {
     (
         "name"
       , "color"
-      , "creation_date"
-      , "last_update_date"
+      , "creationDate"
+      , "lastUpdateDate"
       )
     VALUES (
         '${sector.name}'

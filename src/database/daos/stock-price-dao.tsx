@@ -13,8 +13,8 @@ export default class StockPriceDAO {
       , "transactionDate"
       , "companyId"
       , "exchangeRate"
-      , "creation_date"
-      , "last_update_date"
+      , "creationDate"
+      , "lastUpdateDate"
     )
     VALUES
     (

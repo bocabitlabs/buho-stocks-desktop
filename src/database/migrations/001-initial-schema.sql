@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS "currencies" (
 	"color" TEXT,
 	"symbol" TEXT,
 	"country" TEXT,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 INSERT INTO "currencies" (
@@ -57,8 +57,8 @@ CREATE TABLE IF NOT EXISTS "portfolios" (
 	"color" TEXT,
 	"currencyId" INTEGER NOT NULL,
 	"hideClosedCompanies" INTEGER NOT NULL DEFAULT 0 CHECK(hideClosedCompanies IN (0, 1)),
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("currencyId") REFERENCES "currencies" ("id")
 );
@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS "markets" (
 	"region" TEXT,
 	"openTime" TEXT,
 	"closeTime" TEXT,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 INSERT INTO "markets" (
@@ -166,8 +166,8 @@ CREATE TABLE IF NOT EXISTS "sectors" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"name" TEXT NOT NULL UNIQUE,
 	"color" TEXT,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 INSERT INTO "sectors" ("name", "color")
@@ -194,8 +194,8 @@ CREATE TABLE IF NOT EXISTS "inflations" (
 	"id" INTEGER NOT NULL UNIQUE,
 	"year" INTEGER NOT NULL UNIQUE,
 	"percentage" NUMERIC NOT NULL,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT)
 );
 INSERT INTO "inflations" ("year", "percentage")
@@ -222,8 +222,8 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	"marketId" INTEGER NOT NULL,
 	"currencyId" INTEGER NOT NULL,
 	"portfolioId" INTEGER NOT NULL,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("sectorId") REFERENCES "sectors" ("id"),
 	FOREIGN KEY ("portfolioId") REFERENCES "portfolios" ("id") ON DELETE CASCADE,
@@ -236,8 +236,8 @@ CREATE TABLE IF NOT EXISTS "stockPrices" (
 	"price" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	"exchangeRate" NUMERIC NOT NULL,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ON DELETE CASCADE
 );
@@ -251,8 +251,8 @@ CREATE TABLE IF NOT EXISTS "dividendsTransactions" (
 	"color" TEXT,
 	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ON DELETE CASCADE
 );
@@ -267,8 +267,8 @@ CREATE TABLE IF NOT EXISTS "rightsTransactions" (
 	"exchangeRate" INTEGER NOT NULL,
 	"notes" TEXT,
 	"companyId" INTEGER NOT NULL,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ("id") ON DELETE CASCADE
 );
@@ -283,8 +283,8 @@ CREATE TABLE IF NOT EXISTS "sharesTransactions" (
 	"exchangeRate" NUMERIC NOT NULL,
 	"companyId" INTEGER NOT NULL,
 	"notes" TEXT,
-	"creation_date" TEXT,
-	"last_update_date" TEXT,
+	"creationDate" TEXT,
+	"lastUpdateDate" TEXT,
 	PRIMARY KEY ("id" AUTOINCREMENT),
 	FOREIGN KEY ("companyId") REFERENCES "companies" ("id") ON DELETE CASCADE
 );

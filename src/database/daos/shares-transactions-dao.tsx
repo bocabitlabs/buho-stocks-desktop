@@ -18,8 +18,8 @@ export default class SharesTransactionsDAO {
       , "transactionDate"
       , "companyId"
       , "color"
-      , "creation_date"
-      , "last_update_date"
+      , "creationDate"
+      , "lastUpdateDate"
     )
     VALUES
     (
@@ -116,7 +116,7 @@ export default class SharesTransactionsDAO {
     , companyId = '${transaction.companyId}'
     , color = '${transaction.color}'
     , type = '${transaction.type}'
-    , last_update_date = '${moment(new Date())}'
+    , lastUpdateDate = '${moment(new Date())}'
     WHERE sharesTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "update");

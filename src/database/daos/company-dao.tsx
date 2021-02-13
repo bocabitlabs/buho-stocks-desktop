@@ -10,7 +10,6 @@ export default class CompanyDAO {
     ("name"
     , "ticker"
     , "broker"
-    , "closed"
     , "description"
     , "sectorId"
     , "marketId"
@@ -18,13 +17,12 @@ export default class CompanyDAO {
     , "portfolioId"
     , "url"
     , "color"
-    , "creation_date"
-    , "last_update_date"
+    , "creationDate"
+    , "lastUpdateDate"
     )
     VALUES ('${company.name}'
     , '${company.ticker}'
     , '${company.broker}'
-    , '${company.closed}'
     , '${company.description}'
     , '${company.sector}'
     , '${company.market}'

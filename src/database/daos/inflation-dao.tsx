@@ -13,8 +13,8 @@ const addInflation = (inflation: InflationFormFields) => {
   (
       "year"
     , "percentage"
-    , "creation_date"
-    , "last_update_date"
+    , "creationDate"
+    , "lastUpdateDate"
     )
   VALUES (
       '${inflation.year}'

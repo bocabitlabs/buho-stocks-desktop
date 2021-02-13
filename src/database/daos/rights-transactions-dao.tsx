@@ -18,8 +18,8 @@ export default class RightsTransactionsDAO {
       , "transactionDate"
       , "companyId"
       , "color"
-      , "creation_date"
-      , "last_update_date"
+      , "creationDate"
+      , "lastUpdateDate"
     )
     VALUES
     (
@@ -98,7 +98,7 @@ export default class RightsTransactionsDAO {
     , transactionDate = '${transaction.transactionDate}'
     , companyId = '${transaction.companyId}'
     , color = '${transaction.color}'
-    , last_update_date = '${moment(new Date())}'
+    , lastUpdateDate = '${moment(new Date())}'
     WHERE rightsTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "update");
