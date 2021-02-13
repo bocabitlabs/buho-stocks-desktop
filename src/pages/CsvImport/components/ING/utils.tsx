@@ -3,13 +3,19 @@ import { ICompany } from "types/company";
 import { IPortfolio } from "types/portfolio";
 import { Moment } from "moment";
 
+const normalizeAndRemoveAccents = (inputString: string) => {
+  return inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
+
 export const getCompanyFromTransaction = (
   name: string,
   portfolio: IPortfolio
 ): ICompany | undefined => {
   console.log("Getting company from transaction:", name);
   const found = portfolio.companies.find((element) =>
-    element.name.toLowerCase().includes(name.toLowerCase())
+    normalizeAndRemoveAccents(element.name)
+      .toLowerCase()
+      .includes(normalizeAndRemoveAccents(name).toLowerCase())
   );
   console.log("Company found?", found);
   if (found) {
@@ -62,7 +68,6 @@ export const getPriceInCompanyCurrency = (
   }
   return initialPrice;
 };
-
 
 export function getCommission(total: number, count: number, price: number) {
   let commission = total - count * price;

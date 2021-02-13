@@ -35,19 +35,16 @@ interface Props {
 
 function formatINGRowForShares(inputData: string[]) {
   const transactionDate = moment(inputData[0], "DD/MM/YYYY");
-  const validTransactionTypes = ["COMPRA", "VENTA", "SUSCRIPCION"];
+  const validBuyTypes = ["COMPRA", "ALTA POR CANJE"];
   let transactionType = inputData[1];
   const companyName = inputData[3];
   const count = +inputData[6];
   const price = +inputData[7];
-  let total = +(inputData[9].replace("'", ""));
+  let total = +inputData[9].replace("'", "");
 
-  if (validTransactionTypes.includes(transactionType)) {
-    transactionType =
-      transactionType === ("COMPRA" || "SUSCRIPCION")
-        ? TransactionType.BUY
-        : TransactionType.SELL;
-  }
+  transactionType = validBuyTypes.includes(transactionType)
+    ? TransactionType.BUY
+    : TransactionType.SELL;
 
   return { companyName, total, transactionDate, count, price, transactionType };
 }
@@ -173,7 +170,7 @@ export default function INGTradesImportForm({
       }}
     >
       <Row>
-        <Typography.Title level={4}>{companyName}</Typography.Title>
+        <Typography.Title level={4}>{inputData[1]} {companyName}</Typography.Title>
       </Row>
       <Row gutter={24}>
         <Col span={12}>

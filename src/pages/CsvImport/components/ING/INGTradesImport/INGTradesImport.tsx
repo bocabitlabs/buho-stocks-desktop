@@ -10,7 +10,7 @@ interface Props {
 
 export const INGTradesImport = ({ portfolio }: Props) => {
   const [data, setData] = useState([]);
-  const validTransactionTypes = ["COMPRA", "VENTA"];
+  const validTransactionTypes = ["COMPRA", "VENTA", "ALTA POR CANJE"];
 
   const handleOnFileLoad = (data: any) => {
     const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/;
