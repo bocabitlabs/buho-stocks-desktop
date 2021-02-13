@@ -11,7 +11,6 @@ export default class RightsTransactionsDAO {
         "count"
       , "price"
       , "commission"
-      , "shares"
       , "type"
       , "exchangeRate"
       , "notes"
@@ -26,7 +25,6 @@ export default class RightsTransactionsDAO {
         '${rightsTransaction.count}'
       , '${rightsTransaction.price}'
       , '${rightsTransaction.commission}'
-      , '${rightsTransaction.shares}'
       , '${rightsTransaction.type}'
       , '${rightsTransaction.exchangeRate}'
       , '${rightsTransaction.notes}'
@@ -91,7 +89,6 @@ export default class RightsTransactionsDAO {
     count = '${transaction.count}'
     , price = '${transaction.price}'
     , commission = '${transaction.commission}'
-    , shares = '${transaction.shares}'
     , type = '${transaction.type}'
     , exchangeRate = '${transaction.exchangeRate}'
     , notes = '${transaction.notes}'

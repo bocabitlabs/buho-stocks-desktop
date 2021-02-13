@@ -117,7 +117,6 @@ export default function INGTradesImportForm({
         count: values.count,
         price: values.price,
         commission: commission,
-        shares: 0,
         exchangeRate: exchangeRate ? exchangeRate.exchangeValue : 1,
         transactionDate: moment(values.transactionDate, "DD/MM/YYYY").format(
           "YYYY-MM-DD"

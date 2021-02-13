@@ -81,15 +81,8 @@ export class Company implements ICompany {
       .reduce(function (accumulator: number, obj: SharesTransaction) {
         return accumulator + obj.count;
       }, 0);
-    const rightsShares = this.rightsTransactions.reduce(function (
-      accumulator: number,
-      obj: RightsTransaction
-    ) {
-      return accumulator + obj.shares;
-    },
-    0);
 
-    return buyCount + rightsShares - sellCount;
+    return buyCount - sellCount;
   }
 
   getDividendsAmount(inBaseCurrency = false): number {

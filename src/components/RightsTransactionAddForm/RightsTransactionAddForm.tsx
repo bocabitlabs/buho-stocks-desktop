@@ -84,7 +84,6 @@ export default function RightsTransactionAddForm({
     const transaction: RightsTransactionFormProps = {
       count,
       price,
-      shares: 0,
       type,
       commission,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),

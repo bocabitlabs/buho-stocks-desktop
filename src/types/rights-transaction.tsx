@@ -1,7 +1,6 @@
 import { Transaction, TransactionType } from "./transaction";
 
 export interface RightsTransactionFormProps extends Transaction {
-  shares: number;
   type: TransactionType;
 }
 

@@ -93,13 +93,6 @@ export default function RightsTransactionsTable({
         `${text.toFixed(2)} ${record.currencySymbol}`
     },
     {
-      title: "Shares",
-      dataIndex: "shares",
-      key: "shares",
-      width: 70,
-      render: (text: number, record: any) => text
-    },
-    {
       title: "Commission",
       dataIndex: "commission",
       key: "commission",
@@ -148,7 +141,6 @@ export default function RightsTransactionsTable({
       type: share.type,
       transactionDate: share.transactionDate,
       price: share.price,
-      shares: share.shares,
       commission: share.commission,
       total:
         share.type === TransactionType.BUY
