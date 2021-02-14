@@ -1,10 +1,10 @@
 import React from "react";
-
 import { Layout } from "antd";
 
 import { useHistory, useParams } from "react-router-dom";
 import { useCompaniesContext } from "hooks/companies";
 import { CompaniesContext } from "contexts/companies";
+
 import PortfolioDetailsHeader from "./components/PortfolioDetailsHeader/PortfolioDetailsHeader";
 import CompanyCardList from "./components/CompanyCardList/CompanyCardList";
 import PortfolioStats from "./components/PortfolioStats/PortfolioStats";

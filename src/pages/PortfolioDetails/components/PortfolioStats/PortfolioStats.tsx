@@ -2,7 +2,6 @@ import { Col, Row, Select, Statistic } from "antd";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useState } from "react";
 
-
 export default function PortfolioStats(): ReactElement {
   const { portfolio } = useContext(PortfoliosContext);
   const [year, setyYear] = useState("all");
@@ -45,9 +44,13 @@ export default function PortfolioStats(): ReactElement {
           onBlur={onBlur}
           onSearch={onSearch}
         >
+          <Option value="2015">2015</Option>
+          <Option value="2016">2016</Option>
+          <Option value="2017">2017</Option>
           <Option value="2018">2018</Option>
           <Option value="2019">2019</Option>
           <Option value="2020">2020</Option>
+          <Option value="2021">2021</Option>
           <Option value="all">All</Option>
         </Select>
       </div>
