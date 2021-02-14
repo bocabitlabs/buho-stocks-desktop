@@ -5,7 +5,6 @@ import {
   message,
   Row,
   Select,
-  Table,
   Typography
 } from "antd";
 import { Form } from "antd";
@@ -22,6 +21,17 @@ interface Props {
   portfolio: IPortfolio;
 }
 
+const getCompanyFromTransaction = (name: string, portfolio: IPortfolio) => {
+  console.log("Getting company from transaction:", name);
+  const found = portfolio.companies.find((element) =>
+    element.ticker.includes(name)
+  );
+  if (found) {
+    return found.id;
+  }
+  return found;
+};
+
 export default function IBTradesImportForm({
   inputData,
   portfolio
@@ -29,20 +39,32 @@ export default function IBTradesImportForm({
   const [form] = Form.useForm();
   const [formSent, setFormSent] = useState(false);
   const key = "updatable";
+
   const companyName = inputData[5];
+  const companyCurrency = inputData[4];
+  const count = +inputData[7]
+  const transactionDate = moment(inputData[6]);
+  const price = +inputData[8];
+  let commission = +inputData[11];
+  if (commission < 0) {
+    commission = commission * -1;
+  }
+
+  const company = getCompanyFromTransaction(companyName, portfolio);
+  console.log("Company is ", company);
 
   const onFinish = (values: any) => {
     console.log("Finish:", values);
-    const companyCurrency = inputData[4];
-    const transactionDate = moment(values.transactionDate).format("DD/MM/YYYY");
+    const transactionDate = moment(values.transactionDate, "DD/MM/YYYY");
     const portfolioCurrency = portfolio.currencyAbbreviation;
 
     const exchangeName = companyCurrency + portfolioCurrency;
     let exchangeRateValue = 1;
     if (companyCurrency !== portfolioCurrency) {
-      console.log(transactionDate.replace(/\//g, "-"));
+      const formattedTransactionDate = transactionDate.format("DD/MM/YYYY");
+      console.log(formattedTransactionDate.replace(/\//g, "-"));
       const exchangeRate = ExchangeRateService.get(
-        transactionDate.replace(/\//g, "-"),
+        formattedTransactionDate.replace(/\//g, "-"),
         exchangeName
       );
       console.log(exchangeRate);
@@ -58,45 +80,29 @@ export default function IBTradesImportForm({
       commission = commission * -1;
     }
 
-    console.log(exchangeName);
-    console.log(transactionDate);
-    console.log(commission);
-    console.log(exchangeRateValue);
-
     const transaction: SharesTransactionFormProps = {
       count: values.count,
       price: values.price,
       commission: commission,
       exchangeRate: exchangeRateValue,
-      transactionDate: moment(values.transactionDate).format("YYYY-MM-DD"),
+      transactionDate: transactionDate.format("YYYY-MM-DD"),
       color: "#0066cc",
-      notes: "",
+      notes: "Imported from IB CSV",
       companyId: values.company,
       type: TransactionType.BUY
     };
+    console.log(transactionDate)
+    console.log(transaction)
 
     const added = SharesTransactionsService.create(transaction);
 
     if (added.changes) {
+      setFormSent(true);
       message.success({ content: "Transaction has been added", key });
     } else {
       message.error({ content: "Unable to add the transaction", key });
     }
 
-    setFormSent(true);
-  };
-  console.log(inputData);
-  console.log(portfolio);
-
-  const getCompanyFromTransaction = (name: string) => {
-    console.log("Getting company from transaction:", name);
-    const found = portfolio.companies.find((element) =>
-      element.ticker.includes(name)
-    );
-    if (found) {
-      return found.id;
-    }
-    return found;
   };
 
   return (
@@ -104,16 +110,16 @@ export default function IBTradesImportForm({
       form={form}
       onFinish={onFinish}
       initialValues={{
-        commission: inputData[11],
-        price: inputData[8],
-        count: inputData[7],
-        transactionDate: inputData[6],
-        company: getCompanyFromTransaction(companyName)
+        commission: commission,
+        price: price,
+        count: count,
+        transactionDate: transactionDate.format("DD/MM/YYYY"),
+        company: company
       }}
     >
       <Row>
         <Typography.Title level={4}>
-          {inputData[5]} ({inputData[4]})
+          {companyName} ({companyCurrency})
         </Typography.Title>
       </Row>
       <Row gutter={24}>
@@ -122,6 +128,7 @@ export default function IBTradesImportForm({
             name="count"
             label="Count"
             rules={[{ required: true, message: "Please input the company" }]}
+            help={`Received: ${inputData[7]}`}
           >
             <Input placeholder="Count" />
           </Form.Item>
@@ -131,6 +138,7 @@ export default function IBTradesImportForm({
             name="price"
             label="Price"
             rules={[{ required: true, message: "Please input your username!" }]}
+            help={`Received: ${inputData[8]}`}
           >
             <Input placeholder="Price" />
           </Form.Item>
@@ -141,6 +149,7 @@ export default function IBTradesImportForm({
             name="commission"
             label="Commission"
             rules={[{ required: true, message: "Please input your username!" }]}
+            help={`Received: ${inputData[11]}`}
           >
             <Input placeholder="Commission" />
           </Form.Item>
@@ -166,6 +175,7 @@ export default function IBTradesImportForm({
             name="transactionDate"
             label="Date"
             rules={[{ required: true, message: "Please input your username!" }]}
+            help={`Received: ${inputData[6]}`}
           >
             <Input placeholder="Date" />
           </Form.Item>

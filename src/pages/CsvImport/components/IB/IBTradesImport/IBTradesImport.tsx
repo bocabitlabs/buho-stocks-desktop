@@ -1,8 +1,8 @@
 import { Typography } from "antd";
-import IBTradesImportForm from "pages/CsvImport/components/ING/INGTradesImportForm/INGTradesImportForm";
 import React, { useState } from "react";
 import { CSVReader } from "react-papaparse";
 import { IPortfolio } from "types/portfolio";
+import IBTradesImportForm from "../IBTradesImportForm/IBTradesImportForm";
 
 interface Props {
   portfolio: IPortfolio;
@@ -15,7 +15,15 @@ export const IBTradesImport = ({ portfolio }: Props) => {
   const [data, setData] = useState([]);
 
   const handleOnFileLoad = (data: any) => {
-    setData(data);
+    const filteredData = data.filter((element: any) => {
+      return (
+        (rowHeaders.includes(element.data[0])) &&
+        (rowSubHeaders.includes(element.data[1])) &&
+        (rowFilters.includes(element.data[3]))
+      );
+    });
+
+    setData(filteredData);
   };
 
   const handleOnError = (err: any, file: any, inputElem: any, reason: any) => {
@@ -37,20 +45,13 @@ export const IBTradesImport = ({ portfolio }: Props) => {
 
           <ol>
             {data.map((element: any) => {
-              if (rowHeaders.includes(element.data[0])) {
-                if (rowSubHeaders.includes(element.data[1])) {
-                  if (rowFilters.includes(element.data[3])) {
-                    console.log(element.data);
-                    return (
-                      <IBTradesImportForm
-                        inputData={element.data}
-                        portfolio={portfolio}
-                      />
-                    );
-                  }
-                }
-              }
-              return null;
+              console.log(element.data);
+              return (
+                <IBTradesImportForm
+                  inputData={element.data}
+                  portfolio={portfolio}
+                />
+              );
             })}
           </ol>
         </div>
