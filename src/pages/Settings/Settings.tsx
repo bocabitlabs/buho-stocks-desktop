@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 
-import { Layout, PageHeader } from "antd";
+import { Descriptions, Layout, PageHeader } from "antd";
 
 import { Link } from "react-router-dom";
 import SettingsForm from "./components/SettingsForm/SettingsForm";
 import { useSettingsContext } from "hooks/settings";
 import { SettingsContext } from "contexts/settings";
+import { version } from "utils/app-info";
 
 const Settings = () => {
   const settingsContext = useSettingsContext();
@@ -39,6 +40,9 @@ const Settings = () => {
         }}
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
+        <Descriptions title="App Info">
+          <Descriptions.Item label="Version">{version}</Descriptions.Item>
+        </Descriptions>
         <SettingsForm />
       </Layout>
     </SettingsContext.Provider>

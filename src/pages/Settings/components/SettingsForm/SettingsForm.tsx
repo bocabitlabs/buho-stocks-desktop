@@ -4,9 +4,6 @@ import { Button, Form, Input, message, Typography } from "antd";
 import { SettingsContext } from "contexts/settings";
 import { ISettingsForm } from "types/settings";
 
-import AddSampleCurrenciesForm from "../AddSampleCurrenciesForm/AddSampleCurrenciesForm";
-import AddSampleMarketsForm from "../AddSampleMarketsForm/AddSampleMarketsForm";
-
 /**
  * Add a new Currency
  */
@@ -47,7 +44,6 @@ function SettingsForm(): ReactElement | null {
 
   return (
     <>
-      <AddSampleCurrenciesForm /> <AddSampleMarketsForm />
       <Form
         form={form}
         layout="vertical"
