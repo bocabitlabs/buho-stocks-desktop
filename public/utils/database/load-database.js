@@ -6,7 +6,7 @@ const Database = require("better-sqlite3");
 
 let appPath = app.getPath("userData");
 if (isDev) {
-  appPath = "./data";
+  appPath = "./dev-data";
 }
 let databasePath = path.join(appPath, "buho-stocks.sqlite3");
 log.info(`Database Path: ${databasePath}`);

@@ -7,12 +7,13 @@ module.exports = {
     packageManager: "yarn",
     ignore: [
       "/coverage",
-      "/data",
+      "/dev-data",
       "/docs",
       "/node_modules/.cache",
-      // "!node_modules/module-x/*" //prevent module x to be included
+      "/node_modules/antd",
+      "/node_modules/@ant-design",
+      "/node_modules/@icons"
     ],
-
     asar: true
   },
   publishers: [
@@ -31,6 +32,9 @@ module.exports = {
   plugins: [["@electron-forge/plugin-auto-unpack-natives"]],
   makers: [
     {
+      name: '@electron-forge/maker-dmg'
+    },
+    {
       name: "@electron-forge/maker-squirrel",
       config: {
         name: "buho_stocks",
@@ -43,7 +47,8 @@ module.exports = {
       config: {
         options: {
           maintainer: "BocabitLabs",
-          homepage: "https://bocabit.com"
+          homepage: "https://bocabit.com",
+          description: "Long time investment stock manager app"
         }
       }
     }

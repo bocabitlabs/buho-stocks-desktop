@@ -1,5 +1,5 @@
 const { ipcMain } = require("electron");
-const { database } = require("../database/load-database");
+const { database } = require("./load-database");
 const log = require("electron-log");
 
 function handleStatement(type, statement) {

@@ -4,9 +4,9 @@ const EventEmitter = require("events");
 const { app, BrowserWindow, Menu } = require("electron");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
-require("../src/message-control/main");
+require("./utils/database/main");
 
-const { closeDB } = require("../src/database/close-database");
+const { closeDB } = require("./utils/database/close-database");
 const { applicationMenu } = require("./utils/app-menu");
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
@@ -96,7 +96,7 @@ app.whenReady().then(() => {
     loadingWindow.webContents.send("progress", message);
   });
 
-  const { createDBandMigrate } = require("../src/database/migration-database");
+  const { createDBandMigrate } = require("./utils/database/migration-database");
   const migrated = createDBandMigrate(loadingEvents);
   if (migrated) {
     log.debug("Emit: finished DB loading");

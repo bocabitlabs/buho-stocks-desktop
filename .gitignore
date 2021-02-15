@@ -29,9 +29,9 @@ config.js
 public/db.sqlite3
 public/db.sqlite3-shm
 public/db.sqlite3-wal
-data/db.sqlite3
-data/db.sqlite3-shm
-data/db.sqlite3-wal
-data/buho-stocks.sqlite3
-data/buho-stocks.sqlite3-shm
-data/buho-stocks.sqlite3-wal
+dev-data/db.sqlite3
+dev-data/db.sqlite3-shm
+dev-data/db.sqlite3-wal
+dev-data/buho-stocks.sqlite3
+dev-data/buho-stocks.sqlite3-shm
+dev-data/buho-stocks.sqlite3-wal
