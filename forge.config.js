@@ -4,6 +4,15 @@ module.exports = {
   packagerConfig: {
     icon: "src/icons/mac/icon.icns",
     name: "Buho-Stocks",
+    packageManager: "yarn",
+    ignore: [
+      "/coverage",
+      "/data",
+      "/docs",
+      "/node_modules/.cache",
+      // "!node_modules/module-x/*" //prevent module x to be included
+    ],
+
     asar: true
   },
   publishers: [
@@ -12,7 +21,7 @@ module.exports = {
       config: {
         repository: {
           owner: "bocabitlabs",
-          name: "buho-stocks",
+          name: "buho-stocks"
         },
         authToken: githubPublisherToken,
         prerelease: true
@@ -33,8 +42,8 @@ module.exports = {
       name: "@electron-forge/maker-deb",
       config: {
         options: {
-          maintainer: 'BocabitLabs',
-          homepage: 'https://bocabit.com'
+          maintainer: "BocabitLabs",
+          homepage: "https://bocabit.com"
         }
       }
     }

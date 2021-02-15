@@ -6,6 +6,15 @@ Application to manage a stocks portfolio for Buy & Hold investment.
 
 **Development**: ![Continuous Integration](https://github.com/bocabitlabs/buho-stocks/workflows/Continuous%20Integration/badge.svg?branch=development) [![codecov](https://codecov.io/gh/bocabitlabs/buho-stocks/branch/development/graph/badge.svg)](https://codecov.io/gh/bocabitlabs/buho-stocks)
 
+## 🎁 Features
+
+- Unlimited portfolios.
+- Unlimited companies per portfolio.
+- Handle stock transactions, dividends and rights.
+- Multiple currencies, exchange rates and sectors.
+- Support for inflation.
+- Import CSV files from Interactive Brokers and ING (Spain.)
+
 ## Technologies used
 
 - React
