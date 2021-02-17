@@ -16,6 +16,11 @@ export default class CompanyService {
     return new CompanyDAO().addCompany(company);
   };
 
+  exportAll = (): ICompany[] => {
+    const companies = new CompanyDAO().exportAll();
+    return companies;
+  };
+
   getCompanies = (portfolioId: string): ICompany[] => {
     console.log("CompanyService: getCompanies for portfolio=", portfolioId);
     if (portfolioId === "undefined") {

@@ -33,6 +33,7 @@ import RightsTransactionEdit from "pages/RightsTransactionEdit/RightsTransaction
 import CsvImport from "pages/CsvImport/CsvImport";
 import { usePortfoliosContext } from "hooks/portfolios";
 import { PortfoliosContext } from "contexts/portfolios";
+import ExportData from "pages/ExportData/ExportData";
 
 function App() {
   /**
@@ -73,7 +74,8 @@ function App() {
                   <Redirect to="/home" />
                 </Route>
                 <Route exact path="/home" component={Home} />
-                <Route exact path="/csv-import" component={CsvImport} />
+                <Route exact path="/import-export" component={CsvImport} />
+                <Route exact path="/export" component={ExportData} />
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/add/portfolio" component={PortfolioAdd} />
                 <Route exact path="/add/currency" component={CurrencyAdd} />

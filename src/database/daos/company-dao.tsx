@@ -1,6 +1,6 @@
 import moment from "moment";
-import sendIpcSql from "../../message-control/renderer";
-import { ICompany, CompanyFormFields } from "../../types/company";
+import sendIpcSql from "message-control/renderer";
+import { ICompany, CompanyFormFields } from "types/company";
 import { deleteById } from "./operations";
 
 export default class CompanyDAO {
@@ -36,6 +36,21 @@ export default class CompanyDAO {
 
     const result = sendIpcSql(sql, "insert");
     return result;
+  };
+
+  exportAll = () => {
+    //Call the DB
+    console.log("Export all companies");
+    const sql = `
+    SELECT *
+    FROM "companies";
+    `;
+    const results = sendIpcSql(sql);
+    if (results.length > 0) {
+      return [];
+    }
+    console.log(results)
+    return results;
   };
 
   getCompanies = (portfolioId: string) => {
