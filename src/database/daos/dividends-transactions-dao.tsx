@@ -42,6 +42,17 @@ export default class DividendsTransactionsDAO {
     return results;
   };
 
+  static exportAll = () => {
+    //Call the DB
+    console.log("Export all dividendsTransactions");
+    const sql = `
+    SELECT *
+    FROM "dividendsTransactions";
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
   static update = (transactionId: string, transaction: DividendsTransactionFormProps) => {
     const sql = `
     UPDATE dividendsTransactions

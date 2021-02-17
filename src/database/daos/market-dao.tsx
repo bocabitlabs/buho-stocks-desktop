@@ -33,6 +33,17 @@ export default class MarketDAO {
     const results = sendIpcSql(sql, "insert");
     return results;
   };
+  static exportAll = () => {
+    //Call the DB
+    console.log("Export all markets");
+    const sql = `
+    SELECT *
+    FROM "markets";
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
   static getMarkets = () => {
     //Call the DB
     console.log("Get all markets");

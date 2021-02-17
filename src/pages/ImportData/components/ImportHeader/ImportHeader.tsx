@@ -2,8 +2,8 @@ import { PageHeader } from "antd";
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 
-export default function CsvImportHeader(): ReactElement {
 
+export default function ImportDataHeader(): ReactElement {
   const routes = [
     {
       path: "/home",
@@ -18,12 +18,7 @@ export default function CsvImportHeader(): ReactElement {
     {
       path: "/import",
       name: "import",
-      breadcrumbName: "Import"
-    },
-    {
-      path: "/import/broker",
-      name: "import-broker",
-      breadcrumbName: "Broker"
+      breadcrumbName: "Import data"
     }
   ];
   function itemRender(route: any) {
@@ -32,7 +27,7 @@ export default function CsvImportHeader(): ReactElement {
   return (
     <PageHeader
       className="site-page-header"
-      title="CSV Import"
+      title="Import data"
       breadcrumb={{
         routes,
         itemRender

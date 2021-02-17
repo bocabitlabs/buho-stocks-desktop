@@ -4,6 +4,17 @@ import { SectorFormFields } from "types/sector";
 import { deleteById, getById } from "./operations";
 
 export default class SectorDAO {
+  static exportAll = () => {
+    //Call the DB
+    console.log("Export all sectors");
+    const sql = `
+    SELECT *
+    FROM "sectors";
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
   static getSectors = () => {
     //Call the DB
     console.log("Get all sectors");

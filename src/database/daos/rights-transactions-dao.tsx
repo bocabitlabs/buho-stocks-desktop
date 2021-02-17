@@ -41,6 +41,17 @@ export default class RightsTransactionsDAO {
     return results;
   };
 
+  static  exportAll = () => {
+    //Call the DB
+    console.log("Export all rights transactions");
+    const sql = `
+    SELECT *
+    FROM "rightsTransactions";
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
   static getById = (transactionId: string): RightsTransaction => {
     //Call the DB
     const sql = `

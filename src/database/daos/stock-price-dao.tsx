@@ -31,6 +31,17 @@ export default class StockPriceDAO {
     return results;
   };
 
+  static exportAll = () => {
+    //Call the DB
+    console.log("Export all stock prices");
+    const sql = `
+    SELECT *
+    FROM "stockPrices";
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
   static getStockPrices = (companyId: string) => {
     //Call the DB
     console.log("Get all price stock");
@@ -45,7 +56,10 @@ export default class StockPriceDAO {
     return results;
   };
 
-  static getLastStockPricePerYearByCompanyId = (companyId: string, year: string) => {
+  static getLastStockPricePerYearByCompanyId = (
+    companyId: string,
+    year: string
+  ) => {
     const sql = `
     SELECT *
     FROM stockPrices
@@ -53,7 +67,7 @@ export default class StockPriceDAO {
     ORDER BY strftime(stockPrices.transactionDate) DESC
     LIMIT 1;
       `;
-    const results = sendIpcSql(sql, 'get');
+    const results = sendIpcSql(sql, "get");
     console.log(results);
     return results;
   };
@@ -66,7 +80,7 @@ export default class StockPriceDAO {
     ORDER BY strftime(stockPrices.transactionDate) DESC
     LIMIT 1;
       `;
-    const results = sendIpcSql(sql, 'get');
+    const results = sendIpcSql(sql, "get");
     console.log(results);
     return results;
   };

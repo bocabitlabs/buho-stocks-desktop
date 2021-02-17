@@ -1,9 +1,14 @@
 import RightsTransactionsDAO from "database/daos/rights-transactions-dao";
-import { RightsTransactionFormProps } from "types/rights-transaction";
+import { RightsTransaction, RightsTransactionFormProps } from "types/rights-transaction";
 
 export default class RightsTransactionsService {
   static create = (transaction: RightsTransactionFormProps) => {
     return RightsTransactionsDAO.create(transaction);
+  };
+
+  static exportAll = (): RightsTransaction[] => {
+    const results = RightsTransactionsDAO.exportAll();
+    return results;
   };
 
   static getAll = (companyId: string) => {

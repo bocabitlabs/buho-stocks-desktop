@@ -31,6 +31,18 @@ export default class CurrencyDAO {
     const result = sendIpcSql(sql, "insert");
     return result;
   };
+
+  static exportAll = () => {
+    //Call the DB
+    console.log("Export all currencies");
+    const sql = `
+    SELECT *
+    FROM "currencies";
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
   static getCurrencies = () => {
     //Call the DB
     console.log("Get all currencies");

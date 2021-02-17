@@ -1,9 +1,14 @@
 import MarketDAO from "database/daos/market-dao";
-import { MarketFormProps } from "types/market";
+import { Market, MarketFormProps } from "types/market";
 
 export default class MarketService {
   static addMarket = (market: MarketFormProps) => {
     return MarketDAO.addMarket(market);
+  };
+
+  exportAll = (): Market[] => {
+    const results = MarketDAO.exportAll();
+    return results;
   };
 
   static getMarkets = () => {

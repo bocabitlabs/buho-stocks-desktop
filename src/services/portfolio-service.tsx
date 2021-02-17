@@ -14,6 +14,11 @@ export default class PortfolioService {
     return result;
   };
 
+  exportAll = (): IPortfolio[] => {
+    const results = PortfolioDAO.exportAll();
+    return results;
+  };
+
   static getAll = (): IPortfolio[] => {
     console.log("Portfolio Service: getPortfolios");
     const portfoliosData = PortfolioDAO.getAll();

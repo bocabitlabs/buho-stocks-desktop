@@ -27,9 +27,21 @@ const addInflation = (inflation: InflationFormFields) => {
   return results;
 };
 
+
 const deleteById = (id: string) => {
   //Call the DB
   const results = deleteByIdOperation("inflations", id);
+  return results;
+};
+
+const exportAll = () => {
+  //Call the DB
+  console.log("Export all inflations");
+  const sql = `
+  SELECT *
+  FROM "inflations";
+  `;
+  const results = sendIpcSql(sql);
   return results;
 };
 
@@ -61,6 +73,7 @@ const getInflationsForYear = (year: number): Inflation[] => {
 
 const exportedModule = {
   addInflation,
+  exportAll,
   deleteById,
   getAll,
   getById,

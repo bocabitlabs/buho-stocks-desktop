@@ -46,10 +46,6 @@ export default class CompanyDAO {
     FROM "companies";
     `;
     const results = sendIpcSql(sql);
-    if (results.length > 0) {
-      return [];
-    }
-    console.log(results)
     return results;
   };
 

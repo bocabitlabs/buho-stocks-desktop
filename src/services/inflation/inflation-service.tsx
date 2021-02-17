@@ -9,6 +9,11 @@ class InflationService {
     return InflationDAO.deleteById(inflationId);
   };
 
+  static exportAll = (): Inflation[] => {
+    const results = InflationDAO.exportAll();
+    return results;
+  };
+
   static getAll = () => {
     return InflationDAO.getAll();
   };

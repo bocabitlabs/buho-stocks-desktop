@@ -1,6 +1,9 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
-import { SharesTransaction, SharesTransactionFormProps } from "types/shares-transaction";
+import {
+  SharesTransaction,
+  SharesTransactionFormProps
+} from "types/shares-transaction";
 import { deleteById } from "./operations";
 
 export default class SharesTransactionsDAO {
@@ -37,6 +40,17 @@ export default class SharesTransactionsDAO {
     );
     `;
     const results = sendIpcSql(sql, "insert");
+    return results;
+  };
+
+  static exportAll = () => {
+    //Call the DB
+    console.log("Export all shares transactions");
+    const sql = `
+    SELECT *
+    FROM "sharesTransactions";
+    `;
+    const results = sendIpcSql(sql);
     return results;
   };
 
