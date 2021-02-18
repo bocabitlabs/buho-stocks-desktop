@@ -57,6 +57,7 @@ export default class RightsTransactionsDAO {
     , currencies.symbol as currencySymbol
     , currencies.name as currencyName
     , companies.name as companyName
+    , companies.ticker as ticker
   FROM "rightsTransactions"
   LEFT JOIN "companies"
     ON companies.id = rightsTransactions.companyId

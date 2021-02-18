@@ -54,6 +54,10 @@ export default class DividendsTransactionsDAO {
     , dividendsTransactions.exchangeRate as exchangeRate
     , dividendsTransactions.color as color
     , dividendsTransactions.notes as notes
+    , currencies.symbol as currencySymbol
+    , currencies.name as currencyName
+    , companies.name as companyName
+    , companies.ticker as ticker
     FROM "dividendsTransactions"
     LEFT JOIN "companies"
       ON companies.id = dividendsTransactions.companyId
