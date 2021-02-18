@@ -70,8 +70,8 @@ function App() {
               <Layout.Content
                 className="site-layout-background"
                 style={{
-                  margin: "16px",
-                  marginTop: 80
+                  margin: "74px 0 10px 10px",
+                  overflowY: "auto"
                 }}
               >
                 <Route exact path="/">

@@ -42,8 +42,25 @@ export default class CompanyDAO {
     //Call the DB
     console.log("Export all companies");
     const sql = `
-    SELECT *
-    FROM "companies";
+    SELECT companies.name as name
+      , companies.color as color
+      , companies.ticker as ticker
+      , companies.description as description
+      , companies.broker as broker
+      , companies.url as url
+      , companies.closed as closed
+      , sectors.name as sectorName
+      , currencies.name as currencyName
+      , currencies.symbol as currencySymbol
+      , portfolios.name as portfolioName
+    FROM "companies"
+    LEFT JOIN "portfolios"
+      ON portfolios.id = companies.portfolioId
+    LEFT JOIN "currencies"
+      ON currencies.id = companies.currencyId
+    LEFT JOIN "sectors"
+      ON sectors.id = companies.sectorId
+    ;
     `;
     const results = sendIpcSql(sql);
     return results;

@@ -37,11 +37,17 @@ export default class MarketDAO {
     //Call the DB
     console.log("Export all markets");
     const sql = `
-    SELECT *
+    SELECT name, color, region, description, openTime, closeTime
     FROM "markets";
     `;
     const results = sendIpcSql(sql);
     return results;
+  };
+
+  static getByName = (name: string) => {
+    const sql = `SELECT * FROM "markets" WHERE "name" = '${name}'`;
+    const result = sendIpcSql(sql, "get");
+    return result;
   };
 
   static getMarkets = () => {

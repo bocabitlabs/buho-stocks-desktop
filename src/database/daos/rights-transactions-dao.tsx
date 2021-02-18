@@ -45,8 +45,24 @@ export default class RightsTransactionsDAO {
     //Call the DB
     console.log("Export all rights transactions");
     const sql = `
-    SELECT *
-    FROM "rightsTransactions";
+    SELECT
+    rightsTransactions.count as count
+    , rightsTransactions.price as price
+    , rightsTransactions.commission as commission
+    , rightsTransactions.color as color
+    , rightsTransactions.transactionDate as transactionDate
+    , rightsTransactions.exchangeRate as exchangeRate
+    , rightsTransactions.notes as notes
+    , rightsTransactions.type as type
+    , currencies.symbol as currencySymbol
+    , currencies.name as currencyName
+    , companies.name as companyName
+  FROM "rightsTransactions"
+  LEFT JOIN "companies"
+    ON companies.id = rightsTransactions.companyId
+  LEFT JOIN "currencies"
+    ON currencies.id = companies.currencyId
+    ;
     `;
     const results = sendIpcSql(sql);
     return results;

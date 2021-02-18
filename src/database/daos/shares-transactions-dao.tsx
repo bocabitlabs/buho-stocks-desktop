@@ -47,8 +47,24 @@ export default class SharesTransactionsDAO {
     //Call the DB
     console.log("Export all shares transactions");
     const sql = `
-    SELECT *
-    FROM "sharesTransactions";
+    SELECT
+      sharesTransactions.count as count
+      , sharesTransactions.price as price
+      , sharesTransactions.commission as commission
+      , sharesTransactions.color as color
+      , sharesTransactions.transactionDate as transactionDate
+      , sharesTransactions.exchangeRate as exchangeRate
+      , sharesTransactions.notes as notes
+      , sharesTransactions.type as type
+      , currencies.symbol as currencySymbol
+      , currencies.name as currencyName
+      , companies.name as companyName
+    FROM "sharesTransactions"
+    LEFT JOIN "companies"
+      ON companies.id = sharesTransactions.companyId
+    LEFT JOIN "currencies"
+      ON currencies.id = companies.currencyId
+    ;
     `;
     const results = sendIpcSql(sql);
     return results;

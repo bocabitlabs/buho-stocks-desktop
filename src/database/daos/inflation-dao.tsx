@@ -38,7 +38,7 @@ const exportAll = () => {
   //Call the DB
   console.log("Export all inflations");
   const sql = `
-  SELECT *
+  SELECT year, percentage
   FROM "inflations";
   `;
   const results = sendIpcSql(sql);

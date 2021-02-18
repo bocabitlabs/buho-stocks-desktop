@@ -46,8 +46,20 @@ export default class DividendsTransactionsDAO {
     //Call the DB
     console.log("Export all dividendsTransactions");
     const sql = `
-    SELECT *
-    FROM "dividendsTransactions";
+    SELECT
+    dividendsTransactions.count as count
+    , dividendsTransactions.price as price
+    , dividendsTransactions.commission as commission
+    , dividendsTransactions.transactionDate as transactionDate
+    , dividendsTransactions.exchangeRate as exchangeRate
+    , dividendsTransactions.color as color
+    , dividendsTransactions.notes as notes
+    FROM "dividendsTransactions"
+    LEFT JOIN "companies"
+      ON companies.id = dividendsTransactions.companyId
+    LEFT JOIN "currencies"
+      ON currencies.id = companies.currencyId
+    ;
     `;
     const results = sendIpcSql(sql);
     return results;

@@ -11,6 +11,10 @@ export default class MarketService {
     return results;
   };
 
+  static getByName = (name: string) => {
+    return MarketDAO.getByName(name);
+  };
+
   static getMarkets = () => {
     return MarketDAO.getMarkets();
   };

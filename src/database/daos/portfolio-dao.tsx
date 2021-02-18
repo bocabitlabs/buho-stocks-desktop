@@ -35,8 +35,17 @@ export default class PortfolioDAO {
     //Call the DB
     console.log("Export all portfolios");
     const sql = `
-    SELECT *
-    FROM "portfolios";
+    SELECT portfolios.name as name
+    , portfolios.color as color
+    , portfolios.description as description
+    , portfolios.hideClosedCompanies as hideClosedCompanies
+	  , currencies.symbol as currencySymbol
+	  , currencies.name as currencyName
+    , currencies.abbreviation as currencyAbbreviation
+    FROM "portfolios"
+    LEFT JOIN "currencies"
+    ON currencies.id = portfolios.currencyId
+    ;
     `;
     const results = sendIpcSql(sql);
     return results;
