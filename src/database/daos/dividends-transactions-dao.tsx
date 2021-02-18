@@ -58,11 +58,14 @@ export default class DividendsTransactionsDAO {
     , currencies.name as currencyName
     , companies.name as companyName
     , companies.ticker as ticker
+    , portfolios.name as portfolioName
     FROM "dividendsTransactions"
     LEFT JOIN "companies"
       ON companies.id = dividendsTransactions.companyId
     LEFT JOIN "currencies"
       ON currencies.id = companies.currencyId
+    LEFT JOIN "portfolios"
+      ON portfolios.id = companies.portfolioId
     ;
     `;
     const results = sendIpcSql(sql);
