@@ -31,6 +31,12 @@ export default class PortfolioDAO {
     return result;
   };
 
+  static getByName = (name: string) => {
+    const sql = `SELECT * FROM "portfolios" WHERE "name" = '${name}'`;
+    const result = sendIpcSql(sql, "get");
+    return result;
+  };
+
   static exportAll = () => {
     //Call the DB
     console.log("Export all portfolios");

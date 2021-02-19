@@ -45,6 +45,12 @@ const exportAll = () => {
   return results;
 };
 
+const getByYear = (year: number) => {
+  const sql = `SELECT * FROM "inflations" WHERE "year" = '${year}'`;
+  const result = sendIpcSql(sql, "get");
+  return result;
+};
+
 const getAll = (): Inflation[] => {
   //Call the DB
   const sql = `
@@ -76,6 +82,7 @@ const exportedModule = {
   exportAll,
   deleteById,
   getAll,
+  getByYear,
   getById,
   getInflationsForYear
 };

@@ -21,6 +21,14 @@ export default class CompanyService {
     return companies;
   };
 
+  static getByTicker = (ticker: string) => {
+    return CompanyDAO.getByTicker(ticker);
+  };
+
+  static getByTickerPortfolio = (ticker: string, portfolioId: string) => {
+    return CompanyDAO.getByTickerPortfolio(ticker, portfolioId);
+  };
+
   getCompanies = (portfolioId: string): ICompany[] => {
     console.log("CompanyService: getCompanies for portfolio=", portfolioId);
     if (portfolioId === "undefined") {

@@ -14,6 +14,10 @@ class InflationService {
     return results;
   };
 
+  static getByYear = (year: number) => {
+    return InflationDAO.getByYear(year);
+  };
+
   static getAll = () => {
     return InflationDAO.getAll();
   };

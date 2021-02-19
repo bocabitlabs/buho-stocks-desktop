@@ -53,6 +53,7 @@ export default class CompanyDAO {
       , currencies.name as currencyName
       , currencies.symbol as currencySymbol
       , portfolios.name as portfolioName
+      , markets.name as marketName
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId
@@ -60,10 +61,24 @@ export default class CompanyDAO {
       ON currencies.id = companies.currencyId
     LEFT JOIN "sectors"
       ON sectors.id = companies.sectorId
+    LEFT JOIN "markets"
+      ON markets.id = companies.marketId
     ;
     `;
     const results = sendIpcSql(sql);
     return results;
+  };
+
+  static getByTicker = (ticker: string) => {
+    const sql = `SELECT * FROM "companies" WHERE "ticker" = '${ticker}'`;
+    const result = sendIpcSql(sql, "get");
+    return result;
+  };
+
+  static getByTickerPortfolio = (ticker: string, portfolioId: string) => {
+    const sql = `SELECT * FROM "companies" WHERE "ticker" = '${ticker}' AND "portfolioId"= '${portfolioId}'`;
+    const result = sendIpcSql(sql, "get");
+    return result;
   };
 
   getCompanies = (portfolioId: string) => {
