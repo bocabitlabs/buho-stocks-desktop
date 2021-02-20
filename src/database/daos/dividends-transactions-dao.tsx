@@ -50,9 +50,9 @@ export default class DividendsTransactionsDAO {
     dividendsTransactions.count as count
     , dividendsTransactions.price as price
     , dividendsTransactions.commission as commission
+    , dividendsTransactions.color as color
     , dividendsTransactions.transactionDate as transactionDate
     , dividendsTransactions.exchangeRate as exchangeRate
-    , dividendsTransactions.color as color
     , dividendsTransactions.notes as notes
     , currencies.symbol as currencySymbol
     , currencies.name as currencyName
