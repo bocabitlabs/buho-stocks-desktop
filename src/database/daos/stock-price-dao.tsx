@@ -35,8 +35,18 @@ export default class StockPriceDAO {
     //Call the DB
     console.log("Export all stock prices");
     const sql = `
-    SELECT *
-    FROM "stockPrices";
+    SELECT
+      stockPrices.price as price
+      , stockPrices.exchangeRate as exchangeRate
+      , stockPrices.transactionDate as transactionDate
+      , companies.ticker as ticker
+      , portfolios.name as portfolioName
+    FROM "stockPrices"
+    LEFT JOIN "companies"
+      ON companies.id = stockPrices.companyId
+    LEFT JOIN "portfolios"
+      ON portfolios.id = companies.portfolioId
+    ;
     `;
     const results = sendIpcSql(sql);
     return results;

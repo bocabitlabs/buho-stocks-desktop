@@ -10,6 +10,7 @@ import InflationService from "services/inflation/inflation-service";
 import SharesTransactionsService from "services/shares-transactions-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
 import RightsTransactionsService from "services/rights-transactions-service";
+import StockPriceService from "services/stock-price-service";
 
 export default function ExportAppDataForm(): ReactElement {
   const onFinish = (values: any) => {
@@ -89,9 +90,30 @@ export default function ExportAppDataForm(): ReactElement {
         csvContent += row + "\r\n";
       });
     }
+    if (checkbox.includes("stockPrices")) {
+      const dividendsResults = StockPriceService.exportAll();
+      dividendsResults.forEach(function (rowArray) {
+        const keys = Object.values(rowArray);
+        let row = "stockPrice," + keys.join(",");
+        csvContent += row + "\r\n";
+      });
+    }
     console.log(csvContent);
     saveFile(csvContent);
   };
+
+  const options = [
+    { label: "Companies", value: "companies" },
+    { label: "Currencies", value: "currencies" },
+    { label: "Dividends", value: "dividends" },
+    { label: "Inflations", value: "inflation" },
+    { label: "Markets", value: "markets" },
+    { label: "Portfolios", value: "portfolios" },
+    { label: "Rights", value: "rights" },
+    { label: "Sectors", value: "sectors" },
+    { label: "Shares", value: "shares" },
+    { label: "Stock Prices", value: "stockPrices" }
+  ];
 
   return (
     <Form onFinish={onFinish}>
@@ -100,35 +122,7 @@ export default function ExportAppDataForm(): ReactElement {
         of that type will be included on the export CSV file.
       </Typography.Text>
       <Form.Item name="checkbox" label="Elements to export">
-        <Checkbox.Group>
-          <Checkbox value="portfolios" style={{ lineHeight: "32px" }}>
-            Portfolios
-          </Checkbox>
-          <Checkbox value="companies" style={{ lineHeight: "32px" }}>
-            Companies
-          </Checkbox>
-          <Checkbox value="shares" style={{ lineHeight: "32px" }}>
-            Shares
-          </Checkbox>
-          <Checkbox value="dividends" style={{ lineHeight: "32px" }}>
-            Dividends
-          </Checkbox>
-          <Checkbox value="rights" style={{ lineHeight: "32px" }}>
-            Rights
-          </Checkbox>
-          <Checkbox value="sectors" style={{ lineHeight: "32px" }}>
-            Sectors
-          </Checkbox>
-          <Checkbox value="currencies" style={{ lineHeight: "32px" }}>
-            Currencies
-          </Checkbox>
-          <Checkbox value="markets" style={{ lineHeight: "32px" }}>
-            Markets
-          </Checkbox>
-          <Checkbox value="inflation" style={{ lineHeight: "32px" }}>
-            Inflation
-          </Checkbox>
-        </Checkbox.Group>
+        <Checkbox.Group options={options} />
       </Form.Item>
 
       <Form.Item>
