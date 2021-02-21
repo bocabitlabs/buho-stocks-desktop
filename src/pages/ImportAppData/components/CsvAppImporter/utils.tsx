@@ -25,8 +25,8 @@ export function importSectors(sectors: any[]) {
   let notes: string[] = [];
   sectors.forEach((sectorData: any) => {
     const sector: SectorFormFields = {
-      name: sectorData.data[2],
-      color: sectorData.data[3]
+      name: sectorData.data[1],
+      color: sectorData.data[2]
     };
     const exists = SectorService.getByName(sector.name);
     if (exists === undefined) {
@@ -48,12 +48,12 @@ export function importMarkets(markets: any[]) {
 
   markets.forEach((marketData: any) => {
     const market: MarketFormProps = {
-      name: marketData.data[2],
-      description: marketData.data[3],
-      color: marketData.data[4],
-      region: marketData.data[5],
-      openTime: marketData.data[6],
-      closeTime: marketData.data[7]
+      name: marketData.data[1],
+      color: marketData.data[2],
+      region: marketData.data[3],
+      description: marketData.data[4],
+      openTime: marketData.data[5],
+      closeTime: marketData.data[6]
     };
     const exists = MarketService.getByName(market.name);
     if (exists === undefined) {

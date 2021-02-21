@@ -8,23 +8,31 @@ export default function ImportExportSelector(): ReactElement {
 
   const goToImportPage = () => {
     history.push("/import");
-  }
+  };
 
   const goToExportPage = () => {
     history.push("/export");
-  }
+  };
 
   return (
     <div>
-      <p>
-        <Button onClick={goToImportPage} type="primary" icon={<DownloadOutlined />} size="large">
-          Import
-        </Button>
-        <Divider type="vertical">OR</Divider>
-        <Button onClick={goToExportPage} type="primary" icon={<UploadOutlined />} size="large">
-          Export
-        </Button>
-      </p>
+      <Button
+        onClick={goToImportPage}
+        type="primary"
+        icon={<DownloadOutlined />}
+        size="large"
+      >
+        Import
+      </Button>
+      <Divider type="vertical">OR</Divider>
+      <Button
+        onClick={goToExportPage}
+        type="primary"
+        icon={<UploadOutlined />}
+        size="large"
+      >
+        Export
+      </Button>
     </div>
   );
 }
