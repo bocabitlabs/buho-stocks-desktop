@@ -37,6 +37,38 @@ const openLogsFolder = () => {
   shell.showItemInFolder(logsPath);
 };
 
+const openAppDataFolder = () => {
+  let logsPath;
+  switch (process.platform) {
+    case "darwin":
+      logsPath = path.join(
+        app.getPath("home"),
+        "Library",
+        "Application Support",
+        "buho-Stocks"
+      );
+      break;
+    case "win32":
+      logsPath = path.join(
+        app.getPath("home"),
+        "AppData",
+        "Local",
+        "buho-Stocks"
+      );
+      break;
+    case "linux":
+      logsPath = path.join(
+        app.getPath("home"),
+        ".config",
+        "Buho-Stocks"
+      );
+      break;
+    default:
+      break;
+  }
+  shell.showItemInFolder(logsPath);
+};
+
 const applicationMenu = Menu.buildFromTemplate([
   {
     label: "App",
@@ -46,8 +78,16 @@ const applicationMenu = Menu.buildFromTemplate([
         label: "Open logs folder",
         accelerator: "CmdOrCtrl+L",
         click: (menuItem) => {
-          log.debug("Clicked Open logs folder");
+          log.debug("Menu: Open logs folder");
           openLogsFolder();
+        }
+      },
+      {
+        label: "Open app data folder",
+        accelerator: "CmdOrCtrl+L",
+        click: (menuItem) => {
+          log.debug("Menu: Open app data folder");
+          openAppDataFolder();
         }
       },
       {
