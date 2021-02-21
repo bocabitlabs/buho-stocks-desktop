@@ -33,6 +33,11 @@ import RightsTransactionEdit from "pages/RightsTransactionEdit/RightsTransaction
 import CsvImport from "pages/CsvImport/CsvImport";
 import { usePortfoliosContext } from "hooks/portfolios";
 import { PortfoliosContext } from "contexts/portfolios";
+import ImportExport from "pages/ImportExport/ImportExport";
+import ExportAppData from "pages/ExportAppData/ExportAppData";
+import Import from "pages/ImportData/Import";
+import ImportAppData from "pages/ImportAppData/ImportAppData";
+
 
 function App() {
   /**
@@ -65,15 +70,20 @@ function App() {
               <Layout.Content
                 className="site-layout-background"
                 style={{
-                  margin: "16px",
-                  marginTop: 80
+                  margin: "74px 0 10px 10px",
+                  overflowY: "auto"
                 }}
               >
                 <Route exact path="/">
                   <Redirect to="/home" />
                 </Route>
                 <Route exact path="/home" component={Home} />
-                <Route exact path="/csv-import" component={CsvImport} />
+                <Route exact path="/import-export" component={ImportExport} />
+                <Route exact path="/export" component={ExportAppData} />
+                <Route exact path="/import" component={Import} />
+                <Route exact path="/import/app-data" component={ImportAppData} />
+                <Route exact path="/import/broker" component={CsvImport} />
+
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/add/portfolio" component={PortfolioAdd} />
                 <Route exact path="/add/currency" component={CurrencyAdd} />

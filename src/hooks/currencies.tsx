@@ -23,7 +23,7 @@ export function useCurrenciesContext(): CurrenciesContextType {
 
   const addCurrency = useCallback((currency: CurrencyFormFields) => {
     setIsLoading(true);
-    const result = new CurrencyService().addCurrency(currency);
+    const result = CurrencyService.addCurrency(currency);
     setIsLoading(false);
     return result;
   }, []);

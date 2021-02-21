@@ -42,7 +42,8 @@ function createMainWindow() {
     width: 1100,
     height: 700,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
   });
 

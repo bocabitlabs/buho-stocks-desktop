@@ -1,6 +1,6 @@
 import moment from "moment";
-import sendIpcSql from "../../message-control/renderer";
-import { ICompany, CompanyFormFields } from "../../types/company";
+import sendIpcSql from "message-control/renderer";
+import { ICompany, CompanyFormFields } from "types/company";
 import { deleteById } from "./operations";
 
 export default class CompanyDAO {
@@ -35,6 +35,49 @@ export default class CompanyDAO {
     ) ;`;
 
     const result = sendIpcSql(sql, "insert");
+    return result;
+  };
+
+  exportAll = () => {
+    //Call the DB
+    console.log("Export all companies");
+    const sql = `
+    SELECT companies.name as name
+      , companies.color as color
+      , companies.ticker as ticker
+      , companies.description as description
+      , companies.broker as broker
+      , companies.url as url
+      , companies.closed as closed
+      , sectors.name as sectorName
+      , currencies.name as currencyName
+      , currencies.symbol as currencySymbol
+      , portfolios.name as portfolioName
+      , markets.name as marketName
+    FROM "companies"
+    LEFT JOIN "portfolios"
+      ON portfolios.id = companies.portfolioId
+    LEFT JOIN "currencies"
+      ON currencies.id = companies.currencyId
+    LEFT JOIN "sectors"
+      ON sectors.id = companies.sectorId
+    LEFT JOIN "markets"
+      ON markets.id = companies.marketId
+    ;
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
+  static getByTicker = (ticker: string) => {
+    const sql = `SELECT * FROM "companies" WHERE "ticker" = '${ticker}'`;
+    const result = sendIpcSql(sql, "get");
+    return result;
+  };
+
+  static getByTickerPortfolio = (ticker: string, portfolioId: string) => {
+    const sql = `SELECT * FROM "companies" WHERE "ticker" = '${ticker}' AND "portfolioId"= '${portfolioId}'`;
+    const result = sendIpcSql(sql, "get");
     return result;
   };
 

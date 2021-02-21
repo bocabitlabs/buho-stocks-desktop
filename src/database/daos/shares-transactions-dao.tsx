@@ -1,6 +1,9 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
-import { SharesTransaction, SharesTransactionFormProps } from "types/shares-transaction";
+import {
+  SharesTransaction,
+  SharesTransactionFormProps
+} from "types/shares-transaction";
 import { deleteById } from "./operations";
 
 export default class SharesTransactionsDAO {
@@ -37,6 +40,37 @@ export default class SharesTransactionsDAO {
     );
     `;
     const results = sendIpcSql(sql, "insert");
+    return results;
+  };
+
+  static exportAll = () => {
+    //Call the DB
+    console.log("Export all shares transactions");
+    const sql = `
+    SELECT
+      sharesTransactions.count as count
+      , sharesTransactions.price as price
+      , sharesTransactions.commission as commission
+      , sharesTransactions.color as color
+      , sharesTransactions.transactionDate as transactionDate
+      , sharesTransactions.exchangeRate as exchangeRate
+      , sharesTransactions.notes as notes
+      , sharesTransactions.type as type
+      , currencies.symbol as currencySymbol
+      , currencies.name as currencyName
+      , companies.name as companyName
+      , companies.ticker as ticker
+      , portfolios.name as portfolioName
+    FROM "sharesTransactions"
+    LEFT JOIN "companies"
+      ON companies.id = sharesTransactions.companyId
+    LEFT JOIN "currencies"
+      ON currencies.id = companies.currencyId
+    LEFT JOIN "portfolios"
+      ON portfolios.id = companies.portfolioId
+    ;
+    `;
+    const results = sendIpcSql(sql);
     return results;
   };
 

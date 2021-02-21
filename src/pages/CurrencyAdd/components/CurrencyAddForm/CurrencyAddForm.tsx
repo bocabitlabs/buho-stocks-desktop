@@ -28,7 +28,7 @@ function CurrencyAddForm(): ReactElement {
       color
     };
     //Add the currency
-    const added = new CurrencyService().addCurrency(currency);
+    const added = CurrencyService.addCurrency(currency);
     if (added.changes) {
       history.push("/currencies");
       message.success({ content: "Currency has been added", key });

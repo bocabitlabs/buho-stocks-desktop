@@ -13,7 +13,7 @@ function AddSampleCurrenciesForm(): ReactElement {
 
   const handleAddCurrencies = () => {
     currencies.forEach((currency: CurrencyFormFields) => {
-      new CurrencyService().addCurrency(currency);
+      CurrencyService.addCurrency(currency);
     });
   };
 
