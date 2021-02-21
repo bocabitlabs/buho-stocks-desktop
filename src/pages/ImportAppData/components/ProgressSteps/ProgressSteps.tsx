@@ -83,7 +83,13 @@ export default function ProgressSteps({
         content: "Waiting"
       },
       {
-        id: 10,
+        id: ImportIds.stockPrices,
+        name: "stockPrices",
+        title: "Stock prices",
+        content: "Waiting"
+      },
+      {
+        id: 11,
         name: "completed",
         title: "Done"
       }

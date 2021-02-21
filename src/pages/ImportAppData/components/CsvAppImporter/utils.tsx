@@ -7,6 +7,7 @@ import PortfolioService from "services/portfolio-service";
 import RightsTransactionsService from "services/rights-transactions-service";
 import SectorService from "services/sector-service";
 import SharesTransactionsService from "services/shares-transactions-service";
+import StockPriceService from "services/stock-price-service";
 import { CompanyFormFields } from "types/company";
 import { CurrencyFormFields } from "types/currency";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
@@ -16,6 +17,7 @@ import { PortfolioFormFields } from "types/portfolio";
 import { RightsTransactionFormProps } from "types/rights-transaction";
 import { SectorFormFields } from "types/sector";
 import { SharesTransactionFormProps } from "types/shares-transaction";
+import { StockPriceFormProps } from "types/stock-price";
 
 
 export function importSectors(sectors: any[]) {
@@ -255,5 +257,34 @@ export function importInflations(inflations: any[]) {
     totalCount++;
   });
   console.log(`Imported ${importedCount} inflations`);
+  return { importedCount, totalCount };
+}
+
+
+export function importStockPrices(dividends: any[]) {
+  let importedCount = 0;
+  let totalCount = 0;
+  console.log("Importing stock prices: ", dividends.length)
+  dividends.forEach((portfolioData: any) => {
+    const portfolio = PortfolioService.getByName(portfolioData.data[5]);
+    if (portfolio) {
+      const company = CompanyService.getByTickerPortfolio(
+        portfolioData.data[4],
+        portfolio.id
+      );
+      if (company) {
+        const transaction: StockPriceFormProps = {
+          price: portfolioData.data[1],
+          exchangeRate: portfolioData.data[2],
+          transactionDate: portfolioData.data[3],
+          companyId: company.id
+        };
+        StockPriceService.add(transaction);
+        importedCount++;
+      }
+    }
+    totalCount++;
+  });
+  console.log(`Imported ${importedCount} stock prices`);
   return { importedCount, totalCount };
 }

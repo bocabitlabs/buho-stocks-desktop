@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 
-interface ElementsFoundProps{
+interface ElementsFoundProps {
   sectorsCount: number;
   marketsCount: number;
   currenciesCount: number;
@@ -10,13 +10,14 @@ interface ElementsFoundProps{
   rightsCount: number;
   dividendsCount: number;
   inflationsCount: number;
+  stockPricesCount: number;
 }
 
 interface Props {
-  elementsFound: ElementsFoundProps
+  elementsFound: ElementsFoundProps;
 }
 
-export default function FoundItems({elementsFound}: Props): ReactElement {
+export default function FoundItems({ elementsFound }: Props): ReactElement {
   return (
     <div>
       Found:
@@ -30,6 +31,7 @@ export default function FoundItems({elementsFound}: Props): ReactElement {
         <li>{elementsFound.rightsCount} rights transactions.</li>
         <li>{elementsFound.dividendsCount} dividends transactions.</li>
         <li>{elementsFound.inflationsCount} inflations.</li>
+        <li>{elementsFound.stockPricesCount} stock prices.</li>
       </ul>
     </div>
   );

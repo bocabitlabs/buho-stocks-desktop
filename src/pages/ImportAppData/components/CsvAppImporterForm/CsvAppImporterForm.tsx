@@ -81,6 +81,13 @@ export default function CsvAppImporterForm({
           >
             Inflation
           </Checkbox>
+          <Checkbox
+            value="stockPrices"
+            style={{ lineHeight: "32px" }}
+            disabled={importStarted}
+          >
+            Stock prices
+          </Checkbox>
         </Checkbox.Group>
       </Form.Item>
 

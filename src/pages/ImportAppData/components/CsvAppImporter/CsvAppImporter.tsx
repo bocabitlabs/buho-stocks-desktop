@@ -14,11 +14,12 @@ import {
   importPortfolios,
   importRightsTransactions,
   importSectors,
-  importSharesTransactions
+  importSharesTransactions,
+  importStockPrices
 } from "./utils";
 
 export default function CsvAppImporter(): ReactElement {
-  const [data, setData] = useState([]);
+  const [imported, setImported] = useState(false);
   const [stepsNames, setStepsNames] = useState<string[]>([]);
 
   const [importStarted, setImportStarted] = useState(false);
@@ -34,46 +35,60 @@ export default function CsvAppImporter(): ReactElement {
   const [rights, setRights] = useState([]);
   const [dividends, setDividends] = useState([]);
   const [inflations, setInflations] = useState([]);
+  const [stockPrices, setStockPrices] = useState([]);
 
   const handleOnFileLoad = (data: any) => {
     console.log(data);
     const filteredSectors = data.filter((element: any) => {
       return element.data[0] === "sector";
     });
+    setSectors(filteredSectors);
+
     const filteredMarkets = data.filter((element: any) => {
       return element.data[0] === "market";
     });
+    setMarkets(filteredMarkets);
+
     const filteredCurrencies = data.filter((element: any) => {
       return element.data[0] === "currency";
     });
+    setCurrencies(filteredCurrencies);
+
     const filteredPortfolios = data.filter((element: any) => {
       return element.data[0] === "portfolio";
     });
+    setPortfolios(filteredPortfolios);
+
     const filteredCompanies = data.filter((element: any) => {
       return element.data[0] === "company";
     });
+    setCompanies(filteredCompanies);
+
     const filteredShares = data.filter((element: any) => {
       return element.data[0] === "shares";
     });
+    setShares(filteredShares);
+
     const filteredRights = data.filter((element: any) => {
       return element.data[0] === "rights";
     });
+    setRights(filteredRights);
+
     const filteredDividends = data.filter((element: any) => {
       return element.data[0] === "dividends";
     });
+    setDividends(filteredDividends);
+
     const filteredInflations = data.filter((element: any) => {
       return element.data[0] === "inflation";
     });
-    setSectors(filteredSectors);
-    setMarkets(filteredMarkets);
-    setCurrencies(filteredCurrencies);
-    setPortfolios(filteredPortfolios);
-    setCompanies(filteredCompanies);
-    setShares(filteredShares);
-    setRights(filteredRights);
-    setDividends(filteredDividends);
     setInflations(filteredInflations);
-    setData(data);
+
+    const filteredStockPrices = data.filter((element: any) => {
+      return element.data[0] === "stockPrice";
+    });
+    setStockPrices(filteredStockPrices);
+    setImported(true);
   };
 
   const handleOnError = (err: any, file: any, inputElem: any, reason: any) => {
@@ -144,7 +159,12 @@ export default function CsvAppImporter(): ReactElement {
       const { importedCount, totalCount } = importInflations(inflations);
       setImportStepText(`Imported ${importedCount}/${totalCount} inflations`);
     }
-    setImportStep(10);
+    if (checkbox.includes("stockPrices")) {
+      setImportStep(ImportIds.stockPrices);
+      const { importedCount, totalCount } = importStockPrices(stockPrices);
+      setImportStepText(`Imported ${importedCount}/${totalCount} stock prices`);
+    }
+    setImportStep(11);
   };
 
   return (
@@ -152,7 +172,7 @@ export default function CsvAppImporter(): ReactElement {
       <CSVReader onDrop={handleOnFileLoad} onError={handleOnError} noDrag>
         <span>Click to upload.</span>
       </CSVReader>
-      {data && data.length > 0 && (
+      {imported && (
         <Space direction="vertical">
           <FoundItems
             elementsFound={{
@@ -164,7 +184,8 @@ export default function CsvAppImporter(): ReactElement {
               sharesCount: shares.length,
               rightsCount: rights.length,
               dividendsCount: dividends.length,
-              inflationsCount: inflations.length
+              inflationsCount: inflations.length,
+              stockPricesCount: stockPrices.length
             }}
           />
           {importStarted ? (
