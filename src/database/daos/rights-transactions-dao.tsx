@@ -41,6 +41,37 @@ export default class RightsTransactionsDAO {
     return results;
   };
 
+  static  exportAll = () => {
+    //Call the DB
+    console.log("Export all rights transactions");
+    const sql = `
+    SELECT
+    rightsTransactions.count as count
+    , rightsTransactions.price as price
+    , rightsTransactions.commission as commission
+    , rightsTransactions.color as color
+    , rightsTransactions.transactionDate as transactionDate
+    , rightsTransactions.exchangeRate as exchangeRate
+    , rightsTransactions.notes as notes
+    , rightsTransactions.type as type
+    , currencies.symbol as currencySymbol
+    , currencies.name as currencyName
+    , companies.name as companyName
+    , companies.ticker as ticker
+    , portfolios.name as portfolioName
+  FROM "rightsTransactions"
+  LEFT JOIN "companies"
+    ON companies.id = rightsTransactions.companyId
+  LEFT JOIN "currencies"
+    ON currencies.id = companies.currencyId
+  LEFT JOIN "portfolios"
+    ON portfolios.id = companies.portfolioId
+    ;
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
   static getById = (transactionId: string): RightsTransaction => {
     //Call the DB
     const sql = `

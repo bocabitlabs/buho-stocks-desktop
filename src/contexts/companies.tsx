@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { IAddProps } from "types/common";
-import { CompanyFormFields, ICompany } from "../types/company";
+import { CompanyFormFields, ICompany } from "types/company";
 
 export type CompaniesContextType = {
   companies: ICompany[];
