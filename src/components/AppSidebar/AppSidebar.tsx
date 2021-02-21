@@ -32,7 +32,7 @@ const navLinks: RoutePathProps[] = [
   },
   { key: "-3", path: "/sectors", text: "Sectors", icon: <ClusterOutlined /> },
   { key: "-4", path: "/inflations", text: "Inflation", icon: <RiseOutlined /> },
-  { key: "-5", path: "/csv-import", text: "CSV Import", icon: <ImportOutlined /> },
+  { key: "-5", path: "/import-export", text: "Import & Export", icon: <ImportOutlined /> },
 
   {
     key: "-6",
@@ -58,7 +58,6 @@ export default function AppSidebar(): ReactElement {
   };
 
   useEffect(() => {
-    console.log(location.pathname);
     let selected =
       navLinks.find((item) => location.pathname.startsWith(item.path))?.key ||
       "";

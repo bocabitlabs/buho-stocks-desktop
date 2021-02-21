@@ -4,12 +4,12 @@ import {
   DatePicker,
   Divider,
   Form,
+  Input,
   InputNumber,
   message,
   Select,
   Typography
 } from "antd";
-import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 
@@ -287,7 +287,7 @@ export default function SharesTransactionAddForm({
       )}
 
       <Form.Item name="notes" label="Notes">
-        <TextArea rows={4} />
+        <Input.TextArea rows={4} />
       </Form.Item>
 
       <Form.Item>

@@ -42,6 +42,36 @@ export default class DividendsTransactionsDAO {
     return results;
   };
 
+  static exportAll = () => {
+    //Call the DB
+    console.log("Export all dividendsTransactions");
+    const sql = `
+    SELECT
+    dividendsTransactions.count as count
+    , dividendsTransactions.price as price
+    , dividendsTransactions.commission as commission
+    , dividendsTransactions.color as color
+    , dividendsTransactions.transactionDate as transactionDate
+    , dividendsTransactions.exchangeRate as exchangeRate
+    , dividendsTransactions.notes as notes
+    , currencies.symbol as currencySymbol
+    , currencies.name as currencyName
+    , companies.name as companyName
+    , companies.ticker as ticker
+    , portfolios.name as portfolioName
+    FROM "dividendsTransactions"
+    LEFT JOIN "companies"
+      ON companies.id = dividendsTransactions.companyId
+    LEFT JOIN "currencies"
+      ON currencies.id = companies.currencyId
+    LEFT JOIN "portfolios"
+      ON portfolios.id = companies.portfolioId
+    ;
+    `;
+    const results = sendIpcSql(sql);
+    return results;
+  };
+
   static update = (transactionId: string, transaction: DividendsTransactionFormProps) => {
     const sql = `
     UPDATE dividendsTransactions

@@ -11,9 +11,19 @@ export default function CsvImportHeader(): ReactElement {
       breadcrumbName: "Home"
     },
     {
-      path: "/csv-import",
-      name: "csv",
-      breadcrumbName: "CSV Import"
+      path: "/import-export",
+      name: "import-export",
+      breadcrumbName: "Import & Export"
+    },
+    {
+      path: "/import",
+      name: "import",
+      breadcrumbName: "Import"
+    },
+    {
+      path: "/import/broker",
+      name: "import-broker",
+      breadcrumbName: "Broker"
     }
   ];
   function itemRender(route: any) {

@@ -1,9 +1,14 @@
 import StockPriceDAO from "database/daos/stock-price-dao";
-import { StockPriceFormProps } from "types/stock-price";
+import { IStockPrice, StockPriceFormProps } from "types/stock-price";
 
 export default class StockPriceService {
   static add = (stockPrice: StockPriceFormProps) => {
     return StockPriceDAO.add(stockPrice);
+  };
+
+  static exportAll = (): IStockPrice[] => {
+    const results = StockPriceDAO.exportAll();
+    return results;
   };
 
   static getStockPrices = (companyId: string) => {
