@@ -10,7 +10,6 @@ function handleStatement(type, statement) {
 
   const queryAllStatement = () => {
     const rows = statement.all();
-    log.info(rows);
     return rows;
   };
 

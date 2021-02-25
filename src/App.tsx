@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { Redirect, Route } from "react-router-dom";
-
 import { Layout } from "antd";
 
 import TopNavbar from "./components/TopNavbar/TopNavbar";

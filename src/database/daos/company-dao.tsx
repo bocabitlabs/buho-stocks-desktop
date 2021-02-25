@@ -19,6 +19,7 @@ export default class CompanyDAO {
     , "color"
     , "creationDate"
     , "lastUpdateDate"
+    , "alternativeTickers"
     )
     VALUES ('${company.name}'
     , '${company.ticker}'
@@ -32,6 +33,7 @@ export default class CompanyDAO {
     , '${company.color}'
     , '${moment(new Date())}'
     , '${moment(new Date())}'
+    , '${company.alternativeTickers}'
     ) ;`;
 
     const result = sendIpcSql(sql, "insert");
@@ -54,6 +56,7 @@ export default class CompanyDAO {
       , currencies.symbol as currencySymbol
       , portfolios.name as portfolioName
       , markets.name as marketName
+      , companies.alternativeTickers as alternativeTickers
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId

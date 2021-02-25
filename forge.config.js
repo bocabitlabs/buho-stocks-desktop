@@ -25,7 +25,8 @@ module.exports = {
           name: "buho-stocks"
         },
         authToken: githubPublisherToken,
-        prerelease: true
+        prerelease: true,
+        draft: true
       }
     }
   ],
