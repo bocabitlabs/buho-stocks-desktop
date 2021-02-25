@@ -16,8 +16,8 @@ import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
 import { RightsTransactionFormProps } from "types/rights-transaction";
-import { useExchangeRate } from "hooks/use-exchange-rate";
 import { RightsTransactionContext } from "contexts/rights-transactions";
+import ExchangeRateService from "services/exchange-rate";
 
 interface Props {
   companyId: string;
@@ -31,20 +31,20 @@ export default function RightsTransactionAddForm({
   companyId,
   transactionId
 }: Props): ReactElement | null {
+  // Hooks
   const [form] = Form.useForm();
   const { company, fetchCompany } = useContext(CompaniesContext);
   const { create, getById, getAll, rightsTransaction, update } = useContext(
     RightsTransactionContext
   );
-
   const history = useHistory();
+  // State
   const [color] = useState("#607d8b");
   const key = "updatable";
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
-  const exchangeRate = useExchangeRate(exchangeName, transactionDate);
 
   useEffect(() => {
     const newCompany = fetchCompany(companyId);
@@ -65,6 +65,23 @@ export default function RightsTransactionAddForm({
       getById(transactionId);
     }
   }, [transactionId, getById]);
+
+  const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
+  const getExchangeRate = async () => {
+    console.log("Get exchange rate", exchangeName, transactionDate);
+    setGettingExchangeRate(true);
+    const result = await ExchangeRateService.getFromAPI(
+      transactionDate,
+      exchangeName
+    );
+
+    if (result) {
+      form.setFieldsValue({
+        exchangeRate: result.close
+      });
+    }
+    setGettingExchangeRate(false);
+  };
 
   if (company === null) {
     return null;
@@ -140,16 +157,6 @@ export default function RightsTransactionAddForm({
         company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
       );
     }
-  };
-
-  const getExchangeRate = () => {
-    let exchangeValue = 0;
-    if (exchangeRate !== null && exchangeRate !== undefined) {
-      exchangeValue = exchangeRate.exchangeValue;
-    }
-    form.setFieldsValue({
-      exchangeRate: exchangeValue
-    });
   };
 
   const updateFieldsForING = () => {
@@ -272,6 +279,7 @@ export default function RightsTransactionAddForm({
         <Button
           disabled={transactionDate === null || exchangeName === null}
           onClick={getExchangeRate}
+          loading={gettingExchangeRate}
         >
           Get exchange rate ({exchangeName})
         </Button>

@@ -31,6 +31,7 @@ export class Company implements ICompany {
   currencyAbbreviation: string;
   broker: string;
   closed: boolean;
+  alternativeTickers: string;
 
   constructor(parameters: ICompany) {
     this.id = parameters.id;
@@ -61,6 +62,7 @@ export class Company implements ICompany {
       parameters.portfolioCurrencyAbbreviation;
     this.broker = parameters.broker;
     this.closed = parameters.closed;
+    this.alternativeTickers = parameters.alternativeTickers;
   }
 
   getSharesCount(): number {

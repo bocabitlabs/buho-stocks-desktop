@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionFormProps } from "types/shares-transaction";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
-import { useExchangeRate } from "hooks/use-exchange-rate";
+import ExchangeRateService from "services/exchange-rate";
 
 interface Props {
   companyId: string;
@@ -38,9 +38,26 @@ export default function SharesTransactionAddForm({
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
-  const exchangeRate = useExchangeRate(exchangeName, transactionDate);
   const dateFormat = "DD/MM/YYYY";
   const key = "updatable";
+
+  const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
+  const getExchangeRate = async () => {
+    console.log("Get exchange rate", exchangeName, transactionDate);
+    setGettingExchangeRate(true);
+    const result = await ExchangeRateService.getFromAPI(
+      transactionDate,
+      exchangeName
+    );
+
+    if (result) {
+      console.log("Set exchange rate:", result.close);
+      form.setFieldsValue({
+        exchangeRate: result.close
+      });
+    }
+    setGettingExchangeRate(false);
+  };
 
   useEffect(() => {
     const newCompany = fetchCompany(companyId);
@@ -125,16 +142,6 @@ export default function SharesTransactionAddForm({
         company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
       );
     }
-  };
-
-  const getExchangeRate = () => {
-    let exchangeValue = 0;
-    if (exchangeRate !== null && exchangeRate !== undefined) {
-      exchangeValue = exchangeRate.exchangeValue;
-    }
-    form.setFieldsValue({
-      exchangeRate: exchangeValue
-    });
   };
 
   const updateFieldsForING = () => {
@@ -251,6 +258,7 @@ export default function SharesTransactionAddForm({
         <Button
           disabled={transactionDate === null || exchangeName === null}
           onClick={getExchangeRate}
+          loading={gettingExchangeRate}
         >
           Get exchange rate ({exchangeName})
         </Button>

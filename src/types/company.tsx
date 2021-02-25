@@ -15,6 +15,7 @@ export interface CompanyFormFields {
   sector: string;
   color: string;
   portfolioId: string;
+  alternativeTickers: string;
 }
 
 export interface ICompany extends CompanyFormFields {

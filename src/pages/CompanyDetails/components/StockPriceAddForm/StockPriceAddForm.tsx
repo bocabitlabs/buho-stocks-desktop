@@ -26,7 +26,7 @@ export default function StockPriceAddForm({
   );
   const [exchangeName, setExchangeName] = useState<string>("");
   console.log("Loading exchange rate", exchangeName, transactionDate);
-  const exchangeRate = useExchangeRate(exchangeName, transactionDate);
+  const [gettingLastPrices, setGettingLastPrices] = useState(false);
 
   useEffect(() => {
     if (company) {
@@ -41,6 +41,25 @@ export default function StockPriceAddForm({
     }
   }, [company]);
 
+  const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
+  const getExchangeRate = async () => {
+    console.log("Get exchange rate", exchangeName, transactionDate);
+    let exchangeValue = 0;
+    setGettingExchangeRate(true);
+    const result = await ExchangeRateService.getFromAPI(
+      transactionDate,
+      exchangeName
+    );
+
+    if (result) {
+      console.log("Set exchange rate:", exchangeValue);
+      form.setFieldsValue({
+        exchangeRateValue: result.close
+      });
+    }
+    setGettingExchangeRate(false);
+  };
+
   if (company === null) {
     return null;
   }
@@ -50,7 +69,7 @@ export default function StockPriceAddForm({
 
     const stockPrice: StockPriceFormProps = {
       price,
-      exchangeRate: exchangeRateValue,
+      exchangeRate: exchangeRateValue ? exchangeRateValue : 1,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       companyId: company.id
     };
@@ -97,17 +116,22 @@ export default function StockPriceAddForm({
     }
   };
 
-  const getExchangeRate = () => {
-    console.log("Get exchange rate", exchangeName, transactionDate);
-    let exchangeValue = 0;
-    console.log(exchangeRate);
-    if (exchangeRate !== null && exchangeRate !== undefined) {
-      exchangeValue = exchangeRate.exchangeValue;
+  const getLatestPrice = async () => {
+    setGettingLastPrices(true);
+    const { found, data } = await StockPriceService.getStockPriceAPI(
+      company.ticker,
+      company.alternativeTickers
+    );
+    console.log("results are");
+    console.log(data);
+    console.log(found);
+
+    if (found) {
+      form.setFieldsValue({
+        price: data?.price
+      });
     }
-    console.log("Set exchange rate:", exchangeValue);
-    form.setFieldsValue({
-      exchangeRateValue: exchangeValue
-    });
+    setGettingLastPrices(false);
   };
 
   return (
@@ -136,6 +160,16 @@ export default function StockPriceAddForm({
         />
       </Form.Item>
 
+      <Form.Item>
+        <Button
+          disabled={transactionDate === null || exchangeName === null}
+          onClick={getLatestPrice}
+          loading={gettingLastPrices}
+        >
+          Get latest price
+        </Button>
+      </Form.Item>
+
       <Form.Item
         name="transactionDate"
         label="Operation's date"
@@ -145,30 +179,38 @@ export default function StockPriceAddForm({
       >
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
+      {company.currencyAbbreviation !==
+        company.portfolioCurrencyAbbreviation && (
+        <div>
+          <Form.Item
+            name="exchangeRateValue"
+            label="Exchange Rate"
+            rules={[
+              {
+                required: true,
+                message: "Please input the exchange rate for the given day"
+              }
+            ]}
+          >
+            <InputNumber
+              style={{ width: "20em" }}
+              decimalSeparator="."
+              min={0}
+              step={0.001}
+            />
+          </Form.Item>
 
-      <Form.Item
-        name="exchangeRateValue"
-        label="Exchange Rate"
-        rules={[
-          {
-            required: true,
-            message: "Please input the exchange rate for the given day"
-          }
-        ]}
-      >
-        <InputNumber
-          style={{ width: "20em" }}
-          decimalSeparator="."
-          min={0}
-          step={0.001}
-        />
-      </Form.Item>
-      <Button
-        disabled={transactionDate === null || exchangeName === null}
-        onClick={getExchangeRate}
-      >
-        Get exchange rate ({exchangeName})
-      </Button>
+          <Form.Item>
+            <Button
+              disabled={transactionDate === null || exchangeName === null}
+              onClick={getExchangeRate}
+              loading={gettingExchangeRate}
+            >
+              Get exchange rate ({exchangeName})
+            </Button>{" "}
+          </Form.Item>
+        </div>
+      )}
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Add stock price

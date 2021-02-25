@@ -34,7 +34,17 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
   const key = "updatable";
 
   const handleAddCompany = (values: any) => {
-    const { url, name, ticker, broker, market, sector, currency, description } = values;
+    const {
+      url,
+      name,
+      ticker,
+      broker,
+      market,
+      sector,
+      currency,
+      description,
+      alternativeTickers
+    } = values;
     const company: CompanyFormFields = {
       url,
       name,
@@ -46,7 +56,8 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
       color,
       description,
       currency,
-      portfolioId
+      portfolioId,
+      alternativeTickers
     };
     const added = addCompany(company);
     if (added.changes) {
@@ -84,12 +95,21 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
       </Form.Item>
       <Form.Item
         name="ticker"
-        label="Ticker"
+        label="Main Ticker"
         rules={[
           { required: true, message: "Please input the company's ticker" }
         ]}
       >
         <Input type="text" placeholder="NASDQ:MSFT, NYSE:T..." />
+      </Form.Item>
+      <Form.Item
+        name="alternativeTickers"
+        label="Alternative tickers"
+        help={
+          "These tickers will used to get real time information of the current company."
+        }
+      >
+        <Input type="text" placeholder="MSFT, IBE.MC, UNA.AS" />
       </Form.Item>
       <Form.Item
         name="broker"
@@ -98,7 +118,7 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
           { required: true, message: "Please input the company's broker" }
         ]}
       >
-        <Input type="text"/>
+        <Input type="text" />
       </Form.Item>
       <Form.Item label="Color">
         <CirclePicker color={color} onChange={handleColorChange} />
