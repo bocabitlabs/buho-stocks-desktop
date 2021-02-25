@@ -9,7 +9,7 @@ require("./utils/database/main");
 const { closeDB } = require("./utils/database/close-database");
 const { applicationMenu } = require("./utils/app-menu");
 // Conditionally include the dev tools installer to load React Dev Tools
-let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
+let installExtension, REACT_DEVELOPER_TOOLS;
 
 const loadingEvents = new EventEmitter();
 const createLoadingWindow = () =>
@@ -18,13 +18,6 @@ const createLoadingWindow = () =>
       nodeIntegration: true
     }
   });
-
-if (isDev) {
-  log.info("Installing devtools");
-  const devTools = require("electron-devtools-installer");
-  installExtension = devTools.default;
-  REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
-}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling
 if (require("electron-squirrel-startup")) {
@@ -43,7 +36,8 @@ function createMainWindow() {
     height: 700,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      webSecurity: false
     }
   });
 
@@ -52,11 +46,6 @@ function createMainWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
-
-  // Open the DevTools.
-  if (isDev) {
-    mainWindow.webContents.openDevTools({ mode: "detach" });
-  }
 
   const handleRedirect = (e, url) => {
     /**
@@ -70,12 +59,28 @@ function createMainWindow() {
 
   mainWindow.webContents.on("will-navigate", handleRedirect);
   mainWindow.webContents.on("new-window", handleRedirect);
+
+  // Open the DevTools.
+  mainWindow.webContents.once('dom-ready', () => {
+    if (isDev) {
+      mainWindow.webContents.openDevTools({ mode: "detach" })
+    }
+  })
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  if (isDev) {
+    const devTools = require("electron-devtools-installer");
+    installExtension = devTools.default;
+    REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
+    installExtension(REACT_DEVELOPER_TOOLS)
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log("An error occurred: ", err));
+  }
+
   log.debug("Creating loading window");
   const loadingWindow = createLoadingWindow();
   log.debug("Loading loading.html file");
