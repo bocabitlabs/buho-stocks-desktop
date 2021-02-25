@@ -6,8 +6,8 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
-import { useExchangeRate } from "hooks/use-exchange-rate";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
+import ExchangeRateService from "services/exchange-rate";
 
 interface Props {
   companyId: string;
@@ -23,7 +23,6 @@ export default function DividendsTransactionAddForm({
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
-  const exchangeRate = useExchangeRate(exchangeName, transactionDate);
   const [form] = Form.useForm();
   const history = useHistory();
   const [color] = useState("#607d8b");
@@ -53,6 +52,24 @@ export default function DividendsTransactionAddForm({
       getById(transactionId);
     }
   }, [transactionId, getById]);
+
+  const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
+  const getExchangeRate = async () => {
+    console.log("Get exchange rate", exchangeName, transactionDate);
+    setGettingExchangeRate(true);
+    const result = await ExchangeRateService.getFromAPI(
+      transactionDate,
+      exchangeName
+    );
+
+    if (result) {
+      console.log("Set exchange rate:", result.close);
+      form.setFieldsValue({
+        exchangeRate: result.close
+      });
+    }
+    setGettingExchangeRate(false);
+  };
 
   if (company === null) {
     return null;
@@ -123,16 +140,6 @@ export default function DividendsTransactionAddForm({
         company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
       );
     }
-  };
-
-  const getExchangeRate = () => {
-    let exchangeValue = 0;
-    if (exchangeRate !== null && exchangeRate !== undefined) {
-      exchangeValue = exchangeRate.exchangeValue;
-    }
-    form.setFieldsValue({
-      exchangeRate: exchangeValue
-    });
   };
 
   return (
@@ -217,6 +224,7 @@ export default function DividendsTransactionAddForm({
         <Button
           disabled={transactionDate === null || exchangeName === null}
           onClick={getExchangeRate}
+          loading={gettingExchangeRate}
         >
           Get exchange rate ({exchangeName})
         </Button>
