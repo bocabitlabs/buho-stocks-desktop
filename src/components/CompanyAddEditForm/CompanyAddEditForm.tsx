@@ -1,5 +1,5 @@
-import React, { ReactElement, useContext, useState } from "react";
-import { Form, Input, Button, Select, message } from "antd";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { Form, Input, Button, Select, message, Switch } from "antd";
 import { CirclePicker } from "react-color";
 import TextArea from "antd/lib/input/TextArea";
 import { useHistory } from "react-router-dom";
@@ -15,24 +15,43 @@ import { Market } from "types/market";
 import { CompaniesContext } from "contexts/companies";
 import TransactionLogService from "services/transaction-log-service";
 
-interface CompanyAddFormProps {
+interface CompanyAddEditFormProps {
   portfolioId: string;
+  companyId?: string;
 }
 
 /**
  * Add a new Currency
  */
-function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
+function CompanyAddEditForm({
+  portfolioId,
+  companyId
+}: CompanyAddEditFormProps): ReactElement | null {
   const [form] = Form.useForm();
   const { currencies } = useContext(CurrenciesContext);
   const { markets } = useContext(MarketsContext);
   const { sectors } = useContext(SectorsContext);
-  const { addCompany } = useContext(CompaniesContext);
+  const {
+    company,
+    fetchCompany: getCompanyById,
+    addCompany,
+    update: updateCompany
+  } = useContext(CompaniesContext);
 
   const history = useHistory();
-  const [color, setColor] = useState("#607d8b");
+  const [color, setColor] = useState(company ? company.color : "#607d8b");
 
   const key = "updatable";
+
+  useEffect(() => {
+    if (companyId) {
+      console.log("Fetching company");
+      const newCompany = getCompanyById(companyId);
+      if (newCompany) {
+        setColor(newCompany.color);
+      }
+    }
+  }, [companyId, getCompanyById]);
 
   const handleAddCompany = (values: any) => {
     const {
@@ -40,47 +59,51 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
       name,
       ticker,
       broker,
-      market,
-      sector,
-      currency,
+      closed,
+      marketId,
+      sectorId,
+      currencyId,
       description,
       alternativeTickers
     } = values;
-    const company: CompanyFormFields = {
+    const newCompany: CompanyFormFields = {
       url,
       name,
       ticker,
-      closed: false,
+      closed,
       broker,
-      market,
-      sector,
+      marketId,
+      sectorId,
       color,
       description,
-      currency,
+      currencyId,
       portfolioId,
       alternativeTickers
     };
-    const added = addCompany(company);
-    if (added.changes) {
-      TransactionLogService.add({
-        type: "Add company",
-        message: `Added company "${company.name} (${company.ticker})"`,
-        portfolioId: +company.portfolioId
-      });
-      history.push(`/portfolios/${portfolioId}`);
-      message.success({ content: "Company has been added", key });
+    let changes = null;
+    console.log(newCompany);
+
+    if (companyId) {
+      changes = updateCompany(companyId, newCompany);
     } else {
-      message.error({ content: "Unable to add the  company", key });
+      changes = addCompany(newCompany);
     }
-  };
-
-  const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 14 }
-  };
-
-  const buttonItemLayout = {
-    wrapperCol: { span: 14, offset: 4 }
+    if (changes.changes) {
+      if (!companyId) {
+        TransactionLogService.add({
+          type: "Add company",
+          message: `Added company "${newCompany.name} (${newCompany.ticker})"`,
+          portfolioId: +newCompany.portfolioId
+        });
+        message.success({ content: "Company has been added", key });
+        history.push(`/portfolios/${portfolioId}`);
+      } else {
+        message.success({ content: "Company has been updated", key });
+        history.push(`/portfolios/${portfolioId}/companies/${companyId}`);
+      }
+    } else {
+      message.error({ content: "Unable to add/edit the  company", key });
+    }
   };
 
   const handleColorChange = (color: any, event: any) => {
@@ -88,8 +111,29 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
     setColor(color.hex);
   };
 
+  if (companyId && !company) {
+    return null;
+  }
+  console.log(company);
+  const closed = (company?.closed)? true: false;
   return (
-    <Form {...layout} form={form} name="basic" onFinish={handleAddCompany}>
+    <Form
+      layout="vertical"
+      form={form}
+      onFinish={handleAddCompany}
+      initialValues={{
+        name: company?.name,
+        ticker: company?.ticker,
+        alternativeTickers: company?.alternativeTickers,
+        broker: company?.broker,
+        closed: closed,
+        sectorId: company?.sectorId,
+        currencyId: company?.currencyId,
+        marketId: company?.marketId,
+        url: company?.url,
+        description: company?.description
+      }}
+    >
       <Form.Item
         name="name"
         label="Company Name"
@@ -130,7 +174,10 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
         <CirclePicker color={color} onChange={handleColorChange} />
         <Input type="hidden" value={color} />
       </Form.Item>
-      <Form.Item name="sector" label="Sector" rules={[{ required: true }]}>
+      <Form.Item label="Closed" name="closed" valuePropName="checked">
+        <Switch />
+      </Form.Item>
+      <Form.Item name="sectorId" label="Sector" rules={[{ required: true }]}>
         <Select
           placeholder="Select a option and change input text above"
           allowClear
@@ -139,14 +186,18 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
             sectors.map((sector: Sector, index: number) => (
               <Select.Option
                 value={sector.id}
-                key={`currency-${sector.id}-${index}`}
+                key={`sector-${sector.id}-${index}`}
               >
                 {sector.name}
               </Select.Option>
             ))}
         </Select>
       </Form.Item>
-      <Form.Item name="currency" label="Currency" rules={[{ required: true }]}>
+      <Form.Item
+        name="currencyId"
+        label="Currency"
+        rules={[{ required: true }]}
+      >
         <Select
           placeholder="Select a option and change input text above"
           allowClear
@@ -162,7 +213,7 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
             ))}
         </Select>
       </Form.Item>
-      <Form.Item name="market" label="Market" rules={[{ required: true }]}>
+      <Form.Item name="marketId" label="Market" rules={[{ required: true }]}>
         <Select
           placeholder="Select a option and change input text above"
           allowClear
@@ -188,13 +239,13 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
       >
         <TextArea placeholder="" />
       </Form.Item>
-      <Form.Item {...buttonItemLayout}>
+      <Form.Item>
         <Button type="primary" htmlType="submit">
-          Add Company
+          {companyId ? "Edit Company" : "Add Company"}
         </Button>
       </Form.Item>
     </Form>
   );
 }
 
-export default CompanyAddForm;
+export default CompanyAddEditForm;

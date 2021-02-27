@@ -31,7 +31,7 @@ export default function SharesTransactionAddForm({
   const [form] = Form.useForm();
   const history = useHistory();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { sharesTransaction, create, getAll, getById, update } = useContext(
+  const { sharesTransaction, create: addTransaction, getAll, getById, update: updateTransaction } = useContext(
     SharesTransactionsContext
   );
   const [color] = useState("#607d8b");
@@ -109,10 +109,10 @@ export default function SharesTransactionAddForm({
     let changes = null;
     let updateMessage = "";
     if (transactionId) {
-      changes = update(transactionId, transaction);
+      changes = updateTransaction(transactionId, transaction);
       updateMessage = "Shares transaction has been updated";
     } else {
-      changes = create(transaction);
+      changes = addTransaction(transaction);
       updateMessage = "Shares transaction has been added";
     }
     if (changes.changes) {

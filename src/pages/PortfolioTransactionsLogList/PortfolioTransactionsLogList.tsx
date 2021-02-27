@@ -1,9 +1,6 @@
-import { cleanup } from "@testing-library/react";
 import { Layout } from "antd";
-import input from "antd/lib/input";
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
-import TransactionLogService from "services/transaction-log-service";
 import TransactionsLogListHeader from "./components/TransactionsLogListHeader/TransactionsLogListHeader";
 import TransactionsLogListTable from "./components/TransactionsLogListTable/TransactionsLogListTable";
 

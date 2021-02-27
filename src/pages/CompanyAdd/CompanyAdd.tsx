@@ -12,7 +12,7 @@ import { useMarketsContext } from "../../hooks/markets";
 import { SectorsContext } from "../../contexts/sectors";
 import { CurrenciesContext } from "../../contexts/currencies";
 import { MarketsContext } from "../../contexts/markets";
-import CompanyAddForm from "./components/CompanyAddForm/CompanyAddForm";
+import CompanyAddEditForm from "components/CompanyAddEditForm/CompanyAddEditForm";
 
 export interface IAddCompanyRouteParams {
   id: string;
@@ -35,7 +35,7 @@ const CompanyAdd = () => {
               <Layout
                 style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}
               >
-                <CompanyAddForm portfolioId={id} />
+                <CompanyAddEditForm portfolioId={id} />
               </Layout>
             </CompaniesContext.Provider>
         </MarketsContext.Provider>

@@ -36,8 +36,8 @@ import ImportExport from "pages/ImportExport/ImportExport";
 import ExportAppData from "pages/ExportAppData/ExportAppData";
 import Import from "pages/ImportData/Import";
 import ImportAppData from "pages/ImportAppData/ImportAppData";
-import PortfolioTransactionsLog from "pages/PortfolioTransactionsLogList/PortfolioTransactionsLogList";
-
+import CompanyEdit from "pages/CompanyEdit/CompanyEdit";
+import PortfolioTransactionsLogList from "pages/PortfolioTransactionsLogList/PortfolioTransactionsLogList";
 
 function App() {
   /**
@@ -81,7 +81,11 @@ function App() {
                 <Route exact path="/import-export" component={ImportExport} />
                 <Route exact path="/export" component={ExportAppData} />
                 <Route exact path="/import" component={Import} />
-                <Route exact path="/import/app-data" component={ImportAppData} />
+                <Route
+                  exact
+                  path="/import/app-data"
+                  component={ImportAppData}
+                />
                 <Route exact path="/import/broker" component={CsvImport} />
 
                 <Route exact path="/settings" component={Settings} />
@@ -103,18 +107,23 @@ function App() {
                 />
                 <Route
                   exact
-                  path="/portfolios/:id/add-company"
+                  path="/portfolios/:id/companies/add"
                   component={CompanyAdd}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:id/log"
-                  component={PortfolioTransactionsLog}
                 />
                 <Route
                   exact
                   path="/portfolios/:portfolioId/companies/:companyId"
                   component={CompanyDetails}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:portfolioId/companies/:companyId/edit"
+                  component={CompanyEdit}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:id/log"
+                  component={PortfolioTransactionsLogList}
                 />
                 <Route
                   exact

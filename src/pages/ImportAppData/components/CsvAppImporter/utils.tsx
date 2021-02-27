@@ -154,9 +154,9 @@ export function importCompanies(companies: any[]) {
           broker: portfolioData.data[5],
           url: portfolioData.data[6],
           closed: portfolioData.data[7],
-          currency: currency.id,
-          market: market.id,
-          sector: sector.id,
+          currencyId: currency.id,
+          marketId: market.id,
+          sectorId: sector.id,
           portfolioId: portfolio.id,
           alternativeTickers: portfolioData.data[8]
         };

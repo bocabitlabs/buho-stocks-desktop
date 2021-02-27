@@ -26,7 +26,7 @@ export default function CompanyAddHeader({ portfolioId }: Props): ReactElement {
       breadcrumbName: portfolio ? portfolio.name : ""
     },
     {
-      path: `/portfolios/${portfolioId}/add-company`,
+      path: `/portfolios/${portfolioId}/companies/add`,
       name: "add-currency",
       breadcrumbName: "Add company"
     }
