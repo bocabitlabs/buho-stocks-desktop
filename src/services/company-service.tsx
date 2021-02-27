@@ -65,6 +65,13 @@ export default class CompanyService {
     const result = new CompanyDAO().deleteById(companyId);
     return result;
   };
+
+  update = (
+    companyId: string,
+    company: CompanyFormFields
+  ) => {
+    return new CompanyDAO().update(companyId, company);
+  };
 }
 function createCompany(
   result: ICompany,

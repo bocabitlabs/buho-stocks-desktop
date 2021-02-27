@@ -1,4 +1,4 @@
-import { EllipsisOutlined } from "@ant-design/icons";
+import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu, PageHeader, Tag } from "antd";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -112,7 +112,21 @@ export default function CompanyDetailsRouteHeader({
           routes,
           itemRender
         }}
-        extra={[<DropdownMenu key="more" />]}
+        extra={[
+          <Button
+            key={"company-edit-header"}
+            icon={<EditOutlined />}
+            onClick={() => {
+              console.log(`/portfolios/${portfolioId}/companies/${companyId}/edit`)
+              history.push(
+                `/portfolios/${portfolioId}/companies/${companyId}/edit`
+              );
+            }}
+          >
+            Edit
+          </Button>,
+          <DropdownMenu key="more" />
+        ]}
       />
       {company && (
         <StockPriceAddModal

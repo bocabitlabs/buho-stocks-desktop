@@ -25,9 +25,9 @@ export default class CompanyDAO {
     , '${company.ticker}'
     , '${company.broker}'
     , '${company.description}'
-    , '${company.sector}'
-    , '${company.market}'
-    , '${company.currency}'
+    , '${company.sectorId}'
+    , '${company.marketId}'
+    , '${company.currencyId}'
     , '${company.portfolioId}'
     , '${company.url}'
     , '${company.color}'
@@ -173,6 +173,28 @@ export default class CompanyDAO {
   deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("companies", id);
+    return results;
+  };
+
+  update = (companyId: string, company: CompanyFormFields) => {
+    const sql = `
+    UPDATE companies
+    SET
+    name = '${company.name}'
+    , ticker = '${company.ticker}'
+    , broker = '${company.broker}'
+    , alternativeTickers = '${company.alternativeTickers}'
+    , description = '${company.description}'
+    , url = '${company.url}'
+    , color = '${company.color}'
+    , closed = '${company.closed ? 1 : 0}'
+    , currencyId = '${company.currencyId}'
+    , marketId = '${company.marketId}'
+    , sectorId = '${company.sectorId}'
+    , lastUpdateDate = '${moment(new Date())}'
+    WHERE companies.id = '${companyId}';
+    `;
+    const results = sendIpcSql(sql, "update");
     return results;
   };
 }

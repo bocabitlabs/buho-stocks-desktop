@@ -10,9 +10,9 @@ export interface CompanyFormFields {
   closed: boolean;
   url: string;
   description: string;
-  currency: string;
-  market: string;
-  sector: string;
+  currencyId: string;
+  marketId: string;
+  sectorId: string;
   color: string;
   portfolioId: string;
   alternativeTickers: string;

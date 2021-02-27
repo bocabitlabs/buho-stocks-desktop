@@ -81,7 +81,7 @@ export default function PortfolioDetailsHeader({
           key={"company-add-header"}
           icon={<PlusOutlined />}
           onClick={() => {
-            history.push(`/portfolios/${portfolioId}/add-company`);
+            history.push(`/portfolios/${portfolioId}/companies/add`);
           }}
         >
           Company

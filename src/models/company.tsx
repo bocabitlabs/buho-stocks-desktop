@@ -20,9 +20,9 @@ export class Company implements ICompany {
   ticker: string;
   url: string;
   description: string;
-  currency: string;
-  market: string;
-  sector: string;
+  currencyId: string;
+  marketId: string;
+  sectorId: string;
   color: string;
   portfolioId: string;
   portfolioName: string;
@@ -41,10 +41,10 @@ export class Company implements ICompany {
     this.currencyName = parameters.currencyName;
     this.currencySymbol = parameters.currencySymbol;
     this.currencyAbbreviation = parameters.currencyAbbreviation;
-    this.currency = parameters.currency;
+    this.currencyId = parameters.currencyId;
 
     this.sectorName = parameters.sectorName;
-    this.sector = parameters.sector;
+    this.sectorId = parameters.sectorId;
 
     this.dividendsTransactions = parameters.dividendsTransactions;
     this.sharesTransactions = parameters.sharesTransactions;
@@ -54,7 +54,7 @@ export class Company implements ICompany {
     this.name = parameters.name;
     this.ticker = parameters.ticker;
     this.url = parameters.url;
-    this.market = parameters.market;
+    this.marketId = parameters.marketId;
     this.color = parameters.color;
     this.description = parameters.description;
     this.portfolioCurrencySymbol = parameters.portfolioCurrencySymbol;

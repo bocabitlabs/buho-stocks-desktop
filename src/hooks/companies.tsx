@@ -45,12 +45,20 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
     return result;
   }, []);
 
+  const update = useCallback((companyId: string, company: CompanyFormFields) => {
+    setIsLoading(true);
+    const result = new CompanyService().update(companyId, company);
+    setIsLoading(false);
+    return result;
+  }, []);
+
   return {
     companies,
     company,
     isLoading,
     fetchCompanies,
     fetchCompany,
-    addCompany
+    addCompany,
+    update
   };
 }
