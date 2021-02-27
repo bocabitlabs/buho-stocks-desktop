@@ -18,6 +18,7 @@ import { CompaniesContext } from "contexts/companies";
 import { RightsTransactionFormProps } from "types/rights-transaction";
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import ExchangeRateService from "services/exchange-rate";
+import TransactionLogService from "services/transaction-log-service";
 
 interface Props {
   companyId: string;
@@ -119,6 +120,15 @@ export default function RightsTransactionAddForm({
       updateMessage = "Rights transaction has been added";
     }
     if (changes.changes) {
+
+      if(!transactionId){
+        TransactionLogService.add({
+          type: "Rights transaction",
+          message: `Added rights "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          portfolioId: +company.portfolioId
+        });
+      }
+
       getAll();
       history.push(
         `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=rights`

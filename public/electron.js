@@ -1,7 +1,7 @@
 const path = require("path");
 // const fs = require("fs");
 const EventEmitter = require("events");
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, shell } = require("electron");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
 require("./utils/database/main");
@@ -37,7 +37,7 @@ function createMainWindow() {
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
-      webSecurity: false
+      webSecurity: !isDev // Only enabled on development mode to allow external API calls
     }
   });
 
@@ -53,7 +53,7 @@ function createMainWindow() {
      */
     if (url !== mainWindow.webContents.getURL()) {
       e.preventDefault();
-      require("electron").shell.openExternal(url);
+      shell.openExternal(url);
     }
   };
 
@@ -61,11 +61,11 @@ function createMainWindow() {
   mainWindow.webContents.on("new-window", handleRedirect);
 
   // Open the DevTools.
-  mainWindow.webContents.once('dom-ready', () => {
+  mainWindow.webContents.once("dom-ready", () => {
     if (isDev) {
-      mainWindow.webContents.openDevTools({ mode: "detach" })
+      mainWindow.webContents.openDevTools({ mode: "detach" });
     }
-  })
+  });
 }
 
 // This method will be called when Electron has finished

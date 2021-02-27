@@ -17,6 +17,7 @@ import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionFormProps } from "types/shares-transaction";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import ExchangeRateService from "services/exchange-rate";
+import TransactionLogService from "services/transaction-log-service";
 
 interface Props {
   companyId: string;
@@ -115,6 +116,15 @@ export default function SharesTransactionAddForm({
       updateMessage = "Shares transaction has been added";
     }
     if (changes.changes) {
+
+      if(!transactionId){
+        TransactionLogService.add({
+          type: "Shares transaction",
+          message: `Added shares "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          portfolioId: +company.portfolioId
+        });
+      }
+
       getAll();
       history.push(
         `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`

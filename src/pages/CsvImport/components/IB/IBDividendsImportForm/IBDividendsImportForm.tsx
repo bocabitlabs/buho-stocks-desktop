@@ -4,6 +4,7 @@ import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import DividendsTransactionsService from "services/dividends-transactions-service";
 import ExchangeRateService from "services/exchange-rate";
+import TransactionLogService from "services/transaction-log-service";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { IPortfolio } from "types/portfolio";
 
@@ -22,6 +23,40 @@ export default function IBDividendsImportForm({
   const [formSent, setFormSent] = useState(false);
   const key = "updatable";
 
+  const priceMatch = inputData[4].match(/[+-]?\d+(\.\d+)/);
+  const companyNameMatch = inputData[4].match(/^(\w)+/g);
+  console.log(companyNameMatch);
+  let companyName = "";
+  if (companyNameMatch) {
+    companyName = companyNameMatch[0];
+  }
+  let notes = inputData[4];
+  if(taxData){
+    notes += "." + taxData[4];
+  }
+
+  const total = +inputData[5];
+  let count: number = 0;
+  let price: number = 0;
+  if (total && priceMatch && priceMatch[0]) {
+    price = +priceMatch[0];
+    count = total / price;
+  }
+  console.log(taxData);
+
+  const getCompanyFromTransaction = (name: string) => {
+    const found = portfolio.companies.find((element) =>
+      element.ticker.includes(name)
+    );
+    if (found) {
+      return found;
+    }
+    return found;
+  };
+
+  const company = getCompanyFromTransaction(companyName);
+
+
   const onFinish = (values: any) => {
     console.log("Finish:", values);
     const companyCurrency = inputData[2];
@@ -31,6 +66,8 @@ export default function IBDividendsImportForm({
     const exchangeName = companyCurrency + portfolioCurrency;
     let exchangeRateValue = 1;
     console.log(`Exchange name`, exchangeName);
+
+
     if (companyCurrency !== portfolioCurrency) {
       let exchangeRate = null;
       let tries = 1;
@@ -57,11 +94,6 @@ export default function IBDividendsImportForm({
       commission = commission * -1;
     }
 
-    // console.log(exchangeName);
-    // console.log(transactionDate);
-    // console.log(commission);
-    // console.log(exchangeRateValue);
-
     const transaction: DividendsTransactionFormProps = {
       count: values.count,
       price: values.price,
@@ -76,48 +108,19 @@ export default function IBDividendsImportForm({
     const added = DividendsTransactionsService.create(transaction);
 
     if (added.changes) {
+      if (company) {
+        TransactionLogService.add({
+          type: "Dividends transaction",
+          message: `Added dividends from  IB CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          portfolioId: +company.portfolioId
+        });
+      }
       message.success({ content: "Dividends has been added", key });
     } else {
       message.error({ content: "Unable to add the dividends", key });
     }
 
     setFormSent(true);
-  };
-  // console.log(taxData);
-
-  const priceMatch = inputData[4].match(/[+-]?\d+(\.\d+)/);
-  const companyNameMatch = inputData[4].match(/^(\w)+/g);
-  console.log(companyNameMatch);
-  let companyName = "";
-  if (companyNameMatch) {
-    companyName = companyNameMatch[0];
-  }
-  let notes = inputData[4];
-  if(taxData){
-    notes += "." + taxData[4];
-  }
-
-  const total = +inputData[5];
-  let count: number = 0;
-  let price: number = 0;
-  if (total && priceMatch && priceMatch[0]) {
-    price = +priceMatch[0];
-    count = total / price;
-  }
-  console.log(taxData);
-  // let taxCommission = 0;
-  // if (taxData) {
-  //   taxCommission = taxData[5] * -1;
-  // }
-
-  const getCompanyFromTransaction = (name: string) => {
-    const found = portfolio.companies.find((element) =>
-      element.ticker.includes(name)
-    );
-    if (found) {
-      return found.id;
-    }
-    return found;
   };
 
   return (
@@ -130,7 +133,7 @@ export default function IBDividendsImportForm({
         count: Math.round(count),
         notes: notes,
         transactionDate: inputData[3],
-        company: getCompanyFromTransaction(companyName)
+        company: company?.id
       }}
     >
       {/* <div>

@@ -8,6 +8,7 @@ import { CompaniesContext } from "contexts/companies";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import ExchangeRateService from "services/exchange-rate";
+import TransactionLogService from "services/transaction-log-service";
 
 interface Props {
   companyId: string;
@@ -105,6 +106,15 @@ export default function DividendsTransactionAddForm({
       updateMessage = "Dividends transaction has been added";
     }
     if (changes.changes) {
+
+      if(!transactionId){
+        TransactionLogService.add({
+          type: "Dividends transaction",
+          message: `Added dividends "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          portfolioId: +company.portfolioId
+        });
+      }
+
       history.push(
         `/portfolios/${company?.portfolioId}/companies/${companyId}?tab=dividends`
       );
