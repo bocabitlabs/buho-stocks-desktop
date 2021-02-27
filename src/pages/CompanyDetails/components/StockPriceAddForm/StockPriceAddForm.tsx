@@ -1,10 +1,10 @@
 import { Button, DatePicker, Form, InputNumber, message } from "antd";
 import { CompaniesContext } from "contexts/companies";
-import { useExchangeRate } from "hooks/use-exchange-rate";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import ExchangeRateService from "services/exchange-rate";
 import StockPriceService from "services/stock-price-service";
+import TransactionLogService from "services/transaction-log-service";
 import { IExchangeRateForm } from "types/exchange-rate";
 import { StockPriceFormProps } from "types/stock-price";
 
@@ -76,6 +76,12 @@ export default function StockPriceAddForm({
     console.log(values);
     const added = StockPriceService.add(stockPrice);
     if (added.changes) {
+      TransactionLogService.add({
+        type: "Stock price",
+        message: `Added stock price "${company.name} (${company.ticker})": ${price} - ${transactionDate}`,
+        portfolioId: +company.portfolioId
+      });
+
       const newExchangeRate: IExchangeRateForm = {
         transactionDate: transactionDate.format("DD-MM-YYYY"),
         exchangeName: exchangeName,

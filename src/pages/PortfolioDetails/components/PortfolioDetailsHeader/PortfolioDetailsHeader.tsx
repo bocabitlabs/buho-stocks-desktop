@@ -7,6 +7,11 @@ import { Link, useHistory } from "react-router-dom";
 
 import { PortfoliosContext } from "contexts/portfolios";
 import PortfolioService from "services/portfolio-service";
+import {
+  DeleteOutlined,
+  PlusOutlined,
+  UnorderedListOutlined
+} from "@ant-design/icons";
 
 interface Props {
   portfolioId: string;
@@ -16,16 +21,14 @@ export default function PortfolioDetailsHeader({
   portfolioId
 }: Props): ReactElement {
   const history = useHistory();
-  const { portfolio, getAll, getById } = useContext(
-    PortfoliosContext
-  );
+  const { portfolio, getAll, getById } = useContext(PortfoliosContext);
   const key = "updatable";
 
   useEffect(() => {
-    if(portfolioId === undefined || portfolioId === null){
-      console.error("portfolioId is undefined. This will lead to errors")
+    if (portfolioId === undefined || portfolioId === null) {
+      console.error("portfolioId is undefined. This will lead to errors");
     }
-    console.log("Fetching portfolio", portfolioId)
+    console.log("Fetching portfolio", portfolioId);
     getById(portfolioId);
   }, [portfolioId, getById]);
 
@@ -73,15 +76,24 @@ export default function PortfolioDetailsHeader({
         routes,
         itemRender
       }}
-      subTitle="This is a subtitle"
       extra={[
         <Button
           key={"company-add-header"}
+          icon={<PlusOutlined />}
           onClick={() => {
             history.push(`/portfolios/${portfolioId}/add-company`);
           }}
         >
-          + Company
+          Company
+        </Button>,
+        <Button
+          key={"company-view-logs"}
+          icon={<UnorderedListOutlined />}
+          onClick={() => {
+            history.push(`/portfolios/${portfolioId}/log`);
+          }}
+        >
+          View Logs
         </Button>,
         <Popconfirm
           key={"portfolio-delete-header"}
@@ -91,7 +103,7 @@ export default function PortfolioDetailsHeader({
           okText="Yes"
           cancelText="No"
         >
-          <Button>Delete</Button>
+          <Button icon={<DeleteOutlined />}>Delete</Button>
         </Popconfirm>
       ]}
     />

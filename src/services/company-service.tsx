@@ -13,7 +13,8 @@ import StockPriceService from "./stock-price-service";
 
 export default class CompanyService {
   addCompany = (company: CompanyFormFields): IAddProps => {
-    return new CompanyDAO().addCompany(company);
+    const result = new CompanyDAO().addCompany(company);
+    return result;
   };
 
   exportAll = (): ICompany[] => {
@@ -61,7 +62,8 @@ export default class CompanyService {
   };
 
   deleteById = (companyId: string) => {
-    return new CompanyDAO().deleteById(companyId);
+    const result = new CompanyDAO().deleteById(companyId);
+    return result;
   };
 }
 function createCompany(
