@@ -40,25 +40,29 @@ export default class CompanyService {
     let companiesWithDetails: ICompany[] = [];
     companies.forEach((element: ICompany) => {
       const company = this.getCompanyDetails(element.id);
-      companiesWithDetails.push(company);
+      if (company) {
+        companiesWithDetails.push(company);
+      }
     });
     return companiesWithDetails;
   };
 
-  getCompanyDetails = (companyId: string): Company => {
+  getCompanyDetails = (companyId: string): Company | null => {
     const result = new CompanyDAO().getCompany(companyId);
-    const sharesTransactions = SharesTransactionsDAO.getAll(companyId);
-    const dividendsTransactions = DividendsTransactionsDAO.getAll(companyId);
-    const rightsTransactions = RightsTransactionsService.getAll(companyId);
-    const stockPrices = StockPriceService.getStockPrices(companyId);
-
-    return createCompany(
-      result,
-      dividendsTransactions,
-      sharesTransactions,
-      rightsTransactions,
-      stockPrices
-    );
+    if (result) {
+      const sharesTransactions = SharesTransactionsDAO.getAll(companyId);
+      const dividendsTransactions = DividendsTransactionsDAO.getAll(companyId);
+      const rightsTransactions = RightsTransactionsService.getAll(companyId);
+      const stockPrices = StockPriceService.getStockPrices(companyId);
+      return createCompany(
+        result,
+        dividendsTransactions,
+        sharesTransactions,
+        rightsTransactions,
+        stockPrices
+      );
+    }
+    return null;
   };
 
   deleteById = (companyId: string) => {
@@ -66,10 +70,7 @@ export default class CompanyService {
     return result;
   };
 
-  update = (
-    companyId: string,
-    company: CompanyFormFields
-  ) => {
+  update = (companyId: string, company: CompanyFormFields) => {
     return new CompanyDAO().update(companyId, company);
   };
 }
@@ -85,6 +86,5 @@ function createCompany(
   result.rightsTransactions = rightsTransactions;
   result.stockPrices = stockPrices;
   const company: Company = new Company(result);
-
   return company;
 }
