@@ -36,6 +36,7 @@ import ImportExport from "pages/ImportExport/ImportExport";
 import ExportAppData from "pages/ExportAppData/ExportAppData";
 import Import from "pages/ImportData/Import";
 import ImportAppData from "pages/ImportAppData/ImportAppData";
+import PortfolioTransactionsLog from "pages/PortfolioTransactionsLogList/PortfolioTransactionsLogList";
 
 
 function App() {
@@ -104,6 +105,11 @@ function App() {
                   exact
                   path="/portfolios/:id/add-company"
                   component={CompanyAdd}
+                />
+                <Route
+                  exact
+                  path="/portfolios/:id/log"
+                  component={PortfolioTransactionsLog}
                 />
                 <Route
                   exact
