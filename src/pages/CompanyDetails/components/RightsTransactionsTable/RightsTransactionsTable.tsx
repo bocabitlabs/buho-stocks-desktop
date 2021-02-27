@@ -7,6 +7,8 @@ import { Link, useHistory } from "react-router-dom";
 import { RightsTransaction } from "types/rights-transaction";
 import { buySellFormatter } from "utils/table-formatters";
 import { TransactionType } from "types/transaction";
+import { CompaniesContext } from "contexts/companies";
+import TransactionLogService from "services/transaction-log-service";
 
 interface IProps {
   portfolioId: string;
@@ -20,6 +22,8 @@ export default function RightsTransactionsTable({
   const { rightsTransactions, getAll, deleteById } = useContext(
     RightsTransactionContext
   );
+  const { company } = useContext(CompaniesContext);
+
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -46,6 +50,15 @@ export default function RightsTransactionsTable({
     }
 
     if (result.changes) {
+
+      if (company) {
+        TransactionLogService.add({
+          type: "Rights transaction",
+          message: `Removed rights transaction "${company.name} (${company.ticker})": ${recordId}`,
+          portfolioId: +company.portfolioId
+        });
+      }
+
       getAll();
       message.success({
         content: "Transaction has been deleted",

@@ -12,6 +12,7 @@ import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import ExchangeRateService from "services/exchange-rate";
 import SharesTransactionsService from "services/shares-transactions-service";
+import TransactionLogService from "services/transaction-log-service";
 import { IPortfolio } from "types/portfolio";
 import { SharesTransactionFormProps } from "types/shares-transaction";
 import { TransactionType } from "types/transaction";
@@ -27,7 +28,7 @@ const getCompanyFromTransaction = (name: string, portfolio: IPortfolio) => {
     element.ticker.includes(name)
   );
   if (found) {
-    return found.id;
+    return found;
   }
   return found;
 };
@@ -97,6 +98,13 @@ export default function IBTradesImportForm({
     const added = SharesTransactionsService.create(transaction);
 
     if (added.changes) {
+      if (company) {
+        TransactionLogService.add({
+          type: "Shares transaction",
+          message: `Added shares from  IB CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          portfolioId: +company.portfolioId
+        });
+      }
       setFormSent(true);
       message.success({ content: "Transaction has been added", key });
     } else {
@@ -114,7 +122,7 @@ export default function IBTradesImportForm({
         price: price,
         count: count,
         transactionDate: transactionDate.format("DD/MM/YYYY"),
-        company: company
+        company: company?.id
       }}
     >
       <Row>

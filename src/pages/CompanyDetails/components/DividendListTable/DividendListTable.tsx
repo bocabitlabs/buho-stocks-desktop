@@ -5,6 +5,8 @@ import { Link, useHistory } from "react-router-dom";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import { StringUtils } from "utils/string-utils";
 import { DividendsTransaction } from "types/dividends-transaction";
+import TransactionLogService from "services/transaction-log-service";
+import { CompaniesContext } from "contexts/companies";
 
 interface IProps {
   portfolioId: string;
@@ -15,6 +17,8 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   const { dividendsTransactions, deleteById, fetchAll } = useContext(
     DividendsTransactionsContext
   );
+  const { company } = useContext(CompaniesContext);
+
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -31,6 +35,13 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   function confirm(recordId: string) {
     const result = deleteById(recordId);
     if (result.changes) {
+      if (company) {
+        TransactionLogService.add({
+          type: "Dividends transaction",
+          message: `Removed dividends transaction "${company.name} (${company.ticker})": ${recordId}`,
+          portfolioId: +company.portfolioId
+        });
+      }
       fetchAll();
       history.push({
         pathname: `/portfolios/${portfolioId}/companies/${companyId}`,
@@ -94,7 +105,11 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
           >
             <Button>Delete</Button>
           </Popconfirm>
-          <Link to={`/portfolios/${portfolioId}/companies/${companyId}/dividends/${record.key}/edit`}>Edit</Link>
+          <Link
+            to={`/portfolios/${portfolioId}/companies/${companyId}/dividends/${record.key}/edit`}
+          >
+            Edit
+          </Link>
         </Space>
       )
     }

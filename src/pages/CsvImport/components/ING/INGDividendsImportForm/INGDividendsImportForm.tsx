@@ -4,6 +4,7 @@ import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import CurrencyService from "services/currency-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
+import TransactionLogService from "services/transaction-log-service";
 import { Currency } from "types/currency";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { IExchangeRate } from "types/exchange-rate";
@@ -73,6 +74,13 @@ export default function INGDividendsImportForm({
     console.log(transaction);
     const added = DividendsTransactionsService.create(transaction);
     if (added.changes) {
+      if (company) {
+        TransactionLogService.add({
+          type: "Dividends transaction",
+          message: `Added dividends from  ING CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          portfolioId: +company.portfolioId
+        });
+      }
       message.success({ content: "Transaction has been added", key });
     } else {
       message.error({ content: "Unable to add the transaction", key });

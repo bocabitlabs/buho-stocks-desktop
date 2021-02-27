@@ -16,6 +16,7 @@ import CurrencyService from "services/currency-service";
 import ExchangeRateService from "services/exchange-rate";
 import RightsTransactionsService from "services/rights-transactions-service";
 import SharesTransactionsService from "services/shares-transactions-service";
+import TransactionLogService from "services/transaction-log-service";
 import { Currency } from "types/currency";
 import { IExchangeRate } from "types/exchange-rate";
 import { IPortfolio } from "types/portfolio";
@@ -144,6 +145,13 @@ export default function INGTradesImportForm({
     }
 
     if (added.changes) {
+      if (company) {
+        TransactionLogService.add({
+          type: "Shares transaction",
+          message: `Added shares from  ING CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          portfolioId: +company.portfolioId
+        });
+      }
       message.success({ content: "Transaction has been added", key });
     } else {
       message.error({ content: "Unable to add the transaction", key });
@@ -170,7 +178,9 @@ export default function INGTradesImportForm({
       }}
     >
       <Row>
-        <Typography.Title level={4}>{inputData[1]} {companyName}</Typography.Title>
+        <Typography.Title level={4}>
+          {inputData[1]} {companyName}
+        </Typography.Title>
       </Row>
       <Row gutter={24}>
         <Col span={12}>

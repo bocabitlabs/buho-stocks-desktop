@@ -13,6 +13,7 @@ import { Sector } from "types/sector";
 import { Currency } from "types/currency";
 import { Market } from "types/market";
 import { CompaniesContext } from "contexts/companies";
+import TransactionLogService from "services/transaction-log-service";
 
 interface CompanyAddFormProps {
   portfolioId: string;
@@ -61,6 +62,11 @@ function CompanyAddForm({ portfolioId }: CompanyAddFormProps): ReactElement {
     };
     const added = addCompany(company);
     if (added.changes) {
+      TransactionLogService.add({
+        type: "Add company",
+        message: `Added company "${company.name} (${company.ticker})"`,
+        portfolioId: +company.portfolioId
+      });
       history.push(`/portfolios/${portfolioId}`);
       message.success({ content: "Company has been added", key });
     } else {

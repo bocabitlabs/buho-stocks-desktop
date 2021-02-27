@@ -1,8 +1,10 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
+import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import TransactionLogService from "services/transaction-log-service";
 import { SharesTransaction } from "types/shares-transaction";
 import { buySellFormatter } from "utils/table-formatters";
 
@@ -15,6 +17,8 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
   const { sharesTransactions, getAll, deleteById } = useContext(
     SharesTransactionsContext
   );
+  const { company } = useContext(CompaniesContext);
+
   const [width, setWidth] = useState(window.innerWidth);
 
   const history = useHistory();
@@ -41,6 +45,15 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
     }
 
     if (result.changes) {
+
+      if (company) {
+        TransactionLogService.add({
+          type: "Shares transaction",
+          message: `Removed shares transaction "${company.name} (${company.ticker})": ${recordId}`,
+          portfolioId: +company.portfolioId
+        });
+      }
+
       getAll();
       message.success({
         content: "Share has been deleted",
