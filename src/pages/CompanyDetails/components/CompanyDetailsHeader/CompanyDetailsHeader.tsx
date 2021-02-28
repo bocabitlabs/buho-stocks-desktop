@@ -1,11 +1,24 @@
-import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Menu, PageHeader, Tag } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EllipsisOutlined
+} from "@ant-design/icons";
+import {
+  Button,
+  Dropdown,
+  Menu,
+  message,
+  PageHeader,
+  Popconfirm,
+  Tag
+} from "antd";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
 import StockPriceAddModal from "../StockPriceAddModal/StockPriceAddModal";
 import StockPriceListModal from "../StockPriceListModal/StockPriceListModal";
+import TransactionLogService from "services/transaction-log-service";
 
 interface Props {
   portfolioId: string;
@@ -17,9 +30,15 @@ export default function CompanyDetailsRouteHeader({
   companyId
 }: Props): ReactElement | null {
   const history = useHistory();
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const {
+    company,
+    fetchCompany,
+    deleteById: deleteCompany,
+    fetchCompanies
+  } = useContext(CompaniesContext);
   const [addStockModalVisible, setAddStockModalVisible] = useState(false);
   const [listStockModalVisible, setListStockModalVisible] = useState(false);
+  const key = "updatable";
 
   useEffect(() => {
     fetchCompany(companyId);
@@ -98,10 +117,32 @@ export default function CompanyDetailsRouteHeader({
     );
   };
 
+  function confirm(e: any) {
+    const comapnyName = company?.name;
+    const companyticker = company?.ticker;
+    const result = deleteCompany(companyId);
+    console.log(result);
+    if (result.changes) {
+      TransactionLogService.add({
+        type: "Remove company",
+        message: `Removed company "${comapnyName} (${companyticker}) - #${companyId}"`,
+        portfolioId: +portfolioId
+      });
+      fetchCompanies(portfolioId);
+      message.success({
+        content: "Company has been deleted",
+        key,
+        duration: 2
+      });
+      history.push(`/portfolios/${portfolioId}`);
+    }
+  }
+
   return (
     <>
       <PageHeader
-        title={`${company?.name}`}
+        title={company?.name}
+        subTitle={company.ticker}
         onBack={() => history.push(`/portfolios/${portfolioId}`)}
         tags={
           <Tag color="blue">
@@ -117,7 +158,6 @@ export default function CompanyDetailsRouteHeader({
             key={"company-edit-header"}
             icon={<EditOutlined />}
             onClick={() => {
-              console.log(`/portfolios/${portfolioId}/companies/${companyId}/edit`)
               history.push(
                 `/portfolios/${portfolioId}/companies/${companyId}/edit`
               );
@@ -125,6 +165,17 @@ export default function CompanyDetailsRouteHeader({
           >
             Edit
           </Button>,
+          <Popconfirm
+            key={"delete-header"}
+            title="Delete this company? All it's content will be removed too."
+            onConfirm={confirm}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button icon={<DeleteOutlined />} danger>
+              Delete
+            </Button>
+          </Popconfirm>,
           <DropdownMenu key="more" />
         ]}
       />

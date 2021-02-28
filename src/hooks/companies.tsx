@@ -45,6 +45,13 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
     return result;
   }, []);
 
+  const deleteById = useCallback((companyId: string) => {
+    setIsLoading(true);
+    const results = new CompanyService().deleteById(companyId);
+    setIsLoading(false);
+    return results;
+  }, []);
+
   const update = useCallback((companyId: string, company: CompanyFormFields) => {
     setIsLoading(true);
     const result = new CompanyService().update(companyId, company);
@@ -59,6 +66,7 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
     fetchCompanies,
     fetchCompany,
     addCompany,
+    deleteById,
     update
   };
 }
