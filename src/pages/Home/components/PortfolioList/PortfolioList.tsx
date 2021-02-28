@@ -1,11 +1,17 @@
 import { List } from "antd";
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PortfoliosContext } from "contexts/portfolios";
 import PortfolioCard from "../PortfolioCard/PortfolioCard";
 
 export default function PortfolioList(): ReactElement {
-  const { portfolios } = useContext(PortfoliosContext);
+  const { portfolios, getAll: getAllPortfolios } = useContext(
+    PortfoliosContext
+  );
+
+  useEffect(() => {
+    getAllPortfolios();
+  }, [getAllPortfolios]);
 
   return (
     <List

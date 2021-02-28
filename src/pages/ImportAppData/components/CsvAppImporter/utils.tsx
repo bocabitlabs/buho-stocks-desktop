@@ -139,10 +139,10 @@ export function importCompanies(companies: any[]) {
   companies.forEach((portfolioData: any) => {
     const exists = CompanyService.getByTicker(portfolioData.data[3]);
     if (exists === undefined) {
-      const currency = CurrencyService.getByName(portfolioData.data[9]);
       const sector = SectorService.getByName(portfolioData.data[8]);
-      const market = MarketService.getByName(portfolioData.data[6]);
+      const currency = CurrencyService.getByName(portfolioData.data[9]);
       const portfolio = PortfolioService.getByName(portfolioData.data[11]);
+      const market = MarketService.getByName(portfolioData.data[12]);
 
       if (currency && sector && market && portfolio) {
         console.log(portfolioData);
@@ -158,7 +158,7 @@ export function importCompanies(companies: any[]) {
           marketId: market.id,
           sectorId: sector.id,
           portfolioId: portfolio.id,
-          alternativeTickers: portfolioData.data[8]
+          alternativeTickers: portfolioData.data[13]
         };
         new CompanyService().addCompany(company);
         importedCount++;
