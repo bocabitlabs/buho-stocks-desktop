@@ -103,7 +103,7 @@ export default function PortfolioDetailsHeader({
           okText="Yes"
           cancelText="No"
         >
-          <Button icon={<DeleteOutlined />}>Delete</Button>
+          <Button icon={<DeleteOutlined />} danger>Delete</Button>
         </Popconfirm>
       ]}
     />

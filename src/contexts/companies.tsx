@@ -10,6 +10,7 @@ export type CompaniesContextType = {
   fetchCompany: (companyId: string) => ICompany | null;
   addCompany: (company: CompanyFormFields) => IAddProps;
   update: (transactionId: string, transaction: CompanyFormFields) => IAddProps;
+  deleteById: (transactionId: string) => IAddProps;
 };
 
 export const companiesDefaultValue: CompaniesContextType = {
@@ -19,7 +20,8 @@ export const companiesDefaultValue: CompaniesContextType = {
   fetchCompanies: () => null,
   fetchCompany: (): ICompany | null => null,
   addCompany: (): IAddProps => ({ changes: false }),
-  update: () => ({changes: false})
+  update: () => ({changes: false}),
+  deleteById: () => ({ changes: false })
 };
 
 export const CompaniesContext = createContext<CompaniesContextType>(
