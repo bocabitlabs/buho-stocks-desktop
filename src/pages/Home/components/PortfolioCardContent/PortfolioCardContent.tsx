@@ -24,7 +24,7 @@ export default function PortfolioCardContent({
     return null;
   }
 
-  const portfolioValue = currentPortfolio.getPortfolioValueWithInflation(true);
+  const portfolioValue = currentPortfolio.getPortfolioValue(true);
 
   return (
     <Card
