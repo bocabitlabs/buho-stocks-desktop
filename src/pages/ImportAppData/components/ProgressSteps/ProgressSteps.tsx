@@ -1,6 +1,5 @@
 import { Steps } from "antd";
 import React, {
-  ReactElement,
   useEffect,
   useRef,
   useState
@@ -17,7 +16,7 @@ export default function ProgressSteps({
   importStep,
   importText,
   stepsNames
-}: Props): ReactElement {
+}: Props): React.ReactElement {
   const myRef = useRef<HTMLDivElement>(null);
   const [importSteps, setImportSteps] = useState<any>([]);
 

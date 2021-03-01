@@ -1,6 +1,5 @@
 import { PageHeader } from 'antd';
-import React, { ReactElement, useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react'
 import { CompaniesContext } from 'contexts/companies';
 import { HomeOutlined } from '@ant-design/icons';
 import { breadcrumbItemRender } from 'utils/headers-utils';
@@ -10,7 +9,7 @@ interface Props {
   portfolioId: string;
 }
 
-export default function ShareAddHeader({companyId, portfolioId}: Props): ReactElement {
+export default function ShareAddHeader({companyId, portfolioId}: Props): React.ReactElement {
   const { company, fetchCompany } = useContext(CompaniesContext);
 
   useEffect(() => {
