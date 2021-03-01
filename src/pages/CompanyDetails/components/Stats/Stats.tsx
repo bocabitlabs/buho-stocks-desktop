@@ -15,7 +15,7 @@ export default function Stats({ company }: Props): ReactElement | null {
   const sharesCount = company.getSharesCount();
   const dividendsAmount = company.getDividendsAmount(true);
   const totalInvested = company.getTotalInvested(true);
-  const portfolioValue = company.getPortfolioValueWithInflation(true);
+  const portfolioValue = company.getPortfolioValue(true);
   const companyReturn = company.getReturn(true);
   const returnPercentage = company.getReturnWithDividendsPercentage(true);
   const companyRpd = company.getRpd(true);

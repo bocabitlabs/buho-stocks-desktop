@@ -24,6 +24,21 @@ export class Portfolio implements IPortfolio {
     this.companies = parameters.companies;
   }
 
+  getPortfolioValue(inBaseCurrency = false): number {
+    console.log("Portfolio companies", this.companies);
+    const totalPortfolioValue = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      if (inBaseCurrency) {
+        return accumulator + obj.getPortfolioValue(true);
+      }
+      return accumulator + obj.getPortfolioValue();
+    },
+    0);
+    return totalPortfolioValue;
+  }
+
   getPortfolioValueWithInflation(inBaseCurrency = false): number {
     console.log("Portfolio companies", this.companies);
     const totalPortfolioValue = this.companies.reduce(function (

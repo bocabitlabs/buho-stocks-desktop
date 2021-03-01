@@ -206,11 +206,11 @@ export class Company implements ICompany {
   }
 
   getReturn(inBaseCurrency = false): number {
-    const portfolioValueWithInflation = this.getPortfolioValueWithInflation(
+    const portfolioValue = this.getPortfolioValue(
       inBaseCurrency
     );
     const totalInvested = this.getTotalInvested(inBaseCurrency);
-    const totalReturn = portfolioValueWithInflation - totalInvested;
+    const totalReturn = portfolioValue - totalInvested;
     // return acumReturn;
     return totalReturn;
   }
@@ -257,7 +257,7 @@ export class Company implements ICompany {
 
   getRpd(inBaseCurrency = false): number {
     const dividendsAmount = this.getDividendsAmount(inBaseCurrency);
-    const totalInvested = this.getPortfolioValue(inBaseCurrency);
+    const totalInvested = this.getTotalInvested(inBaseCurrency);
 
     const rpd = (dividendsAmount / totalInvested) * 100;
     return rpd;
