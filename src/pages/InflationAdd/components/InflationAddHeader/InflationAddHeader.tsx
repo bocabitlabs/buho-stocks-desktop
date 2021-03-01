@@ -1,6 +1,7 @@
+import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import React, { ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { breadcrumbItemRender } from "utils/headers-utils";
 
 
 export default function InflationAddHeader(): ReactElement {
@@ -8,7 +9,9 @@ export default function InflationAddHeader(): ReactElement {
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: "/inflations",
@@ -21,18 +24,15 @@ export default function InflationAddHeader(): ReactElement {
       breadcrumbName: "Add inflation"
     }
   ];
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
+
   return (
     <PageHeader
       className="site-page-header"
       title="Add a inflation"
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
-      subTitle="This is a subtitle"
     />
   );
 }

@@ -1,6 +1,8 @@
+import { HomeOutlined } from "@ant-design/icons";
 import { Button, PageHeader } from "antd";
 import React, { ReactElement } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { breadcrumbItemRender } from "utils/headers-utils";
 
 
 export default function SectorListRouteHeader(): ReactElement {
@@ -10,7 +12,9 @@ export default function SectorListRouteHeader(): ReactElement {
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: "/sectors",
@@ -18,18 +22,15 @@ export default function SectorListRouteHeader(): ReactElement {
       breadcrumbName: "Sectors"
     }
   ];
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
+
   return (
     <PageHeader
       className="site-page-header"
       title="Sectors"
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
-      subTitle="This is a subtitle"
       extra={[
         <Button
           onClick={() => {

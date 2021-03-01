@@ -1,6 +1,7 @@
+import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import React, { ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { breadcrumbItemRender } from "utils/headers-utils";
 
 
 export default function ExportAppDataHeader(): ReactElement {
@@ -8,7 +9,9 @@ export default function ExportAppDataHeader(): ReactElement {
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: "/import-export",
@@ -21,16 +24,14 @@ export default function ExportAppDataHeader(): ReactElement {
       breadcrumbName: "Export app data"
     }
   ];
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
+
   return (
     <PageHeader
       className="site-page-header"
       title="Export app data"
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
     />
   );

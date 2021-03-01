@@ -1,8 +1,9 @@
 import React, { ReactElement, useContext, useEffect } from 'react'
 
 import { PageHeader } from "antd";
-import { Link } from "react-router-dom";
 import { PortfoliosContext } from 'contexts/portfolios';
+import { HomeOutlined } from '@ant-design/icons';
+import { breadcrumbItemRender } from 'utils/headers-utils';
 
 interface Props {
   portfolioId: string;
@@ -19,7 +20,9 @@ export default function TransactionsLogListHeader({portfolioId}: Props): ReactEl
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: `/portfolios/${portfolioId}`,
@@ -33,17 +36,13 @@ export default function TransactionsLogListHeader({portfolioId}: Props): ReactEl
     }
   ];
 
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
-
   return (
     <PageHeader
       className="site-page-header"
       title="Logs"
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
     />
   );

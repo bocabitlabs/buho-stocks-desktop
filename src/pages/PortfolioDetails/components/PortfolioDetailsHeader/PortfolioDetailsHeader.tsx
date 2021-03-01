@@ -3,15 +3,17 @@ import Button from "antd/lib/button";
 import PageHeader from "antd/lib/page-header";
 import Popconfirm from "antd/lib/popconfirm";
 import React, { ReactElement, useContext, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { PortfoliosContext } from "contexts/portfolios";
 import PortfolioService from "services/portfolio-service";
 import {
   DeleteOutlined,
+  HomeOutlined,
   PlusOutlined,
   UnorderedListOutlined
 } from "@ant-design/icons";
+import { breadcrumbItemRender } from "utils/headers-utils";
 
 interface Props {
   portfolioId: string;
@@ -36,7 +38,9 @@ export default function PortfolioDetailsHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: `/portfolios/${portfolioId}`,
@@ -44,10 +48,6 @@ export default function PortfolioDetailsHeader({
       breadcrumbName: portfolio ? portfolio.name : ""
     }
   ];
-
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
 
   function confirm(e: any) {
     const result = PortfolioService.deleteById(portfolioId);
@@ -74,7 +74,7 @@ export default function PortfolioDetailsHeader({
       title={`${portfolio?.name}`}
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
       extra={[
         <Button

@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react'
 
 import { Button, PageHeader } from "antd";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { HomeOutlined } from '@ant-design/icons';
+import { breadcrumbItemRender } from 'utils/headers-utils';
 
 export default function InflationListHeader(): ReactElement {
   const history = useHistory();
@@ -10,7 +12,9 @@ export default function InflationListHeader(): ReactElement {
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: "/inflations",
@@ -18,18 +22,15 @@ export default function InflationListHeader(): ReactElement {
       breadcrumbName: "Inflations"
     }
   ];
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
+
   return (
     <PageHeader
       className="site-page-header"
       title="Inflations"
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
-      subTitle="This is a subtitle"
       extra={[
         <Button
           onClick={() => {

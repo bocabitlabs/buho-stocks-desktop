@@ -1,7 +1,8 @@
 import { PageHeader } from "antd";
 import React, { ReactElement, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
+import { HomeOutlined } from "@ant-design/icons";
+import { breadcrumbItemRender } from "utils/headers-utils";
 
 interface Props {
   companyId: string;
@@ -24,7 +25,9 @@ export default function RightsTransactionEditHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: `/portfolios/${portfolioId}`,
@@ -43,17 +46,13 @@ export default function RightsTransactionEditHeader({
     }
   ];
 
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
-
   return (
     <PageHeader
       className="site-page-header"
       title="Edit rights transaction"
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
     />
   );

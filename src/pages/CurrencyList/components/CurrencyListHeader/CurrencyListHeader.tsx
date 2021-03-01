@@ -1,6 +1,8 @@
+import { HomeOutlined } from "@ant-design/icons";
 import { Button, PageHeader } from "antd";
 import React, { ReactElement } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { breadcrumbItemRender } from "utils/headers-utils";
 
 export default function CurrencyListHeader(): ReactElement {
   const history = useHistory();
@@ -9,7 +11,9 @@ export default function CurrencyListHeader(): ReactElement {
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: "/currencies",
@@ -17,18 +21,15 @@ export default function CurrencyListHeader(): ReactElement {
       breadcrumbName: "Currencies"
     }
   ];
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
+
   return (
     <PageHeader
       className="site-page-header"
       title="Currencies"
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
-      subTitle="This is a subtitle"
       extra={[
         <Button
           onClick={() => {

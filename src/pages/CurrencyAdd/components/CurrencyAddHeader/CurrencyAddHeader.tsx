@@ -1,6 +1,7 @@
+import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import React, { ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { breadcrumbItemRender } from "utils/headers-utils";
 
 
 export default function CurrencyAddHeader(): ReactElement {
@@ -8,7 +9,9 @@ export default function CurrencyAddHeader(): ReactElement {
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: "/add-currency",
@@ -16,18 +19,15 @@ export default function CurrencyAddHeader(): ReactElement {
       breadcrumbName: "Add currency"
     }
   ];
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
+
   return (
     <PageHeader
       className="site-page-header"
       title="Add a currency"
       breadcrumb={{
         routes,
-        itemRender
+        itemRender: breadcrumbItemRender
       }}
-      subTitle="This is a subtitle"
     />
   );
 }

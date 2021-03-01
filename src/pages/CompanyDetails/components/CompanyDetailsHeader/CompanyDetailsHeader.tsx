@@ -1,7 +1,8 @@
 import {
   DeleteOutlined,
   EditOutlined,
-  EllipsisOutlined
+  EllipsisOutlined,
+  HomeOutlined
 } from "@ant-design/icons";
 import {
   Button,
@@ -13,12 +14,13 @@ import {
   Tag
 } from "antd";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
 import StockPriceAddModal from "../StockPriceAddModal/StockPriceAddModal";
 import StockPriceListModal from "../StockPriceListModal/StockPriceListModal";
 import TransactionLogService from "services/transaction-log-service";
+import { breadcrumbItemRender } from "utils/headers-utils";
 
 interface Props {
   portfolioId: string;
@@ -52,7 +54,9 @@ export default function CompanyDetailsRouteHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home"
+      breadcrumbName: "Home",
+      icon: <HomeOutlined />,
+      iconOnly: true
     },
     {
       path: `/portfolios/${company.portfolioId}`,
@@ -65,10 +69,6 @@ export default function CompanyDetailsRouteHeader({
       breadcrumbName: company.name
     }
   ];
-
-  function itemRender(route: any) {
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  }
 
   const showAddStockPriceModal = () => {
     setAddStockModalVisible(true);
@@ -151,7 +151,7 @@ export default function CompanyDetailsRouteHeader({
         }
         breadcrumb={{
           routes,
-          itemRender
+          itemRender: breadcrumbItemRender
         }}
         extra={[
           <Button
