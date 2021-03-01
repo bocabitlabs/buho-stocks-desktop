@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { Layout } from "antd";
 
 import TopNavbar from "./components/TopNavbar/TopNavbar";
@@ -38,6 +38,7 @@ import Import from "pages/ImportData/Import";
 import ImportAppData from "pages/ImportAppData/ImportAppData";
 import CompanyEdit from "pages/CompanyEdit/CompanyEdit";
 import PortfolioTransactionsLogList from "pages/PortfolioTransactionsLogList/PortfolioTransactionsLogList";
+import ScrollToTop from "hooks/scroll-to-top";
 
 function App() {
   /**
@@ -53,7 +54,7 @@ function App() {
         <PortfoliosContext.Provider value={portfoliosContext}>
           <SelectedPortfolioContext.Provider value={selectedPortfolioContext}>
             <AppSidebar />
-
+            <ScrollToTop />
             <Layout>
               <Layout.Header
                 className="site-layout-background"
@@ -68,93 +69,96 @@ function App() {
               </Layout.Header>
 
               <Layout.Content
+                id="mainDiv"
                 className="site-layout-background"
                 style={{
                   margin: "74px 0 10px 10px",
                   overflowY: "auto"
                 }}
               >
-                <Route exact path="/">
-                  <Redirect to="/home" />
-                </Route>
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/import-export" component={ImportExport} />
-                <Route exact path="/export" component={ExportAppData} />
-                <Route exact path="/import" component={Import} />
-                <Route
-                  exact
-                  path="/import/app-data"
-                  component={ImportAppData}
-                />
-                <Route exact path="/import/broker" component={CsvImport} />
+                <Switch>
+                  <Route exact path="/">
+                    <Redirect to="/home" />
+                  </Route>
+                  <Route exact path="/home" component={Home} />
+                  <Route exact path="/import-export" component={ImportExport} />
+                  <Route exact path="/export" component={ExportAppData} />
+                  <Route exact path="/import" component={Import} />
+                  <Route
+                    exact
+                    path="/import/app-data"
+                    component={ImportAppData}
+                  />
+                  <Route exact path="/import/broker" component={CsvImport} />
 
-                <Route exact path="/settings" component={Settings} />
-                <Route exact path="/add/portfolio" component={PortfolioAdd} />
-                <Route exact path="/add/currency" component={CurrencyAdd} />
-                <Route exact path="/currencies" component={CurrencyList} />
+                  <Route exact path="/settings" component={Settings} />
+                  <Route exact path="/add/portfolio" component={PortfolioAdd} />
+                  <Route exact path="/add/currency" component={CurrencyAdd} />
+                  <Route exact path="/currencies" component={CurrencyList} />
 
-                <Route exact path="/add/market" component={MarketAdd} />
-                <Route exact path="/markets" component={MarketList} />
-                <Route exact path="/add/inflation" component={InflationAdd} />
-                <Route exact path="/inflations" component={InflationList} />
+                  <Route exact path="/add/market" component={MarketAdd} />
+                  <Route exact path="/markets" component={MarketList} />
+                  <Route exact path="/add/inflation" component={InflationAdd} />
+                  <Route exact path="/inflations" component={InflationList} />
 
-                <Route exact path="/sectors" component={SectorList} />
-                <Route exact path="/add/sector" component={SectorAdd} />
-                <Route
-                  exact
-                  path="/portfolios/:id"
-                  component={PortfolioDetails}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:id/companies/add"
-                  component={CompanyAdd}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:portfolioId/companies/:companyId"
-                  component={CompanyDetails}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:portfolioId/companies/:companyId/edit"
-                  component={CompanyEdit}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:id/log"
-                  component={PortfolioTransactionsLogList}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:portfolioId/companies/:companyId/add-shares"
-                  component={SharesTransactionAdd}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:portfolioId/companies/:companyId/shares/:transactionId/edit/"
-                  component={SharesTransactionEdit}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
-                  component={DividendsTransactionAdd}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:portfolioId/companies/:companyId/dividends/:transactionId/edit/"
-                  component={DividendsTransactionEdit}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:portfolioId/companies/:companyId/add-rights-transaction"
-                  component={RightsTransactionAdd}
-                />
-                <Route
-                  exact
-                  path="/portfolios/:portfolioId/companies/:companyId/rights/:transactionId/edit/"
-                  component={RightsTransactionEdit}
-                />
+                  <Route exact path="/sectors" component={SectorList} />
+                  <Route exact path="/add/sector" component={SectorAdd} />
+                  <Route
+                    exact
+                    path="/portfolios/:id"
+                    component={PortfolioDetails}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:id/companies/add"
+                    component={CompanyAdd}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/companies/:companyId"
+                    component={CompanyDetails}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/companies/:companyId/edit"
+                    component={CompanyEdit}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:id/log"
+                    component={PortfolioTransactionsLogList}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/companies/:companyId/add-shares"
+                    component={SharesTransactionAdd}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/companies/:companyId/shares/:transactionId/edit/"
+                    component={SharesTransactionEdit}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/companies/:companyId/add-dividends"
+                    component={DividendsTransactionAdd}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/companies/:companyId/dividends/:transactionId/edit/"
+                    component={DividendsTransactionEdit}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/companies/:companyId/add-rights-transaction"
+                    component={RightsTransactionAdd}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/companies/:companyId/rights/:transactionId/edit/"
+                    component={RightsTransactionEdit}
+                  />
+                </Switch>
               </Layout.Content>
             </Layout>
           </SelectedPortfolioContext.Provider>
