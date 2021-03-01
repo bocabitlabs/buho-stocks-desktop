@@ -287,6 +287,7 @@ export function importDividendsTransactions(dividends: any[]) {
           companyId: company.id
         };
         DividendsTransactionsService.create(transaction);
+        importedCount++;
       } else {
         notes.push(
           `Dividends transactions: Company ${portfolioData.data[11]} doesn't exist. Add it first. Skipping.`
