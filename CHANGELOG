@@ -2,13 +2,32 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Buho Stocks](https://github.com/bocabitlabs/buho-stocks).
 
-## [version] - [unreleased date]
+## 0.6.0 - 02/03/2021
 ### Added
-- XXX
+- Fetch stock prices from external API (#49)
+- Transactions log: when a company is added, a transaction is made, a stock price is updated.
+- Company edit is now possible.
+- Delete company button.
 ### Fixed
-- XXX
+- Fix portfolios import (app data)
+- Fix dividends import count (wasn't increassed).
+- Fix bug on companies import (app data)
 ### Improved
-- XXX
+- Display portfolio return with no inflation. Clearer to get information.
+- Display portfolio value without inflation.
+- Add home icon to breadcrumbs.
+- Remove unused imports.
+- Scroll to top when the route changes.
+- Return calculations
+- Return for closed comapnies
+
+## 0.5.1 - 21/02/2021
+### Added
+- Import and export app data from the App and from brokers csvs.
+- "Open data folder" menu item to menu.
+- Alternative tickers for companies.
+### Fixed
+- Scroll now possible again on main content
 
 ## 0.5.0 - 15/02/2021
 ### Added
