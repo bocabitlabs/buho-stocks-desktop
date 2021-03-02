@@ -1,7 +1,9 @@
-import { Card, Statistic } from "antd";
+import { Card, Statistic, Typography } from "antd";
+import { BaseType } from "antd/lib/typography/Base";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { IPortfolio } from "types/portfolio";
+import { StringUtils } from "utils/string-utils";
 
 interface Props {
   portfolioId: string;
@@ -25,6 +27,28 @@ export default function PortfolioCardContent({
   }
 
   const portfolioValue = currentPortfolio.getPortfolioValue(true);
+  const portfolioReturn = currentPortfolio.getReturnWithDividends(true);
+  const portfolioReturnPercentage = currentPortfolio.getReturnWithDividendsPercentage(
+    true
+  );
+
+  let positive: BaseType = "success";
+  if (portfolioReturn < 0) {
+    positive = "danger";
+  }
+  if (portfolioReturn === 0) {
+    positive = "secondary";
+  }
+  const formattedReturn = StringUtils.getAmountWithSymbol(
+    portfolioReturn,
+    2,
+    currentPortfolio.currencySymbol
+  );
+  const formattedReturnPercentage = StringUtils.getAmountWithSymbol(
+    portfolioReturnPercentage,
+    2,
+    "%"
+  );
 
   return (
     <Card
@@ -42,6 +66,8 @@ export default function PortfolioCardContent({
         suffix={currentPortfolio.currencySymbol}
         precision={2}
       />
+      <Typography.Text type={positive}>{formattedReturn}</Typography.Text> -
+      <Typography.Text type={positive}>{formattedReturnPercentage}</Typography.Text>
     </Card>
   );
 }

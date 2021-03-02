@@ -1,22 +1,21 @@
 import { Col, Row, Statistic, Typography } from "antd";
 import { BaseType } from "antd/lib/typography/Base";
 import moment from "moment";
-import React, { ReactElement} from "react";
+import React from "react";
 import { ICompany } from "types/company";
-import { IStockPrice } from "types/stock-price";
 import { StringUtils } from "utils/string-utils";
 
 interface Props {
   company: ICompany;
 }
 
-export default function Stats({ company }: Props): ReactElement | null {
-  let latestStockPrice: IStockPrice = company.getLatestStockPrice();
+export default function Stats({ company }: Props): React.ReactElement | null {
+  let latestStockPrice = company.getLatestStockPrice(true);
   const sharesCount = company.getSharesCount();
   const dividendsAmount = company.getDividendsAmount(true);
   const totalInvested = company.getTotalInvested(true);
   const portfolioValue = company.getPortfolioValue(true);
-  const companyReturn = company.getReturn(true);
+  const companyReturn = company.getReturnWithDividends(true);
   const returnPercentage = company.getReturnWithDividendsPercentage(true);
   const companyRpd = company.getRpd(true);
   const companyYoc = company.getYoc(true);

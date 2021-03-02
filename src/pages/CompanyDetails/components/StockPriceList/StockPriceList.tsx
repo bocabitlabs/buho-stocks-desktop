@@ -44,6 +44,12 @@ export default function StockPriceList({
       render: (text: string, record: any) => `${text} ${currencySymbol}`
     },
     {
+      title: "Exchange Rate",
+      dataIndex: "exchangeRate",
+      key: "exchangeRate",
+      render: (text: string, record: any) => text
+    },
+    {
       title: "Action",
       key: "action",
       render: (text: string, record: any) => (
@@ -91,7 +97,8 @@ export default function StockPriceList({
     const shares2 = stockPrices.map((stock: IStockPrice) => ({
       key: stock.id,
       transactionDate: stock.transactionDate,
-      price: stock.price
+      price: stock.price,
+      exchangeRate: stock.exchangeRate
     }));
 
     return shares2;

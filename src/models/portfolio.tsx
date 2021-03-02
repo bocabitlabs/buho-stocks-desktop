@@ -54,6 +54,20 @@ export class Portfolio implements IPortfolio {
     return totalPortfolioValue;
   }
 
+  getAllPortfolioDividends(inBaseCurrency = false): number {
+    const amount = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      if (inBaseCurrency) {
+        return accumulator + obj.getDividendsAmount(inBaseCurrency);
+      }
+      return accumulator + obj.getDividendsAmount(inBaseCurrency);
+    },
+    0);
+    return amount;
+  }
+
   getPortfolioDividends(year: string, inBaseCurrency = false): number {
     const amount = this.companies.reduce(function (
       accumulator: number,
@@ -81,5 +95,76 @@ export class Portfolio implements IPortfolio {
     },
     0);
     return amount;
+  }
+
+  getTotalInvested(inBaseCurrency: boolean) {
+    const totalInvested = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      if (inBaseCurrency) {
+        return accumulator + obj.getTotalInvested(inBaseCurrency);
+      }
+      return accumulator + obj.getTotalInvested(inBaseCurrency);
+    },
+    0);
+    return totalInvested;
+  }
+
+  private getReturnFromSales = (inBaseCurrency = false) => {
+    const totalInvested = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      if (inBaseCurrency) {
+        return accumulator + obj.getReturnFromSales(inBaseCurrency);
+      }
+      return accumulator + obj.getReturnFromSales(inBaseCurrency);
+    },
+    0);
+    return totalInvested;
+  };
+
+  getReturn(inBaseCurrency = false): number {
+    const totalInvested = this.getTotalInvested(inBaseCurrency);
+    const portfolioValue = this.getPortfolioValue(inBaseCurrency);
+    let returnFromSales = this.getReturnFromSales(inBaseCurrency);
+    let totalReturn = 0;
+
+    totalReturn = portfolioValue + returnFromSales - totalInvested;
+
+    return totalReturn;
+  }
+
+  getReturnWithDividends(inBaseCurrency = false): number {
+    const totalReturn = this.getReturn(inBaseCurrency);
+    const dividendsAmount = this.getAllPortfolioDividends(inBaseCurrency);
+    return totalReturn + dividendsAmount;
+  }
+
+  getReturnPercentage(inBaseCurrency = false): number {
+    const totalReturn = this.getReturn(inBaseCurrency);
+    const totalInvested = this.getTotalInvested(inBaseCurrency);
+
+    if (totalInvested === 0) {
+      return 0;
+    }
+
+    const returnPercentage = (totalReturn / totalInvested) * 100;
+
+    return returnPercentage;
+  }
+
+  getReturnWithDividendsPercentage(inBaseCurrency = false): number {
+    const totalReturn = this.getReturnWithDividends(inBaseCurrency);
+    const totalInvested = this.getTotalInvested(inBaseCurrency);
+
+    if (totalInvested === 0) {
+      return 0;
+    }
+
+    const returnPercentage = (totalReturn / totalInvested) * 100;
+
+    return returnPercentage;
   }
 }
