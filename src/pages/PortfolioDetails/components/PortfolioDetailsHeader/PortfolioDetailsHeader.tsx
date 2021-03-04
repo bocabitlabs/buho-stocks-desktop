@@ -30,7 +30,6 @@ export default function PortfolioDetailsHeader({
     if (portfolioId === undefined || portfolioId === null) {
       console.error("portfolioId is undefined. This will lead to errors");
     }
-    console.log("Fetching portfolio", portfolioId);
     getById(portfolioId);
   }, [portfolioId, getById]);
 
@@ -63,11 +62,11 @@ export default function PortfolioDetailsHeader({
   }
 
   function cancel(e: any) {
-    console.log(e);
+    console.debug(e);
     message.error("Click on No");
   }
 
-  console.log("PortfolioDetailsHeader: portfolio=", portfolio);
+  console.debug("PortfolioDetailsHeader: portfolio=", portfolio);
 
   return (
     <PageHeader

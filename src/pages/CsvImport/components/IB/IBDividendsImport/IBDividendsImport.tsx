@@ -17,8 +17,6 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
   const [commissionsData, setCommissionsData] = useState([]);
 
   const handleOnFileLoad = (data: any) => {
-    console.log("FILE LOADED");
-
     const filteredData = data.filter((element: any) => {
       return (
         rowHeaders.includes(element.data[0]) &&
@@ -40,13 +38,13 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
       );
       element.commissions = commissions;
     });
-    console.log(filteredData);
+    console.debug(filteredData);
     setData(filteredData);
     setCommissionsData(commissionsData);
   };
 
   const handleOnError = (err: any, file: any, inputElem: any, reason: any) => {
-    console.log(err);
+    console.debug(err);
   };
 
   /**
@@ -59,9 +57,9 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
     transactionDate: string,
     commissionsArray: any
   ) => {
-    console.log("Getting commission row for: ", elementDescription);
+    console.debug("Getting commission row for: ", elementDescription);
     const nameWithISINMatch = elementDescription.match(/(\w)+\s?\(\w+\)/g);
-    console.log("Name with ISIN: ", nameWithISINMatch);
+    console.debug("Name with ISIN: ", nameWithISINMatch);
     if (nameWithISINMatch && nameWithISINMatch.length > 0) {
       const nameWithISIN = nameWithISINMatch[0];
 

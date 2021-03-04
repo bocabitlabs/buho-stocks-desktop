@@ -11,13 +11,11 @@ export const getCompanyFromTransaction = (
   name: string,
   portfolio: IPortfolio
 ): ICompany | undefined => {
-  console.log("Getting company from transaction:", name);
   const found = portfolio.companies.find((element) =>
     normalizeAndRemoveAccents(element.name)
       .toLowerCase()
       .includes(normalizeAndRemoveAccents(name).toLowerCase())
   );
-  console.log("Company found?", found);
   if (found) {
     return found;
   }
@@ -51,7 +49,6 @@ export const getPriceInCompanyCurrency = (
   company: ICompany,
   transactionDate: Moment
 ) => {
-  console.log("Get total amount in company currency");
   const INGDefaultCurrency = "EUR";
   if (company && company.currencyAbbreviation !== INGDefaultCurrency) {
     // First, exchage it to EUR, which is the ING total's currency

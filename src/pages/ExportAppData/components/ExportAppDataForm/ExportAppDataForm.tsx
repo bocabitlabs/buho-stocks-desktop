@@ -15,7 +15,7 @@ import StockPriceService from "services/stock-price-service";
 export default function ExportAppDataForm(): ReactElement {
   const onFinish = (values: any) => {
     const { checkbox } = values;
-    console.log("Exporting...");
+    console.debug("Exporting...");
 
     let csvContent = "";
     if (checkbox.includes("sectors")) {
@@ -98,7 +98,7 @@ export default function ExportAppDataForm(): ReactElement {
         csvContent += row + "\r\n";
       });
     }
-    console.log(csvContent);
+    console.debug(csvContent);
     saveFile(csvContent);
   };
 

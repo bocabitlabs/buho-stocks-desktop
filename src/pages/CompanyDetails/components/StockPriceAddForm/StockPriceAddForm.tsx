@@ -25,7 +25,6 @@ export default function StockPriceAddForm({
     moment(new Date()).format("DD-MM-YYYY")
   );
   const [exchangeName, setExchangeName] = useState<string>("");
-  console.log("Loading exchange rate", exchangeName, transactionDate);
   const [gettingLastPrices, setGettingLastPrices] = useState(false);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ export default function StockPriceAddForm({
 
   const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
   const getExchangeRate = async () => {
-    console.log("Get exchange rate", exchangeName, transactionDate);
+    console.debug("Get exchange rate", exchangeName, transactionDate);
     let exchangeValue = 0;
     setGettingExchangeRate(true);
     const result = await ExchangeRateService.getFromAPI(
@@ -52,7 +51,7 @@ export default function StockPriceAddForm({
     );
 
     if (result) {
-      console.log("Set exchange rate:", exchangeValue);
+      console.debug("Set exchange rate:", exchangeValue);
       form.setFieldsValue({
         exchangeRateValue: result.close
       });
@@ -73,7 +72,7 @@ export default function StockPriceAddForm({
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       companyId: company.id
     };
-    console.log(values);
+    console.debug(values);
     const added = StockPriceService.add(stockPrice);
     if (added.changes) {
       TransactionLogService.add({
@@ -87,9 +86,9 @@ export default function StockPriceAddForm({
         exchangeName: exchangeName,
         exchangeValue: exchangeRateValue
       };
-      console.log(newExchangeRate);
+      console.debug(newExchangeRate);
       const result = ExchangeRateService.add(newExchangeRate);
-      console.log(result);
+      console.debug(result);
 
       message.success({
         content: "Stock price added",
@@ -128,9 +127,9 @@ export default function StockPriceAddForm({
       company.ticker,
       company.alternativeTickers
     );
-    console.log("results are");
-    console.log(data);
-    console.log(found);
+    console.debug("results are");
+    console.debug(data);
+    console.debug(found);
 
     if (found) {
       form.setFieldsValue({

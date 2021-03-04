@@ -42,22 +42,16 @@ export default function INGDividendsImportForm({
 
   // Try to find a suitable company
   const company = getCompanyFromTransaction(companyName, portfolio);
-  console.log("Company is ", company);
-
   // Get the transaction total in the company's currency
 
-  console.log("Getting the total amount in Company Currency...");
   if (company) {
-    console.log("Getting the total amount in Company Currency...");
     total = getTotalAmountInCompanyCurrency(total, company, transactionDate);
     price = getPriceInCompanyCurrency(price, company, transactionDate);
   }
   // Get the commission in the company's currency
-  console.log("Get the commission");
   let commission = getCommission(total, count, price);
 
   const onFinish = (values: any) => {
-    console.log("Finish:", values);
     //   const companyCurrency = inputData[4];
     const transaction: DividendsTransactionFormProps = {
       count: values.count,
@@ -71,7 +65,7 @@ export default function INGDividendsImportForm({
       notes: "Csv imported from ING",
       companyId: values.company
     };
-    console.log(transaction);
+    console.debug(transaction);
     const added = DividendsTransactionsService.create(transaction);
     if (added.changes) {
       if (company) {
@@ -87,8 +81,8 @@ export default function INGDividendsImportForm({
     }
     setFormSent(true);
   };
-  // console.log(inputData);
-  // console.log(portfolio);
+  // console.debug(inputData);
+  // console.debug(portfolio);
 
   return (
     <Form

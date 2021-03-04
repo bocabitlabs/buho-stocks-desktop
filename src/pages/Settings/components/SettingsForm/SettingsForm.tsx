@@ -19,11 +19,8 @@ function SettingsForm(): ReactElement | null {
       language
     };
     let result = undefined;
-    console.log(newSettings);
-    console.log(settings);
 
     if (settings && settings.databasePath !== newSettings.databasePath) {
-      console.log("Database path is different. Updating...");
       result = updateDatabasePath(newSettings.databasePath);
     }
 

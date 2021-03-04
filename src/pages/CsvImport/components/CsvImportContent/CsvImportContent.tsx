@@ -24,7 +24,6 @@ export default function CsvImportContent(): ReactElement {
   }, []);
 
   const handlePortfolioChange = (selectedItem: any) => {
-    console.log(selectedItem);
     const newPortfolio = PortfolioService.getById(selectedItem);
     setPortfolio(newPortfolio);
     setSelectedBroker("");

@@ -37,7 +37,6 @@ export function importSectors(sectors: any[]) {
     }
     totalCount++;
   });
-  console.log(`Imported ${importedCount} sectors`);
   return { importedCount, totalCount, notes };
 }
 
@@ -64,7 +63,7 @@ export function importMarkets(markets: any[]) {
     }
     totalCount++;
   });
-  console.log(`Imported ${importedCount} markets`);
+  console.debug(`Imported ${importedCount} markets`);
   return { importedCount, totalCount, notes };
 }
 
@@ -81,7 +80,7 @@ export function importCurrencies(currencies: any[]) {
       symbol: currencyData.data[5],
       country: currencyData.data[6]
     };
-    console.log(currencyData);
+    console.debug(currencyData);
     const exists = CurrencyService.getByName(currency.name);
     if (exists === undefined) {
       CurrencyService.addCurrency(currency);
@@ -93,7 +92,7 @@ export function importCurrencies(currencies: any[]) {
     }
     totalCount++;
   });
-  console.log(`Imported ${importedCount} currencies`);
+  console.debug(`Imported ${importedCount} currencies`);
   return { importedCount, totalCount, notes };
 }
 export function importPortfolios(portfolios: any[]) {
@@ -106,7 +105,7 @@ export function importPortfolios(portfolios: any[]) {
     if (exists === undefined) {
       const currency = CurrencyService.getByName(portfolioData.data[6]);
       if (currency !== undefined) {
-        console.log(portfolioData);
+        console.debug(portfolioData);
         const portfolio: PortfolioFormFields = {
           name: portfolioData.data[1],
           color: portfolioData.data[2],
@@ -127,7 +126,7 @@ export function importPortfolios(portfolios: any[]) {
       );
     }
   });
-  console.log(`Imported ${importedCount} portfolios`);
+  console.debug(`Imported ${importedCount} portfolios`);
   return { importedCount, totalCount, notes };
 }
 
@@ -145,7 +144,7 @@ export function importCompanies(companies: any[]) {
       const market = MarketService.getByName(portfolioData.data[12]);
 
       if (currency && sector && market && portfolio) {
-        console.log(portfolioData);
+        console.debug(portfolioData);
         const company: CompanyFormFields = {
           name: portfolioData.data[1],
           color: portfolioData.data[2],
@@ -174,7 +173,7 @@ export function importCompanies(companies: any[]) {
       );
     }
   });
-  console.log(`Imported ${importedCount} companies`);
+  console.debug(`Imported ${importedCount} companies`);
   return { importedCount, totalCount, notes };
 }
 
@@ -216,7 +215,7 @@ export function importSharesTransactions(shares: any[]) {
       );
     }
   });
-  console.log(`Imported ${importedCount} shares transactions`);
+  console.debug(`Imported ${importedCount} shares transactions`);
   return { importedCount, totalCount, notes };
 }
 
@@ -258,7 +257,7 @@ export function importRightsTransactions(rights: any[]) {
       );
     }
   });
-  console.log(`Imported ${importedCount} rights transactions`);
+  console.debug(`Imported ${importedCount} rights transactions`);
   return { importedCount, totalCount, notes };
 }
 
@@ -267,7 +266,7 @@ export function importDividendsTransactions(dividends: any[]) {
   let totalCount = 0;
   let notes: string[] = [];
 
-  console.log("Importing dividends transactions: ", dividends.length);
+  console.debug("Importing dividends transactions: ", dividends.length);
   dividends.forEach((portfolioData: any) => {
     const portfolio = PortfolioService.getByName(portfolioData.data[12]);
     if (portfolio) {
@@ -300,7 +299,7 @@ export function importDividendsTransactions(dividends: any[]) {
       );
     }
   });
-  console.log(`Imported ${importedCount} dividends transactions`);
+  console.debug(`Imported ${importedCount} dividends transactions`);
   return { importedCount, totalCount, notes };
 }
 
@@ -323,7 +322,7 @@ export function importInflations(inflations: any[]) {
     }
     totalCount++;
   });
-  console.log(`Imported ${importedCount} inflations`);
+  console.debug(`Imported ${importedCount} inflations`);
   return { importedCount, totalCount, notes };
 }
 
@@ -332,7 +331,7 @@ export function importStockPrices(dividends: any[]) {
   let totalCount = 0;
   let notes: string[] = [];
 
-  console.log("Importing stock prices: ", dividends.length);
+  console.debug("Importing stock prices: ", dividends.length);
   dividends.forEach((portfolioData: any) => {
     const portfolio = PortfolioService.getByName(portfolioData.data[5]);
     if (portfolio) {
@@ -361,6 +360,6 @@ export function importStockPrices(dividends: any[]) {
     }
     totalCount++;
   });
-  console.log(`Imported ${importedCount} stock prices`);
+  console.debug(`Imported ${importedCount} stock prices`);
   return { importedCount, totalCount, notes };
 }

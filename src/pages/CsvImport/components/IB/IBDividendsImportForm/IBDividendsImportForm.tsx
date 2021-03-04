@@ -25,7 +25,6 @@ export default function IBDividendsImportForm({
 
   const priceMatch = inputData[4].match(/[+-]?\d+(\.\d+)/);
   const companyNameMatch = inputData[4].match(/^(\w)+/g);
-  console.log(companyNameMatch);
   let companyName = "";
   if (companyNameMatch) {
     companyName = companyNameMatch[0];
@@ -42,7 +41,7 @@ export default function IBDividendsImportForm({
     price = +priceMatch[0];
     count = total / price;
   }
-  console.log(taxData);
+  console.debug(taxData);
 
   const getCompanyFromTransaction = (name: string) => {
     const found = portfolio.companies.find((element) =>
@@ -58,15 +57,12 @@ export default function IBDividendsImportForm({
 
 
   const onFinish = (values: any) => {
-    console.log("Finish:", values);
     const companyCurrency = inputData[2];
     const transactionDate = moment(values.transactionDate);
     const portfolioCurrency = portfolio.currencyAbbreviation;
 
     const exchangeName = companyCurrency + portfolioCurrency;
     let exchangeRateValue = 1;
-    console.log(`Exchange name`, exchangeName);
-
 
     if (companyCurrency !== portfolioCurrency) {
       let exchangeRate = null;
@@ -81,7 +77,6 @@ export default function IBDividendsImportForm({
         tries++;
       } while (exchangeRate === undefined && tries < 5);
 
-      console.log(exchangeRate);
       if (exchangeRate !== undefined) {
         exchangeRateValue = exchangeRate.exchangeValue;
       } else {

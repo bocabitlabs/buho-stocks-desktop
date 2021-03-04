@@ -78,10 +78,8 @@ export default function INGTradesImportForm({
   if (company) {
     total = getTotalAmountInCompanyCurrency(total, company, transactionDate);
   }
-  console.log(total);
   // Get the commission in the company's currency
   let commission = getCommission(total, count, price);
-  console.log(commission);
   // Get the exchange rate for the transaction
   const getExchangeRateForTransaction = () => {
     let newExchangeRate: IExchangeRate | undefined = undefined;
@@ -98,16 +96,8 @@ export default function INGTradesImportForm({
   exchangeRate = getExchangeRateForTransaction();
 
   const onFinish = (values: any) => {
-    console.log("Finish:", values);
     //   const companyCurrency = inputData[4];
-    const portfolioCurrency = portfolio.currencyAbbreviation;
-    const exchangeName = values.currency + portfolioCurrency;
-    console.log(exchangeName);
     let commission = values.commission;
-
-    console.log(exchangeName);
-    console.log(transactionDate);
-    console.log(commission);
     let added = null;
 
     if (isRightsTransaction) {
@@ -124,7 +114,6 @@ export default function INGTradesImportForm({
         companyId: values.company,
         type: values.transactionType
       };
-      console.log(rightTransaction);
       added = RightsTransactionsService.create(rightTransaction);
     } else {
       const transaction: SharesTransactionFormProps = {
@@ -140,7 +129,6 @@ export default function INGTradesImportForm({
         companyId: values.company,
         type: values.transactionType
       };
-      console.log(transaction);
       added = SharesTransactionsService.create(transaction);
     }
 

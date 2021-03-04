@@ -23,7 +23,6 @@ interface Props {
 }
 
 const getCompanyFromTransaction = (name: string, portfolio: IPortfolio) => {
-  console.log("Getting company from transaction:", name);
   const found = portfolio.companies.find((element) =>
     element.ticker.includes(name)
   );
@@ -52,10 +51,8 @@ export default function IBTradesImportForm({
   }
 
   const company = getCompanyFromTransaction(companyName, portfolio);
-  console.log("Company is ", company);
 
   const onFinish = (values: any) => {
-    console.log("Finish:", values);
     const transactionDate = moment(values.transactionDate, "DD/MM/YYYY");
     const portfolioCurrency = portfolio.currencyAbbreviation;
 
@@ -63,12 +60,10 @@ export default function IBTradesImportForm({
     let exchangeRateValue = 1;
     if (companyCurrency !== portfolioCurrency) {
       const formattedTransactionDate = transactionDate.format("DD/MM/YYYY");
-      console.log(formattedTransactionDate.replace(/\//g, "-"));
       const exchangeRate = ExchangeRateService.get(
         formattedTransactionDate.replace(/\//g, "-"),
         exchangeName
       );
-      console.log(exchangeRate);
       if (exchangeRate !== undefined) {
         exchangeRateValue = exchangeRate.exchangeValue;
       } else {
@@ -92,8 +87,8 @@ export default function IBTradesImportForm({
       companyId: values.company,
       type: TransactionType.BUY
     };
-    console.log(transactionDate)
-    console.log(transaction)
+    console.debug(transactionDate)
+    console.debug(transaction)
 
     const added = SharesTransactionsService.create(transaction);
 

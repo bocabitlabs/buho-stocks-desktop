@@ -17,7 +17,6 @@ function MarketAddForm(): ReactElement {
 
   const handleAdd = (values: any) => {
     const { name, description, region, openTime, closeTime } = values;
-    console.log(openTime);
     const market = {
       name,
       description,

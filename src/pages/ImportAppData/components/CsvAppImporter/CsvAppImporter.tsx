@@ -39,7 +39,6 @@ export default function CsvAppImporter(): ReactElement {
   const [stockPrices, setStockPrices] = useState([]);
 
   const handleOnFileLoad = (data: any) => {
-    console.log(data);
     const filteredSectors = data.filter((element: any) => {
       return element.data[0] === "sector";
     });
@@ -93,7 +92,7 @@ export default function CsvAppImporter(): ReactElement {
   };
 
   const handleOnError = (err: any, file: any, inputElem: any, reason: any) => {
-    console.log(err);
+    console.debug(err);
   };
 
   const onFinish = (values: any) => {
@@ -106,7 +105,7 @@ export default function CsvAppImporter(): ReactElement {
     setStepsNames(tempSteps);
 
     setImportStarted(true);
-    console.log("Importing...");
+    console.debug("Importing...");
     if (checkbox.includes("sectors")) {
       setImportStep(ImportIds.sectors);
       const { importedCount, totalCount, notes } = importSectors(sectors);

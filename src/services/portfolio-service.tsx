@@ -24,7 +24,6 @@ export default class PortfolioService {
   };
 
   static getAll = (): IPortfolio[] => {
-    console.log("Portfolio Service: getPortfolios");
     const portfoliosData = PortfolioDAO.getAll();
     let portfoliosWithDetails: IPortfolio[] = [];
     if (portfoliosData === undefined) {
@@ -42,17 +41,8 @@ export default class PortfolioService {
   };
 
   static getById = (portfolioId: string): IPortfolio | null => {
-    console.log(`PortfolioService: Getting portfolio info: id=${portfolioId}`);
     const data = PortfolioDAO.getById(portfolioId);
-    console.log(
-      `PortfolioService: Getting portfolio info companies: id=${portfolioId}`
-    );
     const companiesData = new CompanyService().getCompanies(portfolioId);
-    console.log(
-      `PortfolioService: Creating portfolio from info: id=${portfolioId}`,
-      data,
-      companiesData
-    );
     const portfolio = createPortfolioObject(data, companiesData);
     return portfolio;
   };
@@ -66,7 +56,6 @@ function createPortfolioObject(result: IPortfolio, companies: ICompany[]) {
   if (result === undefined) {
     return null;
   }
-  console.log(`PortfolioService (createPortfolio):`, result, companies);
   result.companies = companies;
   const portfolio: Portfolio = new Portfolio(result);
 

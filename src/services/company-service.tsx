@@ -31,9 +31,7 @@ export default class CompanyService {
   };
 
   getCompanies = (portfolioId: string): ICompany[] => {
-    console.log("CompanyService: getCompanies for portfolio=", portfolioId);
     if (portfolioId === "undefined") {
-      console.log("portfolioId is undefined");
       return [];
     }
     const companies = new CompanyDAO().getCompanies(portfolioId);

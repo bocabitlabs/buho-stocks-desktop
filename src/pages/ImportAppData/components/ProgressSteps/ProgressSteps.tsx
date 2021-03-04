@@ -96,14 +96,12 @@ export default function ProgressSteps({
     const newSteps = steps.filter((element) => {
       return [...stepsNames, "start", "completed"].includes(element.name);
     });
-    console.log("newSteps", newSteps);
     setImportSteps(newSteps);
   }, [stepsNames]);
 
   useEffect(() => {
     const setStepAsFinished = () => {
       let stepToEdit = getStepPositionById();
-      console.log("Update step as Finished: ", importStep, stepToEdit);
 
       if (stepToEdit !== -1) {
         let updatedImportSteps = [...importSteps];
@@ -113,7 +111,6 @@ export default function ProgressSteps({
         };
 
         setImportSteps(updatedImportSteps);
-        console.log(updatedImportSteps);
       }
     };
     setStepAsFinished();
@@ -127,9 +124,7 @@ export default function ProgressSteps({
   }, [importText]);
 
   const getStepPositionById = () => {
-    console.log("Get step position by id: ", importStep);
     let foundIndex = importSteps.findIndex((x: any) => x.id === importStep);
-    console.log(`Id ${importStep} found on index ${foundIndex}`);
     return foundIndex;
   };
 

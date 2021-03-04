@@ -10,7 +10,6 @@ import PortfolioAddForm from "./components/PortfolioAddForm/PortfolioAddForm";
 const PortfolioAdd = () => {
   const currenciesContext = useCurrenciesContext();
 
-  console.log("AddPortfoliosRoute rendered");
   return (
     <div>
       <CurrenciesContext.Provider value={currenciesContext}>

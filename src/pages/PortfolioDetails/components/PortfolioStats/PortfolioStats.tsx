@@ -9,7 +9,6 @@ export default function PortfolioStats(): ReactElement {
   const { Option } = Select;
 
   function onChange(value: any) {
-    console.log(`selected ${value}`);
     setyYear(value);
   }
   let dividendsPerYear = 0;
@@ -21,15 +20,15 @@ export default function PortfolioStats(): ReactElement {
   }
 
   function onBlur() {
-    console.log("blur");
+    console.debug("blur");
   }
 
   function onFocus() {
-    console.log("focus");
+    console.debug("focus");
   }
 
   function onSearch(val: any) {
-    console.log("search:", val);
+    console.debug("search:", val);
   }
 
   return (

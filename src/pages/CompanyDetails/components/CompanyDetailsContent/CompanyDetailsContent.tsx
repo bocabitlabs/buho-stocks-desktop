@@ -36,7 +36,7 @@ export default function CompanyDetailsContent({
           <Tabs
             defaultActiveKey={query.get("tab") || "shares"}
             onChange={() => {
-              console.log("Tab click");
+              console.debug("Tab click");
             }}
           >
             <Tabs.TabPane tab="Shares" key="shares">

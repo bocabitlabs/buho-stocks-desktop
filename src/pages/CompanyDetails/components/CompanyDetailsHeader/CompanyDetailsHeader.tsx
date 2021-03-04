@@ -121,7 +121,6 @@ export default function CompanyDetailsRouteHeader({
     const comapnyName = company?.name;
     const companyticker = company?.ticker;
     const result = deleteCompany(companyId);
-    console.log(result);
     if (result.changes) {
       TransactionLogService.add({
         type: "Remove company",

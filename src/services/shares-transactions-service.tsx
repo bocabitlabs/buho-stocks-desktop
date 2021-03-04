@@ -4,7 +4,6 @@ import { IAddProps } from "types/common";
 
 export default class SharesTransactionsService {
   static create = (transaction: SharesTransactionFormProps): IAddProps => {
-    console.log("Adding share transaction: SharesTransactionService");
     return SharesTransactionsDAO.create(transaction);
   };
 

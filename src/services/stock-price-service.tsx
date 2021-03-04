@@ -28,7 +28,6 @@ export default class StockPriceService {
       data = await getCurrentData(ticker);
       found = true;
     } catch (error) {
-      console.log(alternativeTickers);
       const companyTickersArray = alternativeTickers
         .replace(" ", "")
         .split(",");
@@ -42,7 +41,7 @@ export default class StockPriceService {
             data = await getCurrentData(element);
             found = true;
           } catch (error) {
-            console.log("error" + error);
+            console.error("error" + error);
           }
         })
       );

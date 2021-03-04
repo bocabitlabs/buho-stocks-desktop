@@ -18,23 +18,10 @@ export default class ExchangeRateService {
   };
 
   static getFromAPI = async (transactionDate: string, exchangeName: string) => {
-    console.log(`Get from API: ${exchangeName} for ${transactionDate}`);
     let data: any = undefined;
     const momentDate = moment(transactionDate, "DD-MM-YYYY");
-    console.log(momentDate.format("DD-MM-YYYY"))
-    console.log(momentDate)
     try {
       delay(1000);
-      console.log(
-        +momentDate.month(),
-        +momentDate.format('DD'),
-        +momentDate.year(),
-        +momentDate.month(),
-        +momentDate.format('DD'),
-        +momentDate.year(),
-        exchangeName + "=X",
-        "1d"
-      );
       data = await getHistoricalPrices(
         +momentDate.month(),
         +momentDate.format('DD'),
@@ -46,11 +33,11 @@ export default class ExchangeRateService {
         "1d"
       );
     } catch (error) {
-      console.log(
+      console.warn(
         `Unable to get the historical price for ${exchangeName} (${transactionDate})`
       );
     }
-    console.log(data)
+    console.debug(data)
     if (data.length > 0) {
       return data[0];
     }

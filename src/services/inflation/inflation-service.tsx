@@ -47,7 +47,6 @@ class InflationService {
               currentInflation * (1 + accumulatedInflation);
           }
         }
-        // console.log(`Inflation for year ${inflation.year}=${accumulatedInflation}`)
         count++;
       });
     }

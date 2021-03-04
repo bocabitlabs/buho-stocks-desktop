@@ -40,7 +40,6 @@ function PortfolioAddForm(): ReactElement {
   };
 
   const handleColorChange = (color: any, event: any) => {
-    console.log(color.hex);
     setColor(color.hex);
   };
   return (

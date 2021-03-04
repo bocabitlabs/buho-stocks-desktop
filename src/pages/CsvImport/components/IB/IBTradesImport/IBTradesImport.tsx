@@ -27,7 +27,7 @@ export const IBTradesImport = ({ portfolio }: Props) => {
   };
 
   const handleOnError = (err: any, file: any, inputElem: any, reason: any) => {
-    console.log(err);
+    console.error(err);
   };
 
   return (
@@ -45,7 +45,6 @@ export const IBTradesImport = ({ portfolio }: Props) => {
 
           <ol>
             {data.map((element: any) => {
-              console.log(element.data);
               return (
                 <IBTradesImportForm
                   inputData={element.data}
