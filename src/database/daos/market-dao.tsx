@@ -35,7 +35,7 @@ export default class MarketDAO {
   };
   static exportAll = () => {
     //Call the DB
-    console.log("Export all markets");
+    console.debug("Export all markets");
     const sql = `
     SELECT name, color, region, description, openTime, closeTime
     FROM "markets";
@@ -52,7 +52,7 @@ export default class MarketDAO {
 
   static getMarkets = () => {
     //Call the DB
-    console.log("Get all markets");
+    console.debug("Get all markets");
     const sql = `
     SELECT * FROM markets
     `;

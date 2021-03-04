@@ -56,7 +56,6 @@ export default function DividendsTransactionAddForm({
 
   const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
   const getExchangeRate = async () => {
-    console.log("Get exchange rate", exchangeName, transactionDate);
     setGettingExchangeRate(true);
     const result = await ExchangeRateService.getFromAPI(
       transactionDate,
@@ -64,7 +63,6 @@ export default function DividendsTransactionAddForm({
     );
 
     if (result) {
-      console.log("Set exchange rate:", result.close);
       form.setFieldsValue({
         exchangeRate: result.close
       });

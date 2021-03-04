@@ -36,7 +36,7 @@ const deleteById = (id: string) => {
 
 const exportAll = () => {
   //Call the DB
-  console.log("Export all inflations");
+  console.debug("Export all inflations");
   const sql = `
   SELECT year, percentage
   FROM "inflations";

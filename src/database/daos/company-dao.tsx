@@ -42,7 +42,7 @@ export default class CompanyDAO {
 
   exportAll = () => {
     //Call the DB
-    console.log("Export all companies");
+    console.debug("Export all companies");
     const sql = `
     SELECT companies.name as name
       , companies.color as color
@@ -86,7 +86,7 @@ export default class CompanyDAO {
 
   getCompanies = (portfolioId: string) => {
     //Call the DB
-    console.log("Get all companies from portfolio");
+    console.debug("Get all companies from portfolio");
     const sql = `
     SELECT companies.*
       , sectors.name as sectorName
@@ -129,7 +129,6 @@ export default class CompanyDAO {
   };
   getCompany = (companyId: string): ICompany => {
     //Call the DB
-    console.log("Get company");
     const sql = `
     SELECT companies.*
       , portfolios.name as portfolioName
@@ -152,7 +151,6 @@ export default class CompanyDAO {
     `;
 
     const results = sendIpcSql(sql, "get");
-    console.log(results);
 
     return results;
   };
@@ -166,7 +164,6 @@ export default class CompanyDAO {
       ;
     `;
     const results = sendIpcSql(sql);
-    console.log(results);
     return results;
   };
 

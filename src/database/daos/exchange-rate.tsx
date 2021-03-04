@@ -37,7 +37,6 @@ export default class ExchangeRateDAO {
     const sql = `
     SELECT * FROM "exchanges"
     WHERE transactionDate = '${transactionDate}' AND exchangeName='${exchangeName}'`;
-    console.log(sql);
     const results = sendIpcSql(sql, "get");
     return results;
   };

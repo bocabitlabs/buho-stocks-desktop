@@ -17,14 +17,12 @@ export default function PortfolioSelectorMenu(): ReactElement {
   const { isCollapsed, toggleCollapsed } = useContext(IsCollapsedContext);
 
   const openPortfolio = () => {
-    console.log(selectedPortfolio);
     if (selectedPortfolio) {
       history.push(`/portfolios/${selectedPortfolio}`);
     }
   };
 
   const changeIsCollapsed = () => {
-    console.log("Changing is collapsed...");
     // setIsCollapsed(!isCollapsed);
     toggleCollapsed();
   };

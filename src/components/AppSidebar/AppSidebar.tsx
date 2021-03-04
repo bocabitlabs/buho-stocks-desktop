@@ -52,7 +52,6 @@ export default function AppSidebar(): ReactElement {
   );
 
   const onClickMenu = (item: any) => {
-    console.log(item);
     let clicked = navLinks.find((_item) => _item.key === item.key);
     history.push(clicked?.path || "");
   };

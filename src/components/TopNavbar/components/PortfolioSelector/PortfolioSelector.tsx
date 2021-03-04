@@ -10,11 +10,8 @@ export default function PortfolioSelector(): ReactElement {
   const { portfolios } = useContext(PortfoliosContext);
 
   function handleChange(value: string) {
-    console.log(`selected ${value}`);
     update(value);
   }
-
-  console.log(`Portfolios length=${portfolios.length}`);
 
   return (
     <Select

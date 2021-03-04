@@ -39,7 +39,7 @@ export default class PortfolioDAO {
 
   static exportAll = () => {
     //Call the DB
-    console.log("Export all portfolios");
+    console.debug("Export all portfolios");
     const sql = `
     SELECT portfolios.name as name
     , portfolios.color as color
@@ -67,7 +67,7 @@ export default class PortfolioDAO {
     ON currencies.id = portfolios.currencyId
     `;
     const results = sendIpcSql(sql);
-    console.log("results", results)
+    console.debug("results", results)
     return results;
   };
 

@@ -5,10 +5,9 @@ import { ISettings } from "types/settings";
 export default class SettingsDAO {
   static getSettings = () => {
     //Call the DB
-    console.log("Get all settings");
+    console.debug("Get all settings");
     const sql = `SELECT * FROM settings WHERE id='1'`;
     const result = sendIpcSql(sql, "get");
-    console.log(result);
     return result;
   };
   static getIsCollapsed = () => {
@@ -39,10 +38,9 @@ export default class SettingsDAO {
   };
   static updateDatabasePath = (databasePath: string) => {
     //Call the DB
-    console.log("Updating databasePath");
+    console.debug("Updating databasePath");
     const sql = `UPDATE "settings" SET "databasePath" = '${databasePath}' WHERE "id" = '1';`;
     const results = sendIpcSql(sql, "insert");
-    console.log(results);
     return results;
   };
   static updateSelectedPortfolio = (selectedPortfolio: string) => {

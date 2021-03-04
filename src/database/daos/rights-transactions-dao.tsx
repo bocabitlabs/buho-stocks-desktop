@@ -35,15 +35,13 @@ export default class RightsTransactionsDAO {
       , '${moment(new Date())}'
     );
     `;
-    console.log(sql);
     const results = sendIpcSql(sql, "insert");
-    console.log(results);
     return results;
   };
 
   static  exportAll = () => {
     //Call the DB
-    console.log("Export all rights transactions");
+    console.debug("Export all rights transactions");
     const sql = `
     SELECT
     rightsTransactions.count as count
@@ -85,7 +83,6 @@ export default class RightsTransactionsDAO {
 
   static getAll = (companyId: string) => {
     //Call the DB
-    console.log("Get all rights");
     const sql = `
     SELECT
     rightsTransactions.*
@@ -100,7 +97,6 @@ export default class RightsTransactionsDAO {
     `;
 
     const results = sendIpcSql(sql);
-    console.log(results)
     return results;
   };
 

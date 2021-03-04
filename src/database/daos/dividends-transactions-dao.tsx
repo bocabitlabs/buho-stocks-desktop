@@ -44,7 +44,7 @@ export default class DividendsTransactionsDAO {
 
   static exportAll = () => {
     //Call the DB
-    console.log("Export all dividendsTransactions");
+    console.debug("Export all dividendsTransactions");
     const sql = `
     SELECT
     dividendsTransactions.count as count
@@ -93,7 +93,7 @@ export default class DividendsTransactionsDAO {
 
   static getAll = (companyId: string) => {
     //Call the DB
-    console.log("Get all dividends");
+    console.debug("Get all dividends");
     const sql = `
     SELECT
       dividendsTransactions.*
@@ -119,8 +119,6 @@ export default class DividendsTransactionsDAO {
     WHERE dividendsTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "get");
-    console.log(results);
-
     return results;
   };
 

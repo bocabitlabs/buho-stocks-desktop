@@ -34,7 +34,7 @@ export default class CurrencyDAO {
 
   static exportAll = () => {
     //Call the DB
-    console.log("Export all currencies");
+    console.debug("Export all currencies");
     const sql = `
     SELECT name, color, abbreviation, symbol, country
     FROM "currencies";
@@ -51,7 +51,7 @@ export default class CurrencyDAO {
 
   static getCurrencies = () => {
     //Call the DB
-    console.log("Get all currencies");
+    console.debug("Get all currencies");
     const sql = `
     SELECT * FROM currencies
     `;

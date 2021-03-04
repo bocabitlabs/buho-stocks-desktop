@@ -45,7 +45,7 @@ export default class SharesTransactionsDAO {
 
   static exportAll = () => {
     //Call the DB
-    console.log("Export all shares transactions");
+    console.debug("Export all shares transactions");
     const sql = `
     SELECT
       sharesTransactions.count as count
@@ -87,7 +87,7 @@ export default class SharesTransactionsDAO {
 
   static getAll = (companyId: string) => {
     //Call the DB
-    console.log("Get all shares");
+    console.debug("Get all shares");
     const sql = `
     SELECT
     sharesTransactions.*

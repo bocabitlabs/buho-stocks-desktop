@@ -6,7 +6,7 @@ import { deleteById, getById } from "./operations";
 export default class SectorDAO {
   static exportAll = () => {
     //Call the DB
-    console.log("Export all sectors");
+    console.debug("Export all sectors");
     const sql = `
     SELECT name, color
     FROM "sectors";
@@ -17,7 +17,7 @@ export default class SectorDAO {
 
   static getSectors = () => {
     //Call the DB
-    console.log("Get all sectors");
+    console.debug("Get all sectors");
     const sql = `
     SELECT * FROM sectors
     `;

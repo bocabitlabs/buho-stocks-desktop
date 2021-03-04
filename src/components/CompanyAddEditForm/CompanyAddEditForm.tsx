@@ -45,7 +45,6 @@ function CompanyAddEditForm({
 
   useEffect(() => {
     if (companyId) {
-      console.log("Fetching company");
       const newCompany = getCompanyById(companyId);
       if (newCompany) {
         setColor(newCompany.color);
@@ -81,7 +80,6 @@ function CompanyAddEditForm({
       alternativeTickers
     };
     let changes = null;
-    console.log(newCompany);
 
     if (companyId) {
       changes = updateCompany(companyId, newCompany);
@@ -107,14 +105,12 @@ function CompanyAddEditForm({
   };
 
   const handleColorChange = (color: any, event: any) => {
-    console.log(color.hex);
     setColor(color.hex);
   };
 
   if (companyId && !company) {
     return null;
   }
-  console.log(company);
   const closed = (company?.closed)? true: false;
   return (
     <Form

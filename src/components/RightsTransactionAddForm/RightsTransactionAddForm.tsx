@@ -69,7 +69,6 @@ export default function RightsTransactionAddForm({
 
   const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
   const getExchangeRate = async () => {
-    console.log("Get exchange rate", exchangeName, transactionDate);
     setGettingExchangeRate(true);
     const result = await ExchangeRateService.getFromAPI(
       transactionDate,
@@ -170,15 +169,15 @@ export default function RightsTransactionAddForm({
   };
 
   const updateFieldsForING = () => {
-    console.log("Update fields for ING");
+    console.debug("Update fields for ING");
     const count = form.getFieldValue("count");
     const price = form.getFieldValue("price");
     const total = form.getFieldValue("total");
 
-    console.log(count, price, total);
+    console.debug(count, price, total);
 
     const totalAmount = +total.replace("'", "");
-    console.log(totalAmount, +count * +price);
+    console.debug(totalAmount, +count * +price);
     let newCommission = totalAmount - +count * +price;
 
     newCommission = +count * +price - totalAmount;
@@ -187,7 +186,7 @@ export default function RightsTransactionAddForm({
       newCommission *= -1;
     }
 
-    console.log(count, totalAmount, newCommission);
+    console.debug(count, totalAmount, newCommission);
 
     form.setFieldsValue({
       commission: newCommission

@@ -44,7 +44,6 @@ export default function SharesTransactionAddForm({
 
   const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
   const getExchangeRate = async () => {
-    console.log("Get exchange rate", exchangeName, transactionDate);
     setGettingExchangeRate(true);
     const result = await ExchangeRateService.getFromAPI(
       transactionDate,
@@ -52,7 +51,6 @@ export default function SharesTransactionAddForm({
     );
 
     if (result) {
-      console.log("Set exchange rate:", result.close);
       form.setFieldsValue({
         exchangeRate: result.close
       });
@@ -155,7 +153,6 @@ export default function SharesTransactionAddForm({
   };
 
   const updateFieldsForING = () => {
-    console.log("Update fields for ING");
     const count = form.getFieldValue("count");
     const price = form.getFieldValue("price");
     let total = form.getFieldValue("total");
