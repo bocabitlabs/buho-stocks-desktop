@@ -8,7 +8,7 @@
       content="script-src 'self' 'unsafe-inline';"
     />
     <script>
-      require("electron").ipcRenderer.on("progress", (event, message) => {
+      window.ipcRenderer.on("progress", (event, message) => {
         aler(message);
         window.document.getElementById("loadingMessage").innerHTML = message;
       });

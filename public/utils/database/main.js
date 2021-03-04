@@ -1,7 +1,3 @@
-const { ipcMain } = require("electron");
-const { database } = require("./load-database");
-const log = require("electron-log");
-
 function handleStatement(type, statement) {
   const runStatement = () => {
     const result = statement.run();
@@ -28,15 +24,4 @@ function handleStatement(type, statement) {
   return dbCalls[type]();
 }
 
-ipcMain.on("synchronous-message", (event, arg, queryType) => {
-  const sql = arg;
-
-  try {
-    const statement = database.prepare(sql);
-    const statementResult = handleStatement(queryType, statement);
-    event.returnValue = statementResult;
-  } catch (error) {
-    log.error(error);
-    event.returnValue = "ERROR";
-  }
-});
+module.exports = { handleStatement };

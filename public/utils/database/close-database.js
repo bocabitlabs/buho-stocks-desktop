@@ -5,7 +5,7 @@ function closeDB() {
     if (err) {
       return console.error(err.message);
     }
-    console.log("Closed the database connection.");
+    console.info("Closed the database connection.");
   });
 }
 

@@ -1,10 +1,10 @@
 const path = require("path");
-// const fs = require("fs");
 const EventEmitter = require("events");
 const { app, BrowserWindow, Menu, shell } = require("electron");
 const isDev = require("electron-is-dev");
-const log = require("electron-log");
-require("./utils/database/main");
+const { log } = require("./utils/logger");
+
+require("./utils/ipc-main");
 
 const { closeDB } = require("./utils/database/close-database");
 const { applicationMenu } = require("./utils/app-menu");
@@ -35,8 +35,7 @@ function createMainWindow() {
     width: 1100,
     height: 700,
     webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
+      preload: path.join(__dirname, 'preload.js'),
       webSecurity: !isDev // Only enabled on development mode to allow external API calls
     }
   });
@@ -77,8 +76,8 @@ app.whenReady().then(() => {
     installExtension = devTools.default;
     REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
     installExtension(REACT_DEVELOPER_TOOLS)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log("An error occurred: ", err));
+      .then((name) => console.debug(`Added Extension:  ${name}`))
+      .catch((err) => console.error("An error occurred: ", err));
   }
 
   log.debug("Creating loading window");
