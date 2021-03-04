@@ -1,10 +1,18 @@
-const electron = window.require("electron");
-const { ipcRenderer } = electron;
+const { electron } = window;
+
+const { sendSync } = electron;
 
 export default function sendIpcSql(
   sql: string,
-  queryType: "raw" | "exec" | "select" | "insert" | "update" | "delete" | "get" = "select"
+  queryType:
+    | "raw"
+    | "exec"
+    | "select"
+    | "insert"
+    | "update"
+    | "delete"
+    | "get" = "select"
 ) {
-  const result = ipcRenderer.sendSync("synchronous-message", sql, queryType);
+  const result = sendSync("synchronous-message", sql, queryType);
   return result;
 }
