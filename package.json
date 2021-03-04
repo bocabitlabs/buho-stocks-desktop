@@ -1,6 +1,6 @@
 {
   "name": "buho-stocks",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
@@ -20,21 +20,21 @@
     "yahoo-stock-prices-fetch": "^1.4.4"
   },
   "scripts": {
-    "dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
+    "dev": "IS_DEV=true concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
     "electron": "wait-on tcp:3000 && electron-forge start",
     "electron2": "electron-forge start",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "IS_DEV=true react-scripts test",
     "coverage": "CI=true react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "make": "react-scripts build && electron-forge make",
-    "make-windows": "react-scripts build && electron-forge make --verbose --platform win32",
-    "make-linux": "react-scripts build && electron-forge make --verbose --platform linux",
-    "package": "react-scripts build && electron-forge package",
-    "package-windows": "react-scripts build && electron-forge package --verbose --platform win32",
-    "package-linux": "react-scripts build && electron-forge package --verbose --platform linux",
-    "forge-publish": "react-scripts build && electron-forge publish"
+    "make": "IS_DEV=false react-scripts build && electron-forge make",
+    "make-windows": "IS_DEV=false react-scripts build && electron-forge make --verbose --platform win32",
+    "make-linux": "IS_DEV=false react-scripts build && electron-forge make --verbose --platform linux",
+    "package": "IS_DEV=false react-scripts build && electron-forge package",
+    "package-windows": "IS_DEV=false react-scripts build && electron-forge package --verbose --platform win32",
+    "package-linux": "IS_DEV=false react-scripts build && electron-forge package --verbose --platform linux",
+    "forge-publish": "IS_DEV=false react-scripts build && electron-forge publish"
   },
   "eslintConfig": {
     "extends": [
@@ -75,7 +75,7 @@
     "@types/react-router-dom": "^5.1.5",
     "antd": "^4.8.0",
     "concurrently": "5.2.0",
-    "electron": "10.2.0",
+    "electron": "^12.0.0",
     "electron-devtools-installer": "^3.1.1",
     "electron-icon-maker": "^0.0.5",
     "prettier": "^2.0.5",
