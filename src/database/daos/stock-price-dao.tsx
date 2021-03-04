@@ -33,7 +33,7 @@ export default class StockPriceDAO {
 
   static exportAll = () => {
     //Call the DB
-    console.log("Export all stock prices");
+    console.debug("Export all stock prices");
     const sql = `
     SELECT
       stockPrices.price as price
@@ -54,7 +54,7 @@ export default class StockPriceDAO {
 
   static getStockPrices = (companyId: string) => {
     //Call the DB
-    console.log("Get all price stock");
+    console.debug("Get all price stock");
     const sql = `
     SELECT *
     FROM stockPrices
@@ -78,7 +78,6 @@ export default class StockPriceDAO {
     LIMIT 1;
       `;
     const results = sendIpcSql(sql, "get");
-    console.log(results);
     return results;
   };
 
@@ -91,7 +90,6 @@ export default class StockPriceDAO {
     LIMIT 1;
       `;
     const results = sendIpcSql(sql, "get");
-    console.log(results);
     return results;
   };
 

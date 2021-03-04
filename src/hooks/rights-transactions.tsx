@@ -55,7 +55,7 @@ export function useRightsTransactionsContext(
   const update = useCallback(
     (transactionId: string, transaction: RightsTransactionFormProps) => {
       setIsLoading(true);
-      console.log("Update rights transaction...");
+      console.debug("Update rights transaction...");
       const result = RightsTransactionsService.update(
         transactionId,
         transaction

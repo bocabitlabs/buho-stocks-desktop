@@ -31,7 +31,7 @@ export default class TransactionLogDAO {
 
   static getAll = (portfolioId: string) => {
     //Call the DB
-    console.log("Get all logs");
+    console.debug("Get all logs");
     const sql = `
     SELECT *
     FROM transactionsLog

@@ -10,7 +10,6 @@ export function usePortfoliosContext(): PortfoliosContextType {
 
   useEffect(() => {
     setIsLoading(true);
-    console.log("Fetching portfolios from hook useEffect");
     const result = PortfolioService.getAll();
     setPortFolios(result);
     setIsLoading(false);
@@ -24,7 +23,6 @@ export function usePortfoliosContext(): PortfoliosContextType {
   }, []);
 
   const getAll = useCallback(() => {
-    console.log("Getting all the portfolios");
     setIsLoading(true);
     const results = PortfolioService.getAll();
     setPortFolios(results);
@@ -42,7 +40,7 @@ export function usePortfoliosContext(): PortfoliosContextType {
 
   const create = useCallback(
     (portfolio: PortfolioFormFields) => {
-      console.log("Creating new portfolio");
+      console.debug("Creating new portfolio");
       setIsLoading(true);
       const result = PortfolioService.create(portfolio);
       if (result.changes) {

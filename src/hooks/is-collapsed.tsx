@@ -12,7 +12,6 @@ export function useIsCollapsedContext(): IsCollapsedContextType {
 
   const toggleCollapsed = useCallback(() => {
     const result = SettingsService.toggleCollapsed();
-    console.log(result)
     if(result.changes){
       const result = SettingsService.getIsCollapsed();
       setIsCollapsed(result);

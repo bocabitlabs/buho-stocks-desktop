@@ -16,7 +16,7 @@ export function useSettingsContext(): SettingsContextType {
   }, []);
 
   const updateDatabasePath = (newPath: string) => {
-    console.log("Calling updateDatabasePath on hook");
+    console.debug("Calling updateDatabasePath on hook");
     setIsLoading(true);
     const result = SettingsService.updateDatabasePath(newPath);
     setIsLoading(false);
