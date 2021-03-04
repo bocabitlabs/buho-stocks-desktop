@@ -92,10 +92,11 @@ export class Company implements ICompany {
       accumulator: number,
       obj: DividendsTransaction
     ) {
+      let exchangeRate = 1;
       if (inBaseCurrency) {
-        return accumulator + obj.price * obj.exchangeRate * obj.count;
+        exchangeRate = obj.exchangeRate;
       }
-      return accumulator + obj.price * obj.count;
+      return accumulator + ((obj.price * exchangeRate * obj.count) - obj.commission);
     },
     0);
     return amount;
@@ -108,10 +109,11 @@ export class Company implements ICompany {
           moment(transaction.transactionDate).format("YYYY") === year
       )
       .reduce(function (accumulator: number, obj: DividendsTransaction) {
+        let exchangeRate = 1;
         if (inBaseCurrency) {
-          return accumulator + obj.price * obj.exchangeRate * obj.count;
+          exchangeRate = obj.exchangeRate;
         }
-        return accumulator + obj.price * obj.count;
+        return accumulator + ((obj.price * exchangeRate * obj.count) - obj.commission);
       }, 0);
     return amount;
   }
@@ -121,7 +123,6 @@ export class Company implements ICompany {
   }
 
   getLatestStockPrice(inBaseCurrency?: boolean): IStockPrice | null {
-    console.log("company: Get latest stock price")
     if (this.stockPrices.length < 1) {
       return null;
     }
@@ -131,7 +132,6 @@ export class Company implements ICompany {
       var currentDate = moment(current.transactionDate);
       return previousDate > currentDate ? prev : current;
     });
-    console.log(`company: Get latest stock price 1`, max)
 
     const newMax = {};
     const returnedTarget = Object.assign(newMax, max);
@@ -139,8 +139,6 @@ export class Company implements ICompany {
     if (inBaseCurrency) {
       returnedTarget.price = returnedTarget.price * returnedTarget.exchangeRate;
     }
-    console.log(`company: Get latest stock price 2`, returnedTarget)
-
     return returnedTarget;
   }
 
@@ -187,7 +185,6 @@ export class Company implements ICompany {
   }
 
   getPortfolioValue(inBaseCurrency = false): number {
-    console.log("company: Get portfolio Value")
     const sharesCount = this.getSharesCount();
     const lastStockPrice = this.getLatestStockPrice(inBaseCurrency);
 
@@ -199,7 +196,6 @@ export class Company implements ICompany {
   }
 
   getPortfolioValueWithInflation(inBaseCurrency = false): number {
-    console.log("company: Get portfolio value with inflation")
     const lastStockPrice = this.getLatestStockPrice(inBaseCurrency);
 
     if (lastStockPrice) {
@@ -230,16 +226,16 @@ export class Company implements ICompany {
         }
         return accumulator + (obj.count * obj.price + obj.commission);
       }, 0);
-  }
+  };
 
   getReturn(inBaseCurrency = false): number {
     const totalInvested = this.getTotalInvested(inBaseCurrency);
     const portfolioValue = this.getPortfolioValue(inBaseCurrency);
-    let returnFromSales = this.getReturnFromSales(inBaseCurrency)
+    let returnFromSales = this.getReturnFromSales(inBaseCurrency);
     let totalReturn = 0;
-    if(this.closed){
+    if (this.closed) {
       totalReturn = returnFromSales - totalInvested;
-    }else{
+    } else {
       totalReturn = portfolioValue - totalInvested;
     }
     return totalReturn;

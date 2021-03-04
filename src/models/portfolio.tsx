@@ -25,7 +25,6 @@ export class Portfolio implements IPortfolio {
   }
 
   getPortfolioValue(inBaseCurrency = false): number {
-    console.log("Portfolio companies", this.companies);
     const totalPortfolioValue = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
@@ -40,7 +39,6 @@ export class Portfolio implements IPortfolio {
   }
 
   getPortfolioValueWithInflation(inBaseCurrency = false): number {
-    console.log("Portfolio companies", this.companies);
     const totalPortfolioValue = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
@@ -83,7 +81,6 @@ export class Portfolio implements IPortfolio {
   }
 
   getMonthlyDividendsForYear(year: string, inBaseCurrency = false): number {
-    console.log("getMonthlyDividendsForYear");
     const amount = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
