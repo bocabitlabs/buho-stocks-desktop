@@ -1,27 +1,46 @@
-import { Table } from 'antd';
-import React, { ReactElement, useEffect, useState } from 'react'
-import TransactionLogService from 'services/transaction-log-service';
-import { ITransactionLogMessage } from 'types/transaction-log';
+import { Table, Tag } from "antd";
+import moment from "moment";
+import React, { ReactElement, useEffect, useState } from "react";
+import TransactionLogService from "services/transaction-log-service";
+import { ITransactionLogMessage } from "types/transaction-log";
 
 interface Props {
   portfolioId: string;
 }
 
-export default function TransactionsLogListTable({portfolioId}: Props): ReactElement {
-  const [logs, setLogs] = useState<ITransactionLogMessage[]>([])
+export default function TransactionsLogListTable({
+  portfolioId
+}: Props): ReactElement {
+  const [logs, setLogs] = useState<ITransactionLogMessage[]>([]);
 
   const columns = [
     {
-      title: "Date",
+      title: "Added Date",
       dataIndex: "creationDate",
       key: "creationDate",
-      render: (text: string) => text
+      render: (text: string) => moment(text).format("DD.MM.YYYY hh:mm")
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
-      render: (text: string) => text
+      render: (text: string) => {
+        let color = "";
+        if (text === "Shares transaction") {
+          color = "volcano";
+        }
+        if (text === "Stock price") {
+          color = "yellow";
+        }
+        if (text === "Dividends transaction") {
+          color = "green";
+        }
+        return (
+          <Tag color={color} key={text}>
+            {text}
+          </Tag>
+        );
+      }
     },
     {
       title: "Message",
@@ -33,16 +52,15 @@ export default function TransactionsLogListTable({portfolioId}: Props): ReactEle
 
   useEffect(() => {
     const log = TransactionLogService.getAll(portfolioId);
-    setLogs(log)
-
-  }, [portfolioId])
+    setLogs(log);
+  }, [portfolioId]);
 
   const getData = () => {
     return logs.map((element) => ({
       key: element.id,
       creationDate: element.creationDate,
       type: element.type,
-      message: element.message,
+      message: element.message
     }));
   };
 
@@ -50,5 +68,5 @@ export default function TransactionsLogListTable({portfolioId}: Props): ReactEle
     <div>
       <Table columns={columns} dataSource={getData()} />
     </div>
-  )
+  );
 }

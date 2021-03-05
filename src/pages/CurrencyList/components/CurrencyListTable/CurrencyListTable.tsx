@@ -20,27 +20,41 @@ export default function CurrencyListTable() {
     }
   }
 
-  const columns = [
+  const columns: any = [
+    {
+      title: "",
+      dataIndex: "color",
+      key: "color",
+      render: (text: string) => (
+        <svg height="20" width="20">
+          <circle cx="10" cy="10" r="10" fill={text} />
+        </svg>
+      )
+    },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text: string) => text
+      render: (text: string) => text,
+      sorter: (a: Currency, b: Currency) => a.name.localeCompare(b.name),
     },
     {
       title: "Abbreviation",
       dataIndex: "abbreviation",
-      key: "abbreviation"
+      key: "abbreviation",
+      sorter: (a: Currency, b: Currency) => a.abbreviation.localeCompare(b.abbreviation),
     },
     {
       title: "Symbol",
       dataIndex: "symbol",
-      key: "symbol"
+      key: "symbol",
+      sorter: (a: Currency, b: Currency) => a.symbol.localeCompare(b.symbol),
     },
     {
       title: "Region",
       dataIndex: "country",
-      key: "country"
+      key: "country",
+      sorter: (a: Currency, b: Currency) => a.country.localeCompare(b.country),
     },
     {
       title: "Action",
@@ -54,7 +68,7 @@ export default function CurrencyListTable() {
             okText="Yes"
             cancelText="No"
           >
-            <Button>Delete</Button>
+            <Button danger type="text">Delete</Button>
           </Popconfirm>
         </Space>
       )
@@ -63,7 +77,9 @@ export default function CurrencyListTable() {
 
   const getData = () => {
     return currencies.map((currency: Currency) => ({
+      id: currency.id,
       key: currency.id,
+      color: currency.color,
       name: currency.name,
       abbreviation: currency.abbreviation,
       symbol: currency.symbol,

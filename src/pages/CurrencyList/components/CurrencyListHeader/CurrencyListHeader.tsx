@@ -1,4 +1,4 @@
-import { HomeOutlined } from "@ant-design/icons";
+import { DollarCircleTwoTone, HomeOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, PageHeader } from "antd";
 import React, { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
@@ -25,13 +25,15 @@ export default function CurrencyListHeader(): ReactElement {
   return (
     <PageHeader
       className="site-page-header"
-      title="Currencies"
+      title={<><DollarCircleTwoTone twoToneColor="#52c41a" /> Currencies</>}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender
       }}
       extra={[
         <Button
+          type="primary"
+          icon={<PlusOutlined/>}
           onClick={() => {
             history.push("/add/currency");
           }}
