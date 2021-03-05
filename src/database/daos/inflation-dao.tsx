@@ -19,8 +19,8 @@ const addInflation = (inflation: InflationFormFields) => {
   VALUES (
       '${inflation.year}'
     , '${inflation.percentage}'
-    , '${moment(new Date())}'
-    , '${moment(new Date())}'
+    , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     );
   `;
   const results = sendIpcSql(sql, "insert");

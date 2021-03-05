@@ -20,6 +20,7 @@ export default class SectorDAO {
     console.debug("Get all sectors");
     const sql = `
     SELECT * FROM sectors
+    ORDER BY name ASC
     `;
     const results = sendIpcSql(sql);
     return results;
@@ -49,8 +50,8 @@ export default class SectorDAO {
     VALUES (
         '${sector.name}'
       , '${sector.color}'
-      , '${moment(new Date())}'
-      , '${moment(new Date())}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
       );
     `;
     const results = sendIpcSql(sql, "insert");

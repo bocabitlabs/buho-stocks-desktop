@@ -31,8 +31,8 @@ export default class CompanyDAO {
     , '${company.portfolioId}'
     , '${company.url}'
     , '${company.color}'
-    , '${moment(new Date())}'
-    , '${moment(new Date())}'
+    , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     , '${company.alternativeTickers}'
     ) ;`;
 
@@ -119,7 +119,9 @@ export default class CompanyDAO {
     FROM "sharesTransactions"
       GROUP BY sharesTransactions.companyId) AS S
       ON companies.id = S.companyId
-    WHERE companies.portfolioId = '${portfolioId}';
+    WHERE companies.portfolioId = '${portfolioId}'
+    ORDER BY name ASC
+    ;
     `;
     const results = sendIpcSql(sql);
     if (results.length > 0 && results[0].id == null) {
@@ -161,6 +163,7 @@ export default class CompanyDAO {
       id, name
       FROM  "companies"
       WHERE companies.portfolioId='${portfolioId}'
+      ORDER BY name ASC
       ;
     `;
     const results = sendIpcSql(sql);
@@ -188,7 +191,7 @@ export default class CompanyDAO {
     , currencyId = '${company.currencyId}'
     , marketId = '${company.marketId}'
     , sectorId = '${company.sectorId}'
-    , lastUpdateDate = '${moment(new Date())}'
+    , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     WHERE companies.id = '${companyId}';
     `;
     const results = sendIpcSql(sql, "update");

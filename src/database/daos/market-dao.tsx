@@ -25,8 +25,8 @@ export default class MarketDAO {
     , '${market.openTime}'
     , '${market.closeTime}'
     , '${market.color}'
-    , '${moment(new Date())}'
-    , '${moment(new Date())}'
+    , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     );
     `;
 
@@ -55,6 +55,7 @@ export default class MarketDAO {
     console.debug("Get all markets");
     const sql = `
     SELECT * FROM markets
+    ORDER BY name ASC
     `;
 
     const results = sendIpcSql(sql);

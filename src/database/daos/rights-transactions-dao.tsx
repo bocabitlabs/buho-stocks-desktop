@@ -31,8 +31,8 @@ export default class RightsTransactionsDAO {
       , '${rightsTransaction.transactionDate}'
       , '${rightsTransaction.companyId}'
       , '${rightsTransaction.color}'
-      , '${moment(new Date())}'
-      , '${moment(new Date())}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     );
     `;
     const results = sendIpcSql(sql, "insert");
@@ -93,7 +93,9 @@ export default class RightsTransactionsDAO {
       ON companies.id = rightsTransactions.companyId
     LEFT JOIN "currencies"
       ON currencies.id = companies.currencyId
-    WHERE rightsTransactions.companyId = '${companyId}';
+    WHERE rightsTransactions.companyId = '${companyId}'
+    ORDER BY datetime(rightsTransactions.transactionDate) ASC
+    ;
     `;
 
     const results = sendIpcSql(sql);
@@ -122,7 +124,7 @@ export default class RightsTransactionsDAO {
     , transactionDate = '${transaction.transactionDate}'
     , companyId = '${transaction.companyId}'
     , color = '${transaction.color}'
-    , lastUpdateDate = '${moment(new Date())}'
+    , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     WHERE rightsTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "update");

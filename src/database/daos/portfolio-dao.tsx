@@ -22,8 +22,8 @@ export default class PortfolioDAO {
     , '${portfolio.description}'
     , '${portfolio.currencyId}'
     , '${portfolio.color}'
-    , '${moment(new Date())}'
-    , '${moment(new Date())}'
+    , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     );
     `;
 

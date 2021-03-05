@@ -23,8 +23,8 @@ export default class CurrencyDAO {
       , '${currency.symbol}'
       , '${currency.country}'
       , '${currency.color}'
-      , '${moment(new Date())}'
-      , '${moment(new Date())}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
       );
     `;
 
@@ -54,6 +54,7 @@ export default class CurrencyDAO {
     console.debug("Get all currencies");
     const sql = `
     SELECT * FROM currencies
+    ORDER BY name ASC
     `;
 
     const currencies = sendIpcSql(sql);

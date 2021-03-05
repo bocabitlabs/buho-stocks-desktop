@@ -33,8 +33,8 @@ export default class DividendsTransactionsDAO {
      , '${transaction.transactionDate}'
      , '${transaction.companyId}'
      , '${transaction.color}'
-     , '${moment(new Date())}'
-     , '${moment(new Date())}'
+     , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+     , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     );
     `;
 
@@ -84,7 +84,7 @@ export default class DividendsTransactionsDAO {
     , transactionDate = '${transaction.transactionDate}'
     , companyId = '${transaction.companyId}'
     , color = '${transaction.color}'
-    , lastUpdateDate = '${moment(new Date())}'
+    , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     WHERE dividendsTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "update");
@@ -104,7 +104,9 @@ export default class DividendsTransactionsDAO {
       ON companies.id = dividendsTransactions.companyId
     LEFT JOIN "currencies"
       ON currencies.id = companies.currencyId
-    WHERE dividendsTransactions.companyId = '${companyId}';
+    WHERE dividendsTransactions.companyId = '${companyId}'
+    ORDER BY datetime(dividendsTransactions.transactionDate) ASC
+    ;
     `;
 
     const results = sendIpcSql(sql);

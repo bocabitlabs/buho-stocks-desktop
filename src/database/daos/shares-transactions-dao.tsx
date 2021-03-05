@@ -35,8 +35,8 @@ export default class SharesTransactionsDAO {
       , '${sharesTransaction.transactionDate}'
       , '${sharesTransaction.companyId}'
       , '${sharesTransaction.color}'
-      , '${moment(new Date())}'
-      , '${moment(new Date())}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     );
     `;
     const results = sendIpcSql(sql, "insert");
@@ -98,7 +98,9 @@ export default class SharesTransactionsDAO {
       ON companies.id = sharesTransactions.companyId
     LEFT JOIN "currencies"
       ON currencies.id = companies.currencyId
-    WHERE sharesTransactions.companyId = '${companyId}';
+    WHERE sharesTransactions.companyId = '${companyId}'
+    ORDER BY datetime(sharesTransactions.transactionDate) ASC
+    ;
     `;
     const results = sendIpcSql(sql);
     return results;
@@ -150,7 +152,7 @@ export default class SharesTransactionsDAO {
     , companyId = '${transaction.companyId}'
     , color = '${transaction.color}'
     , type = '${transaction.type}'
-    , lastUpdateDate = '${moment(new Date())}'
+    , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     WHERE sharesTransactions.id = '${transactionId}';
     `;
     const results = sendIpcSql(sql, "update");

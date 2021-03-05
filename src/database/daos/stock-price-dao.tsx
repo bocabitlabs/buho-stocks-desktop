@@ -22,8 +22,8 @@ export default class StockPriceDAO {
       , '${stockPrice.transactionDate}'
       , '${stockPrice.companyId}'
       , '${stockPrice.exchangeRate}'
-      , '${moment(new Date())}'
-      , '${moment(new Date())}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     );
     `;
 

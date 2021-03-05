@@ -19,8 +19,8 @@ export default class ExchangeRateDAO {
         '${exchangeRate.transactionDate}',
       ,  '${exchangeRate.exchangeValue}'
       , '${exchangeRate.exchangeName}'
-      , '${moment(new Date())}'
-      , '${moment(new Date())}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
       );
     `;
     const results = sendIpcSql(sql, "insert");

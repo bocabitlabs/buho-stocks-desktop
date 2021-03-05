@@ -20,8 +20,8 @@ export default class TransactionLogDAO {
         '${element.type}'
       , '${element.message}'
       , '${element.portfolioId}'
-      , '${moment(new Date())}'
-      , '${moment(new Date())}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+      , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     );
     `;
 
@@ -31,12 +31,11 @@ export default class TransactionLogDAO {
 
   static getAll = (portfolioId: string) => {
     //Call the DB
-    console.debug("Get all logs");
     const sql = `
     SELECT *
     FROM transactionsLog
     WHERE portfolioId = '${portfolioId}'
-    ORDER BY strftime(transactionsLog.creationDate) DESC
+    ORDER BY strftime(transactionsLog.creationDate) ASC
     ;
     `;
     const results = sendIpcSql(sql);
