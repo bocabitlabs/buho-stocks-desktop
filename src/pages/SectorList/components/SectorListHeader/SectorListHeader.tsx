@@ -1,9 +1,8 @@
-import { HomeOutlined } from "@ant-design/icons";
+import { ClusterOutlined, HomeOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, PageHeader } from "antd";
 import React, { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
 import { breadcrumbItemRender } from "utils/headers-utils";
-
 
 export default function SectorListRouteHeader(): ReactElement {
   const history = useHistory();
@@ -26,13 +25,15 @@ export default function SectorListRouteHeader(): ReactElement {
   return (
     <PageHeader
       className="site-page-header"
-      title="Sectors"
+      title={<><ClusterOutlined /> Sectors</>}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender
       }}
       extra={[
         <Button
+          type="primary"
+          icon={<PlusOutlined />}
           onClick={() => {
             history.push("/add/sector");
           }}

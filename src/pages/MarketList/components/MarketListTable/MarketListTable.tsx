@@ -20,7 +20,7 @@ export default function MarketListTable() {
     }
   }
 
-  const columns = [
+  const columns: any = [
     {
       title: "",
       dataIndex: "color",
@@ -35,27 +35,32 @@ export default function MarketListTable() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text: string) => text
+      render: (text: string) => text,
+      sorter: (a: Market, b: Market) => a.name.localeCompare(b.name)
     },
     {
       title: "Description",
       dataIndex: "description",
-      key: "description"
+      key: "description",
+      sorter: (a: Market, b: Market) => a.description.localeCompare(b.description)
     },
     {
       title: "Region",
       dataIndex: "region",
-      key: "region"
+      key: "region",
+      sorter: (a: Market, b: Market) => a.region.localeCompare(b.region)
     },
     {
       title: "Opening Time",
-      dataIndex: "openingTime",
-      key: "openingTime"
+      dataIndex: "openTime",
+      key: "openTime",
+      sorter: (a: Market, b: Market) => a.openTime.localeCompare(b.openTime)
     },
     {
       title: "Closing Time",
-      dataIndex: "closingTime",
-      key: "closingTime"
+      dataIndex: "closeTime",
+      key: "closeTime",
+      sorter: (a: Market, b: Market) => a.closeTime.localeCompare(b.closeTime)
     },
     {
       title: "Action",
@@ -69,7 +74,9 @@ export default function MarketListTable() {
             okText="Yes"
             cancelText="No"
           >
-            <Button>Delete</Button>
+            <Button danger type="text">
+              Delete
+            </Button>
           </Popconfirm>
         </Space>
       )
@@ -82,8 +89,8 @@ export default function MarketListTable() {
       name: market.name,
       description: market.description,
       region: market.region,
-      openingTime: market.openTime,
-      closingTime: market.closeTime,
+      openTime: market.openTime,
+      closeTime: market.closeTime,
       color: market.color
     }));
   };

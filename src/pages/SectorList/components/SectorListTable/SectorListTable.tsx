@@ -20,7 +20,7 @@ export default function SectorListTable() {
     }
   }
 
-  const columns = [
+  const columns: any = [
     {
       title: "",
       dataIndex: "color",
@@ -35,7 +35,8 @@ export default function SectorListTable() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text: string) => text
+      render: (text: string) => text,
+      sorter: (a: Sector, b: Sector) => a.name.localeCompare(b.name)
     },
     {
       title: "Action",
@@ -49,7 +50,9 @@ export default function SectorListTable() {
             okText="Yes"
             cancelText="No"
           >
-            <Button>Delete</Button>
+            <Button danger type="text">
+              Delete
+            </Button>
           </Popconfirm>
         </Space>
       )
