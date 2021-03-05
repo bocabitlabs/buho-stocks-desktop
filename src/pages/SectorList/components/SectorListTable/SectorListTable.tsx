@@ -22,6 +22,16 @@ export default function SectorListTable() {
 
   const columns = [
     {
+      title: "",
+      dataIndex: "color",
+      key: "color",
+      render: (text: string) => (
+        <svg height="20" width="20">
+          <circle cx="10" cy="10" r="10" fill={text} />
+        </svg>
+      )
+    },
+    {
       title: "Name",
       dataIndex: "name",
       key: "name",
@@ -49,7 +59,8 @@ export default function SectorListTable() {
   const getData = () => {
     return sectors.map((sector: Sector) => ({
       key: sector.id,
-      name: sector.name
+      name: sector.name,
+      color: sector.color
     }));
   };
 
