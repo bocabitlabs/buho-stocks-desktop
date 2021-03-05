@@ -62,7 +62,7 @@ export default function INGDividendsImportForm({
         "YYYY-MM-DD"
       ),
       color: "#0066cc",
-      notes: "Csv imported from ING",
+      notes: `Csv imported from ING on ${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}`,
       companyId: values.company
     };
     console.debug(transaction);

@@ -125,7 +125,7 @@ export default function INGTradesImportForm({
           "YYYY-MM-DD"
         ),
         color: "#0066cc",
-        notes: "CSV imported from ING",
+        notes: `CSV imported from ING on ${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}`,
         companyId: values.company,
         type: values.transactionType
       };

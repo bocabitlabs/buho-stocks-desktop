@@ -30,7 +30,7 @@ export default function IBDividendsImportForm({
     companyName = companyNameMatch[0];
   }
   let notes = inputData[4];
-  if(taxData){
+  if (taxData) {
     notes += "." + taxData[4];
   }
 
@@ -54,7 +54,6 @@ export default function IBDividendsImportForm({
   };
 
   const company = getCompanyFromTransaction(companyName);
-
 
   const onFinish = (values: any) => {
     const companyCurrency = inputData[2];
@@ -106,7 +105,11 @@ export default function IBDividendsImportForm({
       if (company) {
         TransactionLogService.add({
           type: "Dividends transaction",
-          message: `Added dividends from  IB CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          message: `Added dividends from  IB CSV: "${company.name} (${
+            company.ticker
+          })": ${count} - ${price} - ${transactionDate} on ${moment(
+            new Date()
+          ).format("YYYY-MM-DD HH:mm:ss")}`,
           portfolioId: +company.portfolioId
         });
       }
@@ -135,7 +138,9 @@ export default function IBDividendsImportForm({
         <pre>{JSON.stringify(inputData)}</pre>
       </div> */}
       <Row>
-        <Typography.Title level={4}>{companyName} - {inputData[2]}</Typography.Title>
+        <Typography.Title level={4}>
+          {companyName} - {inputData[2]}
+        </Typography.Title>
       </Row>
       <Row gutter={24}>
         <Col span={12}>

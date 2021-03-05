@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
 import TopNavbar from "./components/TopNavbar/TopNavbar";
