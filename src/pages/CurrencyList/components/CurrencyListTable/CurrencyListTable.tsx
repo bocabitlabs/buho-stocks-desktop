@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { CurrenciesContext } from "contexts/currencies";
 import CurrencyService from "services/currency-service";
 import { Currency } from "types/currency";
+import { Link } from "react-router-dom";
 
 export default function CurrencyListTable() {
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
@@ -35,7 +36,7 @@ export default function CurrencyListTable() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text: string) => text,
+      render: (text: string, record: any) => <Link to={`/currencies/${record.id}/edit`}>{text}</Link>,
       sorter: (a: Currency, b: Currency) => a.name.localeCompare(b.name),
     },
     {

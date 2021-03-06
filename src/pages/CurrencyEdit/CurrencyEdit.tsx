@@ -4,22 +4,28 @@ import { Layout } from "antd";
 
 import { useCurrenciesContext } from "hooks/currencies";
 import { CurrenciesContext } from "contexts/currencies";
-import CurrencyAddHeader from "./components/CurrencyAddHeader/CurrencyAddHeader";
 import CurrencyAddEditForm from "components/CurrencyAddEditForm/CurrencyAddEditForm";
+import { useParams } from "react-router-dom";
+import CurrencyEditHeader from "./components/CurrencyEditHeader/CurrencyEditHeader";
 
-const CurrencyAdd = () => {
+export interface IRouteParams {
+  currencyId: string;
+}
+
+const CurrencyEdit = () => {
   const currenciesContext = useCurrenciesContext();
+  const { currencyId } = useParams<IRouteParams>();
 
   return (
     <>
-      <CurrencyAddHeader />
       <CurrenciesContext.Provider value={currenciesContext}>
+        <CurrencyEditHeader currencyId={currencyId} />
         <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-          <CurrencyAddEditForm />
+          <CurrencyAddEditForm currencyId={currencyId} />
         </Layout>
       </CurrenciesContext.Provider>
     </>
   );
 };
 
-export default CurrencyAdd;
+export default CurrencyEdit;

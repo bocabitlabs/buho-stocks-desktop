@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { CurrencyFormFields } from "types/currency";
-import { deleteById } from "./operations";
+import { deleteById, getById } from "./operations";
 
 export default class CurrencyDAO {
   static addCurrency = (currency: CurrencyFormFields) => {
@@ -60,9 +60,30 @@ export default class CurrencyDAO {
     const currencies = sendIpcSql(sql);
     return currencies;
   };
+  static getById = (id: string) => {
+    //Call the DB
+    const results = getById("currencies", id);
+    return results;
+  };
+
   static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("currencies", id);
+    return results;
+  };
+  static update = (id: string, currency: CurrencyFormFields) => {
+    const sql = `
+    UPDATE currencies
+    SET
+    name = '${currency.name}'
+    , abbreviation = '${currency.abbreviation}'
+    , country = '${currency.country}'
+    , color = '${currency.color}'
+    , symbol = '${currency.symbol}'
+    , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    WHERE currencies.id = '${id}';
+    `;
+    const results = sendIpcSql(sql, "update");
     return results;
   };
 }

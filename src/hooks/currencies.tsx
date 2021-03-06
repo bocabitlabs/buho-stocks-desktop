@@ -4,6 +4,7 @@ import CurrencyService from "services/currency-service";
 import { Currency, CurrencyFormFields } from "types/currency";
 
 export function useCurrenciesContext(): CurrenciesContextType {
+  const [currency, setCurrency] = useState<Currency|null>(null);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,10 +29,28 @@ export function useCurrenciesContext(): CurrenciesContextType {
     return result;
   }, []);
 
+  const getById = useCallback((id: string) => {
+    setIsLoading(true);
+    const result = CurrencyService.getById(id);
+    setCurrency(result);
+    setIsLoading(false);
+    return result;
+  }, []);
+
+  const update = useCallback((companyId: string, company: CurrencyFormFields) => {
+    setIsLoading(true);
+    const result = CurrencyService.update(companyId, company);
+    setIsLoading(false);
+    return result;
+  }, []);
+
   return {
+    currency,
     currencies,
     isLoading,
     fetchCurrencies,
-    addCurrency
+    addCurrency,
+    getById,
+    update
   };
 }

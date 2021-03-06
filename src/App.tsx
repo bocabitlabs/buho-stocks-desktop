@@ -39,6 +39,7 @@ import ImportAppData from "pages/ImportAppData/ImportAppData";
 import CompanyEdit from "pages/CompanyEdit/CompanyEdit";
 import PortfolioTransactionsLogList from "pages/PortfolioTransactionsLogList/PortfolioTransactionsLogList";
 import ScrollToTop from "hooks/scroll-to-top";
+import CurrencyEdit from "pages/CurrencyEdit/CurrencyEdit";
 
 function App() {
   /**
@@ -95,7 +96,11 @@ function App() {
                   <Route exact path="/add/portfolio" component={PortfolioAdd} />
                   <Route exact path="/add/currency" component={CurrencyAdd} />
                   <Route exact path="/currencies" component={CurrencyList} />
-
+                  <Route
+                    exact
+                    path="/currencies/:currencyId/edit/"
+                    component={CurrencyEdit}
+                  />
                   <Route exact path="/add/market" component={MarketAdd} />
                   <Route exact path="/markets" component={MarketList} />
                   <Route exact path="/add/inflation" component={InflationAdd} />

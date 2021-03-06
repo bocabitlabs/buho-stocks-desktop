@@ -19,7 +19,15 @@ export default class CurrencyService {
     return CurrencyDAO.getCurrencies();
   };
 
+  static getById = (currencyId: string) => {
+    return CurrencyDAO.getById(currencyId);
+  };
+
   deleteById = (currencyId: string) => {
     return CurrencyDAO.deleteById(currencyId);
+  };
+
+  static update = (id: string, currency: CurrencyFormFields) => {
+    return CurrencyDAO.update(id, currency);
   };
 }
