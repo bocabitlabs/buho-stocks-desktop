@@ -63,4 +63,17 @@ export default class SectorDAO {
     const results = deleteById("sectors", id);
     return results;
   };
+
+  static update = (id: string, element: SectorFormFields) => {
+    const sql = `
+    UPDATE sectors
+    SET
+    name = '${element.name}'
+    , color = '${element.color}'
+    , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    WHERE sectors.id = '${id}';
+    `;
+    const results = sendIpcSql(sql, "update");
+    return results;
+  };
 }

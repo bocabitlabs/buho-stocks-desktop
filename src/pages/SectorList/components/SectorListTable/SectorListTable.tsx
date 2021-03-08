@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { SectorsContext } from "contexts/sectors";
 import SectorService from "services/sector-service";
 import { Sector } from "types/sector";
+import { Link } from "react-router-dom";
 
 export default function SectorListTable() {
   const { sectors, fetchSectors } = useContext(SectorsContext);
@@ -35,7 +36,7 @@ export default function SectorListTable() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text: string) => text,
+      render: (text: string, record: any) => <Link to={`/sectors/${record.id}/edit`}>{text}</Link>,
       sorter: (a: Sector, b: Sector) => a.name.localeCompare(b.name)
     },
     {
@@ -61,6 +62,7 @@ export default function SectorListTable() {
 
   const getData = () => {
     return sectors.map((sector: Sector) => ({
+      id: sector.id,
       key: sector.id,
       name: sector.name,
       color: sector.color

@@ -17,14 +17,12 @@ const CurrencyEdit = () => {
   const { currencyId } = useParams<IRouteParams>();
 
   return (
-    <>
-      <CurrenciesContext.Provider value={currenciesContext}>
-        <CurrencyEditHeader currencyId={currencyId} />
-        <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-          <CurrencyAddEditForm currencyId={currencyId} />
-        </Layout>
-      </CurrenciesContext.Provider>
-    </>
+    <CurrenciesContext.Provider value={currenciesContext}>
+      <CurrencyEditHeader currencyId={currencyId} />
+      <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
+        <CurrencyAddEditForm currencyId={currencyId} />
+      </Layout>
+    </CurrenciesContext.Provider>
   );
 };
 

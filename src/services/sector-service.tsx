@@ -26,4 +26,8 @@ export default class SectorService {
   static deleteById = (sectorId: string) => {
     return SectorDAO.deleteById(sectorId);
   };
+
+  static update = (id: string, currency: SectorFormFields) => {
+    return SectorDAO.update(id, currency);
+  };
 }

@@ -40,6 +40,7 @@ import CompanyEdit from "pages/CompanyEdit/CompanyEdit";
 import PortfolioTransactionsLogList from "pages/PortfolioTransactionsLogList/PortfolioTransactionsLogList";
 import ScrollToTop from "hooks/scroll-to-top";
 import CurrencyEdit from "pages/CurrencyEdit/CurrencyEdit";
+import SectorEdit from "pages/SectorEdit/SectorEdit";
 
 function App() {
   /**
@@ -108,6 +109,11 @@ function App() {
 
                   <Route exact path="/sectors" component={SectorList} />
                   <Route exact path="/add/sector" component={SectorAdd} />
+                  <Route
+                    exact
+                    path="/sectors/:sectorId/edit/"
+                    component={SectorEdit}
+                  />
                   <Route
                     exact
                     path="/portfolios/:id"
