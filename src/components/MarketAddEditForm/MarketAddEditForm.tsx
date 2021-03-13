@@ -1,23 +1,42 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Button, Form, Input, message, TimePicker } from "antd";
 import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
 
-import MarketService from "services/market-service";
+import { MarketsContext } from "contexts/markets";
+import moment from "moment";
 
-/**
- * Add a new Currency
- */
-function MarketAddForm(): ReactElement {
+interface AddEditFormProps {
+  marketId?: string;
+}
+
+function MarketAddEditForm({
+  marketId
+}: AddEditFormProps): ReactElement | null {
   const [form] = Form.useForm();
   const history = useHistory();
   const [color, setColor] = useState("#607d8b");
   const key = "updatable";
+  const {
+    market,
+    addMarket,
+    fetchMarkets,
+    getById: getMarketById,
+    update: updateMarket
+  } = useContext(MarketsContext);
 
+  // useEffect(() => {
+  //   if (marketId) {
+  //     const newMarket = getMarketById(marketId);
+  //     if (newMarket) {
+  //       setColor(newMarket.color);
+  //     }
+  //   }
+  // }, [marketId, getMarketById]);
 
-  const handleAdd = (values: any) => {
+  const handleSubmit = (values: any) => {
     const { name, description, region, openTime, closeTime } = values;
-    const market = {
+    const newMarket = {
       name,
       description,
       region,
@@ -25,11 +44,20 @@ function MarketAddForm(): ReactElement {
       openTime: openTime.format("HH:mm"),
       closeTime: closeTime.format("HH:mm")
     };
-    //Add the currency
-    const added = MarketService.addMarket(market);
-    if (added.changes) {
+    let changes = null;
+    if (marketId) {
+      changes = updateMarket(marketId, newMarket);
+    } else {
+      changes = addMarket(newMarket);
+    }
+    if (changes.changes) {
+      fetchMarkets();
+      if (!marketId) {
+        message.success({ content: "Market has been added", key });
+      } else {
+        message.success({ content: "Market has been updated", key });
+      }
       history.push("/markets");
-      message.success({ content: "Market has been added", key });
     } else {
       message.success({ content: "Unable to add the market", key });
     }
@@ -39,8 +67,23 @@ function MarketAddForm(): ReactElement {
     setColor(color.hex);
   };
 
+  if (marketId && !market) {
+    return null;
+  }
+
   return (
-    <Form form={form} name="basic" onFinish={handleAdd}>
+    <Form
+      form={form}
+      name="basic"
+      onFinish={handleSubmit}
+      initialValues={{
+        name: market?.name,
+        description: market?.description,
+        region: market?.region,
+        openTime: market ? moment(market?.openTime, "HH:mm") : "",
+        closeTime: market ? moment(market?.closeTime, "HH:mm") : ""
+      }}
+    >
       <Form.Item
         name="name"
         label="Name"
@@ -86,11 +129,11 @@ function MarketAddForm(): ReactElement {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Add market
+          {marketId ? "Update market" : "Add market"}
         </Button>
       </Form.Item>
     </Form>
   );
 }
 
-export default MarketAddForm;
+export default MarketAddEditForm;

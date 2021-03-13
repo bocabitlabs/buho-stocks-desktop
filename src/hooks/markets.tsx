@@ -4,6 +4,7 @@ import MarketService from "services/market-service";
 import { Market, MarketFormProps } from "types/market";
 
 export function useMarketsContext(): MarketsContextType {
+  const [market, setMarket] = useState<Market|null>(null);
   const [markets, setMarkets] = useState<Market[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,16 +25,32 @@ export function useMarketsContext(): MarketsContextType {
   const addMarket = useCallback((market: MarketFormProps) => {
     setIsLoading(true);
     const result = MarketService.addMarket(market);
-    if (result.changes) {
-      const result = MarketService.getMarkets();
-      setMarkets(result);
-    }
+    setIsLoading(false);
+    return result
+  }, []);
+
+  const getById = useCallback((id: string) => {
+    setIsLoading(true);
+    const result = MarketService.getById(id);
+    setMarket(result);
+    setIsLoading(false);
+    return result;
+  }, []);
+
+  const update = useCallback((id: string, market: MarketFormProps) => {
+    setIsLoading(true);
+    const result = MarketService.update(id, market);
+    setIsLoading(false);
+    return result;
   }, []);
 
   return {
+    market,
     markets,
     isLoading,
     fetchMarkets,
-    addMarket
+    addMarket,
+    getById,
+    update
   };
 }

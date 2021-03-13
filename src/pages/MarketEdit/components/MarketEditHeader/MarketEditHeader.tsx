@@ -1,26 +1,25 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
-import { SectorsContext } from "contexts/sectors";
+import { MarketsContext } from "contexts/markets";
 import React, { ReactElement, useContext, useEffect } from "react";
 import { breadcrumbItemRender } from "utils/headers-utils";
 
 interface Props {
-  sectorId: string;
+  marketId: string;
 }
+export default function MarketAddRouteHeader({
+  marketId
+}: Props): ReactElement| null {
 
-export default function SectorEditHeader({
-  sectorId
-}: Props) : ReactElement | null {
-  const { sector, getById: getSectorById } = useContext(
-    SectorsContext
+  const { market, getById: getMarketById } = useContext(
+    MarketsContext
   );
 
   useEffect(() => {
-    console.debug("Get sector", sectorId)
-    getSectorById(sectorId);
-  }, [getSectorById, sectorId]);
+    getMarketById(marketId);
+  }, [getMarketById, marketId]);
 
-  if (!sector) {
+  if (!market) {
     return null;
   }
 
@@ -33,12 +32,12 @@ export default function SectorEditHeader({
       iconOnly: true
     },
     {
-      path: "/sectors",
-      name: "sectors",
-      breadcrumbName: "Sectors"
+      path: "/markets",
+      name: "markets",
+      breadcrumbName: "Markets"
     },
     {
-      path: `/sectors/${sectorId}/edit`,
+      path: `/markets/${marketId}/edit`,
       name: "edit",
       breadcrumbName: "Edit"
     }
@@ -47,7 +46,7 @@ export default function SectorEditHeader({
   return (
     <PageHeader
       className="site-page-header"
-      title="Edit sector"
+      title="Edit market"
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender
@@ -55,3 +54,4 @@ export default function SectorEditHeader({
     />
   );
 }
+

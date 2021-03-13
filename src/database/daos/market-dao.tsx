@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { MarketFormProps } from "types/market";
-import { deleteById } from "./operations";
+import { deleteById, getById } from "./operations";
 
 export default class MarketDAO {
   static addMarket = (market: MarketFormProps) => {
@@ -50,6 +50,12 @@ export default class MarketDAO {
     return result;
   };
 
+  static getById = (id: string) => {
+    //Call the DB
+    const results = getById("markets", id);
+    return results;
+  };
+
   static getMarkets = () => {
     //Call the DB
     console.debug("Get all markets");
@@ -64,6 +70,23 @@ export default class MarketDAO {
   static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("markets", id);
+    return results;
+  };
+
+  static update = (id: string, market: MarketFormProps) => {
+    const sql = `
+    UPDATE markets
+    SET
+    name = '${market.name}'
+    , description = '${market.description}'
+    , region = '${market.region}'
+    , color = '${market.color}'
+    , openTime = '${market.openTime}'
+    , closeTime = '${market.closeTime}'
+    , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    WHERE markets.id = '${id}';
+    `;
+    const results = sendIpcSql(sql, "update");
     return results;
   };
 }

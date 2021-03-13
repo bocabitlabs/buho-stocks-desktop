@@ -41,6 +41,7 @@ import PortfolioTransactionsLogList from "pages/PortfolioTransactionsLogList/Por
 import ScrollToTop from "hooks/scroll-to-top";
 import CurrencyEdit from "pages/CurrencyEdit/CurrencyEdit";
 import SectorEdit from "pages/SectorEdit/SectorEdit";
+import MarketEdit from "pages/MarketEdit/MarketEdit";
 
 function App() {
   /**
@@ -104,6 +105,11 @@ function App() {
                   />
                   <Route exact path="/add/market" component={MarketAdd} />
                   <Route exact path="/markets" component={MarketList} />
+                  <Route
+                    exact
+                    path="/markets/:marketId/edit/"
+                    component={MarketEdit}
+                  />
                   <Route exact path="/add/inflation" component={InflationAdd} />
                   <Route exact path="/inflations" component={InflationList} />
 

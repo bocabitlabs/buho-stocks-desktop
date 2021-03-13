@@ -3,7 +3,7 @@ import React from "react";
 import { Layout } from "antd";
 
 import MarketAddHeader from "./components/MarketAddHeader/MarketAddHeader";
-import MarketAddForm from "./components/MarketAddForm/MarketAddForm";
+import MarketAddEditForm from "components/MarketAddEditForm/MarketAddEditForm";
 
 const AddMarketRoute = () => {
 
@@ -11,7 +11,7 @@ const AddMarketRoute = () => {
     <>
       <MarketAddHeader/>
       <Layout style={{ padding: "0 24px 24px", backgroundColor: '#fff' }}>
-        <MarketAddForm />
+        <MarketAddEditForm />
       </Layout>
     </>
   );

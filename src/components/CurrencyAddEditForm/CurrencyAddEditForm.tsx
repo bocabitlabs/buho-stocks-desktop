@@ -35,8 +35,6 @@ function CurrencyAddEditForm({ currencyId }: AddEditFormProps): ReactElement | n
   }, [currencyId, getCurrencyById]);
 
   const handleSubmit = (values: any) => {
-    message.loading({ content: "Adding currency...", key });
-
     const { name, abbreviation, symbol, country } = values;
     const newCurrency = {
       name,

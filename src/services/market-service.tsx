@@ -15,11 +15,19 @@ export default class MarketService {
     return MarketDAO.getByName(name);
   };
 
+  static getById = (id: string) => {
+    return MarketDAO.getById(id);
+  };
+
   static getMarkets = () => {
     return MarketDAO.getMarkets();
   };
 
   static deleteById = (marketId: string) => {
     return MarketDAO.deleteById(marketId);
+  };
+
+  static update = (id: string, market: MarketFormProps) => {
+    return MarketDAO.update(id, market);
   };
 }

@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { MarketsContext } from "contexts/markets";
 import MarketService from "services/market-service";
 import { Market } from "types/market";
+import { Link } from "react-router-dom";
 
 export default function MarketListTable() {
   const { markets, fetchMarkets } = useContext(MarketsContext);
@@ -35,7 +36,7 @@ export default function MarketListTable() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text: string) => text,
+      render: (text: string, record: any) => <Link to={`/markets/${record.id}/edit`}>{text}</Link>,
       sorter: (a: Market, b: Market) => a.name.localeCompare(b.name)
     },
     {
@@ -85,6 +86,7 @@ export default function MarketListTable() {
 
   const getData = () => {
     return markets.map((market: Market) => ({
+      id: market.id,
       key: market.id,
       name: market.name,
       description: market.description,
