@@ -52,6 +52,17 @@ export function usePortfoliosContext(): PortfoliosContextType {
     [getAll]
   );
 
+  const update = useCallback(
+    (portfolioId: string, portfolio: PortfolioFormFields) => {
+      setIsLoading(true);
+      const result = PortfolioService.update(portfolioId, portfolio);
+      setPortFolio(result);
+      setIsLoading(false);
+      return result;
+    },
+    []
+  );
+
   return {
     isLoading,
     portfolios,
@@ -59,6 +70,7 @@ export function usePortfoliosContext(): PortfoliosContextType {
     create,
     getAll,
     getById,
-    deleteById
+    deleteById,
+    update
   };
 }

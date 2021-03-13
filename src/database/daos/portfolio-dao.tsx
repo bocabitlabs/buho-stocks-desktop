@@ -89,4 +89,19 @@ export default class PortfolioDAO {
     const results = deleteById("portfolios", id);
     return results;
   };
+
+  static update = (id: string, element: PortfolioFormFields) => {
+    const sql = `
+    UPDATE portfolios
+    SET
+    name = '${element.name}'
+    , color = '${element.color}'
+    , description = '${element.description}'
+    , currencyId = '${element.currencyId}'
+    , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    WHERE portfolios.id = '${id}';
+    `;
+    const results = sendIpcSql(sql, "update");
+    return results;
+  };
 }

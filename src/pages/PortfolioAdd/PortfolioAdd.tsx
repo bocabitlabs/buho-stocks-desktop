@@ -5,7 +5,7 @@ import { Layout } from "antd";
 import { CurrenciesContext } from "contexts/currencies";
 import { useCurrenciesContext } from "hooks/currencies";
 import PortfolioAddHeader from "./components/PortfolioAddHeader/PortfolioAddHeader";
-import PortfolioAddForm from "./components/PortfolioAddForm/PortfolioAddForm";
+import PortfolioAddEditForm from "components/PortfolioAddEditForm/PortfolioAddEditForm";
 
 const PortfolioAdd = () => {
   const currenciesContext = useCurrenciesContext();
@@ -15,7 +15,7 @@ const PortfolioAdd = () => {
       <CurrenciesContext.Provider value={currenciesContext}>
         <PortfolioAddHeader />
         <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-          <PortfolioAddForm />
+          <PortfolioAddEditForm />
         </Layout>
       </CurrenciesContext.Provider>
     </div>

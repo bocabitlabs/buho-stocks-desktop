@@ -10,6 +10,7 @@ export type PortfoliosContextType = {
   deleteById: (transactionId: string) => IAddProps;
   getAll: () => void;
   getById: (portfolioId: string) => IPortfolio|null;
+  update: (currencyId: string, currency: PortfolioFormFields) => IAddProps;
 };
 
 export const portfoliosDefaultValue: PortfoliosContextType = {
@@ -19,7 +20,8 @@ export const portfoliosDefaultValue: PortfoliosContextType = {
   create: () => ({ changes: false }),
   deleteById: () => ({ changes: false }),
   getAll: () => null,
-  getById: () => null
+  getById: () => null,
+  update: () => ({ changes: false })
 };
 
 export const PortfoliosContext = createContext<PortfoliosContextType>(

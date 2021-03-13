@@ -42,6 +42,7 @@ import ScrollToTop from "hooks/scroll-to-top";
 import CurrencyEdit from "pages/CurrencyEdit/CurrencyEdit";
 import SectorEdit from "pages/SectorEdit/SectorEdit";
 import MarketEdit from "pages/MarketEdit/MarketEdit";
+import PortfolioEdit from "pages/PortfolioEdit/PortfolioEdit";
 
 function App() {
   /**
@@ -124,6 +125,11 @@ function App() {
                     exact
                     path="/portfolios/:id"
                     component={PortfolioDetails}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/edit/"
+                    component={PortfolioEdit}
                   />
                   <Route
                     exact

@@ -50,6 +50,10 @@ export default class PortfolioService {
   static deleteById = (portfolioId: string) => {
     return PortfolioDAO.deleteById(portfolioId);
   };
+
+  static update = (portfolioId: string, portfolio: PortfolioFormFields) => {
+    return PortfolioDAO.update(portfolioId, portfolio);
+  };
 }
 
 function createPortfolioObject(result: IPortfolio, companies: ICompany[]) {

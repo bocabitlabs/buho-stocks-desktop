@@ -9,6 +9,7 @@ import { PortfoliosContext } from "contexts/portfolios";
 import PortfolioService from "services/portfolio-service";
 import {
   DeleteOutlined,
+  EditOutlined,
   HomeOutlined,
   PlusOutlined,
   UnorderedListOutlined
@@ -77,6 +78,7 @@ export default function PortfolioDetailsHeader({
       }}
       extra={[
         <Button
+          type="primary"
           key={"company-add-header"}
           icon={<PlusOutlined />}
           onClick={() => {
@@ -94,6 +96,15 @@ export default function PortfolioDetailsHeader({
         >
           View Logs
         </Button>,
+        <Button
+          key={"edit"}
+          icon={<EditOutlined />}
+          onClick={() => {
+            history.push(`/portfolios/${portfolioId}/edit`);
+          }}
+        >
+          Edit
+        </Button>,
         <Popconfirm
           key={"portfolio-delete-header"}
           title="Delete this portfolio?"
@@ -102,7 +113,9 @@ export default function PortfolioDetailsHeader({
           okText="Yes"
           cancelText="No"
         >
-          <Button icon={<DeleteOutlined />} danger>Delete</Button>
+          <Button icon={<DeleteOutlined />} danger>
+            Delete
+          </Button>
         </Popconfirm>
       ]}
     />

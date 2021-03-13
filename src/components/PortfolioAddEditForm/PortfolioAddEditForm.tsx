@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Button, Form, Input, message, Select } from "antd";
 import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
@@ -7,33 +7,63 @@ import { CurrenciesContext } from "contexts/currencies";
 import { Currency } from "types/currency";
 import { PortfoliosContext } from "contexts/portfolios";
 
-/**
- * Add a new Currency
- */
-function PortfolioAddForm(): ReactElement {
+interface AddEditFormProps {
+  portfolioId?: string;
+}
+
+function PortfolioAddEditForm({
+  portfolioId
+}: AddEditFormProps): ReactElement | null {
   const [form] = Form.useForm();
   const history = useHistory();
 
   const { currencies } = useContext(CurrenciesContext);
-  const { create } = useContext(PortfoliosContext);
+  const {
+    portfolio,
+    getAll: getAllPortfolios,
+    create: addPortfolio,
+    getById: getPortfolioById,
+    update: updatePortfolio
+  } = useContext(PortfoliosContext);
 
   const [color, setColor] = useState("#607d8b");
   const key = "updatable";
+
+  useEffect(() => {
+    if (portfolioId) {
+      const newPortfolio = getPortfolioById(portfolioId);
+      if (newPortfolio) {
+        setColor(newPortfolio.color);
+      }
+    }
+  }, [portfolioId, getPortfolioById]);
 
   const handleAdd = (values: any) => {
     message.loading({ content: "Adding portfolio...", key });
 
     const { name, description, currencyId } = values;
-    const portfolio = {
+    const newPortfolio = {
       name,
       description,
       currencyId,
       color
     };
-    const added = create(portfolio);
-    if (added.changes) {
+
+    let changes = null;
+    if (portfolioId) {
+      changes = updatePortfolio(portfolioId, newPortfolio);
+    } else {
+      changes = addPortfolio(newPortfolio);
+    }
+
+    if (changes.changes) {
+      getAllPortfolios();
+      if (!currencyId) {
+        message.success({ content: "Portfolio has been added", key });
+      } else {
+        message.success({ content: "Portfolio has been updated", key });
+      }
       history.push("/home");
-      message.success({ content: "Portfolio has been added", key });
     } else {
       message.success({ content: "Unable to add the portfolio", key });
     }
@@ -42,8 +72,22 @@ function PortfolioAddForm(): ReactElement {
   const handleColorChange = (color: any, event: any) => {
     setColor(color.hex);
   };
+
+  if (portfolioId && !portfolio) {
+    return null;
+  }
+
   return (
-    <Form form={form} name="basic" onFinish={handleAdd}>
+    <Form
+      form={form}
+      name="basic"
+      onFinish={handleAdd}
+      initialValues={{
+        name: portfolio?.name,
+        description: portfolio?.description,
+        currencyId: portfolio?.currencyId
+      }}
+    >
       <Form.Item
         name="name"
         label="Name"
@@ -88,11 +132,11 @@ function PortfolioAddForm(): ReactElement {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Add Portfolio
+          {portfolioId ? "Edit Portfolio" : "Add Portfolio"}
         </Button>
       </Form.Item>
     </Form>
   );
 }
 
-export default PortfolioAddForm;
+export default PortfolioAddEditForm;
