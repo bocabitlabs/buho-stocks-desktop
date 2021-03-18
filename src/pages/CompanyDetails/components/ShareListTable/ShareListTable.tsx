@@ -93,7 +93,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
       render: (text: string, record: any) => text
     },
     {
-      title: "Price",
+      title: "Price (g)",
       dataIndex: "priceShare",
       key: "priceShare",
       width: 70,
@@ -119,6 +119,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
     {
       title: "Action",
       key: "action",
+      width: 70,
       render: (text: string, record: any) => (
         <Space>
           <Popconfirm
@@ -169,7 +170,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
           expandedRowRender: (record) => (
             <p style={{ margin: 0 }}>{record.notes}</p>
           ),
-          rowExpandable: (record) => record.notes !== "undefined"
+          rowExpandable: (record) => (record.notes !== "undefined" && record.notes !== undefined)
         }}
       />
     </>

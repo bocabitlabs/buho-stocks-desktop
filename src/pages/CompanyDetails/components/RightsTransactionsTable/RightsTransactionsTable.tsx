@@ -98,7 +98,7 @@ export default function RightsTransactionsTable({
       render: (text: string, record: any) => text
     },
     {
-      title: "Price",
+      title: "Price (g)",
       dataIndex: "price",
       key: "price",
       width: 70,
@@ -124,6 +124,7 @@ export default function RightsTransactionsTable({
     {
       title: "Action",
       key: "action",
+      width: 70,
       render: (text: string, record: any) => (
         <Space>
           <Popconfirm
@@ -177,7 +178,7 @@ export default function RightsTransactionsTable({
           expandedRowRender: (record) => (
             <p style={{ margin: 0 }}>{record.notes}</p>
           ),
-          rowExpandable: (record) => record.notes !== "undefined"
+          rowExpandable: (record) => (record.notes !== "undefined" && record.notes !== undefined)
         }}
       />
     </>

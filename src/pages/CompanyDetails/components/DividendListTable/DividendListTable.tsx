@@ -68,7 +68,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       width: 70
     },
     {
-      title: "Price",
+      title: "Price (g)",
       dataIndex: "price",
       key: "price",
       width: 70,
@@ -94,6 +94,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
     {
       title: "Action",
       key: "action",
+      width: 70,
       render: (text: string, record: any) => (
         <Space size="middle">
           <Popconfirm
@@ -145,7 +146,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
           expandedRowRender: (record) => (
             <p style={{ margin: 0 }}>{record.notes}</p>
           ),
-          rowExpandable: (record) => record.notes !== "undefined"
+          rowExpandable: (record) => (record.notes !== "undefined" && record.notes !== undefined)
         }}
       />
     </>
