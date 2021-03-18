@@ -4,6 +4,7 @@ import { CirclePicker } from "react-color";
 
 import { useHistory } from "react-router-dom";
 import { CurrenciesContext } from "contexts/currencies";
+import CountrySelector from "components/CountrySelector/CountrySelector";
 
 interface AddEditFormProps {
   currencyId?: string;
@@ -12,10 +13,14 @@ interface AddEditFormProps {
 /**
  * Add a new Currency
  */
-function CurrencyAddEditForm({ currencyId }: AddEditFormProps): ReactElement | null {
+function CurrencyAddEditForm({
+  currencyId
+}: AddEditFormProps): ReactElement | null {
   const [form] = Form.useForm();
   const history = useHistory();
   const [color, setColor] = useState("#607d8b");
+  const [country, setCountry] = useState("");
+
   const {
     currency,
     addCurrency,
@@ -30,12 +35,13 @@ function CurrencyAddEditForm({ currencyId }: AddEditFormProps): ReactElement | n
       const newCurrency = getCurrencyById(currencyId);
       if (newCurrency) {
         setColor(newCurrency.color);
+        setCountry(newCurrency.country);
       }
     }
   }, [currencyId, getCurrencyById]);
 
   const handleSubmit = (values: any) => {
-    const { name, abbreviation, symbol, country } = values;
+    const { name, abbreviation, symbol } = values;
     const newCurrency = {
       name,
       abbreviation,
@@ -66,6 +72,11 @@ function CurrencyAddEditForm({ currencyId }: AddEditFormProps): ReactElement | n
 
   const handleColorChange = (color: any, event: any) => {
     setColor(color.hex);
+  };
+
+  const handleCountryChange = (code: string) => {
+    console.debug(code);
+    setCountry(code);
   };
 
   if (currencyId && !currency) {
@@ -102,6 +113,12 @@ function CurrencyAddEditForm({ currencyId }: AddEditFormProps): ReactElement | n
       >
         <Input type="text" placeholder="EUR, USD, GBP..." />
       </Form.Item>
+      <Form.Item name="region" label="Country">
+        <CountrySelector
+          handleChange={handleCountryChange}
+          initialValue={currency?.country}
+        />
+      </Form.Item>
       <Form.Item label="Color">
         <CirclePicker color={color} onChange={handleColorChange} />
         <Input type="hidden" value={color} />
@@ -114,15 +131,6 @@ function CurrencyAddEditForm({ currencyId }: AddEditFormProps): ReactElement | n
         ]}
       >
         <Input type="text" placeholder="€, $, £..." />
-      </Form.Item>
-      <Form.Item
-        name="country"
-        label="Country"
-        rules={[
-          { required: true, message: "Please input the currency  country" }
-        ]}
-      >
-        <Input type="text" placeholder="USA, EU, Japan..." />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { MarketsContext } from "contexts/markets";
 import moment from "moment";
+import CountrySelector from "components/CountrySelector/CountrySelector";
 
 interface AddEditFormProps {
   marketId?: string;
@@ -16,6 +17,8 @@ function MarketAddEditForm({
   const [form] = Form.useForm();
   const history = useHistory();
   const [color, setColor] = useState("#607d8b");
+  const [region, setRegion] = useState("");
+
   const key = "updatable";
   const {
     market,
@@ -25,17 +28,18 @@ function MarketAddEditForm({
     update: updateMarket
   } = useContext(MarketsContext);
 
-  // useEffect(() => {
-  //   if (marketId) {
-  //     const newMarket = getMarketById(marketId);
-  //     if (newMarket) {
-  //       setColor(newMarket.color);
-  //     }
-  //   }
-  // }, [marketId, getMarketById]);
+  useEffect(() => {
+    if (marketId) {
+      const newMarket = getMarketById(marketId);
+      if (newMarket) {
+        setColor(newMarket.color);
+        setRegion(newMarket.region);
+      }
+    }
+  }, [marketId, getMarketById]);
 
   const handleSubmit = (values: any) => {
-    const { name, description, region, openTime, closeTime } = values;
+    const { name, description, openTime, closeTime } = values;
     const newMarket = {
       name,
       description,
@@ -67,6 +71,11 @@ function MarketAddEditForm({
     setColor(color.hex);
   };
 
+  const handleCountryChange = (code: string) => {
+    console.debug(code);
+    setRegion(code);
+  };
+
   if (marketId && !market) {
     return null;
   }
@@ -74,7 +83,7 @@ function MarketAddEditForm({
   return (
     <Form
       form={form}
-      name="basic"
+      layout="vertical"
       onFinish={handleSubmit}
       initialValues={{
         name: market?.name,
@@ -91,7 +100,7 @@ function MarketAddEditForm({
           { required: true, message: "Please input the name of the market" }
         ]}
       >
-        <Input type="text" placeholder="USA, EU, Japan..." />
+        <Input type="text" placeholder="NYSE, NASDAQ,..." />
       </Form.Item>
       <Form.Item
         name="description"
@@ -100,16 +109,15 @@ function MarketAddEditForm({
       >
         <Input type="text" />
       </Form.Item>
+      <Form.Item name="region" label="Country">
+        <CountrySelector
+          handleChange={handleCountryChange}
+          initialValue={market?.region}
+        />
+      </Form.Item>
       <Form.Item label="Color">
         <CirclePicker color={color} onChange={handleColorChange} />
         <Input type="hidden" value={color} />
-      </Form.Item>
-      <Form.Item
-        name="region"
-        label="region"
-        rules={[{ required: true, message: "Please input the region" }]}
-      >
-        <Input type="text" placeholder="USA, EU, Japan..." />
       </Form.Item>
       <Form.Item
         name="openTime"

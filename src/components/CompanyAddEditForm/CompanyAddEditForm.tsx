@@ -14,6 +14,7 @@ import { Currency } from "types/currency";
 import { Market } from "types/market";
 import { CompaniesContext } from "contexts/companies";
 import TransactionLogService from "services/transaction-log-service";
+import CountrySelector from "components/CountrySelector/CountrySelector";
 
 interface CompanyAddEditFormProps {
   portfolioId: string;
@@ -40,6 +41,7 @@ function CompanyAddEditForm({
 
   const history = useHistory();
   const [color, setColor] = useState(company ? company.color : "#607d8b");
+  const [countryCode, setCountryCode] = useState("");
 
   const key = "updatable";
 
@@ -48,6 +50,7 @@ function CompanyAddEditForm({
       const newCompany = getCompanyById(companyId);
       if (newCompany) {
         setColor(newCompany.color);
+        setCountryCode(newCompany.countryCode);
       }
     }
   }, [companyId, getCompanyById]);
@@ -69,6 +72,7 @@ function CompanyAddEditForm({
       url,
       name,
       ticker,
+      countryCode,
       closed,
       broker,
       marketId,
@@ -106,6 +110,11 @@ function CompanyAddEditForm({
 
   const handleColorChange = (color: any, event: any) => {
     setColor(color.hex);
+  };
+
+  const handleCountryChange = (code: string) => {
+    console.debug(code);
+    setCountryCode(code);
   };
 
   if (companyId && !company) {
@@ -156,6 +165,12 @@ function CompanyAddEditForm({
         }
       >
         <Input type="text" placeholder="MSFT, IBE.MC, UNA.AS" />
+      </Form.Item>
+      <Form.Item name="countryCode" label="Country">
+        <CountrySelector
+          handleChange={handleCountryChange}
+          initialValue={company?.countryCode}
+        />
       </Form.Item>
       <Form.Item
         name="broker"

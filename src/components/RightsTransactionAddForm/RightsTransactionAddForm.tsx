@@ -196,7 +196,7 @@ export default function RightsTransactionAddForm({
   return (
     <Form
       form={form}
-      name="basic"
+      layout="vertical"
       onFinish={handleSubmit}
       initialValues={{
         count: rightsTransaction?.count,
