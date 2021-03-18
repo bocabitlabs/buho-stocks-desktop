@@ -20,6 +20,7 @@ export default class CompanyDAO {
     , "creationDate"
     , "lastUpdateDate"
     , "alternativeTickers"
+    , "countryCode"
     )
     VALUES ('${company.name}'
     , '${company.ticker}'
@@ -34,6 +35,7 @@ export default class CompanyDAO {
     , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     , '${company.alternativeTickers}'
+    , '${company.countryCode}'
     ) ;`;
 
     const result = sendIpcSql(sql, "insert");
@@ -57,6 +59,7 @@ export default class CompanyDAO {
       , portfolios.name as portfolioName
       , markets.name as marketName
       , companies.alternativeTickers as alternativeTickers
+      , companies.countryCode as countryCode
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId
@@ -86,7 +89,6 @@ export default class CompanyDAO {
 
   getCompanies = (portfolioId: string) => {
     //Call the DB
-    console.debug("Get all companies from portfolio");
     const sql = `
     SELECT companies.*
       , sectors.name as sectorName
@@ -192,6 +194,7 @@ export default class CompanyDAO {
     , marketId = '${company.marketId}'
     , sectorId = '${company.sectorId}'
     , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
+    , countryCode = '${company.countryCode}'
     WHERE companies.id = '${companyId}';
     `;
     const results = sendIpcSql(sql, "update");

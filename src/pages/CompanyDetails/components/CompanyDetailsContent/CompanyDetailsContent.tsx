@@ -31,7 +31,12 @@ export default function CompanyDetailsContent({
     <>
       {company && (
         <>
-          <Typography.Paragraph>{company.description}</Typography.Paragraph>
+          <Typography.Paragraph>
+            {company.description !== "undefined" &&
+            company.description !== undefined
+              ? company.description
+              : ""}
+          </Typography.Paragraph>
           <Stats company={company} />
           <Tabs
             defaultActiveKey={query.get("tab") || "shares"}

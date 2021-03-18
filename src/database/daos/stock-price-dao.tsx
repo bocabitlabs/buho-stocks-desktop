@@ -54,7 +54,6 @@ export default class StockPriceDAO {
 
   static getStockPrices = (companyId: string) => {
     //Call the DB
-    console.debug("Get all price stock");
     const sql = `
     SELECT *
     FROM stockPrices

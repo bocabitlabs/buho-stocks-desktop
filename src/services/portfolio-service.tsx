@@ -54,6 +54,10 @@ export default class PortfolioService {
   static update = (portfolioId: string, portfolio: PortfolioFormFields) => {
     return PortfolioDAO.update(portfolioId, portfolio);
   };
+
+  static getFirstTransaction = (portfolioId: string) => {
+    return PortfolioDAO.getFirstTransaction(portfolioId);
+  };
 }
 
 function createPortfolioObject(result: IPortfolio, companies: ICompany[]) {

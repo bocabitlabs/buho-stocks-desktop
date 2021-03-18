@@ -17,6 +17,7 @@
     "electron-log": "^4.3.0",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.1",
+    "react-flag-icon-css": "^1.0.25",
     "yahoo-stock-prices-fetch": "^1.4.4"
   },
   "scripts": {

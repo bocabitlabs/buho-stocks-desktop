@@ -9,6 +9,7 @@ import { TransactionType } from "types/transaction";
 
 export class Company implements ICompany {
   id: string;
+  countryCode: string;
   currencyName: string;
   sectorName: string;
   currencySymbol: string;
@@ -35,6 +36,8 @@ export class Company implements ICompany {
 
   constructor(parameters: ICompany) {
     this.id = parameters.id;
+
+    this.countryCode = parameters.countryCode;
     this.portfolioName = parameters.portfolioName;
     this.portfolioId = parameters.portfolioId;
 
@@ -96,7 +99,9 @@ export class Company implements ICompany {
       if (inBaseCurrency) {
         exchangeRate = obj.exchangeRate;
       }
-      return accumulator + ((obj.price * exchangeRate * obj.count) - obj.commission);
+      return (
+        accumulator + (obj.price * exchangeRate * obj.count - obj.commission)
+      );
     },
     0);
     return amount;
@@ -113,7 +118,9 @@ export class Company implements ICompany {
         if (inBaseCurrency) {
           exchangeRate = obj.exchangeRate;
         }
-        return accumulator + ((obj.price * exchangeRate * obj.count) - obj.commission);
+        return (
+          accumulator + (obj.price * exchangeRate * obj.count - obj.commission)
+        );
       }, 0);
     return amount;
   }
@@ -149,8 +156,37 @@ export class Company implements ICompany {
     return investedInShares + investedInRights;
   }
 
+  getTotalInvestedForYear(year: string, inBaseCurrency = false): number {
+    // yearlyShares.investedAmount + yearlyShares.investmentCommission;
+    const investedInShares = this.getInvestedInSharesForYear(year, inBaseCurrency);
+    const investedInRights = this.getInvestedInRightsForYear(year, inBaseCurrency);
+    return investedInShares + investedInRights;
+  }
+
   private getInvestedInShares(inBaseCurrency: boolean) {
     return this.sharesTransactions
+      .filter(
+        (transaction: SharesTransaction) =>
+          transaction.type === TransactionType.BUY
+      )
+      .reduce(function (accumulator: number, obj: SharesTransaction) {
+        if (inBaseCurrency) {
+          return (
+            accumulator +
+            (obj.count * (obj.price * obj.exchangeRate) +
+              obj.commission * obj.exchangeRate)
+          );
+        }
+        return accumulator + (obj.count * obj.price + obj.commission);
+      }, 0);
+  }
+
+  private getInvestedInSharesForYear(year: string, inBaseCurrency: boolean) {
+    return this.sharesTransactions
+      .filter(
+        (transaction: SharesTransaction) =>
+          moment(transaction.transactionDate).format("YYYY") === year
+      )
       .filter(
         (transaction: SharesTransaction) =>
           transaction.type === TransactionType.BUY
@@ -182,6 +218,24 @@ export class Company implements ICompany {
       return accumulator + (obj.count * obj.price + obj.commission);
     },
     0);
+  }
+
+  private getInvestedInRightsForYear(year: string, inBaseCurrency: boolean) {
+    return this.rightsTransactions
+      .filter(
+        (transaction: RightsTransaction) =>
+          moment(transaction.transactionDate).format("YYYY") === year
+      )
+      .reduce(function (accumulator: number, obj: RightsTransaction) {
+        if (inBaseCurrency) {
+          return (
+            accumulator +
+            (obj.count * (obj.price * obj.exchangeRate) +
+              obj.commission * obj.exchangeRate)
+          );
+        }
+        return accumulator + (obj.count * obj.price + obj.commission);
+      }, 0);
   }
 
   getPortfolioValue(inBaseCurrency = false): number {

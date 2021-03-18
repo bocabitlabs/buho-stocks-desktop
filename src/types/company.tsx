@@ -4,6 +4,7 @@ import { SharesTransaction } from "./shares-transaction";
 import { IStockPrice } from "./stock-price";
 
 export interface CompanyFormFields {
+  countryCode: string;
   name: string;
   ticker: string;
   broker: string;
@@ -38,6 +39,7 @@ export interface ICompany extends CompanyFormFields {
   getMonthlyDividendsForYear(year: string, inBaseCurrency?: boolean): number;
   getLatestStockPrice(inBaseCurrency?: boolean): IStockPrice | null;
   getTotalInvested(inBaseCurrency?: boolean): number;
+  getTotalInvestedForYear(year:string, inBaseCurrency?: boolean): number;
   getPortfolioValue(inBaseCurrency?: boolean): number;
   getPortfolioValueWithInflation(inBaseCurrency?: boolean): number;
   getReturn(inBaseCurrency?: boolean): number;

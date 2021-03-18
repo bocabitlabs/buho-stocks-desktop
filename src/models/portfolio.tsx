@@ -6,6 +6,7 @@ export class Portfolio implements IPortfolio {
   currencySymbol: string;
   currencyName: string;
   currencyAbbreviation: string;
+  currencyCountryCode: string;
   name: string;
   description: string;
   color: string;
@@ -17,6 +18,7 @@ export class Portfolio implements IPortfolio {
     this.currencySymbol = parameters.currencySymbol;
     this.currencyName = parameters.currencyName;
     this.currencyAbbreviation = parameters.currencyAbbreviation;
+    this.currencyCountryCode = parameters.currencyCountryCode;
     this.name = parameters.name;
     this.description = parameters.description;
     this.color = parameters.color;
@@ -103,6 +105,20 @@ export class Portfolio implements IPortfolio {
         return accumulator + obj.getTotalInvested(inBaseCurrency);
       }
       return accumulator + obj.getTotalInvested(inBaseCurrency);
+    },
+    0);
+    return totalInvested;
+  }
+
+  getTotalInvestedForYear(year: string, inBaseCurrency: boolean) {
+    const totalInvested = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      if (inBaseCurrency) {
+        return accumulator + obj.getTotalInvestedForYear(year, inBaseCurrency);
+      }
+      return accumulator + obj.getTotalInvestedForYear(year, inBaseCurrency);
     },
     0);
     return totalInvested;

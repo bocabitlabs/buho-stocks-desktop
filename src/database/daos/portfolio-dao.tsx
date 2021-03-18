@@ -62,12 +62,13 @@ export default class PortfolioDAO {
     SELECT portfolios.*
 	  , currencies.symbol as currencySymbol
 	  , currencies.name as currencyName
+    , currencies.country as currencyCountryCode
     FROM "portfolios"
       LEFT JOIN "currencies"
     ON currencies.id = portfolios.currencyId
     `;
     const results = sendIpcSql(sql);
-    console.debug("results", results)
+    console.debug("results", results);
     return results;
   };
 
@@ -77,6 +78,7 @@ export default class PortfolioDAO {
 	  , currencies.symbol as currencySymbol
 	  , currencies.name as currencyName
     , currencies.abbreviation as currencyAbbreviation
+    , currencies.country as currencyCountryCode
     FROM "portfolios"
       LEFT JOIN "currencies"
     ON currencies.id = portfolios.currencyId
@@ -102,6 +104,33 @@ export default class PortfolioDAO {
     WHERE portfolios.id = '${id}';
     `;
     const results = sendIpcSql(sql, "update");
+    return results;
+  };
+
+  static getFirstTransaction = (id: string) => {
+    const sql = `
+      SELECT
+      sharesTransactions.count as count
+      , sharesTransactions.price as price
+      , sharesTransactions.commission as commission
+      , sharesTransactions.color as color
+      , sharesTransactions.transactionDate as transactionDate
+      , sharesTransactions.exchangeRate as exchangeRate
+      , sharesTransactions.notes as notes
+      , sharesTransactions.type as type
+      , companies.name as companyName
+      , companies.ticker as ticker
+      , portfolios.name as portfolioName
+    FROM "sharesTransactions"
+    LEFT JOIN "companies"
+      ON companies.id = sharesTransactions.companyId
+    LEFT JOIN "portfolios"
+      ON portfolios.id = companies.portfolioId
+    WHERE portfolios.id = ${id}
+    ORDER BY datetime(sharesTransactions.transactionDate) ASC
+    LIMIT 1
+    `;
+    const results = sendIpcSql(sql, "get");
     return results;
   };
 }

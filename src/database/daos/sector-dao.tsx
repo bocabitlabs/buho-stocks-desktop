@@ -17,7 +17,6 @@ export default class SectorDAO {
 
   static getSectors = () => {
     //Call the DB
-    console.debug("Get all sectors");
     const sql = `
     SELECT * FROM sectors
     ORDER BY name ASC

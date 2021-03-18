@@ -51,7 +51,6 @@ export default class CurrencyDAO {
 
   static getCurrencies = () => {
     //Call the DB
-    console.debug("Get all currencies");
     const sql = `
     SELECT * FROM currencies
     ORDER BY name ASC

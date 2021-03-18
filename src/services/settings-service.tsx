@@ -34,4 +34,9 @@ export default class SettingsService {
     //Call the DB
     return SettingsDAO.toggleCollapsed();
   };
+
+  static setDefaultCompanyDisplayMode = (value: string) => {
+    //Call the DB
+    return SettingsDAO.setDefaultCompanyDisplayMode(value);
+  };
 }

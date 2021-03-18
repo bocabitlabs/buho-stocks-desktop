@@ -5,7 +5,6 @@ import { ISettings } from "types/settings";
 export default class SettingsDAO {
   static getSettings = () => {
     //Call the DB
-    console.debug("Get all settings");
     const sql = `SELECT * FROM settings WHERE id='1'`;
     const result = sendIpcSql(sql, "get");
     return result;
@@ -19,6 +18,11 @@ export default class SettingsDAO {
     const sql = `SELECT selectedPortfolio FROM settings WHERE id='1'`;
     const result = sendIpcSql(sql, "get");
     return result.selectedPortfolio;
+  };
+  static getDefaultCompanyDisplayMode = () => {
+    const sql = `SELECT defaultCompanyDisplayMode FROM settings WHERE id='1'`;
+    const result = sendIpcSql(sql, "get");
+    return result.defaultCompanyDisplayMode;
   };
   static addSettings(settings: ISettings) : IAddProps{
     //Call the DB
@@ -53,6 +57,12 @@ export default class SettingsDAO {
   static toggleCollapsed = () => {
     //Call the DB
     const sql = `UPDATE "settings" SET collapsed = ((collapsed | 1) - (collapsed & 1)) WHERE "id" = '1';`;
+    const results = sendIpcSql(sql, "insert");
+    return results;
+  };
+  static setDefaultCompanyDisplayMode = (value: string) => {
+    //Call the DB
+    const sql = `UPDATE "settings" SET defaultCompanyDisplayMode = '${value}' WHERE "id" = '1';`;
     const results = sendIpcSql(sql, "insert");
     return results;
   };

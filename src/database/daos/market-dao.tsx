@@ -58,7 +58,6 @@ export default class MarketDAO {
 
   static getMarkets = () => {
     //Call the DB
-    console.debug("Get all markets");
     const sql = `
     SELECT * FROM markets
     ORDER BY name ASC

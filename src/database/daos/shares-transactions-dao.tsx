@@ -87,7 +87,6 @@ export default class SharesTransactionsDAO {
 
   static getAll = (companyId: string) => {
     //Call the DB
-    console.debug("Get all shares");
     const sql = `
     SELECT
     sharesTransactions.*

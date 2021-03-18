@@ -1,8 +1,9 @@
-import {
+import Icon, {
   DeleteOutlined,
   EditOutlined,
   EllipsisOutlined,
-  HomeOutlined
+  HomeOutlined,
+  LinkOutlined
 } from "@ant-design/icons";
 import {
   Button,
@@ -21,6 +22,7 @@ import StockPriceAddModal from "../StockPriceAddModal/StockPriceAddModal";
 import StockPriceListModal from "../StockPriceListModal/StockPriceListModal";
 import TransactionLogService from "services/transaction-log-service";
 import { breadcrumbItemRender } from "utils/headers-utils";
+import CountryFlag from "components/CountryFlag/CountryFlag";
 
 interface Props {
   portfolioId: string;
@@ -143,11 +145,14 @@ export default function CompanyDetailsRouteHeader({
         title={company?.name}
         subTitle={company.ticker}
         onBack={() => history.push(`/portfolios/${portfolioId}`)}
-        tags={
+        tags={[
+          <Tag color="#fff"><CountryFlag code={company.countryCode} /></Tag>,
           <Tag color="blue">
-            <a href={`${company?.url}`}>Link</a>
+            <a href={`${company?.url}`}>
+              <LinkOutlined />
+            </a>
           </Tag>
-        }
+        ]}
         breadcrumb={{
           routes,
           itemRender: breadcrumbItemRender

@@ -12,9 +12,11 @@ export interface IPortfolio extends PortfolioFormFields {
   currencySymbol: string;
   currencyName: string;
   currencyAbbreviation: string;
+  currencyCountryCode: string;
   companies: ICompany[];
   getPortfolioValue(inBaseCurrency?: boolean): number;
   getTotalInvested(inBaseCurrency?: boolean): number;
+  getTotalInvestedForYear(year:string, inBaseCurrency?: boolean): number;
   getPortfolioValueWithInflation(inBaseCurrency?: boolean): number;
   getAllPortfolioDividends(inBaseCurrency?: boolean): number;
   getPortfolioDividends(year?:string, inBaseCurrency?: boolean): number;
