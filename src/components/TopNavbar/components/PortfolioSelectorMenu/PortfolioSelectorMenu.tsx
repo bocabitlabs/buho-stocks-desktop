@@ -5,16 +5,18 @@ import {
   MenuUnfoldOutlined
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import { IsCollapsedContext } from "contexts/is-collapsed";
 import { SelectedPortfolioContext } from "contexts/selected-portfolio";
-import React, { ReactElement, useContext } from "react";
+import { SettingsContext } from "contexts/settings";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import PortfolioSelector from "../PortfolioSelector/PortfolioSelector";
 
 export default function PortfolioSelectorMenu(): ReactElement {
   const history = useHistory();
   const { selectedPortfolio } = useContext(SelectedPortfolioContext);
-  const { isCollapsed, toggleCollapsed } = useContext(IsCollapsedContext);
+  const { toggleCollapsed,  } = useContext(SettingsContext);
+  const { settings } = useContext(SettingsContext);
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const openPortfolio = () => {
     if (selectedPortfolio) {
@@ -24,8 +26,16 @@ export default function PortfolioSelectorMenu(): ReactElement {
 
   const changeIsCollapsed = () => {
     // setIsCollapsed(!isCollapsed);
+    console.log("Changing collapsed")
     toggleCollapsed();
   };
+
+  useEffect(() => {
+    if(settings !== null){
+      const { collapsed } = settings;
+      setIsCollapsed(collapsed);
+    }
+  }, [settings]);
 
   return (
     <Menu theme="light" mode="horizontal">

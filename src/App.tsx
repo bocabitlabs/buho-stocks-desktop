@@ -43,18 +43,20 @@ import CurrencyEdit from "pages/CurrencyEdit/CurrencyEdit";
 import SectorEdit from "pages/SectorEdit/SectorEdit";
 import MarketEdit from "pages/MarketEdit/MarketEdit";
 import PortfolioEdit from "pages/PortfolioEdit/PortfolioEdit";
+import { useSettingsContext } from "hooks/settings";
+import { SettingsContext } from "contexts/settings";
 
 function App() {
   /**
    * Main
    */
-  const isCollapsedContext = useIsCollapsedContext();
+  const settingsContext = useSettingsContext();
   const selectedPortfolioContext = useSelectedPortfolioContext();
   const portfoliosContext = usePortfoliosContext();
 
   return (
     <Layout>
-      <IsCollapsedContext.Provider value={isCollapsedContext}>
+      <SettingsContext.Provider value={settingsContext}>
         <PortfoliosContext.Provider value={portfoliosContext}>
           <SelectedPortfolioContext.Provider value={selectedPortfolioContext}>
             <AppSidebar />
@@ -112,7 +114,7 @@ function App() {
                     component={MarketEdit}
                   />
                   <Route exact path="/add/inflation" component={InflationAdd} />
-                  <Route exact path="/inflations" component={InflationList} />
+                  {/* <Route exact path="/inflations" component={InflationList} /> */}
 
                   <Route exact path="/sectors" component={SectorList} />
                   <Route exact path="/add/sector" component={SectorAdd} />
@@ -186,7 +188,7 @@ function App() {
             </Layout>
           </SelectedPortfolioContext.Provider>
         </PortfoliosContext.Provider>
-      </IsCollapsedContext.Provider>
+      </SettingsContext.Provider>
     </Layout>
   );
 }

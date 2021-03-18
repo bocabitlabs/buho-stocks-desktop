@@ -4,13 +4,12 @@ import {
   DollarCircleOutlined,
   HomeOutlined,
   ImportOutlined,
-  RiseOutlined,
   SettingOutlined
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { IsCollapsedContext } from "../../contexts/is-collapsed";
+import { SettingsContext } from "contexts/settings";
 interface RoutePathProps {
   key: string;
   path: string;
@@ -18,9 +17,6 @@ interface RoutePathProps {
   icon: ReactElement;
 }
 
-// interface AppSidebarProps {
-//   isCollapsed: boolean;
-// }
 const navLinks: RoutePathProps[] = [
   { key: "0", path: "/home", text: "Home", icon: <HomeOutlined /> },
   { key: "-1", path: "/markets", text: "Markets", icon: <BankOutlined /> },
@@ -31,8 +27,13 @@ const navLinks: RoutePathProps[] = [
     icon: <DollarCircleOutlined />
   },
   { key: "-3", path: "/sectors", text: "Sectors", icon: <ClusterOutlined /> },
-  { key: "-4", path: "/inflations", text: "Inflation", icon: <RiseOutlined /> },
-  { key: "-5", path: "/import-export", text: "Import & Export", icon: <ImportOutlined /> },
+  // { key: "-4", path: "/inflations", text: "Inflation", icon: <RiseOutlined /> },
+  {
+    key: "-5",
+    path: "/import-export",
+    text: "Import & Export",
+    icon: <ImportOutlined />
+  },
 
   {
     key: "-6",
@@ -45,7 +46,9 @@ const navLinks: RoutePathProps[] = [
 export default function AppSidebar(): ReactElement {
   const history = useHistory();
   const location = useLocation();
-  const { isCollapsed } = useContext(IsCollapsedContext);
+  const { settings } = useContext(SettingsContext);
+  const [isCollapsed, setIsCollapsed] = useState(false)
+
 
   const [selectedKey, setSelectedKey] = useState(
     navLinks.find((item) => location.pathname.startsWith(item.path))?.key || ""
@@ -62,6 +65,14 @@ export default function AppSidebar(): ReactElement {
       "";
     setSelectedKey(selected);
   }, [location]);
+
+  useEffect(() => {
+    if(settings !== null){
+      const { collapsed } = settings;
+      setIsCollapsed(collapsed);
+    }
+  }, [settings]);
+
 
   return (
     <Layout.Sider

@@ -4,6 +4,7 @@ import { MarketsContext } from "contexts/markets";
 import MarketService from "services/market-service";
 import { Market } from "types/market";
 import { Link } from "react-router-dom";
+import CountryFlag from "components/CountryFlag/CountryFlag";
 
 export default function MarketListTable() {
   const { markets, fetchMarkets } = useContext(MarketsContext);
@@ -49,6 +50,7 @@ export default function MarketListTable() {
       title: "Region",
       dataIndex: "region",
       key: "region",
+      render: (text: string, record: any) => (<CountryFlag code={text}/>),
       sorter: (a: Market, b: Market) => a.region.localeCompare(b.region)
     },
     {

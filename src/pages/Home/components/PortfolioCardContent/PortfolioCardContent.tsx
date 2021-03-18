@@ -1,5 +1,6 @@
 import { Card, Statistic, Typography } from "antd";
 import { BaseType } from "antd/lib/typography/Base";
+import CountryFlag from "components/CountryFlag/CountryFlag";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { IPortfolio } from "types/portfolio";
@@ -12,15 +13,15 @@ interface Props {
 export default function PortfolioCardContent({
   portfolioId
 }: Props): ReactElement | null {
-  const { getById } = useContext(PortfoliosContext);
+  const { getById: getPortfolioById } = useContext(PortfoliosContext);
   const [currentPortfolio, setCurrentPortfolio] = useState<IPortfolio | null>(
     null
   );
 
   useEffect(() => {
-    const result = getById(portfolioId);
+    const result = getPortfolioById(portfolioId);
     setCurrentPortfolio(result);
-  }, [portfolioId, getById]);
+  }, [portfolioId, getPortfolioById]);
 
   if (currentPortfolio === null) {
     return null;
@@ -55,18 +56,16 @@ export default function PortfolioCardContent({
       title={currentPortfolio.name}
       hoverable
       extra={
-        <svg height="20" width="20">
-          <circle cx="10" cy="10" r="10" fill={currentPortfolio.color} />
-        </svg>
+        <CountryFlag code={currentPortfolio.currencyCountryCode}/>
       }
     >
-      {currentPortfolio.description}
+      {currentPortfolio.companies.length} companies
       <Statistic
         value={portfolioValue}
         suffix={currentPortfolio.currencySymbol}
         precision={2}
       />
-      <Typography.Text type={positive}>{formattedReturn}</Typography.Text> -
+      <Typography.Text type={positive}>{formattedReturn}</Typography.Text> {" / "}
       <Typography.Text type={positive}>{formattedReturnPercentage}</Typography.Text>
     </Card>
   );

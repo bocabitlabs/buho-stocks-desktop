@@ -6,4 +6,5 @@ export interface ISettingsForm {
 export interface ISettings extends ISettingsForm {
   selectedPortfolio: string;
   collapsed: boolean;
+  defaultCompanyDisplayMode: string;
 }

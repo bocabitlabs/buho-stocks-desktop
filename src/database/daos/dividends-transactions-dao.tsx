@@ -93,7 +93,6 @@ export default class DividendsTransactionsDAO {
 
   static getAll = (companyId: string) => {
     //Call the DB
-    console.debug("Get all dividends");
     const sql = `
     SELECT
       dividendsTransactions.*

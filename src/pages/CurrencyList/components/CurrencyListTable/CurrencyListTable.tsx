@@ -4,6 +4,7 @@ import { CurrenciesContext } from "contexts/currencies";
 import CurrencyService from "services/currency-service";
 import { Currency } from "types/currency";
 import { Link } from "react-router-dom";
+import CountryFlag from "components/CountryFlag/CountryFlag";
 
 export default function CurrencyListTable() {
   const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
@@ -55,7 +56,8 @@ export default function CurrencyListTable() {
       title: "Region",
       dataIndex: "country",
       key: "country",
-      sorter: (a: Currency, b: Currency) => a.country.localeCompare(b.country),
+      render: (text: string, record: any) => (<CountryFlag code={text}/>),
+      sorter: (a: Currency, b: Currency) => a.country.localeCompare(b.country)
     },
     {
       title: "Action",

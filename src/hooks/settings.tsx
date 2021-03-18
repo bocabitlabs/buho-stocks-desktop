@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { SettingsContextType } from "contexts/settings";
 import SettingsService from "services/settings-service";
 
@@ -9,11 +9,15 @@ export function useSettingsContext(): SettingsContextType {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    updateSettings();
+  }, []);
+
+  const updateSettings = () => {
     setIsLoading(true);
     const settings = SettingsService.getSettings();
     setSettings(settings);
     setIsLoading(false);
-  }, []);
+  }
 
   const updateDatabasePath = (newPath: string) => {
     console.debug("Calling updateDatabasePath on hook");
@@ -23,9 +27,26 @@ export function useSettingsContext(): SettingsContextType {
     return result;
   };
 
+  const toggleCollapsed = useCallback(() => {
+    const result = SettingsService.toggleCollapsed();
+    if(result.changes){
+      updateSettings();
+    }
+  }, []);
+
+
+  const setDefaultCompanyDisplayMode = useCallback((value: string) => {
+    const result = SettingsService.setDefaultCompanyDisplayMode(value);
+    if(result.changes){
+      updateSettings();
+    }
+  }, []);
+
   return {
     settings,
     isLoading,
-    updateDatabasePath
+    updateDatabasePath,
+    toggleCollapsed,
+    setDefaultCompanyDisplayMode
   };
 }

@@ -2,7 +2,7 @@ import { List } from "antd";
 import { CompaniesContext } from "contexts/companies";
 import React, { ReactElement, useContext } from "react";
 import { Link } from "react-router-dom";
-import CompanyCard from "../CompanyCard/CompanyCard";
+import CompanyCard from "./CompanyCard/CompanyCard";
 
 interface Props {
   portfolioId: string;

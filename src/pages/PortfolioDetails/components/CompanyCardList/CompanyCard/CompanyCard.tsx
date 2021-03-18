@@ -1,5 +1,6 @@
 import { Card, List, Statistic, Typography } from "antd";
 import { BaseType } from "antd/lib/typography/Base";
+import CountryFlag from "components/CountryFlag/CountryFlag";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import CompanyService from "services/company-service";
@@ -23,7 +24,7 @@ export default function CompanyCard({ companyId }: Props): ReactElement | null {
     return null;
   }
 
-  let returnPercentage = company.getReturnWithDividendsPercentage(true)
+  let returnPercentage = company.getReturnWithDividendsPercentage(true);
   const portfolioValue = company.getPortfolioValueWithInflation(true);
 
   let positive: BaseType = "success";
@@ -34,16 +35,16 @@ export default function CompanyCard({ companyId }: Props): ReactElement | null {
     positive = "secondary";
   }
 
-  const formattedReturnPercentage = StringUtils.getAmountWithSymbol(returnPercentage, 2, "%");
+  const formattedReturnPercentage = StringUtils.getAmountWithSymbol(
+    returnPercentage,
+    2,
+    "%"
+  );
   return (
     <List.Item>
       <Card
         hoverable
-        extra={
-          <svg height="20" width="20">
-            <circle cx="10" cy="10" r="10" fill={company.color} />
-          </svg>
-        }
+        extra={<CountryFlag code={company.countryCode} />}
         title={company.name}
       >
         {company.getSharesCount()} shares
@@ -52,7 +53,9 @@ export default function CompanyCard({ companyId }: Props): ReactElement | null {
           suffix={portfolio.currencySymbol}
           precision={2}
         />
-        <Typography.Text type={positive}>{formattedReturnPercentage}</Typography.Text>
+        <Typography.Text type={positive}>
+          {formattedReturnPercentage}
+        </Typography.Text>
       </Card>
     </List.Item>
   );

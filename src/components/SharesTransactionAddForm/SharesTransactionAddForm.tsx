@@ -174,7 +174,7 @@ export default function SharesTransactionAddForm({
   return (
     <Form
       form={form}
-      name="basic"
+      layout="vertical"
       onFinish={handleAdd}
       initialValues={{
         count: sharesTransaction?.count,

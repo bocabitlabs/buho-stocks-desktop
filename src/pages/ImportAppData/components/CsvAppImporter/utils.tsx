@@ -157,7 +157,8 @@ export function importCompanies(companies: any[]) {
           marketId: market.id,
           sectorId: sector.id,
           portfolioId: portfolio.id,
-          alternativeTickers: portfolioData.data[13]
+          alternativeTickers: portfolioData.data[13],
+          countryCode: portfolioData.data[14],
         };
         new CompanyService().addCompany(company);
         importedCount++;

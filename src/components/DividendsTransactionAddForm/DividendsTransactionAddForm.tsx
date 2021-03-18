@@ -153,7 +153,7 @@ export default function DividendsTransactionAddForm({
   return (
     <Form
       form={form}
-      name="basic"
+      layout="vertical"
       onFinish={handleAdd}
       initialValues={{
         count: dividendsTransaction?.count,

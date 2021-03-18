@@ -15,6 +15,7 @@ import {
   UnorderedListOutlined
 } from "@ant-design/icons";
 import { breadcrumbItemRender } from "utils/headers-utils";
+import CountryFlag from "components/CountryFlag/CountryFlag";
 
 interface Props {
   portfolioId: string;
@@ -22,7 +23,7 @@ interface Props {
 
 export default function PortfolioDetailsHeader({
   portfolioId
-}: Props): ReactElement {
+}: Props): ReactElement | null {
   const history = useHistory();
   const { portfolio, getAll, getById } = useContext(PortfoliosContext);
   const key = "updatable";
@@ -67,15 +68,19 @@ export default function PortfolioDetailsHeader({
     message.error("Click on No");
   }
 
-  console.debug("PortfolioDetailsHeader: portfolio=", portfolio);
+  if (portfolio === null) {
+    return null;
+  }
 
   return (
     <PageHeader
-      title={`${portfolio?.name}`}
+      title={portfolio?.name}
+      subTitle={portfolio?.description}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender
       }}
+      tags={[<CountryFlag code={portfolio.currencyCountryCode} />]}
       extra={[
         <Button
           type="primary"
