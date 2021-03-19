@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Buho Stocks](https://github.com/bocabitlabs/buho-stocks).
 
+## 0.7.0 - 19/03/2021
+### Added
+- Country flags
+- Country codes to companies and portfolios.
+- Edit portfolios, companies, markets, currencies
+- Use electron-log for logging
+- Sorting to currencies, markets, companies, sectors and Transactions.
+- Table view for portfolio's companies.
+- Commissions are considered to return calculations.
+### Fixed
+- Scroll to top on route change.
+### Improved
+- Increased app default widht on 200px
+- Update electron to 12.0.0
+- Use preload.js script to load and encapsulate electron modules
+### Removed
+- Support for inflation
+
 ## 0.6.0 - 02/03/2021
 ### Added
 - Fetch stock prices from external API (#49)
