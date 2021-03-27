@@ -1,6 +1,6 @@
 {
   "name": "buho-stocks",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
@@ -11,11 +11,16 @@
     "requiredVersion": 2
   },
   "dependencies": {
+    "@nivo/bar": "^0.67.0",
+    "@nivo/core": "^0.67.0",
+    "@nivo/line": "^0.67.0",
+    "@nivo/pie": "^0.67.0",
     "better-sqlite3": "^7.1.1",
     "better-sqlite3-helper": "^3.1.1",
     "electron-is-dev": "1.2.0",
     "electron-log": "^4.3.0",
     "electron-squirrel-startup": "^1.0.0",
+    "material-colors": "^1.2.6",
     "react": "^17.0.1",
     "react-flag-icon-css": "^1.0.25",
     "yahoo-stock-prices-fetch": "^1.4.4"
