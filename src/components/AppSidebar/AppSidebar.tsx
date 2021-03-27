@@ -7,7 +7,7 @@ import {
   SettingOutlined
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { SettingsContext } from "contexts/settings";
 interface RoutePathProps {
@@ -48,6 +48,7 @@ export default function AppSidebar(): ReactElement {
   const location = useLocation();
   const { settings } = useContext(SettingsContext);
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const sidebarRef = useRef(null);
 
 
   const [selectedKey, setSelectedKey] = useState(
@@ -82,6 +83,8 @@ export default function AppSidebar(): ReactElement {
       collapsible
       collapsed={isCollapsed}
       style={{ minHeight: "100vh" }}
+      id="sidebar"
+      ref={sidebarRef}
     >
       <Menu
         theme="light"

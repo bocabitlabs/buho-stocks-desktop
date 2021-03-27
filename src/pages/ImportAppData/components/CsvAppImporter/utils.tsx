@@ -105,7 +105,6 @@ export function importPortfolios(portfolios: any[]) {
     if (exists === undefined) {
       const currency = CurrencyService.getByName(portfolioData.data[6]);
       if (currency !== undefined) {
-        console.debug(portfolioData);
         const portfolio: PortfolioFormFields = {
           name: portfolioData.data[1],
           color: portfolioData.data[2],
@@ -126,7 +125,6 @@ export function importPortfolios(portfolios: any[]) {
       );
     }
   });
-  console.debug(`Imported ${importedCount} portfolios`);
   return { importedCount, totalCount, notes };
 }
 
@@ -144,7 +142,6 @@ export function importCompanies(companies: any[]) {
       const market = MarketService.getByName(portfolioData.data[12]);
 
       if (currency && sector && market && portfolio) {
-        console.debug(portfolioData);
         const company: CompanyFormFields = {
           name: portfolioData.data[1],
           color: portfolioData.data[2],

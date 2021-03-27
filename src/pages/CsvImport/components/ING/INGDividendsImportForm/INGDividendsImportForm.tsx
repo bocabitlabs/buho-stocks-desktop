@@ -81,8 +81,6 @@ export default function INGDividendsImportForm({
     }
     setFormSent(true);
   };
-  // console.debug(inputData);
-  // console.debug(portfolio);
 
   return (
     <Form

@@ -16,7 +16,6 @@ export default function SectorEditHeader({
   );
 
   useEffect(() => {
-    console.debug("Get sector", sectorId)
     getSectorById(sectorId);
   }, [getSectorById, sectorId]);
 

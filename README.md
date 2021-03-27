@@ -18,8 +18,11 @@ Multi platform (and offline) desktop application to manage and track a stocks po
 - Unlimited companies per portfolio.
 - Handle stock transactions, dividends and rights.
 - Multiple currencies, exchange rates (from ECB) and sectors.
-- Support for inflation.
+- <del>Support for inflation.</del>
 - Import CSV files from Interactive Brokers and ING (Spain).
+- Export app data to CSV.
+- Fetch stock prices and exchange rates from a external source.
+- Graphs
 
 ## 🔧 Install
 
@@ -97,6 +100,7 @@ yarn publish
 
 - UI docs: https://ant.design/components/overview/
 - ECB: https://sdw.ecb.europa.eu/quickview.do?SERIES_KEY=120.EXR.D.CHF.EUR.SP00.A
+- Graphs: https://nivo.rocks/
 
 ## 🙏 Attributions
 

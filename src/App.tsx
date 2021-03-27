@@ -45,6 +45,7 @@ import MarketEdit from "pages/MarketEdit/MarketEdit";
 import PortfolioEdit from "pages/PortfolioEdit/PortfolioEdit";
 import { useSettingsContext } from "hooks/settings";
 import { SettingsContext } from "contexts/settings";
+import PortfolioCharts from "pages/PortfolioCharts/PortfolioCharts";
 
 function App() {
   /**
@@ -127,6 +128,11 @@ function App() {
                     exact
                     path="/portfolios/:id"
                     component={PortfolioDetails}
+                  />
+                  <Route
+                    exact
+                    path="/portfolios/:portfolioId/charts"
+                    component={PortfolioCharts}
                   />
                   <Route
                     exact

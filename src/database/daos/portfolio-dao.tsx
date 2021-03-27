@@ -68,7 +68,6 @@ export default class PortfolioDAO {
     ON currencies.id = portfolios.currencyId
     `;
     const results = sendIpcSql(sql);
-    console.debug("results", results);
     return results;
   };
 

@@ -1,7 +1,8 @@
 import StockPriceDAO from "database/daos/stock-price-dao";
+import moment from "moment";
 import { IStockPrice, StockPriceFormProps } from "types/stock-price";
 import { delay } from "utils/misc";
-import { getCurrentData } from "yahoo-stock-prices-fetch";
+import { getCurrentData, getHistoricalPrices } from "yahoo-stock-prices-fetch";
 
 export default class StockPriceService {
   static add = (stockPrice: StockPriceFormProps) => {
@@ -49,6 +50,68 @@ export default class StockPriceService {
     return {found, data};
   };
 
+  static getHistoricStockPriceFromAPI = async (transactionDate: string, exchangeName: string) => {
+    let data: any = undefined;
+    let found = false;
+    const momentDate = moment(transactionDate, "DD-MM-YYYY");
+    try {
+      delay(2000);
+      data = await getHistoricalPrices(
+        +momentDate.month(),
+        +momentDate.format('DD'),
+        +momentDate.year(),
+        +momentDate.month(),
+        +momentDate.format('DD'),
+        +momentDate.year(),
+        exchangeName,
+        "1wk"
+      );
+    } catch (error) {
+      console.warn(
+        `Unable to get the historical price for ${exchangeName} (${transactionDate})`
+      );
+      found = false;
+    }
+    if (data && data.length > 0) {
+      found = true;
+      return {found, data: data[0]};
+    }
+
+    return {found, data: undefined};
+  };
+
+  static getHistoricStockPriceFromAPIStartEnd = async (transactionDate: string, endDate: string, exchangeName: string) => {
+    let data: any = undefined;
+    let found = false;
+    const momentDate = moment(transactionDate, "DD-MM-YYYY");
+    const momentEndDate = moment(endDate, "DD-MM-YYYY");
+    try {
+      delay(2000);
+      data = await getHistoricalPrices(
+        +momentDate.month(),
+        +momentDate.format('DD'),
+        +momentDate.year(),
+        +momentEndDate.month(),
+        +momentEndDate.format('DD'),
+        +momentEndDate.year(),
+        exchangeName,
+        "1wk"
+      );
+    } catch (error) {
+      console.warn(
+        `Unable to get the historical price for ${exchangeName} (${transactionDate})`
+      );
+      found = false;
+    }
+    if (data && data.length > 0) {
+      found = true;
+
+      return {found, data: data[0]};
+    }
+
+    return {found, data: undefined};
+  };
+
   static getLastStockPricePerYearByCompanyId = (
     companyId: string,
     year: string
@@ -63,4 +126,5 @@ export default class StockPriceService {
   static deleteById = (shareId: string) => {
     return StockPriceDAO.deleteById(shareId);
   };
+
 }

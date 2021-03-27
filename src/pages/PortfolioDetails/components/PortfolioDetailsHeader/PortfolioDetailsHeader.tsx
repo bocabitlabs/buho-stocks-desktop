@@ -11,6 +11,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   HomeOutlined,
+  LineChartOutlined,
   PlusOutlined,
   UnorderedListOutlined
 } from "@ant-design/icons";
@@ -64,7 +65,6 @@ export default function PortfolioDetailsHeader({
   }
 
   function cancel(e: any) {
-    console.debug(e);
     message.error("Click on No");
   }
 
@@ -98,9 +98,15 @@ export default function PortfolioDetailsHeader({
           onClick={() => {
             history.push(`/portfolios/${portfolioId}/log`);
           }}
-        >
-          View Logs
-        </Button>,
+          title="View company logs"
+        />,
+        <Button
+        icon={<LineChartOutlined />}
+        onClick={() => {
+          history.push(`/portfolios/${portfolioId}/charts`);
+        }}
+        title="View portfolio charts"
+      />,
         <Button
           key={"edit"}
           icon={<EditOutlined />}

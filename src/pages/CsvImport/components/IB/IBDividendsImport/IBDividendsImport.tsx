@@ -38,7 +38,6 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
       );
       element.commissions = commissions;
     });
-    console.debug(filteredData);
     setData(filteredData);
     setCommissionsData(commissionsData);
   };
@@ -57,7 +56,6 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
     transactionDate: string,
     commissionsArray: any
   ) => {
-    console.debug("Getting commission row for: ", elementDescription);
     const nameWithISINMatch = elementDescription.match(/(\w)+\s?\(\w+\)/g);
     console.debug("Name with ISIN: ", nameWithISINMatch);
     if (nameWithISINMatch && nameWithISINMatch.length > 0) {

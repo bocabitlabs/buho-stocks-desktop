@@ -1,6 +1,6 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Form, Input, Button, Select, message, Switch } from "antd";
-import { CirclePicker } from "react-color";
+
 import TextArea from "antd/lib/input/TextArea";
 import { useHistory } from "react-router-dom";
 
@@ -15,6 +15,7 @@ import { Market } from "types/market";
 import { CompaniesContext } from "contexts/companies";
 import TransactionLogService from "services/transaction-log-service";
 import CountrySelector from "components/CountrySelector/CountrySelector";
+import ColorSelector from "components/ColorSelector/ColorSelector";
 
 interface CompanyAddEditFormProps {
   portfolioId: string;
@@ -42,7 +43,6 @@ function CompanyAddEditForm({
   const history = useHistory();
   const [color, setColor] = useState(company ? company.color : "#607d8b");
   const [countryCode, setCountryCode] = useState("");
-
   const key = "updatable";
 
   useEffect(() => {
@@ -113,14 +113,14 @@ function CompanyAddEditForm({
   };
 
   const handleCountryChange = (code: string) => {
-    console.debug(code);
     setCountryCode(code);
   };
 
   if (companyId && !company) {
     return null;
   }
-  const closed = (company?.closed)? true: false;
+  const closed = company?.closed ? true : false;
+
   return (
     <Form
       layout="vertical"
@@ -181,9 +181,30 @@ function CompanyAddEditForm({
       >
         <Input type="text" />
       </Form.Item>
-      <Form.Item label="Color">
-        <CirclePicker color={color} onChange={handleColorChange} />
-        <Input type="hidden" value={color} />
+      <Form.Item
+        label={
+          <div>
+            Color:{" "}
+            <svg
+              width="35"
+              height="35"
+              viewBox="0 0 35 35"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="10"
+                y="10"
+                width="25"
+                height="25"
+                rx="5"
+                ry="5"
+                fill={color}
+              />
+            </svg>
+          </div>
+        }
+      >
+        <ColorSelector color={color} handleColorChange={handleColorChange} />
       </Form.Item>
       <Form.Item label="Closed" name="closed" valuePropName="checked">
         <Switch />

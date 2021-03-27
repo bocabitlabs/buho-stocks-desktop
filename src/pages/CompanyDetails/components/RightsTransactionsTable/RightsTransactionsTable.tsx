@@ -23,15 +23,19 @@ export default function RightsTransactionsTable({
     RightsTransactionContext
   );
   const { company } = useContext(CompaniesContext);
-
-  const [width, setWidth] = useState(window.innerWidth);
-
   const history = useHistory();
   const key = "updatable";
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const [sidebarWidth, setSidebarWidth] = useState(0);
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);
+      const info = document.getElementById("sidebar") as HTMLDivElement;
+
+      if (info !== null) {
+        setSidebarWidth(info.offsetWidth);
+      }
     }
     window.addEventListener("resize", updateSize);
     updateSize();
@@ -169,7 +173,7 @@ export default function RightsTransactionsTable({
     <>
       <Table
         size="small"
-        style={{ maxWidth: `max(500px, ${width - 300}px)` }}
+        style={{ maxWidth: `max(500px, ${width - sidebarWidth}px)` }}
         scroll={{ x: 800 }}
         bordered
         columns={columns}

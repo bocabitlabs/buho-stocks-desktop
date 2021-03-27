@@ -18,10 +18,25 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
     DividendsTransactionsContext
   );
   const { company } = useContext(CompaniesContext);
+  const history = useHistory();
+
 
   const [width, setWidth] = useState(window.innerWidth);
+  const [sidebarWidth, setSidebarWidth] = useState(0);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setWidth(window.innerWidth);
+      const info = document.getElementById("sidebar") as HTMLDivElement;
 
-  const history = useHistory();
+      if (info !== null) {
+        setSidebarWidth(info.offsetWidth);
+      }
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -137,7 +152,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
     <>
       <Table
         size="small"
-        style={{ maxWidth: `max(500px, ${width - 300}px)` }}
+        style={{ maxWidth: `max(500px, ${width - sidebarWidth}px)` }}
         scroll={{ x: 800 }}
         bordered
         columns={columns}

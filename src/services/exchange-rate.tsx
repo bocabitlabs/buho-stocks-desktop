@@ -37,7 +37,34 @@ export default class ExchangeRateService {
         `Unable to get the historical price for ${exchangeName} (${transactionDate})`
       );
     }
-    console.debug(data)
+    if (data.length > 0) {
+      return data[0];
+    }
+
+    return undefined;
+  };
+
+  static getFromAPIWeekly = async (transactionDate: string, endDate: string, exchangeName: string) => {
+    let data: any = undefined;
+    const momentDate = moment(transactionDate, "DD-MM-YYYY");
+    const momentEndDate = moment(endDate, "DD-MM-YYYY");
+    try {
+      delay(1000);
+      data = await getHistoricalPrices(
+        +momentDate.month(),
+        +momentDate.format('DD'),
+        +momentDate.year(),
+        +momentEndDate.month(),
+        +momentEndDate.format('DD'),
+        +momentEndDate.year(),
+        exchangeName + "=X",
+        "1wk"
+      );
+    } catch (error) {
+      console.warn(
+        `Unable to get the historical price for ${exchangeName} (${transactionDate})`
+      );
+    }
     if (data.length > 0) {
       return data[0];
     }

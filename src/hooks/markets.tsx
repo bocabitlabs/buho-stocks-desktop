@@ -15,7 +15,6 @@ export function useMarketsContext(): MarketsContextType {
 
 
   const fetchMarkets = useCallback(() => {
-    console.debug("fetching markets");
     setIsLoading(true);
     const result = MarketService.getMarkets();
     setMarkets(result);

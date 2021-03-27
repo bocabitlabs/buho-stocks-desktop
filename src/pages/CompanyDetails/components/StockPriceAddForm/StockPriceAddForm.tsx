@@ -42,21 +42,23 @@ export default function StockPriceAddForm({
 
   const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
   const getExchangeRate = async () => {
-    console.debug("Get exchange rate", exchangeName, transactionDate);
-    let exchangeValue = 0;
-    setGettingExchangeRate(true);
-    const result = await ExchangeRateService.getFromAPI(
-      transactionDate,
-      exchangeName
-    );
+    if (
+      company?.currencyAbbreviation !== company?.portfolioCurrencyAbbreviation
+    ) {
+      let exchangeValue = 0;
+      setGettingExchangeRate(true);
+      const result = await ExchangeRateService.getFromAPI(
+        transactionDate,
+        exchangeName
+      );
 
-    if (result) {
-      console.debug("Set exchange rate:", exchangeValue);
-      form.setFieldsValue({
-        exchangeRateValue: result.close
-      });
+      if (result) {
+        form.setFieldsValue({
+          exchangeRateValue: result.close
+        });
+      }
+      setGettingExchangeRate(false);
     }
-    setGettingExchangeRate(false);
   };
 
   if (company === null) {
@@ -72,7 +74,6 @@ export default function StockPriceAddForm({
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       companyId: company.id
     };
-    console.debug(values);
     const added = StockPriceService.add(stockPrice);
     if (added.changes) {
       TransactionLogService.add({
@@ -139,6 +140,50 @@ export default function StockPriceAddForm({
     setGettingLastPrices(false);
   };
 
+  const getStockPrice = async () => {
+    setGettingLastPrices(true);
+    if (
+      transactionDate ===
+      moment(new Date(), "DD-MM-YYYY").format("DD-MM-YYYY")
+    ) {
+      getTodaysStockPrice();
+    } else {
+      getHistoricStockPrice();
+    }
+    getExchangeRate();
+  };
+
+  const getTodaysStockPrice = async () => {
+    const { found, data } = await StockPriceService.getStockPriceAPI(
+      company.ticker,
+      company.alternativeTickers
+    );
+
+    if (found) {
+      form.setFieldsValue({
+        price: data?.price
+      });
+    }
+    setGettingLastPrices(false);
+  };
+
+  const getHistoricStockPrice = async () => {
+    const {
+      found,
+      data
+    } = await StockPriceService.getHistoricStockPriceFromAPI(
+      transactionDate,
+      company.ticker
+    );
+
+    if (found) {
+      form.setFieldsValue({
+        price: data?.close
+      });
+    }
+    setGettingLastPrices(false);
+  };
+
   return (
     <Form
       layout="vertical"
@@ -168,7 +213,7 @@ export default function StockPriceAddForm({
       <Form.Item>
         <Button
           disabled={transactionDate === null || exchangeName === null}
-          onClick={getLatestPrice}
+          onClick={getStockPrice}
           loading={gettingLastPrices}
         >
           Get latest price

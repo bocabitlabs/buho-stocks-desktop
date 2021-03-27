@@ -1,11 +1,11 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Button, Form, Input, message, TimePicker } from "antd";
-import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
 
 import { MarketsContext } from "contexts/markets";
 import moment from "moment";
 import CountrySelector from "components/CountrySelector/CountrySelector";
+import ColorSelector from "components/ColorSelector/ColorSelector";
 
 interface AddEditFormProps {
   marketId?: string;
@@ -115,9 +115,30 @@ function MarketAddEditForm({
           initialValue={market?.region}
         />
       </Form.Item>
-      <Form.Item label="Color">
-        <CirclePicker color={color} onChange={handleColorChange} />
-        <Input type="hidden" value={color} />
+      <Form.Item
+        label={
+          <div>
+            Color:{" "}
+            <svg
+              width="35"
+              height="35"
+              viewBox="0 0 35 35"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="10"
+                y="10"
+                width="25"
+                height="25"
+                rx="5"
+                ry="5"
+                fill={color}
+              />
+            </svg>
+          </div>
+        }
+      >
+        <ColorSelector color={color} handleColorChange={handleColorChange} />
       </Form.Item>
       <Form.Item
         name="openTime"

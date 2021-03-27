@@ -1,11 +1,11 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Button, Form, Input, message, Select } from "antd";
-import { CirclePicker } from "react-color";
 import { useHistory } from "react-router-dom";
 
 import { CurrenciesContext } from "contexts/currencies";
 import { Currency } from "types/currency";
 import { PortfoliosContext } from "contexts/portfolios";
+import ColorSelector from "components/ColorSelector/ColorSelector";
 
 interface AddEditFormProps {
   portfolioId?: string;
@@ -97,9 +97,30 @@ function PortfolioAddEditForm({
       >
         <Input type="text" />
       </Form.Item>
-      <Form.Item name="color" label="Color">
-        <CirclePicker color={color} onChange={handleColorChange} />
-        <Input type="hidden" value={color} />
+      <Form.Item
+        label={
+          <div>
+            Color:{" "}
+            <svg
+              width="35"
+              height="35"
+              viewBox="0 0 35 35"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="10"
+                y="10"
+                width="25"
+                height="25"
+                rx="5"
+                ry="5"
+                fill={color}
+              />
+            </svg>
+          </div>
+        }
+      >
+        <ColorSelector color={color} handleColorChange={handleColorChange} />
       </Form.Item>
       <Form.Item
         name="description"

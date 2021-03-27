@@ -27,17 +27,31 @@ export class Portfolio implements IPortfolio {
   }
 
   getPortfolioValue(inBaseCurrency = false): number {
-    const totalPortfolioValue = this.companies.reduce(function (
-      accumulator: number,
-      obj: ICompany
-    ) {
-      if (inBaseCurrency) {
-        return accumulator + obj.getPortfolioValue(true);
-      }
-      return accumulator + obj.getPortfolioValue();
-    },
-    0);
+    const totalPortfolioValue = this.companies
+      .filter((company) => !company.closed)
+      .reduce(function (accumulator: number, obj: ICompany) {
+        return accumulator + obj.getPortfolioValue(inBaseCurrency);
+      }, 0);
     return totalPortfolioValue;
+  }
+
+  getPortfolioValueForYear(
+    year: string,
+    years: number[],
+    inBaseCurrency = false
+  ): number {
+    console.debug(`Portfolio value: for year ${year}`)
+    let accumulated = this.companies
+      .filter((company) => !company.closed)
+      .reduce(function (accumulator: number, obj: ICompany) {
+        return (
+          accumulator +
+          obj.getPortfolioValueForYear(year, inBaseCurrency)
+        );
+      }, 0);
+    console.debug(`Portfolio value: for year ${year} = ${accumulated}`)
+
+    return accumulated;
   }
 
   getPortfolioValueWithInflation(inBaseCurrency = false): number {
@@ -54,7 +68,7 @@ export class Portfolio implements IPortfolio {
     return totalPortfolioValue;
   }
 
-  getAllPortfolioDividends(inBaseCurrency = false): number {
+  getDividends(inBaseCurrency = false): number {
     const amount = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
@@ -68,15 +82,34 @@ export class Portfolio implements IPortfolio {
     return amount;
   }
 
-  getPortfolioDividends(year: string, inBaseCurrency = false): number {
+  getDividendsForYear(year: string, inBaseCurrency = false): number {
     const amount = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
-      if (inBaseCurrency) {
-        return accumulator + obj.getDividendsForYear(year, true);
-      }
-      return accumulator + obj.getDividendsForYear(year);
+      return accumulator + obj.getDividendsAmountForYear(year, inBaseCurrency);
+    },
+    0);
+    return amount;
+  }
+
+  getCumulativeDividendsForYear(year: string, inBaseCurrency = false): number {
+    const amount = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      return accumulator + obj.getCumulativeDividendsAmountForYear(year, inBaseCurrency);
+    },
+    0);
+    return amount;
+  }
+
+  getCumulativePortfolioDividendsAmountForYear(year: string, inBaseCurrency = false): number {
+    const amount = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      return accumulator + obj.getCumulativeDividendsAmountForYear(year, inBaseCurrency);
     },
     0);
     return amount;
@@ -87,10 +120,7 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      if (inBaseCurrency) {
-        return accumulator + obj.getMonthlyDividendsForYear(year, true);
-      }
-      return accumulator + obj.getMonthlyDividendsForYear(year);
+      return accumulator + obj.getMonthlyDividendsForYear(year, inBaseCurrency);
     },
     0);
     return amount;
@@ -101,24 +131,45 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      if (inBaseCurrency) {
-        return accumulator + obj.getTotalInvested(inBaseCurrency);
-      }
       return accumulator + obj.getTotalInvested(inBaseCurrency);
     },
     0);
     return totalInvested;
   }
 
-  getTotalInvestedForYear(year: string, inBaseCurrency: boolean) {
+  getTotalInvestedOnYear(year: string, inBaseCurrency: boolean) {
+    const totalInvested = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      return accumulator + obj.getTotalInvestedOnYear(year, inBaseCurrency);
+    },
+    0);
+    return totalInvested;
+  }
+
+  getTotalInvestedUntilYear(year: string, inBaseCurrency = false): number {
+    const totalInvested = this.companies.reduce(function (
+      accumulator: number,
+      obj: ICompany
+    ) {
+      return accumulator + obj.getTotalInvestedUntilYear(year, inBaseCurrency);
+    },
+    0);
+    return totalInvested;
+  }
+
+  getReturnFromSalesForYear(year: string, inBaseCurrency: boolean) {
     const totalInvested = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
       if (inBaseCurrency) {
-        return accumulator + obj.getTotalInvestedForYear(year, inBaseCurrency);
+        return (
+          accumulator + obj.getReturnFromSalesForYear(year, inBaseCurrency)
+        );
       }
-      return accumulator + obj.getTotalInvestedForYear(year, inBaseCurrency);
+      return accumulator + obj.getReturnFromSalesForYear(year, inBaseCurrency);
     },
     0);
     return totalInvested;
@@ -149,10 +200,85 @@ export class Portfolio implements IPortfolio {
     return totalReturn;
   }
 
+
+
+  getReturnForYear(
+    year: string,
+    years: number[],
+    inBaseCurrency = false
+  ): number {
+    let totalReturn = 0;
+
+    const totalInvested = this.getTotalInvestedUntilYear(year, inBaseCurrency);
+    const portfolioValue = this.getPortfolioValueForYear(
+      year,
+      years,
+      inBaseCurrency
+    );
+    let returnFromSales = this.getReturnFromSalesForYear(year, inBaseCurrency);
+    totalReturn = portfolioValue + returnFromSales - totalInvested;
+    console.debug(`Total return for ${year}: totalInvested= ${totalInvested} portfolioValue=${portfolioValue}. Result: ${totalReturn}`);
+
+    return totalReturn;
+  }
+
+  getReturnPercentageForYear(
+    year: string,
+    years: number[],
+    inBaseCurrency = false
+  ): number {
+    console.debug(`getReturnPercentageForYear`);
+    const J2 = this.getPortfolioValueForYear(
+      (parseInt(year) - 1).toString(),
+      years,
+      inBaseCurrency
+    );
+    const J3 = this.getPortfolioValueForYear(year, years, inBaseCurrency);
+    const B3 = this.getTotalInvestedOnYear(year, inBaseCurrency);
+    let amount = 0;
+    if (J2 + B3 > 0) {
+      amount = (J3 - (J2 + B3)) / (J2 + B3);
+    }
+    //=SI(J2+B3>0,(J3-(J2+B3))/(J2+B3),0)
+
+    return amount * 100;
+  }
+
+  getReturnPercentageCumulativeForYear(
+    year: string,
+    years: number[],
+    inBaseCurrency = false
+  ): number {
+    const J3 = this.getPortfolioValueForYear(year, years, inBaseCurrency);
+    const E3 = this.getTotalInvestedUntilYear(year, inBaseCurrency);
+    let amount = 0;
+    if (E3 > 0) {
+      amount = (J3-E3)/E3;
+    }
+    //=SI(E3>0,(J3-E3)/E3,0)
+
+    return amount * 100;
+  }
+
   getReturnWithDividends(inBaseCurrency = false): number {
     const totalReturn = this.getReturn(inBaseCurrency);
-    const dividendsAmount = this.getAllPortfolioDividends(inBaseCurrency);
+    const dividendsAmount = this.getDividends(inBaseCurrency);
     return totalReturn + dividendsAmount;
+  }
+
+  getReturnWithDividendsForYear(
+    year: string,
+    years: number[],
+    inBaseCurrency = false
+  ): number {
+    const totalReturn = this.getReturnForYear(year, years, inBaseCurrency);
+    const dividendsAmount = this.getCumulativePortfolioDividendsAmountForYear(year, inBaseCurrency);
+    const totalAmount = totalReturn + dividendsAmount;
+    console.debug(
+      `${year}: Total: ${totalAmount} (${totalReturn} + ${dividendsAmount})`
+    );
+
+    return totalAmount;
   }
 
   getReturnPercentage(inBaseCurrency = false): number {

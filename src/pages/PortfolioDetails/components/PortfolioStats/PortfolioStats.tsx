@@ -1,8 +1,12 @@
-import { Col, Row, Select, Statistic } from "antd";
+import { Col, Form, Row, Select, Statistic } from "antd";
+import FetchStockPricesButton from "components/FetchStockPricesButton/FetchStockPricesButton";
+import PortfolioYearlyEvolutionChartNivo from "components/PortfolioYearlyEvolutionChartNivo/PortfolioYearlyEvolutionChartNivo";
 import { PortfoliosContext } from "contexts/portfolios";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import PortfolioService from "services/portfolio-service";
+import { ICompany } from "types/company";
+import { StringUtils } from "utils/string-utils";
 
 export default function PortfolioStats(): ReactElement | null {
   const { portfolio } = useContext(PortfoliosContext);
@@ -12,6 +16,7 @@ export default function PortfolioStats(): ReactElement | null {
   const [investmentPerYear, setInvestmentPerYear] = useState<number>(0);
   const [dividendsPerMonth, setDividendsPerMonth] = useState<number>(0);
   const [portfolioValue, setPortfolioValue] = useState<number>(0);
+  const [data, setData] = useState<any[]>([]);
 
   const { Option } = Select;
 
@@ -43,9 +48,38 @@ export default function PortfolioStats(): ReactElement | null {
     }
   }, [portfolio]);
 
+  useEffect(() => {
+    if (portfolio !== null) {
+      const getData = () => {
+        return portfolio.companies.map((company: ICompany) => ({
+          id: company.id,
+          key: company.id,
+          color: company.color,
+          invested: company.getTotalInvested(true),
+          name: company.name,
+          currencyName: company.currencyName,
+          dividends: company.getDividendsAmount(true),
+          portfolioCurrencySymbol: company.portfolioCurrencySymbol,
+          portfolioValue: company.getPortfolioValue(true),
+          return: company.getReturnWithDividendsPercentage(true),
+          ticker: company.ticker,
+          investedText: StringUtils.getAmountWithSymbol(
+            company.getTotalInvested(true),
+            2,
+            company.portfolioCurrencySymbol
+          ),
+          sectorName: company.sectorName,
+          broker: company.broker
+        }));
+      };
+      const tempData = getData();
+      setData(tempData);
+    }
+  }, [portfolio]);
+
   const getValuesForAll = () => {
     if (year === "all" && portfolio !== null) {
-      let newDividendsPerYear = portfolio.getAllPortfolioDividends(true);
+      let newDividendsPerYear = portfolio.getDividends(true);
       let newDividendsPerMonth = 0;
       let newTotalInvestedPerYear = portfolio.getTotalInvested(true);
       let newValue = portfolio.getPortfolioValue(true);
@@ -59,7 +93,7 @@ export default function PortfolioStats(): ReactElement | null {
 
   const getValuesForYear = (value: number) => {
     if (portfolio !== null) {
-      let newDividendsPerYear = portfolio.getPortfolioDividends(
+      let newDividendsPerYear = portfolio.getDividendsForYear(
         value.toString(),
         true
       );
@@ -67,16 +101,20 @@ export default function PortfolioStats(): ReactElement | null {
         value.toString(),
         true
       );
-      let newTotalInvestedPerYear = portfolio.getTotalInvestedForYear(
+      let newTotalInvestedPerYear = portfolio.getTotalInvestedOnYear(
         value.toString(),
         true
       );
-      console.info(newDividendsPerYear);
-      console.info(newDividendsPerMonth);
+      let newValue = portfolio.getPortfolioValueForYear(
+        value.toString(),
+        years,
+        true
+      );
 
       setDividendsPerYear(newDividendsPerYear);
       setDividendsPerMonth(newDividendsPerMonth);
       setInvestmentPerYear(newTotalInvestedPerYear);
+      setPortfolioValue(newValue);
     }
   };
 
@@ -87,20 +125,30 @@ export default function PortfolioStats(): ReactElement | null {
   return (
     <div style={{ marginBottom: 16 }}>
       <div style={{ marginBottom: 16 }}>
-        <Select
-          showSearch
-          style={{ width: 200 }}
-          placeholder="Select a year"
-          onChange={onChange}
-          defaultValue="all"
-        >
-          <Option value="all">All</Option>
-          {years.map((element) => (
-            <Option value={element} key={element}>
-              {element}
-            </Option>
-          ))}
-        </Select>
+        <Form name="customized_form_controls" layout="inline">
+          <Form.Item>
+            <Select
+              showSearch
+              style={{ width: 200 }}
+              placeholder="Select a year"
+              onChange={onChange}
+              defaultValue="all"
+            >
+              <Option value="all">All</Option>
+              {years.map((element) => (
+                <Option value={element} key={element}>
+                  {element}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item>
+            <FetchStockPricesButton
+              companies={portfolio.companies}
+              years={years}
+            />
+          </Form.Item>
+        </Form>
       </div>
       <Row gutter={24}>
         <Col span={6}>
@@ -136,6 +184,16 @@ export default function PortfolioStats(): ReactElement | null {
               precision={2}
             />
           </Col>
+        )}
+      </Row>
+      <Row>
+        {years && years.length > 0 && (
+          <PortfolioYearlyEvolutionChartNivo
+            data={data}
+            portfolio={portfolio}
+            years={years}
+            showTitle={false}
+          />
         )}
       </Row>
     </div>
