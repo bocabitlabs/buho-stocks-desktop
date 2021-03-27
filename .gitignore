@@ -35,3 +35,4 @@ dev-data/db.sqlite3-wal
 dev-data/buho-stocks.sqlite3
 dev-data/buho-stocks.sqlite3-shm
 dev-data/buho-stocks.sqlite3-wal
+dev-data/*.db

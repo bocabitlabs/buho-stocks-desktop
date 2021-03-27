@@ -29,3 +29,28 @@ ipcMain.on("save-file", (event, arg) => {
     event.returnValue = "ERROR";
   }
 });
+
+ipcMain.on("backup-database", (event, arg, queryType) => {
+  let path = arg;
+  if (path === "" || path === null || path === undefined) {
+    const { app } = require("electron");
+    const isDev = require("electron-is-dev");
+    path = app.getPath("userData");
+    if (isDev) {
+      path = "./dev-data";
+    }
+  }
+  if (path.endsWith("/")) {
+    path = path.slice(0, -1);
+  }
+  database
+    .backup(`${path}/backup-${Date.now()}.db`)
+    .then(() => {
+      console.info("backup complete!");
+      event.returnValue = {result: "OK", path};
+    })
+    .catch((err) => {
+      console.error("backup failed:", err);
+      event.returnValue = {result: "ERROR", path};
+    });
+});

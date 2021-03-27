@@ -1,12 +1,10 @@
 import React, { ReactElement, useContext } from "react";
-import { Button, Form, Input, message, Typography } from "antd";
+import { Button, Col, Form, Input, message, Row, Typography } from "antd";
 
 import { SettingsContext } from "contexts/settings";
 import { ISettingsForm } from "types/settings";
+import { backupDatabase } from "message-control/renderer";
 
-/**
- * Add a new Currency
- */
 function SettingsForm(): ReactElement | null {
   const [form] = Form.useForm();
   const { settings, updateDatabasePath } = useContext(SettingsContext);
@@ -35,6 +33,21 @@ function SettingsForm(): ReactElement | null {
     }
   };
 
+  const initBackup = () => {
+    const result = backupDatabase(settings?.databasePath);
+    if (result && result.result === "OK") {
+      message.success({
+        content: `Database backed up successfully: ${result.path}`,
+        key
+      });
+    } else {
+      message.error({
+        content: `Unable to back up the database: ${result.path}`,
+        key
+      });
+    }
+  };
+
   if (settings === null) {
     return null;
   }
@@ -50,13 +63,22 @@ function SettingsForm(): ReactElement | null {
         <Typography.Title level={3}>Advanced</Typography.Title>
         <Form.Item
           name="databasePath"
-          label="Database path"
+          label="Database backup path"
           rules={[
             { required: false, message: "Please input the database path" }
           ]}
-          help="Path of the database. If it's not set, the default location will be used. E.g: /Users/holden/Secure/"
+          help="Path of the database backup folder. If it's not set, the default location will be used."
         >
-          <Input type="text" placeholder="/Users/holden/Secure" />
+          <Row gutter={8}>
+            <Col span={12}>
+              <Input type="text" placeholder="/Users/holden/Secure" />
+            </Col>
+            <Col span={12}>
+              <Button type="default" onClick={initBackup}>
+                Backup database now
+              </Button>
+            </Col>
+          </Row>
         </Form.Item>
         <Form.Item
           name="language"

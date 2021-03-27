@@ -16,3 +16,11 @@ export default function sendIpcSql(
   const result = sendSync("synchronous-message", sql, queryType);
   return result;
 }
+
+
+export function backupDatabase(
+  path: string|undefined
+) {
+  const result = sendSync("backup-database", path);
+  return result;
+}
