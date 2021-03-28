@@ -1,5 +1,5 @@
 import { ReloadOutlined } from "@ant-design/icons";
-import { Button, Modal } from "antd";
+import { Button, Checkbox, Modal } from "antd";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import ExchangeRateService from "services/exchange-rate";
@@ -17,6 +17,7 @@ export default function FetchStockPricesButton({
   years
 }: Props): ReactElement {
   const [loading, setLoading] = useState(false);
+  const [force, setForce] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [currentMessage, setCurrentMessage] = useState("Start Fetching");
@@ -49,7 +50,7 @@ export default function FetchStockPricesButton({
           );
           console.debug(result);
 
-          if (result === undefined) {
+          if (result === undefined || force) {
             console.debug(
               `Fetching stock price for ${company.name} of ${year}`
             );
@@ -83,7 +84,7 @@ export default function FetchStockPricesButton({
                 );
                 if (exchageRate) {
                   exchangeRatePrice = exchageRate.close;
-                }else{
+                } else {
                   setMessages((messages) => [
                     ...messages,
                     `Unable to fetch exchange rate ${exchangeName} for ${company.name} of ${year}`
@@ -106,7 +107,7 @@ export default function FetchStockPricesButton({
                 };
                 StockPriceService.add(stockPrice);
               }
-            }else{
+            } else {
               setMessages((messages) => [
                 ...messages,
                 `Stock price not found for ${company.name} on ${year}`
@@ -117,7 +118,7 @@ export default function FetchStockPricesButton({
       }
     }
     setLoading(false);
-    setCurrentMessage("Start Fetching")
+    setCurrentMessage("Start Fetching");
   };
 
   const showModal = () => {
@@ -138,6 +139,7 @@ export default function FetchStockPricesButton({
       <Modal
         title="Update stock prices"
         visible={isModalVisible}
+        onCancel={()=> setIsModalVisible(!isModalVisible)}
         footer={[
           <Button key="back" onClick={handleOk}>
             Close
@@ -145,8 +147,13 @@ export default function FetchStockPricesButton({
         ]}
       >
         <p>
-          Fetch the stock prices for each year for each one of the companies in this
-          portfolio.
+          Fetch the stock prices for each year for each one of the companies in
+          this portfolio.
+        </p>
+        <p>
+          <Checkbox onChange={() => setForce(!force)}>
+            Force the update
+          </Checkbox>
         </p>
         <Button type="primary" loading={loading} onClick={handleOnClick}>
           {currentMessage}
