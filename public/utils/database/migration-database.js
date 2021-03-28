@@ -19,9 +19,8 @@ const getMigrationsFolderPath = () => {
   return queriesFolderPath;
 };
 
-const createDBandMigrate = (loadingEvents) => {
+const createDBandMigrate = () => {
   log.info("Creating database and schema...");
-  loadingEvents.emit("progress", "Creating DB schema if needed...");
   try {
     // The first call creates the global instance with your settings
     DB({
@@ -40,7 +39,6 @@ const createDBandMigrate = (loadingEvents) => {
     log.error(error);
     throw error;
   }
-  loadingEvents.emit("progress", "Created DB schema and migrations.");
   return true;
 };
 

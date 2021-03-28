@@ -1,5 +1,4 @@
 const path = require("path");
-const EventEmitter = require("events");
 const { app, BrowserWindow, Menu, shell } = require("electron");
 const isDev = require("electron-is-dev");
 const { log } = require("./utils/logger");
@@ -10,14 +9,6 @@ const { closeDB } = require("./utils/database/close-database");
 const { applicationMenu } = require("./utils/app-menu");
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS;
-
-const loadingEvents = new EventEmitter();
-const createLoadingWindow = () =>
-  new BrowserWindow({
-    webPreferences: {
-      nodeIntegration: true
-    }
-  });
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling
 if (require("electron-squirrel-startup")) {
@@ -80,32 +71,11 @@ app.whenReady().then(() => {
       .catch((err) => console.error("An error occurred: ", err));
   }
 
-  log.debug("Creating loading window");
-  const loadingWindow = createLoadingWindow();
-  log.debug("Loading loading.html file");
-  try {
-    loadingWindow.loadURL(`file://${__dirname}/loading.html`);
-    // window.loadFile("./index.html");
-  } catch (e) {
-    log.error(e);
-  }
-  // Our loadingEvents object listens for 'finished'
-  loadingEvents.on("finished", () => {
-    log.debug("Loading finished");
-    loadingWindow.close();
-    createMainWindow();
-  });
-
-  loadingEvents.on("progress", (message) => {
-    log.debug(`Sending loading progress: ${message}`);
-    loadingWindow.webContents.send("progress", message);
-  });
-
   const { createDBandMigrate } = require("./utils/database/migration-database");
-  const migrated = createDBandMigrate(loadingEvents);
+  const migrated = createDBandMigrate();
   if (migrated) {
     log.debug("Emit: finished DB loading");
-    loadingEvents.emit("finished");
+    createMainWindow();
   } else {
     throw Error("Unable to create or migrate the Database");
   }

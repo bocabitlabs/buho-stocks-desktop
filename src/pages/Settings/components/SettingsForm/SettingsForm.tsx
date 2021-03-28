@@ -61,25 +61,28 @@ function SettingsForm(): ReactElement | null {
         initialValues={{ databasePath: settings.databasePath }}
       >
         <Typography.Title level={3}>Advanced</Typography.Title>
-        <Form.Item
-          name="databasePath"
-          label="Database backup path"
-          rules={[
-            { required: false, message: "Please input the database path" }
-          ]}
-          help="Path of the database backup folder. If it's not set, the default location will be used."
-        >
-          <Row gutter={8}>
-            <Col span={12}>
+        <Row gutter={8}>
+          <Col span={12}>
+            <Form.Item
+              name="databasePath"
+              label="Database backup path"
+              rules={[
+                { required: false, message: "Please input the database path" }
+              ]}
+              help="Path of the database backup folder. If it's not set, the default location will be used."
+            >
               <Input type="text" placeholder="/Users/holden/Secure" />
-            </Col>
-            <Col span={12}>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item label='&nbsp;'>
               <Button type="default" onClick={initBackup}>
                 Backup database now
               </Button>
-            </Col>
-          </Row>
-        </Form.Item>
+            </Form.Item>
+          </Col>
+        </Row>
+
         <Form.Item
           name="language"
           label="Language"
