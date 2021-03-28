@@ -1,8 +1,6 @@
 import { Row, Space, Spin, Tabs } from "antd";
 import React, {
   ReactElement,
-  useLayoutEffect,
-  useState
 } from "react";
 import { ICompany } from "types/company";
 import CompanyReturnChartNivo from "./components/CompanyReturnChartNivo/CompanyReturnChartNivo";
@@ -15,16 +13,6 @@ interface Props {
 }
 
 export default function Charts({ company, year, years }: Props): ReactElement {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  useLayoutEffect(() => {
-    function updateSize() {
-      setWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", updateSize);
-    updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
 
   if (company) {
     return (

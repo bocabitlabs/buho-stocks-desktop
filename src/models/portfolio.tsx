@@ -37,7 +37,6 @@ export class Portfolio implements IPortfolio {
 
   getPortfolioValueForYear(
     year: string,
-    years: number[],
     inBaseCurrency = false
   ): number {
     console.debug(`Portfolio value: for year ${year}`)
@@ -204,7 +203,6 @@ export class Portfolio implements IPortfolio {
 
   getReturnForYear(
     year: string,
-    years: number[],
     inBaseCurrency = false
   ): number {
     let totalReturn = 0;
@@ -212,7 +210,6 @@ export class Portfolio implements IPortfolio {
     const totalInvested = this.getTotalInvestedUntilYear(year, inBaseCurrency);
     const portfolioValue = this.getPortfolioValueForYear(
       year,
-      years,
       inBaseCurrency
     );
     let returnFromSales = this.getReturnFromSalesForYear(year, inBaseCurrency);
@@ -224,16 +221,14 @@ export class Portfolio implements IPortfolio {
 
   getReturnPercentageForYear(
     year: string,
-    years: number[],
     inBaseCurrency = false
   ): number {
     console.debug(`getReturnPercentageForYear`);
     const J2 = this.getPortfolioValueForYear(
       (parseInt(year) - 1).toString(),
-      years,
       inBaseCurrency
     );
-    const J3 = this.getPortfolioValueForYear(year, years, inBaseCurrency);
+    const J3 = this.getPortfolioValueForYear(year, inBaseCurrency);
     const B3 = this.getTotalInvestedOnYear(year, inBaseCurrency);
     let amount = 0;
     if (J2 + B3 > 0) {
@@ -246,16 +241,34 @@ export class Portfolio implements IPortfolio {
 
   getReturnPercentageCumulativeForYear(
     year: string,
-    years: number[],
     inBaseCurrency = false
   ): number {
-    const J3 = this.getPortfolioValueForYear(year, years, inBaseCurrency);
+    const J3 = this.getPortfolioValueForYear(year, inBaseCurrency);
     const E3 = this.getTotalInvestedUntilYear(year, inBaseCurrency);
     let amount = 0;
     if (E3 > 0) {
       amount = (J3-E3)/E3;
     }
     //=SI(E3>0,(J3-E3)/E3,0)
+
+    return amount * 100;
+  }
+
+  getReturnPercentageWithDividendsForYearCumulative(
+    year: string,
+    inBaseCurrency = false
+  ): number {
+    const J3 = this.getPortfolioValueForYear(year, inBaseCurrency);
+    const E3 = this.getTotalInvestedUntilYear(year, inBaseCurrency);
+    const dividendsAmount = this.getCumulativePortfolioDividendsAmountForYear(year, inBaseCurrency);
+
+    let amount = 0;
+    if (E3 > 0) {
+      amount = (J3+dividendsAmount-E3)/E3;
+    }
+    //=SI(E3>0,(J3-E3)/E3,0)
+    console.info(`${year}: ${J3} + ${dividendsAmount} - ${E3}/${E3}`)
+
 
     return amount * 100;
   }
@@ -268,10 +281,9 @@ export class Portfolio implements IPortfolio {
 
   getReturnWithDividendsForYear(
     year: string,
-    years: number[],
     inBaseCurrency = false
   ): number {
-    const totalReturn = this.getReturnForYear(year, years, inBaseCurrency);
+    const totalReturn = this.getReturnForYear(year, inBaseCurrency);
     const dividendsAmount = this.getCumulativePortfolioDividendsAmountForYear(year, inBaseCurrency);
     const totalAmount = totalReturn + dividendsAmount;
     console.debug(
@@ -306,4 +318,5 @@ export class Portfolio implements IPortfolio {
 
     return returnPercentage;
   }
+
 }

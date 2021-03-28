@@ -15,7 +15,7 @@ export interface IPortfolio extends PortfolioFormFields {
   currencyCountryCode: string;
   companies: ICompany[];
   getPortfolioValue(inBaseCurrency?: boolean): number;
-  getPortfolioValueForYear(year: string, years: number[], inBaseCurrency?: boolean): number;
+  getPortfolioValueForYear(year: string, inBaseCurrency?: boolean): number;
   getTotalInvested(inBaseCurrency?: boolean): number;
   getTotalInvestedOnYear(year:string, inBaseCurrency?: boolean): number;
   getTotalInvestedUntilYear(year:string, inBaseCurrency?: boolean): number;
@@ -24,10 +24,11 @@ export interface IPortfolio extends PortfolioFormFields {
   getDividendsForYear(year?:string, inBaseCurrency?: boolean): number;
   getCumulativeDividendsForYear(year?:string, inBaseCurrency?: boolean): number;
   getMonthlyDividendsForYear(year: string, inBaseCurrency?: boolean): number;
-  getReturnForYear(year: string, years: number[], inBaseCurrency?: boolean): number;
-  getReturnPercentageCumulativeForYear(year: string, years: number[], inBaseCurrency?: boolean): number;
-  getReturnPercentageForYear(year: string, years: number[], inBaseCurrency?: boolean): number
+  getReturnForYear(year: string, inBaseCurrency?: boolean): number;
+  getReturnPercentageCumulativeForYear(year: string, inBaseCurrency?: boolean): number;
+  getReturnPercentageForYear(year: string, inBaseCurrency?: boolean): number
   getReturnWithDividends(inBaseCurrency?: boolean): number;
   getReturnWithDividendsPercentage(inBaseCurrency?: boolean): number;
-  getReturnWithDividendsForYear(year: string, years: number[], inBaseCurrency?: boolean): number;
+  getReturnWithDividendsForYear(year: string, inBaseCurrency?: boolean): number;
+  getReturnPercentageWithDividendsForYearCumulative(year: string, inBaseCurrency?: boolean): number;
 }

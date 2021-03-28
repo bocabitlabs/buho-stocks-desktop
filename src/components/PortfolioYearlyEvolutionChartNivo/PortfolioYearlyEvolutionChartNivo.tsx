@@ -53,7 +53,6 @@ export default function PortfolioYearlyEvolutionChartNivo({
       years1.reverse().forEach((element) => {
         const tempPortfolioValue = portfolio.getPortfolioValueForYear(
           element.toString(),
-          years,
           true
         );
         portfolioValueData.push({
@@ -70,7 +69,12 @@ export default function PortfolioYearlyEvolutionChartNivo({
           y: tempAccumInvestment
         });
 
-        const tempDividendsData = portfolio.getCumulativeDividendsForYear(
+        const accumulatedDividendsData = portfolio.getCumulativeDividendsForYear(
+          element.toString(),
+          true
+        );
+
+        const tempDividendsData = portfolio.getDividendsForYear(
           element.toString(),
           true
         );
@@ -78,7 +82,7 @@ export default function PortfolioYearlyEvolutionChartNivo({
 
         portfolioValueWithDividends.push({
           x: element.toString(),
-          y: tempPortfolioValue + tempDividendsData
+          y: tempPortfolioValue + accumulatedDividendsData
         });
       });
 
@@ -117,10 +121,10 @@ export default function PortfolioYearlyEvolutionChartNivo({
     return (
       <>
         {showTitle && <Typography.Title level={3}>Portfolio valuation</Typography.Title>}
-        <div style={{ height: 400, width: width - sidebarWidth }}>
+        <div style={{ height: 400, width: width - sidebarWidth - 50 }}>
           <ResponsiveLine
             data={chartData}
-            margin={{ top: 50, right: 110, bottom: 150, left: 60 }}
+            margin={{ top: 50, right: 50, bottom: 150, left: 60 }}
             colors={{ scheme: 'category10' }}
             yScale={{
               type: "linear",

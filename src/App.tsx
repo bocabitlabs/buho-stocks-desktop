@@ -4,8 +4,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
 import TopNavbar from "./components/TopNavbar/TopNavbar";
-import { useIsCollapsedContext } from "./hooks/is-collapsed";
-import { IsCollapsedContext } from "./contexts/is-collapsed";
 import AppSidebar from "./components/AppSidebar/AppSidebar";
 import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
@@ -15,7 +13,6 @@ import CurrencyList from "./pages/CurrencyList/CurrencyList";
 import CompanyDetails from "./pages/CompanyDetails/CompanyDetails";
 import Home from "pages/Home/Home";
 import InflationAdd from "pages/InflationAdd/InflationAdd";
-import InflationList from "pages/InflationList/InflationList";
 import MarketAdd from "pages/MarketAdd/MarketAdd";
 import MarketList from "pages/MarketList/MarketList";
 import PortfolioAdd from "pages/PortfolioAdd/PortfolioAdd";

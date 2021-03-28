@@ -41,7 +41,6 @@ export default function PortfolioReturnChartPercentageNivo({
       years1.reverse().forEach((element) => {
         const value = portfolio.getReturnPercentageCumulativeForYear(
           element.toString(),
-          years,
           true
         );
         dataOne.push({ x: element.toString(), y: value });
@@ -49,7 +48,7 @@ export default function PortfolioReturnChartPercentageNivo({
 
       const years2 = [...years];
       years2.reverse().forEach((element) => {
-        const value = portfolio.getReturnPercentageForYear(element.toString(), years, true);
+        const value = portfolio.getReturnPercentageForYear(element.toString(), true);
         dataTwo.push({ x: element.toString(), y: value });
       });
 
@@ -75,10 +74,10 @@ export default function PortfolioReturnChartPercentageNivo({
     return (
       <>
         <Typography.Title level={3}>Returns %</Typography.Title>
-        <div style={{ height: 400, width: width - sidebarWidth - 100 }}>
+        <div style={{ height: 400, width: width - sidebarWidth - 50 }}>
           <ResponsiveLine
             data={chartData}
-            margin={{ top: 50, right: 110, bottom: 150, left: 60 }}
+            margin={{ top: 50, right: 50, bottom: 150, left: 60 }}
             colors={{ scheme: 'category10' }}
             yScale={{
               type: "linear",

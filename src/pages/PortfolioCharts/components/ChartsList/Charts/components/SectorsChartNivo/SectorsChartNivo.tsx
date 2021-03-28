@@ -43,7 +43,7 @@ export default function CurrenciesChart({
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        <Typography.Title level={3}>Dividends</Typography.Title>
+        <Typography.Title level={3}>Sectors</Typography.Title>
         <div style={{ height: 600, width: width-300 }}>
           <ResponsivePie
             data={chartData}

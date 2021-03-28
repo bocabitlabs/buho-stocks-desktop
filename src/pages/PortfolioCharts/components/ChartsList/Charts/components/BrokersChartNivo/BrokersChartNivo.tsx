@@ -2,8 +2,6 @@ import { Spin, Typography } from "antd";
 import React, { ReactElement, useEffect, useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { IPortfolio } from "types/portfolio";
-import fewColors from "utils/colors";
-import { StringUtils } from "utils/string-utils";
 
 interface Props {
   data: any;

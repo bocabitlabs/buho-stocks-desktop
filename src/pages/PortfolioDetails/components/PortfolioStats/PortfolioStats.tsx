@@ -16,6 +16,11 @@ export default function PortfolioStats(): ReactElement | null {
   const [investmentPerYear, setInvestmentPerYear] = useState<number>(0);
   const [dividendsPerMonth, setDividendsPerMonth] = useState<number>(0);
   const [portfolioValue, setPortfolioValue] = useState<number>(0);
+  const [
+    portfolioReturnPercentage,
+    setPortfolioReturnPercentage
+  ] = useState<number>(0);
+
   const [data, setData] = useState<any[]>([]);
 
   const { Option } = Select;
@@ -25,6 +30,7 @@ export default function PortfolioStats(): ReactElement | null {
     setYear(value);
     if (portfolio !== null) {
       if (value === "all") {
+        console.debug("Set all")
         getValuesForAll();
       } else {
         getValuesForYear(value);
@@ -78,11 +84,16 @@ export default function PortfolioStats(): ReactElement | null {
   }, [portfolio]);
 
   const getValuesForAll = () => {
-    if (year === "all" && portfolio !== null) {
+    if (portfolio !== null) {
+      console.debug("Get values for all")
       let newDividendsPerYear = portfolio.getDividends(true);
       let newDividendsPerMonth = 0;
       let newTotalInvestedPerYear = portfolio.getTotalInvested(true);
       let newValue = portfolio.getPortfolioValue(true);
+      const newPortfolioReturnPercentage = portfolio.getReturnWithDividendsPercentage(
+        true
+      );
+      setPortfolioReturnPercentage(newPortfolioReturnPercentage);
 
       setDividendsPerYear(newDividendsPerYear);
       setDividendsPerMonth(newDividendsPerMonth);
@@ -107,9 +118,14 @@ export default function PortfolioStats(): ReactElement | null {
       );
       let newValue = portfolio.getPortfolioValueForYear(
         value.toString(),
-        years,
         true
       );
+
+      const newPortfolioReturnPercentage = portfolio.getReturnPercentageWithDividendsForYearCumulative(
+        value.toString(),
+        true
+      );
+      setPortfolioReturnPercentage(newPortfolioReturnPercentage);
 
       setDividendsPerYear(newDividendsPerYear);
       setDividendsPerMonth(newDividendsPerMonth);
@@ -151,7 +167,7 @@ export default function PortfolioStats(): ReactElement | null {
         </Form>
       </div>
       <Row gutter={24}>
-        <Col span={6}>
+        <Col span={4}>
           <Statistic
             title="Invested"
             value={investmentPerYear}
@@ -159,7 +175,7 @@ export default function PortfolioStats(): ReactElement | null {
             precision={2}
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <Statistic
             title="Portfolio Value"
             value={portfolioValue}
@@ -167,7 +183,7 @@ export default function PortfolioStats(): ReactElement | null {
             precision={2}
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <Statistic
             title="Dividends"
             value={dividendsPerYear}
@@ -176,7 +192,7 @@ export default function PortfolioStats(): ReactElement | null {
           />
         </Col>
         {year !== "all" && (
-          <Col span={6}>
+          <Col span={5}>
             <Statistic
               title="Dividends per month"
               value={dividendsPerMonth}
@@ -185,6 +201,14 @@ export default function PortfolioStats(): ReactElement | null {
             />
           </Col>
         )}
+        <Col span={4}>
+          <Statistic
+            title="Return"
+            value={portfolioReturnPercentage}
+            suffix={"%"}
+            precision={2}
+          />
+        </Col>
       </Row>
       <Row>
         {years && years.length > 0 && (

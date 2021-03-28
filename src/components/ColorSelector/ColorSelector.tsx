@@ -2,7 +2,7 @@ import React, { ReactElement, useLayoutEffect, useState } from "react";
 import { ColorChangeHandler, TwitterPicker } from "react-color";
 // @ts-ignore
 import * as material from "material-colors";
-import { Button, Row, Space, Typography } from "antd";
+import { Button, Row, Space } from "antd";
 import fewColorsScale from "utils/colors";
 interface Props {
   color: string;

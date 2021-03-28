@@ -45,7 +45,6 @@ export default function StockPriceAddForm({
     if (
       company?.currencyAbbreviation !== company?.portfolioCurrencyAbbreviation
     ) {
-      let exchangeValue = 0;
       setGettingExchangeRate(true);
       const result = await ExchangeRateService.getFromAPI(
         transactionDate,
@@ -120,24 +119,6 @@ export default function StockPriceAddForm({
         company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
       );
     }
-  };
-
-  const getLatestPrice = async () => {
-    setGettingLastPrices(true);
-    const { found, data } = await StockPriceService.getStockPriceAPI(
-      company.ticker,
-      company.alternativeTickers
-    );
-    console.debug("results are");
-    console.debug(data);
-    console.debug(found);
-
-    if (found) {
-      form.setFieldsValue({
-        price: data?.price
-      });
-    }
-    setGettingLastPrices(false);
   };
 
   const getStockPrice = async () => {

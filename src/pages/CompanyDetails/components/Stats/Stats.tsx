@@ -17,8 +17,6 @@ export default function Stats({ company }: Props): React.ReactElement | null {
   const [year, setYear] = useState("all");
   const [accumulatedShares, setAccumulatedShares] = useState(0);
   const [dividendsAmount, setDividendsAmount] = useState(0);
-  const [sharesCount, setSharesCount] = useState(0);
-  const [totalInvested, setTotalInvested] = useState(0);
   const [portfolioValue, setPortfolioValue] = useState(0);
   const [companyReturn, setCompanyReturn] = useState(0);
   const [returnPercentage, setReturnPercentage] = useState(0);
@@ -64,11 +62,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
       const newDividendsAmount = company.getDividendsAmount(true);
       setDividendsAmount(newDividendsAmount);
 
-      const newSharesCount = company.getSharesCount();
-      setSharesCount(newSharesCount);
-
       const newTotalInvested = company.getTotalInvested(true);
-      setTotalInvested(newTotalInvested);
       setAccumulatedInvestment(newTotalInvested);
 
       const newPorfolioValue = company.getPortfolioValue(true);
@@ -95,15 +89,6 @@ export default function Stats({ company }: Props): React.ReactElement | null {
         true
       );
       setDividendsAmount(newDividendsAmount);
-
-      const newSharesCount = company.getSharesCountForYear(value.toString());
-      setSharesCount(newSharesCount);
-
-      const newTotalInvested = company.getTotalInvestedOnYear(
-        value.toString(),
-        true
-      );
-      setTotalInvested(newTotalInvested);
 
       const newAccumulatedInvestment = company.getTotalInvestedUntilYear(value.toString())
       setAccumulatedInvestment(newAccumulatedInvestment);

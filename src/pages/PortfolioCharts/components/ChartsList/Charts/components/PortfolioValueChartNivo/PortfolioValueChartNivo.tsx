@@ -50,12 +50,12 @@ export default function CurrenciesChart({
     return (
       <>
         <Typography.Title level={3}>Portfolio Value</Typography.Title>
-        <div style={{ height: 450, width: width - sidebarWidth - 100 }}>
+        <div style={{ height: 450, width: width - sidebarWidth - 50 }}>
           <ResponsiveBar
             data={chartData}
             keys={[ 'amount' ]}
             indexBy="company"
-            margin={{ top: 50, right: 130, bottom: 150, left: 60 }}
+            margin={{ top: 50, right: 50, bottom: 150, left: 60 }}
             padding={0.3}
             valueScale={{ type: "linear" }}
             indexScale={{ type: "band", round: true }}
@@ -83,30 +83,6 @@ export default function CurrenciesChart({
             labelSkipWidth={100}
             labelSkipHeight={20}
             labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-            legends={[
-              {
-                dataFrom: "keys",
-                anchor: "bottom-right",
-                direction: "column",
-                justify: false,
-                translateX: 120,
-                translateY: 0,
-                itemsSpacing: 2,
-                itemWidth: 100,
-                itemHeight: 20,
-                itemDirection: "left-to-right",
-                itemOpacity: 0.85,
-                symbolSize: 20,
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemOpacity: 1
-                    }
-                  }
-                ]
-              }
-            ]}
             animate={true}
             motionStiffness={90}
             motionDamping={15}

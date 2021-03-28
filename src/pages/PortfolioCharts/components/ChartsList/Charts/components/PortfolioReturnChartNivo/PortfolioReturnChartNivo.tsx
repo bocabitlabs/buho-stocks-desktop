@@ -42,7 +42,6 @@ export default function PortfolioReturnChartNivo({
       years1.reverse().forEach((element) => {
         const value = portfolio.getReturnWithDividendsForYear(
           element.toString(),
-          years,
           true
         );
         dataOne.push({ x: element.toString(), y: value });
@@ -50,7 +49,7 @@ export default function PortfolioReturnChartNivo({
 
       const years2 = [...years];
       years2.reverse().forEach((element) => {
-        const value = portfolio.getReturnForYear(element.toString(), years, true);
+        const value = portfolio.getReturnForYear(element.toString(), true);
         dataTwo.push({ x: element.toString(), y: value });
       });
 
@@ -77,10 +76,10 @@ export default function PortfolioReturnChartNivo({
     return (
       <>
         <Typography.Title level={3}>Net Returns</Typography.Title>
-        <div style={{ height: 400, width: width - sidebarWidth - 100 }}>
+        <div style={{ height: 400, width: width - sidebarWidth - 50 }}>
           <ResponsiveLine
             data={chartData}
-            margin={{ top: 50, right: 110, bottom: 150, left: 60 }}
+            margin={{ top: 50, right: 50, bottom: 150, left: 60 }}
             colors={{ scheme: 'category10' }}
             yScale={{
               type: "linear",
@@ -90,18 +89,6 @@ export default function PortfolioReturnChartNivo({
               // reverse: false
             }}
             yFormat={(data)=> (`${StringUtils.getAmountWithSymbol(parseFloat(data.toString()), 2, portfolio.currencySymbol)}`)}
-            // yFormat={`>-$.2f`}
-            // axisTop={null}
-            // axisRight={null}
-            // axisBottom={{
-            //   orient: "bottom",
-            //   tickSize: 5,
-            //   tickPadding: 5,
-            //   tickRotation: 0,
-            //   legend: "transportation",
-            //   legendOffset: 36,
-            //   legendPosition: "middle"
-            // }}
             axisLeft={{
               orient: "left",
               tickSize: 5,

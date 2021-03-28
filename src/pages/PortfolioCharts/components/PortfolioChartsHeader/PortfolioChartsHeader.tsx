@@ -1,18 +1,9 @@
-import { message } from "antd";
-import Button from "antd/lib/button";
 import PageHeader from "antd/lib/page-header";
-import Popconfirm from "antd/lib/popconfirm";
 import React, { ReactElement, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 
 import { PortfoliosContext } from "contexts/portfolios";
-import PortfolioService from "services/portfolio-service";
 import {
-  DeleteOutlined,
-  EditOutlined,
   HomeOutlined,
-  PlusOutlined,
-  UnorderedListOutlined
 } from "@ant-design/icons";
 import { breadcrumbItemRender } from "utils/headers-utils";
 import CountryFlag from "components/CountryFlag/CountryFlag";

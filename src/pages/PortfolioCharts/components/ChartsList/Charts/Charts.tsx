@@ -110,7 +110,7 @@ export default function Charts({
         <Row>
           <DividendsChart data={data} portfolio={portfolio} width={width} />
         </Row>
-        <Row>
+         <Row>
           <Col span={12}>
             <CurrenciesChartNivo
               data={data}

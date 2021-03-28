@@ -1,4 +1,4 @@
-import Icon, {
+import {
   DeleteOutlined,
   EditOutlined,
   EllipsisOutlined,

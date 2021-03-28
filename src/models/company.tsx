@@ -290,7 +290,6 @@ export class Company implements ICompany {
       inBaseCurrency
     );
     const amount = investedInShares + investedInRights;
-    console.debug(`${this.ticker} invested on ${year}: ${amount}`);
 
     return amount;
   }
@@ -333,7 +332,6 @@ export class Company implements ICompany {
         }
         return accumulator + (obj.count * obj.price + obj.commission);
       }, 0);
-    console.debug(`${this.ticker} invested in shares on ${year}: ${amount}`);
     return amount;
   }
 
