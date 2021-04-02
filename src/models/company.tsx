@@ -22,6 +22,9 @@ export class Company implements ICompany {
   url: string;
   description: string;
   currencyId: string;
+  dividendsCurrencyId: string;
+  dividendsCurrencySymbol: string;
+  dividendsCurrencyAbbreviation: string;
   marketId: string;
   sectorId: string;
   color: string;
@@ -45,6 +48,9 @@ export class Company implements ICompany {
     this.currencySymbol = parameters.currencySymbol;
     this.currencyAbbreviation = parameters.currencyAbbreviation;
     this.currencyId = parameters.currencyId;
+    this.dividendsCurrencyId = parameters.dividendsCurrencyId;
+    this.dividendsCurrencySymbol = parameters.dividendsCurrencySymbol;
+    this.dividendsCurrencyAbbreviation = parameters.dividendsCurrencyAbbreviation;
 
     this.sectorName = parameters.sectorName;
     this.sectorId = parameters.sectorId;

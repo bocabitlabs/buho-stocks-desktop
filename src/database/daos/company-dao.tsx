@@ -21,6 +21,7 @@ export default class CompanyDAO {
     , "lastUpdateDate"
     , "alternativeTickers"
     , "countryCode"
+    , "dividendsCurrencyId"
     )
     VALUES ('${company.name}'
     , '${company.ticker}'
@@ -36,6 +37,7 @@ export default class CompanyDAO {
     , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     , '${company.alternativeTickers}'
     , '${company.countryCode}'
+    , '${company.dividendsCurrencyId}'
     ) ;`;
 
     const result = sendIpcSql(sql, "insert");
@@ -60,6 +62,7 @@ export default class CompanyDAO {
       , markets.name as marketName
       , companies.alternativeTickers as alternativeTickers
       , companies.countryCode as countryCode
+      , companies.dividendsCurrencyId as dividendsCurrencyId
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId
@@ -102,12 +105,15 @@ export default class CompanyDAO {
       , S.buyCommission
       , S.lastTransactionDate
       , portfolios.name as portfolioName
-
+      , currencies2.symbol as dividendsCurrencySymbol
+      , currencies2.abbreviation as dividendsCurrencyAbbreviation
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId
     LEFT JOIN "currencies"
       ON currencies.id = companies.currencyId
+    LEFT JOIN "currencies" as currencies2
+      ON currencies2.id = companies.dividendsCurrencyId
     LEFT JOIN "sectors"
       ON sectors.id = companies.sectorId
     LEFT JOIN (SELECT companyId
@@ -142,6 +148,8 @@ export default class CompanyDAO {
 	  , sectors.name as sectorName
 	  , currencies2.symbol as portfolioCurrencySymbol
     , currencies2.abbreviation as portfolioCurrencyAbbreviation
+    , currencies3.symbol as dividendsCurrencySymbol
+    , currencies3.abbreviation as dividendsCurrencyAbbreviation
     FROM "companies"
     LEFT JOIN "portfolios"
       ON portfolios.id = companies.portfolioId
@@ -151,6 +159,8 @@ export default class CompanyDAO {
       ON sectors.id = companies.sectorId
     LEFT JOIN "currencies" as currencies2
       ON portfolios.currencyId = currencies2.id
+    LEFT JOIN "currencies" as currencies3
+      ON currencies3.id = companies.dividendsCurrencyId
     WHERE companies.id = '${companyId}';
     `;
 
@@ -195,6 +205,7 @@ export default class CompanyDAO {
     , sectorId = '${company.sectorId}'
     , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     , countryCode = '${company.countryCode}'
+    , dividendsCurrencyId = '${company.dividendsCurrencyId}'
     WHERE companies.id = '${companyId}';
     `;
     const results = sendIpcSql(sql, "update");

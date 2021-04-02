@@ -1,5 +1,5 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { Button, DatePicker, Form, InputNumber, message } from "antd";
+import { Button, Col, DatePicker, Form, InputNumber, message, Row } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 
@@ -27,6 +27,8 @@ export default function DividendsTransactionAddForm({
   const [form] = Form.useForm();
   const history = useHistory();
   const [color] = useState("#607d8b");
+  const [dividendsSymbol, setDividendsSymbol] = useState("?");
+
   const { company, fetchCompany } = useContext(CompaniesContext);
   const { dividendsTransaction, create, getById, update } = useContext(
     DividendsTransactionsContext
@@ -35,13 +37,27 @@ export default function DividendsTransactionAddForm({
 
   useEffect(() => {
     const newCompany = fetchCompany(companyId);
+    console.debug(newCompany);
     if (newCompany) {
       if (
         newCompany.currencyAbbreviation !== undefined &&
         newCompany.portfolioCurrencyAbbreviation !== undefined
       ) {
+        let dividendsCurrencyAbbreviation = newCompany.currencyAbbreviation;
+        let dividendsCurrencySymbol = newCompany.currencySymbol;
+
+        if (
+          newCompany.dividendsCurrencyAbbreviation &&
+          newCompany.dividendsCurrencyAbbreviation !==
+            newCompany.portfolioCurrencyAbbreviation
+        ) {
+          dividendsCurrencyAbbreviation =
+            newCompany.dividendsCurrencyAbbreviation;
+          dividendsCurrencySymbol = newCompany.dividendsCurrencySymbol;
+          setDividendsSymbol(dividendsCurrencySymbol);
+        }
         setExchangeName(
-          newCompany.currencyAbbreviation +
+          dividendsCurrencyAbbreviation +
             newCompany.portfolioCurrencyAbbreviation
         );
       }
@@ -104,8 +120,7 @@ export default function DividendsTransactionAddForm({
       updateMessage = "Dividends transaction has been added";
     }
     if (changes.changes) {
-
-      if(!transactionId){
+      if (!transactionId) {
         TransactionLogService.add({
           type: "Dividends transaction",
           message: `Added dividends "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
@@ -140,14 +155,6 @@ export default function DividendsTransactionAddForm({
   ) => {
     const newDate = dateString.replace(/\//g, "-");
     setTransactionDate(newDate);
-    if (
-      company.currencyAbbreviation !== undefined &&
-      company.portfolioCurrencyAbbreviation !== undefined
-    ) {
-      setExchangeName(
-        company.currencyAbbreviation + company.portfolioCurrencyAbbreviation
-      );
-    }
   };
 
   return (
@@ -173,7 +180,7 @@ export default function DividendsTransactionAddForm({
           { required: true, message: "Please input the number of shares" }
         ]}
       >
-        <InputNumber min={0} step={1} style={{ width: '100%' }} />
+        <InputNumber min={0} step={1} style={{ width: "100%" }} />
       </Form.Item>
       <Form.Item
         name="price"
@@ -184,10 +191,10 @@ export default function DividendsTransactionAddForm({
       >
         <InputNumber
           decimalSeparator="."
-          formatter={(value) => `${company?.currencySymbol} ${value}`}
+          formatter={(value) => `${dividendsSymbol} ${value}`}
           min={0}
           step={0.001}
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
         />
       </Form.Item>
       <Form.Item
@@ -199,10 +206,10 @@ export default function DividendsTransactionAddForm({
       >
         <InputNumber
           decimalSeparator="."
-          formatter={(value) => `${company?.currencySymbol} ${value}`}
+          formatter={(value) => `${dividendsSymbol} ${value}`}
           min={0}
           step={0.001}
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
         />
       </Form.Item>
       <Form.Item
@@ -214,30 +221,35 @@ export default function DividendsTransactionAddForm({
       >
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
-      <Form.Item
-        name="exchangeRate"
-        label="Exchange rate"
-        rules={[
-          { required: true, message: "Please input the price per share" }
-        ]}
-      >
-        <InputNumber
-          decimalSeparator="."
-          min={0}
-          step={0.001}
-          style={{ width: '100%' }}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button
-          disabled={transactionDate === null || exchangeName === null}
-          onClick={getExchangeRate}
-          loading={gettingExchangeRate}
-        >
-          Get exchange rate ({exchangeName})
-        </Button>
-      </Form.Item>
-
+      <Row gutter={8}>
+        <Col span={12}>
+          <Form.Item
+            name="exchangeRate"
+            label="Exchange rate"
+            rules={[
+              { required: true, message: "Please input the price per share" }
+            ]}
+          >
+            <InputNumber
+              decimalSeparator="."
+              min={0}
+              step={0.001}
+              style={{ width: "100%" }}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label="&nbsp;">
+            <Button
+              disabled={transactionDate === null || exchangeName === null}
+              onClick={getExchangeRate}
+              loading={gettingExchangeRate}
+            >
+              Get exchange rate ({exchangeName})
+            </Button>
+          </Form.Item>
+        </Col>
+      </Row>
       <Form.Item name="notes" label="Notes">
         <TextArea rows={4} />
       </Form.Item>

@@ -12,6 +12,7 @@ export interface CompanyFormFields {
   url: string;
   description: string;
   currencyId: string;
+  dividendsCurrencyId: string;
   marketId: string;
   sectorId: string;
   color: string;
@@ -24,6 +25,8 @@ export interface ICompany extends CompanyFormFields {
   portfolioName: string;
   portfolioCurrencySymbol: string;
   portfolioCurrencyAbbreviation: string;
+  dividendsCurrencySymbol: string;
+  dividendsCurrencyAbbreviation: string;
   currencyName: string;
   currencyAbbreviation: string;
   sectorName: string;

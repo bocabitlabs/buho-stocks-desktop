@@ -20,7 +20,6 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   const { company } = useContext(CompaniesContext);
   const history = useHistory();
 
-
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
   useLayoutEffect(() => {
@@ -36,7 +35,6 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
     updateSize();
     return () => window.removeEventListener("resize", updateSize);
   }, []);
-
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -88,7 +86,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       key: "price",
       width: 70,
       render: (text: number, record: any) =>
-        StringUtils.getAmountWithSymbol(text, 2, record.currencySymbol)
+        StringUtils.getAmountWithSymbol(text, 2, record.dividendsCurrencySymbol)
     },
     {
       title: "Commission",
@@ -96,7 +94,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       key: "commission",
       width: 70,
       render: (text: number, record: any) =>
-        StringUtils.getAmountWithSymbol(text, 2, record.currencySymbol)
+        StringUtils.getAmountWithSymbol(text, 2, record.dividendsCurrencySymbol)
     },
     {
       title: "Total",
@@ -104,7 +102,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       key: "total",
       width: 70,
       render: (text: number, record: any) =>
-        StringUtils.getAmountWithSymbol(text, 2, record.currencySymbol)
+        StringUtils.getAmountWithSymbol(text, 2, record.dividendsCurrencySymbol)
     },
     {
       title: "Action",
@@ -132,21 +130,24 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   ];
 
   const getData = () => {
-    const shares2 = dividendsTransactions.map(
-      (dividend: DividendsTransaction) => ({
-        id: dividend.id,
-        key: dividend.id,
+    const transactions = dividendsTransactions.map(
+      (transaction: DividendsTransaction) => ({
+        id: transaction.id,
+        key: transaction.id,
         name: "dividend",
-        count: dividend.count.toString(),
-        transactionDate: dividend.transactionDate,
-        price: dividend.price,
-        commission: dividend.commission,
-        total: dividend.count * dividend.price - dividend.commission,
-        notes: dividend.notes,
-        currencySymbol: dividend.currencySymbol
+        count: transaction.count.toString(),
+        transactionDate: transaction.transactionDate,
+        price: transaction.price,
+        commission: transaction.commission,
+        total: transaction.count * transaction.price - transaction.commission,
+        notes: transaction.notes,
+        currencySymbol: transaction.currencySymbol,
+        dividendsCurrencySymbol: company?.dividendsCurrencySymbol
+          ? company?.dividendsCurrencySymbol
+          : company?.currencySymbol
       })
     );
-    return shares2;
+    return transactions;
   };
   return (
     <>
@@ -161,7 +162,8 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
           expandedRowRender: (record) => (
             <p style={{ margin: 0 }}>{record.notes}</p>
           ),
-          rowExpandable: (record) => (record.notes !== "undefined" && record.notes !== undefined)
+          rowExpandable: (record) =>
+            record.notes !== "undefined" && record.notes !== undefined
         }}
       />
     </>

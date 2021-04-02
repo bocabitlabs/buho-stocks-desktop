@@ -66,6 +66,7 @@ function CompanyAddEditForm({
       sectorId,
       currencyId,
       description,
+      dividendsCurrencyId,
       alternativeTickers
     } = values;
     const newCompany: CompanyFormFields = {
@@ -80,6 +81,7 @@ function CompanyAddEditForm({
       color,
       description,
       currencyId,
+      dividendsCurrencyId,
       portfolioId,
       alternativeTickers
     };
@@ -134,6 +136,7 @@ function CompanyAddEditForm({
         closed: closed,
         sectorId: company?.sectorId,
         currencyId: company?.currencyId,
+        dividendsCurrencyId: company?.dividendsCurrencyId,
         marketId: company?.marketId,
         url: company?.url,
         description: company?.description
@@ -232,6 +235,26 @@ function CompanyAddEditForm({
       >
         <Select
           placeholder="Select a option and change input text above"
+          allowClear
+        >
+          {currencies &&
+            currencies.map((currency: Currency, index: number) => (
+              <Select.Option
+                value={currency.id}
+                key={`currency-${currency.id}-${index}`}
+              >
+                {currency.name} ({currency.abbreviation})
+              </Select.Option>
+            ))}
+        </Select>
+      </Form.Item>
+      <Form.Item
+        name="dividendsCurrencyId"
+        label="Dividends currency"
+        rules={[{ required: true }]}
+      >
+        <Select
+          placeholder="Select the currency of the dividends if it's different from the company's one"
           allowClear
         >
           {currencies &&
