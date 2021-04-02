@@ -40,6 +40,13 @@ export default function SectorListTable() {
       sorter: (a: Sector, b: Sector) => a.name.localeCompare(b.name)
     },
     {
+      title: "Super sector",
+      dataIndex: "superSectorName",
+      key: "superSectorName",
+      render: (text: string, record: any) => record.isSuperSector? "Is a super sector": <Link to={`/sectors/${record.id}/edit`}>{text}</Link>,
+      sorter: (a: Sector, b: Sector) => (a.superSectorName && b.superSectorName)? a.superSectorName.localeCompare(b.superSectorName): -1
+    },
+    {
       title: "Action",
       key: "action",
       render: (text: string, record: any) => (
@@ -65,7 +72,9 @@ export default function SectorListTable() {
       id: sector.id,
       key: sector.id,
       name: sector.name,
-      color: sector.color
+      color: sector.color,
+      superSectorName: sector.superSectorName,
+      isSuperSector: sector.isSuperSector
     }));
   };
 

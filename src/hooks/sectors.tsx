@@ -17,12 +17,13 @@ export function useSectorsContext(): SectorsContextType {
     setIsLoading(true);
     const results = SectorService.getSectors();
     setSectors(results);
+    return results;
   }, []);
 
   const addSector = useCallback(
     (sector: SectorFormFields) => {
       setIsLoading(true);
-      const results = SectorService.getSectors();
+      const results = SectorService.addSector(sector);
       setSectors(results);
       return results;
     },

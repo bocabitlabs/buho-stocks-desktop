@@ -6,7 +6,7 @@ import { useSectorsContext } from "hooks/sectors";
 import { useParams } from "react-router-dom";
 import { SectorsContext } from "contexts/sectors";
 import SectorEditHeader from "./components/SectorEditHeader/SectorEditHeader";
-import SectorAddEditForm from "components/SectorAddForm/SectorAddEditForm";
+import SectorAddEditForm from "components/SectorAddEditForm/SectorAddEditForm";
 
 export interface IRouteParams {
   sectorId: string;

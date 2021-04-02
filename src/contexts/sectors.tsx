@@ -6,7 +6,7 @@ export type SectorsContextType = {
   sector: Sector|null;
   sectors: Sector[];
   isLoading: boolean;
-  fetchSectors: () => void;
+  fetchSectors: () => Sector[];
   addSector: (sector: SectorFormFields) => IAddProps;
   getById: (currencyId: string) => Sector | null;
   update: (currencyId: string, sector: SectorFormFields) => IAddProps;
@@ -16,7 +16,7 @@ export const sectorsDefaultValue: SectorsContextType = {
   sector: null,
   sectors: [],
   isLoading: false,
-  fetchSectors: () => null,
+  fetchSectors: () => [],
   addSector: () => ({ changes: false }),
   getById: (): Sector | null => null,
   update: () => ({ changes: false })

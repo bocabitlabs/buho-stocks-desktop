@@ -1,12 +1,14 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import {
   Button,
+  Col,
   DatePicker,
   Divider,
   Form,
   Input,
   InputNumber,
   message,
+  Row,
   Select,
   Typography
 } from "antd";
@@ -31,9 +33,13 @@ export default function SharesTransactionAddForm({
   const [form] = Form.useForm();
   const history = useHistory();
   const { company, fetchCompany } = useContext(CompaniesContext);
-  const { sharesTransaction, create: addTransaction, getAll, getById, update: updateTransaction } = useContext(
-    SharesTransactionsContext
-  );
+  const {
+    sharesTransaction,
+    create: addTransaction,
+    getAll: getAllSharesTransactions,
+    getById,
+    update: updateTransaction
+  } = useContext(SharesTransactionsContext);
   const [color] = useState("#607d8b");
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
@@ -99,7 +105,10 @@ export default function SharesTransactionAddForm({
       type,
       commission,
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
-      exchangeRate,
+      exchangeRate:
+        company.currencyAbbreviation === company.portfolioCurrencyAbbreviation
+          ? 1
+          : exchangeRate,
       notes,
       color,
       companyId
@@ -114,8 +123,7 @@ export default function SharesTransactionAddForm({
       updateMessage = "Shares transaction has been added";
     }
     if (changes.changes) {
-
-      if(!transactionId){
+      if (!transactionId) {
         TransactionLogService.add({
           type: "Shares transaction",
           message: `Added shares "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
@@ -123,7 +131,7 @@ export default function SharesTransactionAddForm({
         });
       }
 
-      getAll();
+      getAllSharesTransactions();
       history.push(
         `/portfolios/${company.portfolioId}/companies/${company.id}?tab=shares`
       );
@@ -249,27 +257,38 @@ export default function SharesTransactionAddForm({
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
 
-      <Form.Item
-        name="exchangeRate"
-        label="Exchange rate:"
-        rules={[{ required: true, message: "Please input the exchange rate" }]}
-      >
-        <InputNumber
-          decimalSeparator="."
-          min={0}
-          step={0.001}
-          style={{ width: "100%" }}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button
-          disabled={transactionDate === null || exchangeName === null}
-          onClick={getExchangeRate}
-          loading={gettingExchangeRate}
-        >
-          Get exchange rate ({exchangeName})
-        </Button>
-      </Form.Item>
+      {company.currencyAbbreviation !==
+        company.portfolioCurrencyAbbreviation && (
+        <Row gutter={8}>
+          <Col span={12}>
+            <Form.Item
+              name="exchangeRate"
+              label="Exchange rate:"
+              rules={[
+                { required: true, message: "Please input the exchange rate" }
+              ]}
+            >
+              <InputNumber
+                decimalSeparator="."
+                min={0}
+                step={0.001}
+                style={{ width: "100%" }}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item label="&nbsp;">
+              <Button
+                disabled={transactionDate === null || exchangeName === null}
+                onClick={getExchangeRate}
+                loading={gettingExchangeRate}
+              >
+                Get exchange rate ({exchangeName})
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      )}
 
       {company.broker.toLowerCase().includes("ing") && (
         <div>
@@ -285,7 +304,7 @@ export default function SharesTransactionAddForm({
               formatter={(value) => `€ ${value}`}
               min={0}
               step={0.001}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             />
           </Form.Item>
           <Form.Item>

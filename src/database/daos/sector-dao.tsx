@@ -8,7 +8,7 @@ export default class SectorDAO {
     //Call the DB
     console.debug("Export all sectors");
     const sql = `
-    SELECT name, color
+    SELECT name, color, isSuperSector, superSectorId
     FROM "sectors";
     `;
     const results = sendIpcSql(sql);
@@ -18,7 +18,11 @@ export default class SectorDAO {
   static getSectors = () => {
     //Call the DB
     const sql = `
-    SELECT * FROM sectors
+    SELECT sectors.*
+      , superSectors.name as superSectorName
+    FROM sectors
+    LEFT JOIN "sectors" as superSectors
+      ON sectors.superSectorId = superSectors.id
     ORDER BY name ASC
     `;
     const results = sendIpcSql(sql);
@@ -26,7 +30,14 @@ export default class SectorDAO {
   };
 
   static getByName = (name: string) => {
-    const sql = `SELECT * FROM "sectors" WHERE "name" = '${name}'`;
+    const sql = `
+    SELECT sectors.*
+      , superSectors.name as superSectorName
+    FROM sectors
+    WHERE "name" = '${name}'
+    LEFT JOIN "sectors" as superSectors
+      ON sectors.superSectorId = superSectors.id
+    `;
     const result = sendIpcSql(sql, "get");
     return result;
   };
@@ -38,21 +49,27 @@ export default class SectorDAO {
 
   static addSector = (sector: SectorFormFields) => {
     //Call the DB
+    console.debug("Adding new sector")
     const sql = `
     INSERT INTO "sectors"
     (
         "name"
       , "color"
+      , "isSuperSector"
+      , "superSectorId"
       , "creationDate"
       , "lastUpdateDate"
       )
     VALUES (
         '${sector.name}'
       , '${sector.color}'
+      , '${sector.isSuperSector ? 1 : 0}'
+      , '${sector.superSectorId}'
       , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
       , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
       );
     `;
+    console.debug(sql)
     const results = sendIpcSql(sql, "insert");
     return results;
   };
@@ -64,15 +81,27 @@ export default class SectorDAO {
   };
 
   static update = (id: string, element: SectorFormFields) => {
+    console.debug(
+      `Saving sector: ${element.isSuperSector} ${
+        element.isSuperSector ? 1 : 0
+      } ${element.superSectorId}`
+    );
+    let superSectorUpdate = `, superSectorId = '${element.superSectorId}'`
+    if(element.superSectorId===null){
+      superSectorUpdate=""
+    }
     const sql = `
     UPDATE sectors
     SET
     name = '${element.name}'
     , color = '${element.color}'
+    , isSuperSector = '${element.isSuperSector ? 1 : 0}'
+    SUPERSECTOR_UPDATE
     , lastUpdateDate = '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
     WHERE sectors.id = '${id}';
     `;
-    const results = sendIpcSql(sql, "update");
+
+    const results = sendIpcSql(sql.replace("SUPERSECTOR_UPDATE", superSectorUpdate), "update");
     return results;
   };
 }

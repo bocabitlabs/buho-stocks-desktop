@@ -26,7 +26,9 @@ export function importSectors(sectors: any[]) {
   sectors.forEach((sectorData: any) => {
     const sector: SectorFormFields = {
       name: sectorData.data[1],
-      color: sectorData.data[2]
+      color: sectorData.data[2],
+      isSuperSector: sectorData.data[3],
+      superSectorId: sectorData.data[4]
     };
     const exists = SectorService.getByName(sector.name);
     if (exists === undefined) {
@@ -156,6 +158,7 @@ export function importCompanies(companies: any[]) {
           portfolioId: portfolio.id,
           alternativeTickers: portfolioData.data[13],
           countryCode: portfolioData.data[14],
+          dividendsCurrencyId: portfolioData.data[15]
         };
         new CompanyService().addCompany(company);
         importedCount++;

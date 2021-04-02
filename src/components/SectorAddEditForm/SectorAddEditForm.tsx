@@ -1,9 +1,10 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, message, Select, Switch } from "antd";
 import { useHistory } from "react-router-dom";
 
 import { SectorsContext } from "contexts/sectors";
 import ColorSelector from "components/ColorSelector/ColorSelector";
+import { Sector } from "types/sector";
 
 interface AddEditFormProps {
   sectorId?: string;
@@ -15,6 +16,8 @@ function SectorAddEditForm({
   const [form] = Form.useForm();
   const history = useHistory();
   const [color, setColor] = useState("#607d8b");
+  const [sectors, setSectors] = useState<Sector[]>([]);
+
 
   const key = "updatable";
 
@@ -27,27 +30,34 @@ function SectorAddEditForm({
   } = useContext(SectorsContext);
 
   useEffect(() => {
+    const sectors = fetchSectors();
+    setSectors(sectors);
+    console.log(sectors)
     if (sectorId) {
       const newSector = getSectorById(sectorId);
       if (newSector) {
         setColor(newSector.color);
       }
     }
-  }, [sectorId, getSectorById]);
+  }, [sectorId, getSectorById, fetchSectors]);
 
   const handleSubmit = (values: any) => {
     message.loading({ content: "Adding sector...", key });
 
-    const { name } = values;
+    const { name, isSuperSector, superSectorId } = values;
     const newSector = {
       name,
-      color
+      color,
+      isSuperSector: isSuperSector? true: false,
+      superSectorId
     };
     let changes = null;
     if (sectorId) {
       changes = updateSector(sectorId, newSector);
     } else {
+      console.log(newSector)
       changes = addSector(newSector);
+      console.debug(changes)
     }
     if (changes.changes) {
       fetchSectors();
@@ -76,7 +86,9 @@ function SectorAddEditForm({
       name="basic"
       onFinish={handleSubmit}
       initialValues={{
-        name: sector?.name
+        name: sector?.name,
+        isSuperSector: sector?.isSuperSector,
+        superSectorId: sector?.superSectorId
       }}
     >
       <Form.Item
@@ -112,6 +124,25 @@ function SectorAddEditForm({
         }
       >
         <ColorSelector color={color} handleColorChange={handleColorChange} />
+      </Form.Item>
+      <Form.Item label="Is super sector" name="isSuperSector" valuePropName="checked">
+        <Switch />
+      </Form.Item>
+      <Form.Item name="superSectorId" label="Super sector">
+        <Select
+          placeholder="Select it's super sector"
+          allowClear
+        >
+          {sectors &&
+            sectors.filter((sec)=> sec.isSuperSector).map((sector: Sector, index: number) => (
+              <Select.Option
+                value={sector.id}
+                key={`sector-${sector.id}-${index}`}
+              >
+                {sector.name}
+              </Select.Option>
+            ))}
+        </Select>
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
