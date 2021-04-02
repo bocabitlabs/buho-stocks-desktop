@@ -39,7 +39,7 @@ VALUES (
 		'CHF',
 		'Swiss Franc',
 		'#607d8b',
-		'SFr.',
+		'chf',
 		'Switzerland'
 	),
 	(
@@ -168,7 +168,10 @@ CREATE TABLE IF NOT EXISTS "sectors" (
 	"color" TEXT,
 	"creationDate" TEXT,
 	"lastUpdateDate" TEXT,
-	PRIMARY KEY ("id" AUTOINCREMENT)
+	"superSectorId" INTEGER,
+	"isSuperSector" INTEGER NOT NULL DEFAULT 0 CHECK(collapsed IN (0, 1)),
+	PRIMARY KEY ("id" AUTOINCREMENT),
+	FOREIGN KEY ("superSectorId") REFERENCES "sectors" ("id")
 );
 INSERT INTO "sectors" ("name", "color")
 VALUES ('Construction', '#3f51b5'),
@@ -221,6 +224,7 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	"sectorId" INTEGER NOT NULL,
 	"marketId" INTEGER NOT NULL,
 	"currencyId" INTEGER NOT NULL,
+	"dividendCurrencyId" INTEGER,
 	"portfolioId" INTEGER NOT NULL,
 	"creationDate" TEXT,
 	"lastUpdateDate" TEXT,
@@ -228,6 +232,7 @@ CREATE TABLE IF NOT EXISTS "companies" (
 	FOREIGN KEY ("sectorId") REFERENCES "sectors" ("id"),
 	FOREIGN KEY ("portfolioId") REFERENCES "portfolios" ("id") ON DELETE CASCADE,
 	FOREIGN KEY ("currencyId") REFERENCES "currencies" ("id"),
+	FOREIGN KEY ("dividendCurrencyId") REFERENCES "currencies" ("id"),
 	FOREIGN KEY ("marketId") REFERENCES "markets" ("id")
 );
 CREATE TABLE IF NOT EXISTS "stockPrices" (
