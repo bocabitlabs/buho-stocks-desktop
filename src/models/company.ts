@@ -12,7 +12,7 @@ import { RightsTransaction } from "types/rights-transaction";
 import { SharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
 import { CompanyDividends } from "./company-parts/company-dividends/company-dividends";
-import { CompanyInvestment } from "./company-parts/company-investment";
+import { CompanyInvestment } from "./company-parts/company-investment/company-investment";
 import { CompanyReturns } from "./company-parts/company-returns";
 import { CompanyShares } from "./company-parts/company-shares/company-shares";
 
@@ -49,7 +49,6 @@ export class Company implements ICompany {
   dividends: ICompanyDividends;
   investment: ICompanyInvestment;
   shares: ICompanyShares;
-
 
   constructor(parameters: ICompany) {
     this.id = parameters.id;
@@ -89,7 +88,10 @@ export class Company implements ICompany {
     this.alternativeTickers = parameters.alternativeTickers;
     this.returns = new CompanyReturns(this);
     this.dividends = new CompanyDividends(this.dividendsTransactions);
-    this.investment = new CompanyInvestment(this);
+    this.investment = new CompanyInvestment(
+      this.sharesTransactions,
+      this.rightsTransactions
+    );
     this.shares = new CompanyShares(this.sharesTransactions);
   }
 

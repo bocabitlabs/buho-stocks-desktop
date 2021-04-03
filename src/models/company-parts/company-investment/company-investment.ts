@@ -1,15 +1,22 @@
 import moment from "moment";
 
-import { ICompany, ICompanyInvestment } from "types/company";
+import { ICompanyInvestment } from "types/company";
 import { RightsTransaction } from "types/rights-transaction";
 import { SharesTransaction } from "types/shares-transaction";
 import { TransactionType } from "types/transaction";
 
 export class CompanyInvestment implements ICompanyInvestment {
-  company: ICompany;
-  constructor(company: ICompany) {
-    this.company = company;
+  sharesTransactions: SharesTransaction[];
+  rightsTransactions: RightsTransaction[];
+
+  constructor(
+    sharesTransactions: SharesTransaction[],
+    rightsTransactions: RightsTransaction[]
+  ) {
+    this.sharesTransactions = sharesTransactions;
+    this.rightsTransactions = rightsTransactions;
   }
+
   getTotalInvested(inPortfolioCurrency = false): number {
     // yearlyShares.investedAmount + yearlyShares.investmentCommission;
     const investedInShares = this.getInvestedInShares(inPortfolioCurrency);
@@ -46,20 +53,21 @@ export class CompanyInvestment implements ICompanyInvestment {
   }
 
   private getInvestedInShares(inPortfolioCurrency: boolean) {
-    return this.company.sharesTransactions
+    return this.sharesTransactions
       .filter(
         (transaction: SharesTransaction) =>
           transaction.type === TransactionType.BUY
       )
       .reduce(function (accumulator: number, obj: SharesTransaction) {
+        let exchangeRate = 1;
         if (inPortfolioCurrency) {
-          return (
-            accumulator +
-            (obj.count * (obj.price * obj.exchangeRate) +
-              obj.commission * obj.exchangeRate)
-          );
+          exchangeRate = obj.exchangeRate;
         }
-        return accumulator + (obj.count * obj.price + obj.commission);
+        return (
+          accumulator +
+          (obj.count * (obj.price * exchangeRate) +
+            obj.commission * exchangeRate)
+        );
       }, 0);
   }
 
@@ -67,7 +75,7 @@ export class CompanyInvestment implements ICompanyInvestment {
     year: string,
     inPortfolioCurrency: boolean
   ) {
-    const amount = this.company.sharesTransactions
+    const amount = this.sharesTransactions
       .filter(
         (transaction: SharesTransaction) =>
           moment(transaction.transactionDate).format("YYYY") === year
@@ -90,27 +98,29 @@ export class CompanyInvestment implements ICompanyInvestment {
   }
 
   private getInvestedInRights(inPortfolioCurrency: boolean) {
-    return this.company.rightsTransactions.reduce(function (
-      accumulator: number,
-      obj: RightsTransaction
-    ) {
-      if (inPortfolioCurrency) {
+    return this.rightsTransactions
+      .filter(
+        (transaction: RightsTransaction) =>
+          transaction.type === TransactionType.BUY
+      )
+      .reduce(function (accumulator: number, obj: RightsTransaction) {
+        let exchangeRate = 1;
+        if (inPortfolioCurrency) {
+          exchangeRate = obj.exchangeRate;
+        }
         return (
           accumulator +
-          (obj.count * (obj.price * obj.exchangeRate) +
-            obj.commission * obj.exchangeRate)
+          (obj.count * (obj.price * exchangeRate) +
+            obj.commission * exchangeRate)
         );
-      }
-      return accumulator + (obj.count * obj.price + obj.commission);
-    },
-    0);
+      }, 0);
   }
 
   private getInvestedInSharesUntilYear(
     year: string,
     inPortfolioCurrency: boolean
   ) {
-    return this.company.sharesTransactions
+    return this.sharesTransactions
       .filter(
         (transaction: SharesTransaction) =>
           transaction.type === TransactionType.BUY &&
@@ -134,7 +144,7 @@ export class CompanyInvestment implements ICompanyInvestment {
     year: string,
     inPortfolioCurrency: boolean
   ) {
-    return this.company.rightsTransactions
+    return this.rightsTransactions
       .filter((transaction: RightsTransaction) =>
         moment(transaction.transactionDate, "YYYY-MM-DD").isBefore(
           moment(year + "-12-31", "YYYY-MM-DD")
@@ -156,7 +166,7 @@ export class CompanyInvestment implements ICompanyInvestment {
     year: string,
     inPortfolioCurrency: boolean
   ) {
-    return this.company.rightsTransactions
+    return this.rightsTransactions
       .filter(
         (transaction: RightsTransaction) =>
           moment(transaction.transactionDate).format("YYYY") === year

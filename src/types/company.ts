@@ -43,6 +43,8 @@ export interface ICompanyDividends {
 }
 
 export interface ICompanyInvestment {
+  sharesTransactions: SharesTransaction[];
+  rightsTransactions: RightsTransaction[];
   getTotalInvested(inPortfolioCurrency?: boolean): number;
   getTotalInvestedUntilYear(
     year: string,
