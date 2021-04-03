@@ -47,14 +47,14 @@ export default function PortfolioReturnChartNivo({
       const years2 = [...years];
       years2.reverse().forEach((element) => {
         const value1 = company.getPortfolioValueForYear(element.toString(), true)
-        const dividends1 = company.getDividendsAmountForYear(element.toString(), true)
+        const dividends1 = company.dividends.getDividendsAmountForYear(element.toString(), true)
         dataTwo.push({ x: element.toString(), y: value1 + dividends1 });
       });
 
       const years3 = [...years];
       years3.reverse().forEach((element) => {
         const value1 = company.getPortfolioValueForYear(element.toString(), true)
-        const dividends1 = company.getCumulativeDividendsAmountForYear(element.toString(), true)
+        const dividends1 = company.dividends.getCumulativeDividendsAmountForYear(element.toString(), true)
         data3.push({ x: element.toString(), y: value1 + dividends1 });
       });
 

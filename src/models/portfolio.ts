@@ -73,9 +73,9 @@ export class Portfolio implements IPortfolio {
       obj: ICompany
     ) {
       if (inBaseCurrency) {
-        return accumulator + obj.getDividendsAmount(inBaseCurrency);
+        return accumulator + obj.dividends.getDividendsAmount(inBaseCurrency);
       }
-      return accumulator + obj.getDividendsAmount(inBaseCurrency);
+      return accumulator + obj.dividends.getDividendsAmount(inBaseCurrency);
     },
     0);
     return amount;
@@ -86,7 +86,7 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      return accumulator + obj.getDividendsAmountForYear(year, inBaseCurrency);
+      return accumulator + obj.dividends.getDividendsAmountForYear(year, inBaseCurrency);
     },
     0);
     return amount;
@@ -97,7 +97,7 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      return accumulator + obj.getCumulativeDividendsAmountForYear(year, inBaseCurrency);
+      return accumulator + obj.dividends.getCumulativeDividendsAmountForYear(year, inBaseCurrency);
     },
     0);
     return amount;
@@ -108,7 +108,7 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      return accumulator + obj.getCumulativeDividendsAmountForYear(year, inBaseCurrency);
+      return accumulator + obj.dividends.getCumulativeDividendsAmountForYear(year, inBaseCurrency);
     },
     0);
     return amount;
@@ -119,7 +119,7 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      return accumulator + obj.getMonthlyDividendsForYear(year, inBaseCurrency);
+      return accumulator + obj.dividends.getMonthlyDividendsForYear(year, inBaseCurrency);
     },
     0);
     return amount;
@@ -130,7 +130,7 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      return accumulator + obj.getTotalInvested(inBaseCurrency);
+      return accumulator + obj.investment.getTotalInvested(inBaseCurrency);
     },
     0);
     return totalInvested;
@@ -141,7 +141,7 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      return accumulator + obj.getTotalInvestedOnYear(year, inBaseCurrency);
+      return accumulator + obj.investment.getTotalInvestedOnYear(year, inBaseCurrency);
     },
     0);
     return totalInvested;
@@ -152,7 +152,7 @@ export class Portfolio implements IPortfolio {
       accumulator: number,
       obj: ICompany
     ) {
-      return accumulator + obj.getTotalInvestedUntilYear(year, inBaseCurrency);
+      return accumulator + obj.investment.getTotalInvestedUntilYear(year, inBaseCurrency);
     },
     0);
     return totalInvested;
@@ -165,10 +165,10 @@ export class Portfolio implements IPortfolio {
     ) {
       if (inBaseCurrency) {
         return (
-          accumulator + obj.getReturnFromSalesForYear(year, inBaseCurrency)
+          accumulator + obj.returns.getReturnFromSalesForYear(year, inBaseCurrency)
         );
       }
-      return accumulator + obj.getReturnFromSalesForYear(year, inBaseCurrency);
+      return accumulator + obj.returns.getReturnFromSalesForYear(year, inBaseCurrency);
     },
     0);
     return totalInvested;
@@ -180,9 +180,9 @@ export class Portfolio implements IPortfolio {
       obj: ICompany
     ) {
       if (inBaseCurrency) {
-        return accumulator + obj.getReturnFromSales(inBaseCurrency);
+        return accumulator + obj.returns.getReturnFromSales(inBaseCurrency);
       }
-      return accumulator + obj.getReturnFromSales(inBaseCurrency);
+      return accumulator + obj.returns.getReturnFromSales(inBaseCurrency);
     },
     0);
     return totalInvested;

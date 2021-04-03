@@ -42,7 +42,7 @@ export default function CompanyReturnChartPercentageNivo({
 
       const years1 = [...years];
       years1.reverse().forEach((element) => {
-        const value = company.getReturnPercentageCumulativeWithDividendsForYear(
+        const value = company.returns.getReturnPercentageCumulativeWithDividendsForYear(
           element.toString(),
           true
         );
@@ -51,7 +51,7 @@ export default function CompanyReturnChartPercentageNivo({
 
       const years4 = [...years];
       years4.reverse().forEach((element) => {
-        const value = company.getReturnPercentageForYearWithDiviends(
+        const value = company.returns.getReturnPercentageForYearWithDiviends(
           element.toString(),
           true
         );
@@ -60,7 +60,7 @@ export default function CompanyReturnChartPercentageNivo({
 
       const years2 = [...years];
       years2.reverse().forEach((element) => {
-        const value = company.getReturnPercentageForYear(element.toString(), true);
+        const value = company.returns.getReturnPercentageForYear(element.toString(), true);
         yearReturn.push({ x: element.toString(), y: value });
       });
 
@@ -69,7 +69,7 @@ export default function CompanyReturnChartPercentageNivo({
 
       const years3 = [...years];
       years3.reverse().forEach((element) => {
-        const value = company.getReturnPercentageCumulativeForYear(
+        const value = company.returns.getReturnPercentageCumulativeForYear(
           element.toString(),
           true
         );

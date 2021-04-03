@@ -24,7 +24,7 @@ export default function CompanyCard({ companyId }: Props): ReactElement | null {
     return null;
   }
 
-  let returnPercentage = company.getReturnWithDividendsPercentage(true);
+  let returnPercentage = company.returns.getReturnWithDividendsPercentage(true);
   const portfolioValue = company.getPortfolioValueWithInflation(true);
 
   let positive: BaseType = "success";
@@ -47,7 +47,7 @@ export default function CompanyCard({ companyId }: Props): ReactElement | null {
         extra={<CountryFlag code={company.countryCode} />}
         title={company.name}
       >
-        {company.getSharesCount()} shares
+        {company.shares.getSharesCount()} shares
         <Statistic
           value={portfolioValue}
           suffix={portfolio.currencySymbol}

@@ -100,12 +100,12 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
       key: company.id,
       color: company.color,
       countryCode: company.countryCode,
-      invested: company.getTotalInvested(true),
+      invested: company.investment.getTotalInvested(true),
       name: company.name,
       portfolioCurrencySymbol: company.portfolioCurrencySymbol,
       portfolioValue: company.getPortfolioValue(true),
-      return: company.getReturnWithDividendsPercentage(true),
-      shares: company.getSharesCount(),
+      return: company.returns.getReturnWithDividendsPercentage(true),
+      shares: company.shares.getSharesCount(),
       ticker: company.ticker
     }));
   };

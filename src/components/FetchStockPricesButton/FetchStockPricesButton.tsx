@@ -31,7 +31,7 @@ export default function FetchStockPricesButton({
       }
       for (let year of years) {
         console.debug(`Fetching: ${company.ticker}`);
-        const numberOfShares = company.getCumulativeSharesCountUntilYear(
+        const numberOfShares = company.shares.getCumulativeSharesCountUntilYear(
           year.toString()
         );
         // console.log(result)
