@@ -14,7 +14,7 @@ import { IStockPrice } from "types/stock-price";
 import { CompanyDividends } from "./company-parts/company-dividends";
 import { CompanyInvestment } from "./company-parts/company-investment";
 import { CompanyReturns } from "./company-parts/company-returns";
-import { CompanyShares } from "./company-parts/company-shares";
+import { CompanyShares } from "./company-parts/company-shares/company-shares";
 
 export class Company implements ICompany {
   id: string;
@@ -90,7 +90,7 @@ export class Company implements ICompany {
     this.returns = new CompanyReturns(this);
     this.dividends = new CompanyDividends(this);
     this.investment = new CompanyInvestment(this);
-    this.shares = new CompanyShares(this);
+    this.shares = new CompanyShares(this.sharesTransactions);
   }
 
   getLatestStockPrice(inPortfolioCurrency?: boolean): IStockPrice | null {

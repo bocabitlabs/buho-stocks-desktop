@@ -51,6 +51,7 @@ export interface ICompanyInvestment {
 }
 
 export interface ICompanyShares {
+  sharesTransactions: SharesTransaction[];
   getSharesCount: Function;
   getSharesCountForYear(year: string): number;
   getCumulativeSharesCountUntilYear(year: string): number;
