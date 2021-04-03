@@ -60,7 +60,7 @@ export default function PortfolioYearlyEvolutionChartNivo({
           y: tempPortfolioValue
         });
 
-        const tempAccumInvestment = portfolio.getTotalInvestedUntilYear(
+        const tempAccumInvestment = portfolio.investments.getTotalInvestedUntilYear(
           element.toString(),
           true
         );

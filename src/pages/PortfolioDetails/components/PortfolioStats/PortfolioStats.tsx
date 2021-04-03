@@ -88,7 +88,7 @@ export default function PortfolioStats(): ReactElement | null {
       console.debug("Get values for all");
       let newDividendsPerYear = portfolio.dividends.getDividends(true);
       let newDividendsPerMonth = 0;
-      let newTotalInvestedPerYear = portfolio.getTotalInvested(true);
+      let newTotalInvestedPerYear = portfolio.investments.getTotalInvested(true);
       let newValue = portfolio.getPortfolioValue(true);
       const newPortfolioReturnPercentage = portfolio.returns.getReturnWithDividendsPercentage(
         true
@@ -112,7 +112,7 @@ export default function PortfolioStats(): ReactElement | null {
         value.toString(),
         true
       );
-      let newTotalInvestedPerYear = portfolio.getTotalInvestedOnYear(
+      let newTotalInvestedPerYear = portfolio.investments.getTotalInvestedOnYear(
         value.toString(),
         true
       );

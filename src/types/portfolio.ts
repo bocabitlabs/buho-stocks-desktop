@@ -37,6 +37,12 @@ export interface IPortfolioReturns {
   ): number;
 }
 
+export interface IPortfolioInvestments {
+  getTotalInvested(inBaseCurrency?: boolean): number;
+  getTotalInvestedOnYear(year: string, inBaseCurrency?: boolean): number;
+  getTotalInvestedUntilYear(year: string, inBaseCurrency?: boolean): number;
+}
+
 export interface IPortfolio extends PortfolioFormFields {
   id: string;
   currencySymbol: string;
@@ -46,11 +52,9 @@ export interface IPortfolio extends PortfolioFormFields {
   companies: ICompany[];
   dividends: IPortfolioDividends;
   returns: IPortfolioReturns;
+  investments: IPortfolioInvestments;
 
   getPortfolioValue(inBaseCurrency?: boolean): number;
   getPortfolioValueForYear(year: string, inBaseCurrency?: boolean): number;
-  getTotalInvested(inBaseCurrency?: boolean): number;
-  getTotalInvestedOnYear(year: string, inBaseCurrency?: boolean): number;
-  getTotalInvestedUntilYear(year: string, inBaseCurrency?: boolean): number;
   getPortfolioValueWithInflation(inBaseCurrency?: boolean): number;
 }

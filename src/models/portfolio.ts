@@ -1,6 +1,7 @@
 import { ICompany } from "types/company";
-import { IPortfolio, IPortfolioDividends, IPortfolioReturns } from "types/portfolio";
+import { IPortfolio, IPortfolioDividends, IPortfolioInvestments, IPortfolioReturns } from "types/portfolio";
 import { PortfolioDividends } from "./portfolio-parts/portfolio-dividends";
+import { PortfolioInvestments } from "./portfolio-parts/portfolio-investments";
 import { PortfolioReturns } from "./portfolio-parts/portfolio-returns";
 
 export class Portfolio implements IPortfolio {
@@ -16,6 +17,7 @@ export class Portfolio implements IPortfolio {
   companies: ICompany[];
   dividends: IPortfolioDividends;
   returns: IPortfolioReturns;
+  investments: IPortfolioInvestments;
 
   constructor(parameters: IPortfolio) {
     this.id = parameters.id;
@@ -30,6 +32,7 @@ export class Portfolio implements IPortfolio {
     this.companies = parameters.companies;
     this.dividends = new PortfolioDividends(this);
     this.returns = new PortfolioReturns(this);
+    this.investments = new PortfolioInvestments(this);
   }
 
   getPortfolioValue(inBaseCurrency = false): number {
@@ -67,42 +70,4 @@ export class Portfolio implements IPortfolio {
     return totalPortfolioValue;
   }
 
-  getTotalInvested(inBaseCurrency: boolean) {
-    const totalInvested = this.companies.reduce(function (
-      accumulator: number,
-      obj: ICompany
-    ) {
-      return accumulator + obj.investment.getTotalInvested(inBaseCurrency);
-    },
-    0);
-    return totalInvested;
-  }
-
-  getTotalInvestedOnYear(year: string, inBaseCurrency: boolean) {
-    const totalInvested = this.companies.reduce(function (
-      accumulator: number,
-      obj: ICompany
-    ) {
-      return (
-        accumulator +
-        obj.investment.getTotalInvestedOnYear(year, inBaseCurrency)
-      );
-    },
-    0);
-    return totalInvested;
-  }
-
-  getTotalInvestedUntilYear(year: string, inBaseCurrency = false): number {
-    const totalInvested = this.companies.reduce(function (
-      accumulator: number,
-      obj: ICompany
-    ) {
-      return (
-        accumulator +
-        obj.investment.getTotalInvestedUntilYear(year, inBaseCurrency)
-      );
-    },
-    0);
-    return totalInvested;
-  }
 }
