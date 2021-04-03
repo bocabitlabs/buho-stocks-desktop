@@ -11,7 +11,7 @@ import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
 import { SharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
-import { CompanyDividends } from "./company-parts/company-dividends";
+import { CompanyDividends } from "./company-parts/company-dividends/company-dividends";
 import { CompanyInvestment } from "./company-parts/company-investment";
 import { CompanyReturns } from "./company-parts/company-returns";
 import { CompanyShares } from "./company-parts/company-shares/company-shares";
@@ -88,7 +88,7 @@ export class Company implements ICompany {
     this.closed = parameters.closed;
     this.alternativeTickers = parameters.alternativeTickers;
     this.returns = new CompanyReturns(this);
-    this.dividends = new CompanyDividends(this);
+    this.dividends = new CompanyDividends(this.dividendsTransactions);
     this.investment = new CompanyInvestment(this);
     this.shares = new CompanyShares(this.sharesTransactions);
   }

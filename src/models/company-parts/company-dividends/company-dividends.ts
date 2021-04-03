@@ -1,18 +1,18 @@
 import moment from "moment";
 import { DividendsTransaction } from "types/dividends-transaction";
 
-import { ICompany, ICompanyDividends } from "types/company";
+import { ICompanyDividends } from "types/company";
 
 export class CompanyDividends implements ICompanyDividends {
-  company: ICompany;
-  constructor(company: ICompany) {
-    this.company = company;
+  dividendsTransactions: DividendsTransaction[];
+  constructor(dividendsTransactions: DividendsTransaction[]) {
+    this.dividendsTransactions = dividendsTransactions;
   }
   getDividendsAmount(
     inPortfolioCurrency = false,
     includeCommission = true
   ): number {
-    const amount = this.company.dividendsTransactions.reduce(function (
+    const amount = this.dividendsTransactions.reduce(function (
       accumulator: number,
       obj: DividendsTransaction
     ) {
@@ -20,12 +20,9 @@ export class CompanyDividends implements ICompanyDividends {
       if (inPortfolioCurrency) {
         exchangeRate = obj.exchangeRate;
       }
-      console.debug(
-        `Get dividends amount with commission: ${includeCommission}`
-      );
       if (includeCommission) {
         return (
-          accumulator + (obj.price * exchangeRate * obj.count - obj.commission)
+          accumulator + (obj.price * obj.count - obj.commission) * exchangeRate
         );
       }
 
@@ -40,7 +37,7 @@ export class CompanyDividends implements ICompanyDividends {
     inPortfolioCurrency?: boolean,
     includeCommission = true
   ): number {
-    const amount = this.company.dividendsTransactions
+    const amount = this.dividendsTransactions
       .filter(
         (transaction: DividendsTransaction) =>
           moment(transaction.transactionDate).format("YYYY") === year
@@ -66,7 +63,7 @@ export class CompanyDividends implements ICompanyDividends {
     inPortfolioCurrency?: boolean,
     includeCommission = true
   ): number {
-    const amount = this.company.dividendsTransactions
+    const amount = this.dividendsTransactions
       .filter((transaction: DividendsTransaction) => {
         return moment(transaction.transactionDate, "YYYY-MM-DD").isBefore(
           moment(year + "-12-31", "YYYY-MM-DD")

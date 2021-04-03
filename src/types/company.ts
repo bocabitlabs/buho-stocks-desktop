@@ -21,6 +21,7 @@ export interface CompanyFormFields {
 }
 
 export interface ICompanyDividends {
+  dividendsTransactions: DividendsTransaction[];
   getDividendsAmount(
     inPortfolioCurrency?: boolean,
     includeCommission?: boolean

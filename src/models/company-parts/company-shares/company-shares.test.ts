@@ -1,20 +1,7 @@
-// const returnAllExample: Inflation[] = [
-//   { id: "1", year: 2019, percentage: 5 },
-//   { id: "2", year: 2020, percentage: 2 },
-//   { id: "3", year: 2021, percentage: 4 }
-// ];
-
 import { ICompanyShares } from "types/company";
 import { SharesTransaction } from "types/shares-transaction";
 import { TransactionType } from "types/transaction";
 import { CompanyShares } from "./company-shares";
-
-// jest.mock("database/daos/inflation-dao", () => ({
-//   getAll: () => returnAllExample,
-//   getInflationsForYear: () => returnAllExample,
-//   addInflation: () => ({changes: 1}),
-//   deleteById: () => ({changes: 1})
-// }));
 
 describe("Company Shares tests", () => {
 
