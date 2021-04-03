@@ -30,7 +30,7 @@ export default function PortfolioStats(): ReactElement | null {
     setYear(value);
     if (portfolio !== null) {
       if (value === "all") {
-        console.debug("Set all")
+        console.debug("Set all");
         getValuesForAll();
       } else {
         getValuesForYear(value);
@@ -85,12 +85,12 @@ export default function PortfolioStats(): ReactElement | null {
 
   const getValuesForAll = () => {
     if (portfolio !== null) {
-      console.debug("Get values for all")
-      let newDividendsPerYear = portfolio.getDividends(true);
+      console.debug("Get values for all");
+      let newDividendsPerYear = portfolio.dividends.getDividends(true);
       let newDividendsPerMonth = 0;
       let newTotalInvestedPerYear = portfolio.getTotalInvested(true);
       let newValue = portfolio.getPortfolioValue(true);
-      const newPortfolioReturnPercentage = portfolio.getReturnWithDividendsPercentage(
+      const newPortfolioReturnPercentage = portfolio.returns.getReturnWithDividendsPercentage(
         true
       );
       setPortfolioReturnPercentage(newPortfolioReturnPercentage);
@@ -104,11 +104,11 @@ export default function PortfolioStats(): ReactElement | null {
 
   const getValuesForYear = (value: number) => {
     if (portfolio !== null) {
-      let newDividendsPerYear = portfolio.getDividendsForYear(
+      let newDividendsPerYear = portfolio.dividends.getDividendsForYear(
         value.toString(),
         true
       );
-      let newDividendsPerMonth = portfolio.getMonthlyDividendsForYear(
+      let newDividendsPerMonth = portfolio.dividends.getMonthlyDividendsForYear(
         value.toString(),
         true
       );
@@ -116,12 +116,9 @@ export default function PortfolioStats(): ReactElement | null {
         value.toString(),
         true
       );
-      let newValue = portfolio.getPortfolioValueForYear(
-        value.toString(),
-        true
-      );
+      let newValue = portfolio.getPortfolioValueForYear(value.toString(), true);
 
-      const newPortfolioReturnPercentage = portfolio.getReturnPercentageWithDividendsForYearCumulative(
+      const newPortfolioReturnPercentage = portfolio.returns.getReturnPercentageWithDividendsForYearCumulative(
         value.toString(),
         true
       );

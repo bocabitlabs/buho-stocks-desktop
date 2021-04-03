@@ -39,7 +39,7 @@ export default function PortfolioReturnChartPercentageNivo({
 
       const years1 = [...years];
       years1.reverse().forEach((element) => {
-        const value = portfolio.getReturnPercentageCumulativeForYear(
+        const value = portfolio.returns.getReturnPercentageCumulativeForYear(
           element.toString(),
           true
         );
@@ -48,7 +48,7 @@ export default function PortfolioReturnChartPercentageNivo({
 
       const years2 = [...years];
       years2.reverse().forEach((element) => {
-        const value = portfolio.getReturnPercentageForYear(element.toString(), true);
+        const value = portfolio.returns.getReturnPercentageForYear(element.toString(), true);
         dataTwo.push({ x: element.toString(), y: value });
       });
 

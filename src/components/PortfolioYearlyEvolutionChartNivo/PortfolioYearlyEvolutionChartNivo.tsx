@@ -69,12 +69,12 @@ export default function PortfolioYearlyEvolutionChartNivo({
           y: tempAccumInvestment
         });
 
-        const accumulatedDividendsData = portfolio.getCumulativeDividendsForYear(
+        const accumulatedDividendsData = portfolio.dividends.getCumulativeDividendsForYear(
           element.toString(),
           true
         );
 
-        const tempDividendsData = portfolio.getDividendsForYear(
+        const tempDividendsData = portfolio.dividends.getDividendsForYear(
           element.toString(),
           true
         );

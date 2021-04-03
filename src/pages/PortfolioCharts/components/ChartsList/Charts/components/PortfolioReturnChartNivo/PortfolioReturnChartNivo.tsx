@@ -40,7 +40,7 @@ export default function PortfolioReturnChartNivo({
 
       const years1 = [...years];
       years1.reverse().forEach((element) => {
-        const value = portfolio.getReturnWithDividendsForYear(
+        const value = portfolio.returns.getReturnWithDividendsForYear(
           element.toString(),
           true
         );
@@ -49,7 +49,7 @@ export default function PortfolioReturnChartNivo({
 
       const years2 = [...years];
       years2.reverse().forEach((element) => {
-        const value = portfolio.getReturnForYear(element.toString(), true);
+        const value = portfolio.returns.getReturnForYear(element.toString(), true);
         dataTwo.push({ x: element.toString(), y: value });
       });
 
