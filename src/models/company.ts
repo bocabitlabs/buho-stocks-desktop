@@ -6,7 +6,8 @@ import {
   ICompanyDividends,
   ICompanyInvestment,
   ICompanyShares,
-  ICompanyStockPrices
+  ICompanyStockPrices,
+  ICompanyPortfolioValue
 } from "types/company";
 import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
@@ -14,6 +15,7 @@ import { SharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
 import { CompanyDividends } from "./company-parts/company-dividends/company-dividends";
 import { CompanyInvestment } from "./company-parts/company-investment/company-investment";
+import { CompanyPortfolioValue } from "./company-parts/company-portfolio-value/company-portfolio-value";
 import { CompanyReturns } from "./company-parts/company-returns/company-returns";
 import { CompanyShares } from "./company-parts/company-shares/company-shares";
 import { CompanyStockPrices } from "./company-parts/company-stock-prices/company-stock-prices";
@@ -52,6 +54,7 @@ export class Company implements ICompany {
   investment: ICompanyInvestment;
   shares: ICompanyShares;
   prices: ICompanyStockPrices;
+  portfolioValue: ICompanyPortfolioValue;
 
   constructor(parameters: ICompany) {
     this.id = parameters.id;
@@ -97,57 +100,7 @@ export class Company implements ICompany {
     );
     this.shares = new CompanyShares(this.sharesTransactions);
     this.prices = new CompanyStockPrices(this.stockPrices);
-  }
-
-  getPortfolioValue(inPortfolioCurrency = false): number {
-    const sharesCount = this.shares.getSharesCount();
-    const lastStockPrice = this.prices.getLatestStockPrice(inPortfolioCurrency);
-
-    if (lastStockPrice === null || sharesCount === 0) {
-      return 0;
-    }
-
-    return sharesCount * lastStockPrice.price;
-  }
-
-  getPortfolioValueForYear(year: string, inPortfolioCurrency = false): number {
-    let accumulated = 0;
-
-    const sharesCount = this.shares.getCumulativeSharesCountUntilYear(year);
-    const lastStockPrice = this.prices.getLatestStockPriceForYear(
-      year,
-      inPortfolioCurrency
-    );
-    if (sharesCount > 0 && lastStockPrice === null) {
-      console.error(
-        `${this.name}: No stock price value for ${year}. shares: ${sharesCount}`
-      );
-    }
-
-    if (
-      lastStockPrice !== null &&
-      lastStockPrice !== undefined &&
-      sharesCount !== 0
-    ) {
-      accumulated = sharesCount * lastStockPrice.price;
-    }
-
-    return accumulated;
-  }
-
-  getPortfolioValueWithInflation(inPortfolioCurrency = false): number {
-    const lastStockPrice = this.prices.getLatestStockPrice(inPortfolioCurrency);
-
-    if (lastStockPrice) {
-      const portfolioValue = this.getPortfolioValue(inPortfolioCurrency);
-      var lastDate = moment(lastStockPrice.transactionDate);
-
-      const inflationForYear = InflationService.calculateInflationForYear(
-        lastDate.year().toString()
-      );
-      return portfolioValue / (1 + inflationForYear);
-    }
-    return 0;
+    this.portfolioValue = new CompanyPortfolioValue(this.name, this.prices, this.shares)
   }
 
   getYoc(inPortfolioCurrency = false): number {

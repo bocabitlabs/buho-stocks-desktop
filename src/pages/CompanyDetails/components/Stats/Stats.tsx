@@ -46,7 +46,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
         const newTotalInvested = company.investment.getTotalInvested(true);
         setAccumulatedInvestment(newTotalInvested);
 
-        const newPorfolioValue = company.getPortfolioValue(true);
+        const newPorfolioValue = company.portfolioValue.getPortfolioValue(true);
         setPortfolioValue(newPorfolioValue);
         const newCompanyReturn = company.returns.getReturnWithDividends(
           true,
@@ -112,7 +112,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
       );
       setAccumulatedInvestment(newAccumulatedInvestment);
 
-      const newPortfolioValue = company.getPortfolioValueForYear(
+      const newPortfolioValue = company.portfolioValue.getPortfolioValueForYear(
         value.toString(),
         true
       );

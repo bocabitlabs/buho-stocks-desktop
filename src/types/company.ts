@@ -110,6 +110,14 @@ export interface ICompanyReturns {
   ): number;
 }
 
+export interface ICompanyPortfolioValue{
+  prices: ICompanyStockPrices;
+  shares: ICompanyShares;
+  companyName: string;
+  getPortfolioValue(inPortfolioCurrency?: boolean): number;
+  getPortfolioValueForYear(year: string, inPortfolioCurrency?: boolean): number;
+}
+
 export interface ICompany extends CompanyFormFields {
   id: string;
   portfolioName: string;
@@ -125,15 +133,14 @@ export interface ICompany extends CompanyFormFields {
   sharesTransactions: SharesTransaction[];
   dividendsTransactions: DividendsTransaction[];
   rightsTransactions: RightsTransaction[];
+  // Components
   dividends: ICompanyDividends;
   returns: ICompanyReturns;
   investment: ICompanyInvestment;
   shares: ICompanyShares;
   prices: ICompanyStockPrices;
+  portfolioValue: ICompanyPortfolioValue;
 
-  getPortfolioValue(inPortfolioCurrency?: boolean): number;
-  getPortfolioValueForYear(year: string, inPortfolioCurrency?: boolean): number;
-  getPortfolioValueWithInflation(inPortfolioCurrency?: boolean): number;
   getYoc(inPortfolioCurrency?: boolean): number;
   getRpd(inPortfolioCurrency?: boolean): number;
 }

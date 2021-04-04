@@ -54,7 +54,7 @@ export class CompanyReturns implements ICompanyReturns{
 
   getReturn(inPortfolioCurrency = false) {
     const totalInvested = this.company.investment.getTotalInvested(inPortfolioCurrency);
-    const portfolioValue = this.company.getPortfolioValue(inPortfolioCurrency);
+    const portfolioValue = this.company.portfolioValue.getPortfolioValue(inPortfolioCurrency);
     let returnFromSales = this.getReturnFromSales(inPortfolioCurrency);
     let totalReturn = 0;
     if (this.company.closed) {
@@ -78,11 +78,11 @@ export class CompanyReturns implements ICompanyReturns{
   ) {
     // R4-(R3+E4)
     // portfolioValue - (previousPortfolioValue + investedCurrentYear)
-    const R3 = this.company.getPortfolioValueForYear(
+    const R3 = this.company.portfolioValue.getPortfolioValueForYear(
       (parseInt(year) - 1).toString(),
       inPortfolioCurrency
     );
-    const R4 = this.company.getPortfolioValueForYear(year, inPortfolioCurrency);
+    const R4 = this.company.portfolioValue.getPortfolioValueForYear(year, inPortfolioCurrency);
     const E4 = this.company.investment.getTotalInvestedOnYear(year, inPortfolioCurrency);
     let amount = R4 - (R3 + E4);
 
@@ -146,11 +146,11 @@ export class CompanyReturns implements ICompanyReturns{
     year: string,
     inPortfolioCurrency = false
   ): number {
-    const Q3 = this.company.getPortfolioValueForYear(
+    const Q3 = this.company.portfolioValue.getPortfolioValueForYear(
       (parseInt(year) - 1).toString(),
       inPortfolioCurrency
     );
-    const Q4 = this.company.getPortfolioValueForYear(year, inPortfolioCurrency);
+    const Q4 = this.company.portfolioValue.getPortfolioValueForYear(year, inPortfolioCurrency);
     const E4 = this.company.investment.getTotalInvestedOnYear(year, inPortfolioCurrency);
     let returnPercentage = 0;
     if (Q3 + E4 !== 0) {
@@ -168,11 +168,11 @@ export class CompanyReturns implements ICompanyReturns{
     inPortfolioCurrency = false,
     includeCommission = true
   ): number {
-    const Q3 = this.company.getPortfolioValueForYear(
+    const Q3 = this.company.portfolioValue.getPortfolioValueForYear(
       (parseInt(year) - 1).toString(),
       inPortfolioCurrency
     );
-    const Q4 = this.company.getPortfolioValueForYear(year, inPortfolioCurrency);
+    const Q4 = this.company.portfolioValue.getPortfolioValueForYear(year, inPortfolioCurrency);
     const E4 = this.company.investment.getTotalInvestedOnYear(year, inPortfolioCurrency);
     const F4 = this.company.dividends.getDividendsAmountForYear(
       year,
@@ -221,7 +221,7 @@ export class CompanyReturns implements ICompanyReturns{
     year: string,
     inPortfolioCurrency = false
   ): number {
-    const Q4 = this.company.getPortfolioValueForYear(year, inPortfolioCurrency);
+    const Q4 = this.company.portfolioValue.getPortfolioValueForYear(year, inPortfolioCurrency);
     const F4 = this.company.investment.getTotalInvestedUntilYear(year, inPortfolioCurrency);
     console.debug(`Amount invested in ${year}: ${F4} -> ${Q4}`);
 
@@ -244,7 +244,7 @@ export class CompanyReturns implements ICompanyReturns{
     year: string,
     inPortfolioCurrency = false
   ): number {
-    const Q4 = this.company.getPortfolioValueForYear(year, inPortfolioCurrency);
+    const Q4 = this.company.portfolioValue.getPortfolioValueForYear(year, inPortfolioCurrency);
     const D1 = this.company.dividends.getCumulativeDividendsAmountForYear(
       year,
       inPortfolioCurrency

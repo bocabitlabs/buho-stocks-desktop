@@ -52,7 +52,7 @@ export default function Charts({
         currencyName: company.currencyName,
         dividends: company.dividends.getDividendsAmount(true),
         portfolioCurrencySymbol: company.portfolioCurrencySymbol,
-        portfolioValue: company.getPortfolioValue(true),
+        portfolioValue: company.portfolioValue.getPortfolioValue(true),
         return: company.returns.getReturnWithDividendsPercentage(true),
         ticker: company.ticker,
         investedText: StringUtils.getAmountWithSymbol(

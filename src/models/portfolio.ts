@@ -39,7 +39,7 @@ export class Portfolio implements IPortfolio {
     const totalPortfolioValue = this.companies
       .filter((company) => !company.closed)
       .reduce(function (accumulator: number, obj: ICompany) {
-        return accumulator + obj.getPortfolioValue(inBaseCurrency);
+        return accumulator + obj.portfolioValue.getPortfolioValue(inBaseCurrency);
       }, 0);
     return totalPortfolioValue;
   }
@@ -49,7 +49,7 @@ export class Portfolio implements IPortfolio {
     let accumulated = this.companies
       .filter((company) => !company.closed)
       .reduce(function (accumulator: number, obj: ICompany) {
-        return accumulator + obj.getPortfolioValueForYear(year, inBaseCurrency);
+        return accumulator + obj.portfolioValue.getPortfolioValueForYear(year, inBaseCurrency);
       }, 0);
     console.debug(`Portfolio value: for year ${year} = ${accumulated}`);
 
@@ -62,9 +62,9 @@ export class Portfolio implements IPortfolio {
       obj: ICompany
     ) {
       if (inBaseCurrency) {
-        return accumulator + obj.getPortfolioValueWithInflation(true);
+        return accumulator + obj.portfolioValue.getPortfolioValueWithInflation(true);
       }
-      return accumulator + obj.getPortfolioValueWithInflation();
+      return accumulator + obj.portfolioValue.getPortfolioValueWithInflation();
     },
     0);
     return totalPortfolioValue;

@@ -103,7 +103,7 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
       invested: company.investment.getTotalInvested(true),
       name: company.name,
       portfolioCurrencySymbol: company.portfolioCurrencySymbol,
-      portfolioValue: company.getPortfolioValue(true),
+      portfolioValue: company.portfolioValue.getPortfolioValue(true),
       return: company.returns.getReturnWithDividendsPercentage(true),
       shares: company.shares.getSharesCount(),
       ticker: company.ticker
