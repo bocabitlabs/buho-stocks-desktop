@@ -5,7 +5,8 @@ import {
   ICompany,
   ICompanyDividends,
   ICompanyInvestment,
-  ICompanyShares
+  ICompanyShares,
+  ICompanyStockPrices
 } from "types/company";
 import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
@@ -13,8 +14,9 @@ import { SharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
 import { CompanyDividends } from "./company-parts/company-dividends/company-dividends";
 import { CompanyInvestment } from "./company-parts/company-investment/company-investment";
-import { CompanyReturns } from "./company-parts/company-returns";
+import { CompanyReturns } from "./company-parts/company-returns/company-returns";
 import { CompanyShares } from "./company-parts/company-shares/company-shares";
+import { CompanyStockPrices } from "./company-parts/company-stock-prices/company-stock-prices";
 
 export class Company implements ICompany {
   id: string;
@@ -49,6 +51,7 @@ export class Company implements ICompany {
   dividends: ICompanyDividends;
   investment: ICompanyInvestment;
   shares: ICompanyShares;
+  prices: ICompanyStockPrices;
 
   constructor(parameters: ICompany) {
     this.id = parameters.id;
@@ -93,63 +96,12 @@ export class Company implements ICompany {
       this.rightsTransactions
     );
     this.shares = new CompanyShares(this.sharesTransactions);
-  }
-
-  getLatestStockPrice(inPortfolioCurrency?: boolean): IStockPrice | null {
-    if (this.stockPrices.length < 1) {
-      return null;
-    }
-
-    const max = this.stockPrices.reduce(function (prev, current) {
-      var previousDate = moment(prev.transactionDate);
-      var currentDate = moment(current.transactionDate);
-      return previousDate > currentDate ? prev : current;
-    });
-
-    const newMax = {};
-    const returnedTarget = Object.assign(newMax, max);
-
-    if (inPortfolioCurrency) {
-      returnedTarget.price = returnedTarget.price * returnedTarget.exchangeRate;
-    }
-    return returnedTarget;
-  }
-
-  getLatestStockPriceForYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): IStockPrice | null {
-    if (this.stockPrices.length < 1) {
-      return null;
-    }
-    if (this.stockPrices.length > 0) {
-      const currentYearStockPrices = this.stockPrices.filter(
-        (transaction: IStockPrice) =>
-          moment(transaction.transactionDate).format("YYYY") === year
-      );
-      if (currentYearStockPrices.length > 0) {
-        const max = currentYearStockPrices.reduce(function (prev, current) {
-          var previousDate = moment(prev.transactionDate);
-          var currentDate = moment(current.transactionDate);
-          return previousDate > currentDate ? prev : current;
-        });
-
-        const newMax = {};
-        const returnedTarget = Object.assign(newMax, max);
-        if (inPortfolioCurrency) {
-          returnedTarget.price =
-            returnedTarget.price * returnedTarget.exchangeRate;
-        }
-        return returnedTarget;
-      }
-    }
-
-    return null;
+    this.prices = new CompanyStockPrices(this.stockPrices);
   }
 
   getPortfolioValue(inPortfolioCurrency = false): number {
     const sharesCount = this.shares.getSharesCount();
-    const lastStockPrice = this.getLatestStockPrice(inPortfolioCurrency);
+    const lastStockPrice = this.prices.getLatestStockPrice(inPortfolioCurrency);
 
     if (lastStockPrice === null || sharesCount === 0) {
       return 0;
@@ -162,7 +114,7 @@ export class Company implements ICompany {
     let accumulated = 0;
 
     const sharesCount = this.shares.getCumulativeSharesCountUntilYear(year);
-    const lastStockPrice = this.getLatestStockPriceForYear(
+    const lastStockPrice = this.prices.getLatestStockPriceForYear(
       year,
       inPortfolioCurrency
     );
@@ -184,7 +136,7 @@ export class Company implements ICompany {
   }
 
   getPortfolioValueWithInflation(inPortfolioCurrency = false): number {
-    const lastStockPrice = this.getLatestStockPrice(inPortfolioCurrency);
+    const lastStockPrice = this.prices.getLatestStockPrice(inPortfolioCurrency);
 
     if (lastStockPrice) {
       const portfolioValue = this.getPortfolioValue(inPortfolioCurrency);

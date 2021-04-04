@@ -53,6 +53,15 @@ export interface ICompanyInvestment {
   getTotalInvestedOnYear(year: string, inPortfolioCurrency?: boolean): number;
 }
 
+export interface ICompanyStockPrices {
+  stockPrices: IStockPrice[];
+  getLatestStockPrice(inPortfolioCurrency?: boolean): IStockPrice | null;
+  getLatestStockPriceForYear(
+    year: string,
+    inPortfolioCurrency?: boolean
+  ): IStockPrice | null;
+}
+
 export interface ICompanyShares {
   sharesTransactions: SharesTransaction[];
   getSharesCount: Function;
@@ -120,13 +129,7 @@ export interface ICompany extends CompanyFormFields {
   returns: ICompanyReturns;
   investment: ICompanyInvestment;
   shares: ICompanyShares;
-
-
-  getLatestStockPrice(inPortfolioCurrency?: boolean): IStockPrice | null;
-  getLatestStockPriceForYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): IStockPrice | null;
+  prices: ICompanyStockPrices;
 
   getPortfolioValue(inPortfolioCurrency?: boolean): number;
   getPortfolioValueForYear(year: string, inPortfolioCurrency?: boolean): number;

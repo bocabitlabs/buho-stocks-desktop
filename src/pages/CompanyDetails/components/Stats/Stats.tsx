@@ -59,7 +59,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
         );
         setReturnPercentage(newReturnPercentage);
 
-        const newStockPrice = company.getLatestStockPrice(true);
+        const newStockPrice = company.prices.getLatestStockPrice(true);
         setLatestStockPrice(newStockPrice);
       }
     },
@@ -131,7 +131,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
       );
       setReturnPercentage(newReturnPercentage);
 
-      const newStockPrice = company.getLatestStockPriceForYear(
+      const newStockPrice = company.prices.getLatestStockPriceForYear(
         value.toString(),
         true
       );
