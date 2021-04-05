@@ -34,9 +34,15 @@ export default function FetchStockPricesButton({
         const numberOfShares = company.shares.getCumulativeSharesCountUntilYear(
           year.toString()
         );
+        var currentYear = moment().format("YYYY");
+
         // console.log(result)
-        const initialDate = "01-12-" + year.toString();
+        let initialDate = "01-12-" + year.toString();
         let endDate = "31-12-" + year.toString();
+        if (year.toString() === currentYear) {
+          initialDate = moment().subtract(1, "week").format("DD-MM-YYYY");
+          endDate = moment().format("DD-MM-YYYY");
+        }
 
         // const currentDate = moment(new Date(), "DD-MM-YYYY")
         // const endDateMoment = moment(endDate, "DD-MM-YYYY")
@@ -139,7 +145,7 @@ export default function FetchStockPricesButton({
       <Modal
         title="Update stock prices"
         visible={isModalVisible}
-        onCancel={()=> setIsModalVisible(!isModalVisible)}
+        onCancel={() => setIsModalVisible(!isModalVisible)}
         footer={[
           <Button key="back" onClick={handleOk}>
             Close
