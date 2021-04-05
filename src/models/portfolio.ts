@@ -56,18 +56,4 @@ export class Portfolio implements IPortfolio {
     return accumulated;
   }
 
-  getPortfolioValueWithInflation(inBaseCurrency = false): number {
-    const totalPortfolioValue = this.companies.reduce(function (
-      accumulator: number,
-      obj: ICompany
-    ) {
-      if (inBaseCurrency) {
-        return accumulator + obj.portfolioValue.getPortfolioValueWithInflation(true);
-      }
-      return accumulator + obj.portfolioValue.getPortfolioValueWithInflation();
-    },
-    0);
-    return totalPortfolioValue;
-  }
-
 }

@@ -25,7 +25,7 @@ export default function CompanyCard({ companyId }: Props): ReactElement | null {
   }
 
   let returnPercentage = company.returns.getReturnWithDividendsPercentage(true);
-  const portfolioValue = company.portfolioValue.getPortfolioValueWithInflation(true);
+  const portfolioValue = company.portfolioValue.getPortfolioValue(true);
 
   let positive: BaseType = "success";
   if (returnPercentage < 0) {

@@ -56,5 +56,4 @@ export interface IPortfolio extends PortfolioFormFields {
 
   getPortfolioValue(inBaseCurrency?: boolean): number;
   getPortfolioValueForYear(year: string, inBaseCurrency?: boolean): number;
-  getPortfolioValueWithInflation(inBaseCurrency?: boolean): number;
 }
