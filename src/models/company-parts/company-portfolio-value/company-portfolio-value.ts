@@ -1,4 +1,3 @@
-import moment from "moment";
 import { ICompanyPortfolioValue, ICompanyShares, ICompanyStockPrices } from "types/company";
 
 export class CompanyPortfolioValue implements ICompanyPortfolioValue {

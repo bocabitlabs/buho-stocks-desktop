@@ -1,5 +1,3 @@
-import moment from "moment";
-import InflationService from "services/inflation/inflation-service";
 import {
   ICompanyReturns,
   ICompany,
@@ -92,7 +90,6 @@ export class Company implements ICompany {
     this.broker = parameters.broker;
     this.closed = parameters.closed;
     this.alternativeTickers = parameters.alternativeTickers;
-    this.returns = new CompanyReturns(this);
     this.dividends = new CompanyDividends(this.dividendsTransactions);
     this.investment = new CompanyInvestment(
       this.sharesTransactions,
@@ -100,7 +97,19 @@ export class Company implements ICompany {
     );
     this.shares = new CompanyShares(this.sharesTransactions);
     this.prices = new CompanyStockPrices(this.stockPrices);
-    this.portfolioValue = new CompanyPortfolioValue(this.name, this.prices, this.shares)
+    this.portfolioValue = new CompanyPortfolioValue(
+      this.name,
+      this.prices,
+      this.shares
+    );
+    this.returns = new CompanyReturns(
+      this.closed,
+      this.sharesTransactions,
+      this.dividendsTransactions,
+      this.investment,
+      this.dividends,
+      this.portfolioValue
+    );
   }
 
   getYoc(inPortfolioCurrency = false): number {

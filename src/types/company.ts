@@ -69,7 +69,22 @@ export interface ICompanyShares {
   getCumulativeSharesCountUntilYear(year: string): number;
 }
 
+export interface ICompanyPortfolioValue{
+  prices: ICompanyStockPrices;
+  shares: ICompanyShares;
+  companyName: string;
+  getPortfolioValue(inPortfolioCurrency?: boolean): number;
+  getPortfolioValueForYear(year: string, inPortfolioCurrency?: boolean): number;
+}
+
 export interface ICompanyReturns {
+  sharesTransactions: SharesTransaction[];
+  dividendsTransactions: DividendsTransaction[];
+  investment: ICompanyInvestment;
+  dividends: ICompanyDividends;
+  portfolioValue: ICompanyPortfolioValue;
+  closed: boolean;
+
   getReturn(inPortfolioCurrency?: boolean): number;
   getReturnForYear(year: string, inPortfolioCurrency?: boolean): number;
   getReturnWithDividends(
@@ -110,14 +125,6 @@ export interface ICompanyReturns {
   ): number;
 }
 
-export interface ICompanyPortfolioValue{
-  prices: ICompanyStockPrices;
-  shares: ICompanyShares;
-  companyName: string;
-  getPortfolioValue(inPortfolioCurrency?: boolean): number;
-  getPortfolioValueForYear(year: string, inPortfolioCurrency?: boolean): number;
-}
-
 export interface ICompany extends CompanyFormFields {
   id: string;
   portfolioName: string;
@@ -135,11 +142,11 @@ export interface ICompany extends CompanyFormFields {
   rightsTransactions: RightsTransaction[];
   // Components
   dividends: ICompanyDividends;
-  returns: ICompanyReturns;
   investment: ICompanyInvestment;
   shares: ICompanyShares;
   prices: ICompanyStockPrices;
   portfolioValue: ICompanyPortfolioValue;
+  returns: ICompanyReturns;
 
   getYoc(inPortfolioCurrency?: boolean): number;
   getRpd(inPortfolioCurrency?: boolean): number;
