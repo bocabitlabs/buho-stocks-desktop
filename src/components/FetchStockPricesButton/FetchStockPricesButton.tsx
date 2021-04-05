@@ -39,10 +39,8 @@ export default function FetchStockPricesButton({
         // console.log(result)
         let initialDate = "01-12-" + year.toString();
         let endDate = "31-12-" + year.toString();
-        if (year.toString() === currentYear) {
-          initialDate = moment().subtract(1, "week").format("DD-MM-YYYY");
-          endDate = moment().format("DD-MM-YYYY");
-        }
+
+        console.debug(`${initialDate} to ${endDate}`);
 
         // const currentDate = moment(new Date(), "DD-MM-YYYY")
         // const endDateMoment = moment(endDate, "DD-MM-YYYY")
@@ -54,7 +52,6 @@ export default function FetchStockPricesButton({
             company.id,
             year.toString()
           );
-          console.debug(result);
 
           if (result === undefined || force) {
             console.debug(
@@ -64,14 +61,31 @@ export default function FetchStockPricesButton({
               `Fetching stock price for ${company.name} of ${year}`
             );
 
-            const {
-              found: stockPriceFound,
-              data
-            } = await StockPriceService.getHistoricStockPriceFromAPIStartEnd(
-              initialDate,
-              endDate,
-              company.ticker
-            );
+            let stockPriceFound = false;
+            let retrievedData = null;
+            if (year.toString() === currentYear) {
+              initialDate = moment().subtract(1, "week").format("DD-MM-YYYY");
+              endDate = moment().format("DD-MM-YYYY");
+              let { found, data } = await StockPriceService.getStockPriceAPI(
+                company.ticker,
+                company.alternativeTickers
+              );
+              stockPriceFound = found;
+              retrievedData = data;
+            } else {
+              let {
+                found,
+                data
+              } = await StockPriceService.getHistoricStockPriceFromAPIStartEnd(
+                initialDate,
+                endDate,
+                company.ticker
+              );
+              stockPriceFound = found;
+              retrievedData = data;
+            }
+            console.debug("Retrieved data: ");
+            console.debug(retrievedData);
 
             if (stockPriceFound) {
               let exchangeRatePrice = 1;
@@ -97,11 +111,17 @@ export default function FetchStockPricesButton({
                   ]);
                 }
               }
+              let price = undefined;
+              if (retrievedData.close !== undefined) {
+                price = retrievedData.close;
+              }
+              if (retrievedData.price !== undefined) {
+                price = retrievedData.price;
+              }
 
-              if (data.close !== undefined && exchangeRatePrice !== undefined) {
-                let price = data.close;
+              if (price !== undefined && exchangeRatePrice !== undefined) {
                 if (exchangeName.startsWith("GBP")) {
-                  price = data.close / 100;
+                  price = price / 100;
                 }
                 const stockPrice: StockPriceFormProps = {
                   price: price,
