@@ -95,6 +95,7 @@ export default class CompanyDAO {
     const sql = `
     SELECT companies.*
       , sectors.name as sectorName
+      , superSectors.name as superSectorName
       , currencies.name as currencyName
       , currencies.symbol as currencySymbol
       , S.buySharesNumber
@@ -116,6 +117,8 @@ export default class CompanyDAO {
       ON currencies2.id = companies.dividendsCurrencyId
     LEFT JOIN "sectors"
       ON sectors.id = companies.sectorId
+    LEFT JOIN "sectors" as superSectors
+      ON sectors.superSectorId = superSectors.id
     LEFT JOIN (SELECT companyId
       , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.count ELSE 0 END) as buySharesNumber
       , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.count ELSE 0 END) as sellSharesNumber
@@ -146,6 +149,7 @@ export default class CompanyDAO {
       , currencies.symbol as currencySymbol
       , currencies.abbreviation as currencyAbbreviation
 	  , sectors.name as sectorName
+    , superSectors.name as superSectorName
 	  , currencies2.symbol as portfolioCurrencySymbol
     , currencies2.abbreviation as portfolioCurrencyAbbreviation
     , currencies3.symbol as dividendsCurrencySymbol
@@ -157,6 +161,8 @@ export default class CompanyDAO {
       ON currencies.id = companies.currencyId
     LEFT JOIN "sectors"
       ON sectors.id = companies.sectorId
+    LEFT JOIN "sectors" as superSectors
+      ON superSectors.id = sectors.superSectorId
     LEFT JOIN "currencies" as currencies2
       ON portfolios.currencyId = currencies2.id
     LEFT JOIN "currencies" as currencies3
@@ -166,19 +172,6 @@ export default class CompanyDAO {
 
     const results = sendIpcSql(sql, "get");
 
-    return results;
-  };
-
-  getCompaniesFromPortfolio = (portfolioId: string) => {
-    const sql = `
-    SELECT
-      id, name
-      FROM  "companies"
-      WHERE companies.portfolioId='${portfolioId}'
-      ORDER BY name ASC
-      ;
-    `;
-    const results = sendIpcSql(sql);
     return results;
   };
 

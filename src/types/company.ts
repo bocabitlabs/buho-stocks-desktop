@@ -135,6 +135,7 @@ export interface ICompany extends CompanyFormFields {
   currencyName: string;
   currencyAbbreviation: string;
   sectorName: string;
+  superSectorName: string;
   currencySymbol: string;
   stockPrices: IStockPrice[];
   sharesTransactions: SharesTransaction[];

@@ -32,6 +32,9 @@ export default function CompanyDetailsContent({
       {company && (
         <>
           <Typography.Paragraph>
+            {company.sectorName} - {company.superSectorName}
+          </Typography.Paragraph>
+          <Typography.Paragraph>
             {company.description !== "undefined" &&
             company.description !== undefined
               ? company.description

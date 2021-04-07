@@ -64,7 +64,7 @@ export default class SectorDAO {
         '${sector.name}'
       , '${sector.color}'
       , '${sector.isSuperSector ? 1 : 0}'
-      , '${sector.superSectorId}'
+      , ${sector.superSectorId === undefined? null: `'${sector.superSectorId}'`}
       , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
       , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
       );

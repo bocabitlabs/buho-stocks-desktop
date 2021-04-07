@@ -17,6 +17,7 @@ import PortfolioReturnChartNivo from "./components/PortfolioReturnChartNivo/Port
 import PortfolioReturnChartPercentageNivo from "./components/PortfolioReturnChartPercentage/PortfolioReturnChartPercentageNivo";
 import PortfolioValueChartNivo from "./components/PortfolioValueChartNivo/PortfolioValueChartNivo";
 import SectorsChartNivo from "./components/SectorsChartNivo/SectorsChartNivo";
+import SuperSectorsChartNivo from "./components/SuperSectorsChartNivo/SuperSectorsChartNivo";
 
 interface Props {
   portfolio: IPortfolio;
@@ -43,26 +44,29 @@ export default function Charts({
 
   useEffect(() => {
     const getData = () => {
-      return portfolio.companies.map((company: ICompany) => ({
-        id: company.id,
-        key: company.id,
-        color: company.color,
-        invested: company.investment.getTotalInvested(true),
-        name: company.name,
-        currencyName: company.currencyName,
-        dividends: company.dividends.getDividendsAmount(true),
-        portfolioCurrencySymbol: company.portfolioCurrencySymbol,
-        portfolioValue: company.portfolioValue.getPortfolioValue(true),
-        return: company.returns.getReturnWithDividendsPercentage(true),
-        ticker: company.ticker,
-        investedText: StringUtils.getAmountWithSymbol(
-          company.investment.getTotalInvested(true),
-          2,
-          company.portfolioCurrencySymbol
-        ),
-        sectorName: company.sectorName,
-        broker: company.broker
-      }));
+      return portfolio.companies
+        .filter((company) => !company.closed)
+        .map((company: ICompany) => ({
+          id: company.id,
+          key: company.id,
+          color: company.color,
+          invested: company.investment.getTotalInvested(true),
+          name: company.name,
+          currencyName: company.currencyName,
+          dividends: company.dividends.getDividendsAmount(true),
+          portfolioCurrencySymbol: company.portfolioCurrencySymbol,
+          portfolioValue: company.portfolioValue.getPortfolioValue(true),
+          return: company.returns.getReturnWithDividendsPercentage(true),
+          ticker: company.ticker,
+          investedText: StringUtils.getAmountWithSymbol(
+            company.investment.getTotalInvested(true),
+            2,
+            company.portfolioCurrencySymbol
+          ),
+          sectorName: company.sectorName,
+          superSectorName: company.superSectorName,
+          broker: company.broker
+        }));
     };
     const tempData = getData();
     setData(tempData);
@@ -102,20 +106,14 @@ export default function Charts({
           <InvestedChartNivo data={data} portfolio={portfolio} />
         </Row>
         <Row>
-          <PortfolioValueChartNivo
-            data={data}
-            portfolio={portfolio}
-          />
+          <PortfolioValueChartNivo data={data} portfolio={portfolio} />
         </Row>
         <Row>
           <DividendsChart data={data} portfolio={portfolio} width={width} />
         </Row>
-         <Row>
+        <Row>
           <Col span={12}>
-            <CurrenciesChartNivo
-              data={data}
-              portfolio={portfolio}
-            />
+            <CurrenciesChartNivo data={data} portfolio={portfolio} />
           </Col>
           <Col span={12}>
             <BrokersChartNivo data={data} portfolio={portfolio} width={width} />
@@ -123,6 +121,13 @@ export default function Charts({
         </Row>
         <Row>
           <SectorsChartNivo data={data} portfolio={portfolio} width={width} />
+        </Row>
+        <Row>
+          <SuperSectorsChartNivo
+            data={data}
+            portfolio={portfolio}
+            width={width}
+          />
         </Row>
       </Space>
     );

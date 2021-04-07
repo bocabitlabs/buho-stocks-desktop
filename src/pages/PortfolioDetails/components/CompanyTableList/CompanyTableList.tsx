@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Typography } from "antd";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 import { CompaniesContext } from "contexts/companies";
 import { Company } from "models/company";
@@ -40,9 +40,24 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
       dataIndex: "name",
       key: "name",
       render: (text: string, record: any) => (
-        <Link to={`/portfolios/${portfolioId}/companies/${record.id}`}>
-          {text}
-        </Link>
+        <>
+          <Link to={`/portfolios/${portfolioId}/companies/${record.id}`}>
+            {text}
+          </Link>
+
+          {record.superSectorName !== null && (
+            <>
+              <br />
+              <Typography.Text
+                type="secondary"
+                style={{ fontSize: "0.8em" }}
+                title={record.superSectorName}
+              >
+                {record.superSectorName}
+              </Typography.Text>
+            </>
+          )}
+        </>
       ),
       sorter: (a: Company, b: Company) => a.name.localeCompare(b.name)
     },
@@ -106,7 +121,9 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
       portfolioValue: company.portfolioValue.getPortfolioValue(true),
       return: company.returns.getReturnWithDividendsPercentage(true),
       shares: company.shares.getSharesCount(),
-      ticker: company.ticker
+      ticker: company.ticker,
+      sectorName: company.sectorName,
+      superSectorName: company.superSectorName
     }));
   };
 

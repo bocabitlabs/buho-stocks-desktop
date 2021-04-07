@@ -53,6 +53,7 @@ export class Company implements ICompany {
   shares: ICompanyShares;
   prices: ICompanyStockPrices;
   portfolioValue: ICompanyPortfolioValue;
+  superSectorName: string;
 
   constructor(parameters: ICompany) {
     this.id = parameters.id;
@@ -72,6 +73,7 @@ export class Company implements ICompany {
 
     this.sectorName = parameters.sectorName;
     this.sectorId = parameters.sectorId;
+    this.superSectorName = parameters.superSectorName;
 
     this.dividendsTransactions = parameters.dividendsTransactions;
     this.sharesTransactions = parameters.sharesTransactions;

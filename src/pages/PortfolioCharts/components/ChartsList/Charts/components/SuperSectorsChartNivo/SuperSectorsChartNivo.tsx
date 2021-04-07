@@ -9,7 +9,7 @@ interface Props {
   width: number;
 }
 
-export default function CurrenciesChart({
+export default function SuperSectorsChartNivo({
   data,
   portfolio,
   width
@@ -18,6 +18,7 @@ export default function CurrenciesChart({
 
   useEffect(() => {
     const tempData = [...data];
+    console.debug("DATA:")
     console.debug(data)
 
     var groupBy = function (xs: any, key: any) {
@@ -31,7 +32,7 @@ export default function CurrenciesChart({
       }, {});
     };
 
-    const grouped = groupBy(tempData, "sectorName");
+    const grouped = groupBy(tempData, "superSectorName");
     console.log(grouped);
 
     const newGroups = Object.entries(grouped).map(([k, v]) => {
@@ -44,7 +45,7 @@ export default function CurrenciesChart({
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        <Typography.Title level={3}>Sectors</Typography.Title>
+        <Typography.Title level={3}>Super Sectors</Typography.Title>
         <div style={{ height: 600, width: width-300 }}>
           <ResponsivePie
             data={chartData}
