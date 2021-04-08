@@ -121,7 +121,7 @@ export default function DividendsTransactionAddForm({
     }
     if (changes.changes) {
       if (!transactionId) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Dividends transaction",
           message: `Added dividends "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId

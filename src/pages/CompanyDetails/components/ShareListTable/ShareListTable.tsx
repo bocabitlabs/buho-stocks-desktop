@@ -52,7 +52,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
     if (result.changes) {
 
       if (company) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Shares transaction",
           message: `Removed shares transaction "${company.name} (${company.ticker})": ${recordId}`,
           portfolioId: +company.portfolioId

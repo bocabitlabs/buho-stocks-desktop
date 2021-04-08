@@ -56,7 +56,7 @@ export default function RightsTransactionsTable({
     if (result.changes) {
 
       if (company) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Rights transaction",
           message: `Removed rights transaction "${company.name} (${company.ticker})": ${recordId}`,
           portfolioId: +company.portfolioId

@@ -75,7 +75,7 @@ export default function StockPriceAddForm({
     };
     const added = StockPriceService.add(stockPrice);
     if (added.changes) {
-      TransactionLogService.add({
+      TransactionLogService.create({
         type: "Stock price",
         message: `Added stock price "${company.name} (${company.ticker})": ${price} - ${transactionDate}`,
         portfolioId: +company.portfolioId

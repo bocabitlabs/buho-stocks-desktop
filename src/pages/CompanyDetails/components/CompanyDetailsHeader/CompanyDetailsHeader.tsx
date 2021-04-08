@@ -124,7 +124,7 @@ export default function CompanyDetailsRouteHeader({
     const companyticker = company?.ticker;
     const result = deleteCompany(companyId);
     if (result.changes) {
-      TransactionLogService.add({
+      TransactionLogService.create({
         type: "Remove company",
         message: `Removed company "${comapnyName} (${companyticker}) - #${companyId}"`,
         portfolioId: +portfolioId

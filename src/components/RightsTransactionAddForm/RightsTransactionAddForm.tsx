@@ -121,7 +121,7 @@ export default function RightsTransactionAddForm({
     if (changes.changes) {
 
       if(!transactionId){
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Rights transaction",
           message: `Added rights "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId

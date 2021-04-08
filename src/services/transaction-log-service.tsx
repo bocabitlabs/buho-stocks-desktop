@@ -1,9 +1,9 @@
-import TransactionLogDAO from "database/daos/transaction-log-dao";
+import TransactionLogDAO from "database/daos/transaction-log-dao/transaction-log-dao";
 import { ITransactionLogMessageFormProps } from "types/transaction-log";
 
 export default class TransactionLogService {
-  static add = (element: ITransactionLogMessageFormProps) => {
-    return TransactionLogDAO.add(element);
+  static create = (element: ITransactionLogMessageFormProps) => {
+    return TransactionLogDAO.create(element);
   };
 
   static getAll = (portfolioId: string) => {

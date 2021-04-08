@@ -103,7 +103,7 @@ export default function IBDividendsImportForm({
 
     if (added.changes) {
       if (company) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Dividends transaction",
           message: `Added dividends from  IB CSV: "${company.name} (${
             company.ticker

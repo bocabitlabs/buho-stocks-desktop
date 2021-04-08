@@ -49,7 +49,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
     const result = deleteById(recordId);
     if (result.changes) {
       if (company) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Dividends transaction",
           message: `Removed dividends transaction "${company.name} (${company.ticker})": ${recordId}`,
           portfolioId: +company.portfolioId

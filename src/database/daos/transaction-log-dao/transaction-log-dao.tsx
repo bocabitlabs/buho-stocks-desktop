@@ -1,10 +1,10 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { ITransactionLogMessageFormProps } from "types/transaction-log";
-import { deleteById } from "./operations";
+import { deleteById } from "../operations";
 
 export default class TransactionLogDAO {
-  static add = (element: ITransactionLogMessageFormProps) => {
+  static create = (element: ITransactionLogMessageFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO transactionsLog

@@ -94,7 +94,7 @@ export default function IBTradesImportForm({
 
     if (added.changes) {
       if (company) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Shares transaction",
           message: `Added shares from  IB CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId

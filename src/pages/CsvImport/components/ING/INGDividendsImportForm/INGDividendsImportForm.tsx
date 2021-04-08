@@ -69,7 +69,7 @@ export default function INGDividendsImportForm({
     const added = DividendsTransactionsService.create(transaction);
     if (added.changes) {
       if (company) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Dividends transaction",
           message: `Added dividends from  ING CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId

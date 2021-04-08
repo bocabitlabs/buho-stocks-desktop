@@ -134,7 +134,7 @@ export default function INGTradesImportForm({
 
     if (added.changes) {
       if (company) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Shares transaction",
           message: `Added shares from  ING CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId

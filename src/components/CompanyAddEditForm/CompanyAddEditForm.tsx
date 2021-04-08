@@ -94,7 +94,7 @@ function CompanyAddEditForm({
     }
     if (changes.changes) {
       if (!companyId) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Add company",
           message: `Added company "${newCompany.name} (${newCompany.ticker})"`,
           portfolioId: +newCompany.portfolioId

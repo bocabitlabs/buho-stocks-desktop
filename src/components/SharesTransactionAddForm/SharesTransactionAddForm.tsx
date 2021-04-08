@@ -124,7 +124,7 @@ export default function SharesTransactionAddForm({
     }
     if (changes.changes) {
       if (!transactionId) {
-        TransactionLogService.add({
+        TransactionLogService.create({
           type: "Shares transaction",
           message: `Added shares "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId
