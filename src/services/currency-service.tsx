@@ -1,12 +1,12 @@
-import CurrencyDAO from "database/daos/currency-dao";
-import { Currency, CurrencyFormFields } from "types/currency";
+import CurrencyDAO from "database/daos/currency-dao/currency-dao";
+import { ICurrency, CurrencyFormFields } from "types/currency";
 
 export default class CurrencyService {
-  static addCurrency = (currency: CurrencyFormFields) => {
-    return CurrencyDAO.addCurrency(currency);
+  static create = (currency: CurrencyFormFields) => {
+    return CurrencyDAO.create(currency);
   };
 
-  exportAll = (): Currency[] => {
+  static exportAll = (): ICurrency[] => {
     const results = CurrencyDAO.exportAll();
     return results;
   };
@@ -15,15 +15,15 @@ export default class CurrencyService {
     return CurrencyDAO.getByName(name);
   };
 
-  getCurrencies = () => {
-    return CurrencyDAO.getCurrencies();
+  static getAll = () => {
+    return CurrencyDAO.getAll();
   };
 
   static getById = (currencyId: string) => {
     return CurrencyDAO.getById(currencyId);
   };
 
-  deleteById = (currencyId: string) => {
+  static deleteById = (currencyId: string) => {
     return CurrencyDAO.deleteById(currencyId);
   };
 

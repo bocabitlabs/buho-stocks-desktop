@@ -1,10 +1,10 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { CurrencyFormFields } from "types/currency";
-import { deleteById, getById } from "./operations";
+import { deleteById, getById } from "../operations";
 
 export default class CurrencyDAO {
-  static addCurrency = (currency: CurrencyFormFields) => {
+  static create = (currency: CurrencyFormFields) => {
     //Call the DB
     const sql = `
     INSERT INTO "currencies"
@@ -49,7 +49,7 @@ export default class CurrencyDAO {
     return result;
   };
 
-  static getCurrencies = () => {
+  static getAll = () => {
     //Call the DB
     const sql = `
     SELECT * FROM currencies

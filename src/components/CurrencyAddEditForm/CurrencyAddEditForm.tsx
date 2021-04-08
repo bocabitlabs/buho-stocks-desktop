@@ -23,7 +23,7 @@ function CurrencyAddEditForm({
 
   const {
     currency,
-    addCurrency,
+    create: addCurrency,
     fetchCurrencies,
     getById: getCurrencyById,
     update: updateCurrency

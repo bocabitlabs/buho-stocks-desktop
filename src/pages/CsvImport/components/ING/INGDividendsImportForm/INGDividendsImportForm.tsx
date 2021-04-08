@@ -5,7 +5,7 @@ import React, { ReactElement, useState } from "react";
 import CurrencyService from "services/currency-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
 import TransactionLogService from "services/transaction-log-service";
-import { Currency } from "types/currency";
+import { ICurrency } from "types/currency";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { IExchangeRate } from "types/exchange-rate";
 import { IPortfolio } from "types/portfolio";
@@ -38,7 +38,7 @@ export default function INGDividendsImportForm({
   // const commission = count * +inputData[7] - total;
   // const price = total / count;
 
-  const currencies = new CurrencyService().getCurrencies();
+  const currencies = CurrencyService.getAll();
 
   // Try to find a suitable company
   const company = getCompanyFromTransaction(companyName, portfolio);
@@ -148,7 +148,7 @@ export default function INGDividendsImportForm({
             rules={[{ required: true, message: "Please input your username!" }]}
           >
             <Select placeholder="Currency">
-              {currencies.map((element: Currency) => (
+              {currencies.map((element: ICurrency) => (
                 <Select.Option key={element.id} value={element.abbreviation}>
                   {element.name} ({element.abbreviation})
                 </Select.Option>

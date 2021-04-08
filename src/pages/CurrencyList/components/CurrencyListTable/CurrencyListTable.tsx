@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { CurrenciesContext } from "contexts/currencies";
 import CurrencyService from "services/currency-service";
-import { Currency } from "types/currency";
+import { ICurrency } from "types/currency";
 import { Link } from "react-router-dom";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 
@@ -11,7 +11,7 @@ export default function CurrencyListTable() {
   const key = "updatable";
 
   function confirm(recordId: string) {
-    const result = new CurrencyService().deleteById(recordId);
+    const result = CurrencyService.deleteById(recordId);
     if (result.changes) {
       fetchCurrencies();
       message.success({
@@ -38,26 +38,26 @@ export default function CurrencyListTable() {
       dataIndex: "name",
       key: "name",
       render: (text: string, record: any) => <Link to={`/currencies/${record.id}/edit`}>{text}</Link>,
-      sorter: (a: Currency, b: Currency) => a.name.localeCompare(b.name),
+      sorter: (a: ICurrency, b: ICurrency) => a.name.localeCompare(b.name),
     },
     {
       title: "Abbreviation",
       dataIndex: "abbreviation",
       key: "abbreviation",
-      sorter: (a: Currency, b: Currency) => a.abbreviation.localeCompare(b.abbreviation),
+      sorter: (a: ICurrency, b: ICurrency) => a.abbreviation.localeCompare(b.abbreviation),
     },
     {
       title: "Symbol",
       dataIndex: "symbol",
       key: "symbol",
-      sorter: (a: Currency, b: Currency) => a.symbol.localeCompare(b.symbol),
+      sorter: (a: ICurrency, b: ICurrency) => a.symbol.localeCompare(b.symbol),
     },
     {
       title: "Region",
       dataIndex: "country",
       key: "country",
       render: (text: string, record: any) => (<CountryFlag code={text}/>),
-      sorter: (a: Currency, b: Currency) => a.country.localeCompare(b.country)
+      sorter: (a: ICurrency, b: ICurrency) => a.country.localeCompare(b.country)
     },
     {
       title: "Action",
@@ -79,7 +79,7 @@ export default function CurrencyListTable() {
   ];
 
   const getData = () => {
-    return currencies.map((currency: Currency) => ({
+    return currencies.map((currency: ICurrency) => ({
       id: currency.id,
       key: currency.id,
       color: currency.color,

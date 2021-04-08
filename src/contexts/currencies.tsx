@@ -1,14 +1,14 @@
 import { createContext } from "react";
 import { IAddProps } from "types/common";
-import { Currency, CurrencyFormFields } from "types/currency";
+import { ICurrency, CurrencyFormFields } from "types/currency";
 
 export type CurrenciesContextType = {
-  currency: Currency | null;
-  currencies: Currency[];
+  currency: ICurrency | null;
+  currencies: ICurrency[];
   isLoading: boolean;
   fetchCurrencies: () => void;
-  getById: (currencyId: string) => Currency | null;
-  addCurrency: (currency: CurrencyFormFields) => IAddProps;
+  getById: (currencyId: string) => ICurrency | null;
+  create: (currency: CurrencyFormFields) => IAddProps;
   update: (currencyId: string, currency: CurrencyFormFields) => IAddProps;
 };
 
@@ -17,8 +17,8 @@ export const currenciesDefaultValue: CurrenciesContextType = {
   currencies: [],
   isLoading: false,
   fetchCurrencies: () => null,
-  getById: (): Currency | null => null,
-  addCurrency: () => ({ changes: false }),
+  getById: (): ICurrency | null => null,
+  create: () => ({ changes: false }),
   update: () => ({ changes: false })
 };
 

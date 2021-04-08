@@ -85,7 +85,7 @@ export function importCurrencies(currencies: any[]) {
     console.debug(currencyData);
     const exists = CurrencyService.getByName(currency.name);
     if (exists === undefined) {
-      CurrencyService.addCurrency(currency);
+      CurrencyService.create(currency);
       importedCount++;
     } else {
       notes.push(

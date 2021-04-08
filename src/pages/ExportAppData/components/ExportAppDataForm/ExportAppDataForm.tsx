@@ -27,7 +27,7 @@ export default function ExportAppDataForm(): ReactElement {
       });
     }
     if (checkbox.includes("currencies")) {
-      const currenciesResults = new CurrencyService().exportAll();
+      const currenciesResults = CurrencyService.exportAll();
       currenciesResults.forEach(function (rowArray) {
         const keys = Object.values(rowArray);
         let row = "currency," + keys.join(",");

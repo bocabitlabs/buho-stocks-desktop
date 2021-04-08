@@ -10,7 +10,7 @@ import { SectorsContext } from "contexts/sectors";
 
 import { CompanyFormFields } from "types/company";
 import { ISector } from "types/sector";
-import { Currency } from "types/currency";
+import { ICurrency } from "types/currency";
 import { IMarket } from "types/market";
 import { CompaniesContext } from "contexts/companies";
 import TransactionLogService from "services/transaction-log-service";
@@ -238,7 +238,7 @@ function CompanyAddEditForm({
           allowClear
         >
           {currencies &&
-            currencies.map((currency: Currency, index: number) => (
+            currencies.map((currency: ICurrency, index: number) => (
               <Select.Option
                 value={currency.id}
                 key={`currency-${currency.id}-${index}`}
@@ -258,7 +258,7 @@ function CompanyAddEditForm({
           allowClear
         >
           {currencies &&
-            currencies.map((currency: Currency, index: number) => (
+            currencies.map((currency: ICurrency, index: number) => (
               <Select.Option
                 value={currency.id}
                 key={`currency-${currency.id}-${index}`}

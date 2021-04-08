@@ -3,7 +3,7 @@ import { Button, Form, Input, message, Select } from "antd";
 import { useHistory } from "react-router-dom";
 
 import { CurrenciesContext } from "contexts/currencies";
-import { Currency } from "types/currency";
+import { ICurrency } from "types/currency";
 import { PortfoliosContext } from "contexts/portfolios";
 import ColorSelector from "components/ColorSelector/ColorSelector";
 
@@ -141,7 +141,7 @@ function PortfolioAddEditForm({
           allowClear
         >
           {currencies &&
-            currencies.map((currency: Currency, index: number) => (
+            currencies.map((currency: ICurrency, index: number) => (
               <Select.Option
                 value={currency.id}
                 key={`currency-${currency.id}-${index}`}

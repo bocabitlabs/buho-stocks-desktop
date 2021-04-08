@@ -6,6 +6,6 @@ export interface CurrencyFormFields{
   country: string;
 }
 
-export interface Currency extends CurrencyFormFields{
+export interface ICurrency extends CurrencyFormFields{
   id: string;
 }

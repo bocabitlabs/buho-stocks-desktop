@@ -17,7 +17,7 @@ import ExchangeRateService from "services/exchange-rate";
 import RightsTransactionsService from "services/rights-transactions-service";
 import SharesTransactionsService from "services/shares-transactions-service";
 import TransactionLogService from "services/transaction-log-service";
-import { Currency } from "types/currency";
+import { ICurrency } from "types/currency";
 import { IExchangeRate } from "types/exchange-rate";
 import { IPortfolio } from "types/portfolio";
 import { RightsTransactionFormProps } from "types/rights-transaction";
@@ -71,7 +71,7 @@ export default function INGTradesImportForm({
   } = formatINGRowForShares(inputData);
 
   // Get all the currencies
-  const currencies = new CurrencyService().getCurrencies();
+  const currencies = CurrencyService.getAll();
   // Try to find a suitable company
   const company = getCompanyFromTransaction(companyName, portfolio);
   // Get the transaction total in the company's currency
@@ -220,7 +220,7 @@ export default function INGTradesImportForm({
             rules={[{ required: true, message: "Please input your username!" }]}
           >
             <Select placeholder="Currency">
-              {currencies.map((element: Currency) => (
+              {currencies.map((element: ICurrency) => (
                 <Select.Option key={element.id} value={element.abbreviation}>
                   {element.name} ({element.abbreviation})
                 </Select.Option>

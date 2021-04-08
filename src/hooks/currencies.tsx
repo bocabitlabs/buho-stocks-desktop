@@ -1,30 +1,30 @@
 import { useState, useEffect, useCallback } from "react";
 import { CurrenciesContextType } from "contexts/currencies";
 import CurrencyService from "services/currency-service";
-import { Currency, CurrencyFormFields } from "types/currency";
+import { ICurrency, CurrencyFormFields } from "types/currency";
 
 export function useCurrenciesContext(): CurrenciesContextType {
-  const [currency, setCurrency] = useState<Currency|null>(null);
-  const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [currency, setCurrency] = useState<ICurrency|null>(null);
+  const [currencies, setCurrencies] = useState<ICurrency[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    const currencies = new CurrencyService().getCurrencies();
+    const currencies = CurrencyService.getAll();
     setCurrencies(currencies);
     setIsLoading(false);
   }, []);
 
   const fetchCurrencies = useCallback(() => {
     setIsLoading(true);
-    const currencies = new CurrencyService().getCurrencies();
+    const currencies = CurrencyService.getAll();
     setCurrencies(currencies);
     setIsLoading(false);
   }, []);
 
-  const addCurrency = useCallback((currency: CurrencyFormFields) => {
+  const create = useCallback((currency: CurrencyFormFields) => {
     setIsLoading(true);
-    const result = CurrencyService.addCurrency(currency);
+    const result = CurrencyService.create(currency);
     setIsLoading(false);
     return result;
   }, []);
@@ -49,7 +49,7 @@ export function useCurrenciesContext(): CurrenciesContextType {
     currencies,
     isLoading,
     fetchCurrencies,
-    addCurrency,
+    create,
     getById,
     update
   };
