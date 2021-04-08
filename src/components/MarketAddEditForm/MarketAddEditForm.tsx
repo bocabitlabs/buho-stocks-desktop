@@ -22,7 +22,7 @@ function MarketAddEditForm({
   const key = "updatable";
   const {
     market,
-    addMarket,
+    create: addMarket,
     fetchMarkets,
     getById: getMarketById,
     update: updateMarket

@@ -13,6 +13,7 @@ export default function sendIpcSql(
     | "delete"
     | "get" = "select"
 ) {
+  // console.debug("Calling the original sendIpcSQL")
   const result = sendSync("synchronous-message", sql, queryType);
   return result;
 }

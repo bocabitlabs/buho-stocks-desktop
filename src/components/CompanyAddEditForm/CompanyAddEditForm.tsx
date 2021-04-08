@@ -11,7 +11,7 @@ import { SectorsContext } from "contexts/sectors";
 import { CompanyFormFields } from "types/company";
 import { Sector } from "types/sector";
 import { Currency } from "types/currency";
-import { Market } from "types/market";
+import { IMarket } from "types/market";
 import { CompaniesContext } from "contexts/companies";
 import TransactionLogService from "services/transaction-log-service";
 import CountrySelector from "components/CountrySelector/CountrySelector";
@@ -274,7 +274,7 @@ function CompanyAddEditForm({
           allowClear
         >
           {markets &&
-            markets.map((market: Market, index: number) => (
+            markets.map((market: IMarket, index: number) => (
               <Select.Option
                 value={market.id}
                 key={`market-${market.id}-${index}`}

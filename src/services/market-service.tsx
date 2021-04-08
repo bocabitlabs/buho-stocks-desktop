@@ -1,12 +1,12 @@
-import MarketDAO from "database/daos/market-dao";
-import { Market, MarketFormProps } from "types/market";
+import MarketDAO from "database/daos/market-dao/market-dao";
+import { IMarket, MarketFormProps } from "types/market";
 
 export default class MarketService {
-  static addMarket = (market: MarketFormProps) => {
-    return MarketDAO.addMarket(market);
+  static create = (market: MarketFormProps) => {
+    return MarketDAO.create(market);
   };
 
-  exportAll = (): Market[] => {
+  exportAll = (): IMarket[] => {
     const results = MarketDAO.exportAll();
     return results;
   };
@@ -19,8 +19,8 @@ export default class MarketService {
     return MarketDAO.getById(id);
   };
 
-  static getMarkets = () => {
-    return MarketDAO.getMarkets();
+  static getAll = () => {
+    return MarketDAO.getAll();
   };
 
   static deleteById = (marketId: string) => {

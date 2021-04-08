@@ -58,7 +58,7 @@ export function importMarkets(markets: any[]) {
     };
     const exists = MarketService.getByName(market.name);
     if (exists === undefined) {
-      MarketService.addMarket(market);
+      MarketService.create(market);
       importedCount++;
     } else {
       notes.push(`Markets: Market ${market.name} already exists. Skipping.`);

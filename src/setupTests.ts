@@ -21,5 +21,9 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: jest.fn()
   }))
 });
+const electron = {
+  sendSync: () => {"setupTests implementation for sendSync"}
+}
+window.electron = electron;
 
 window.require = require;

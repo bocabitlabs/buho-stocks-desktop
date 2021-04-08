@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { MarketsContext } from "contexts/markets";
 import MarketService from "services/market-service";
-import { Market } from "types/market";
+import { IMarket } from "types/market";
 import { Link } from "react-router-dom";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 
@@ -38,32 +38,32 @@ export default function MarketListTable() {
       dataIndex: "name",
       key: "name",
       render: (text: string, record: any) => <Link to={`/markets/${record.id}/edit`}>{text}</Link>,
-      sorter: (a: Market, b: Market) => a.name.localeCompare(b.name)
+      sorter: (a: IMarket, b: IMarket) => a.name.localeCompare(b.name)
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      sorter: (a: Market, b: Market) => a.description.localeCompare(b.description)
+      sorter: (a: IMarket, b: IMarket) => a.description.localeCompare(b.description)
     },
     {
       title: "Region",
       dataIndex: "region",
       key: "region",
       render: (text: string, record: any) => (<CountryFlag code={text}/>),
-      sorter: (a: Market, b: Market) => a.region.localeCompare(b.region)
+      sorter: (a: IMarket, b: IMarket) => a.region.localeCompare(b.region)
     },
     {
       title: "Opening Time",
       dataIndex: "openTime",
       key: "openTime",
-      sorter: (a: Market, b: Market) => a.openTime.localeCompare(b.openTime)
+      sorter: (a: IMarket, b: IMarket) => a.openTime.localeCompare(b.openTime)
     },
     {
       title: "Closing Time",
       dataIndex: "closeTime",
       key: "closeTime",
-      sorter: (a: Market, b: Market) => a.closeTime.localeCompare(b.closeTime)
+      sorter: (a: IMarket, b: IMarket) => a.closeTime.localeCompare(b.closeTime)
     },
     {
       title: "Action",
@@ -87,7 +87,7 @@ export default function MarketListTable() {
   ];
 
   const getData = () => {
-    return markets.map((market: Market) => ({
+    return markets.map((market: IMarket) => ({
       id: market.id,
       key: market.id,
       name: market.name,

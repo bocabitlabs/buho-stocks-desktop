@@ -1,10 +1,10 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { MarketFormProps } from "types/market";
-import { deleteById, getById } from "./operations";
+import { deleteById, getById } from "../operations";
 
 export default class MarketDAO {
-  static addMarket = (market: MarketFormProps) => {
+  static create = (market: MarketFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO "markets"
@@ -34,8 +34,6 @@ export default class MarketDAO {
     return results;
   };
   static exportAll = () => {
-    //Call the DB
-    console.debug("Export all markets");
     const sql = `
     SELECT name, color, region, description, openTime, closeTime
     FROM "markets";
@@ -56,13 +54,12 @@ export default class MarketDAO {
     return results;
   };
 
-  static getMarkets = () => {
+  static getAll = () => {
     //Call the DB
     const sql = `
     SELECT * FROM markets
     ORDER BY name ASC
     `;
-
     const results = sendIpcSql(sql);
     return results;
   };

@@ -7,6 +7,6 @@ export interface MarketFormProps {
   closeTime: string;
 }
 
-export interface Market extends MarketFormProps{
+export interface IMarket extends MarketFormProps{
   id: string;
 }

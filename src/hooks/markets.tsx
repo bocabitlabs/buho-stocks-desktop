@@ -1,29 +1,29 @@
 import { useState, useEffect, useCallback } from "react";
 import { MarketsContextType } from "contexts/markets";
 import MarketService from "services/market-service";
-import { Market, MarketFormProps } from "types/market";
+import { IMarket, MarketFormProps } from "types/market";
 
 export function useMarketsContext(): MarketsContextType {
-  const [market, setMarket] = useState<Market|null>(null);
-  const [markets, setMarkets] = useState<Market[]>([]);
+  const [market, setMarket] = useState<IMarket|null>(null);
+  const [markets, setMarkets] = useState<IMarket[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const result = MarketService.getMarkets();
+    const result = MarketService.getAll();
     setMarkets(result);
   }, []);
 
 
   const fetchMarkets = useCallback(() => {
     setIsLoading(true);
-    const result = MarketService.getMarkets();
+    const result = MarketService.getAll();
     setMarkets(result);
     setIsLoading(false);
   }, []);
 
-  const addMarket = useCallback((market: MarketFormProps) => {
+  const create = useCallback((market: MarketFormProps) => {
     setIsLoading(true);
-    const result = MarketService.addMarket(market);
+    const result = MarketService.create(market);
     setIsLoading(false);
     return result
   }, []);
@@ -48,7 +48,7 @@ export function useMarketsContext(): MarketsContextType {
     markets,
     isLoading,
     fetchMarkets,
-    addMarket,
+    create,
     getById,
     update
   };
