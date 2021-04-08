@@ -6,11 +6,12 @@
 Multi platform (and offline) desktop application to manage and track a stocks portfolio for [Buy & Hold investment](https://en.wikipedia.org/wiki/Buy_and_hold) purposes.
 
 
-**Master**: ![Continuous Integration](https://github.com/bocabitlabs/buho-stocks/workflows/Continuous%20Integration/badge.svg) [![codecov](https://codecov.io/gh/bocabitlabs/buho-stocks/branch/master/graph/badge.svg)](https://codecov.io/gh/bocabitlabs/buho-stocks)
+![Continuous Integration](https://github.com/bocabitlabs/buho-stocks/workflows/Continuous%20Integration/badge.svg) [![codecov](https://codecov.io/gh/bocabitlabs/buho-stocks/branch/master/graph/badge.svg)](https://codecov.io/gh/bocabitlabs/buho-stocks)
 
-**Development**: ![Continuous Integration](https://github.com/bocabitlabs/buho-stocks/workflows/Continuous%20Integration/badge.svg?branch=development) [![codecov](https://codecov.io/gh/bocabitlabs/buho-stocks/branch/development/graph/badge.svg)](https://codecov.io/gh/bocabitlabs/buho-stocks)
 
 <hr/>
+
+![App Preview](./docs/images/preview.gif)
 
 ## 🎁 Features
 
@@ -18,11 +19,13 @@ Multi platform (and offline) desktop application to manage and track a stocks po
 - Unlimited companies per portfolio.
 - Handle stock transactions, dividends and rights.
 - Multiple currencies, exchange rates (from ECB) and sectors.
-- <del>Support for inflation.</del>
 - Import CSV files from Interactive Brokers and ING (Spain).
 - Export app data to CSV.
-- Fetch stock prices and exchange rates from a external source.
-- Graphs
+- Fetch stock prices and exchange rates from a external source in real time.
+- Multiple charts
+- Database backup on the selected location
+- <del>Support for inflation.</del>
+
 
 ## 🔧 Install
 
