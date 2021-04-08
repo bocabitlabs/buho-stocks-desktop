@@ -32,7 +32,7 @@ export function importSectors(sectors: any[]) {
     };
     const exists = SectorService.getByName(sector.name);
     if (exists === undefined) {
-      SectorService.addSector(sector);
+      SectorService.create(sector);
       importedCount++;
     } else {
       notes.push(`Sectors: Sector ${sector.name} already exists. Skipping.`);

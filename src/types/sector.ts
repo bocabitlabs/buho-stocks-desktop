@@ -5,7 +5,7 @@ export interface SectorFormFields {
   superSectorId?: number;
 }
 
-export interface Sector extends SectorFormFields {
+export interface ISector extends SectorFormFields {
   id: string;
   superSectorName: string;
 }

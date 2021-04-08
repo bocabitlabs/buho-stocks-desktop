@@ -1,18 +1,18 @@
-import SectorDAO from "database/daos/sector-dao";
-import { Sector, SectorFormFields } from "types/sector";
+import SectorDAO from "database/daos/sector-dao/sector-dao";
+import { ISector, SectorFormFields } from "types/sector";
 
 export default class SectorService {
-  static addSector = (company: SectorFormFields) => {
-    return SectorDAO.addSector(company);
+  static create = (company: SectorFormFields) => {
+    return SectorDAO.create(company);
   };
 
-  static exportAll = (): Sector[] => {
+  static exportAll = (): ISector[] => {
     const results = SectorDAO.exportAll();
     return results;
   };
 
-  static getSectors = () => {
-    return SectorDAO.getSectors();
+  static getAll = () => {
+    return SectorDAO.getAll();
   };
 
   static getById = (sectorId: string) => {

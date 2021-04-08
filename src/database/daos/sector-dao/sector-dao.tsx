@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { SectorFormFields } from "types/sector";
-import { deleteById, getById } from "./operations";
+import { deleteById, getById } from "../operations";
 
 export default class SectorDAO {
   static exportAll = () => {
@@ -15,7 +15,7 @@ export default class SectorDAO {
     return results;
   };
 
-  static getSectors = () => {
+  static getAll = () => {
     //Call the DB
     const sql = `
     SELECT sectors.*
@@ -47,7 +47,7 @@ export default class SectorDAO {
     return results;
   };
 
-  static addSector = (sector: SectorFormFields) => {
+  static create = (sector: SectorFormFields) => {
     //Call the DB
     console.debug("Adding new sector")
     const sql = `

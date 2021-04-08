@@ -17,7 +17,7 @@ export function useSectorsContext(): ExchangeRatesContextType {
   const add = useCallback(
     (sector: IExchangeRateForm) => {
       setIsLoading(true);
-      const results = SectorService.getSectors();
+      const results = SectorService.getAll();
       setExchangeRates(results);
     },
     []

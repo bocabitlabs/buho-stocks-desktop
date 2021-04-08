@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { SectorsContext } from "contexts/sectors";
 import SectorService from "services/sector-service";
-import { Sector } from "types/sector";
+import { ISector } from "types/sector";
 import { Link } from "react-router-dom";
 
 export default function SectorListTable() {
@@ -37,14 +37,14 @@ export default function SectorListTable() {
       dataIndex: "name",
       key: "name",
       render: (text: string, record: any) => <Link to={`/sectors/${record.id}/edit`}>{text}</Link>,
-      sorter: (a: Sector, b: Sector) => a.name.localeCompare(b.name)
+      sorter: (a: ISector, b: ISector) => a.name.localeCompare(b.name)
     },
     {
       title: "Super sector",
       dataIndex: "superSectorName",
       key: "superSectorName",
       render: (text: string, record: any) => record.isSuperSector? "Is a super sector": <Link to={`/sectors/${record.id}/edit`}>{text}</Link>,
-      sorter: (a: Sector, b: Sector) => (a.superSectorName && b.superSectorName)? a.superSectorName.localeCompare(b.superSectorName): -1
+      sorter: (a: ISector, b: ISector) => (a.superSectorName && b.superSectorName)? a.superSectorName.localeCompare(b.superSectorName): -1
     },
     {
       title: "Action",
@@ -68,7 +68,7 @@ export default function SectorListTable() {
   ];
 
   const getData = () => {
-    return sectors.map((sector: Sector) => ({
+    return sectors.map((sector: ISector) => ({
       id: sector.id,
       key: sector.id,
       name: sector.name,

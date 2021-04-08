@@ -1,14 +1,14 @@
 import { createContext } from "react";
 import { IAddProps } from "types/common";
-import { Sector, SectorFormFields } from "types/sector";
+import { ISector, SectorFormFields } from "types/sector";
 
 export type SectorsContextType = {
-  sector: Sector|null;
-  sectors: Sector[];
+  sector: ISector|null;
+  sectors: ISector[];
   isLoading: boolean;
-  fetchSectors: () => Sector[];
-  addSector: (sector: SectorFormFields) => IAddProps;
-  getById: (currencyId: string) => Sector | null;
+  fetchSectors: () => ISector[];
+  create: (sector: SectorFormFields) => IAddProps;
+  getById: (currencyId: string) => ISector | null;
   update: (currencyId: string, sector: SectorFormFields) => IAddProps;
 };
 
@@ -17,8 +17,8 @@ export const sectorsDefaultValue: SectorsContextType = {
   sectors: [],
   isLoading: false,
   fetchSectors: () => [],
-  addSector: () => ({ changes: false }),
-  getById: (): Sector | null => null,
+  create: () => ({ changes: false }),
+  getById: (): ISector | null => null,
   update: () => ({ changes: false })
 };
 

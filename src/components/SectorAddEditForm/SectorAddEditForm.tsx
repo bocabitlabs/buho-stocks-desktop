@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { SectorsContext } from "contexts/sectors";
 import ColorSelector from "components/ColorSelector/ColorSelector";
-import { Sector } from "types/sector";
+import { ISector } from "types/sector";
 
 interface AddEditFormProps {
   sectorId?: string;
@@ -16,14 +16,14 @@ function SectorAddEditForm({
   const [form] = Form.useForm();
   const history = useHistory();
   const [color, setColor] = useState("#607d8b");
-  const [sectors, setSectors] = useState<Sector[]>([]);
+  const [sectors, setSectors] = useState<ISector[]>([]);
 
 
   const key = "updatable";
 
   const {
     sector,
-    addSector,
+    create: addSector,
     fetchSectors,
     getById: getSectorById,
     update: updateSector
@@ -134,7 +134,7 @@ function SectorAddEditForm({
           allowClear
         >
           {sectors &&
-            sectors.filter((sec)=> sec.isSuperSector).map((sector: Sector, index: number) => (
+            sectors.filter((sec)=> sec.isSuperSector).map((sector: ISector, index: number) => (
               <Select.Option
                 value={sector.id}
                 key={`sector-${sector.id}-${index}`}
