@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Buho Stocks](https://github.com/bocabitlabs/buho-stocks).
 
+## 0.8.0 - 10/04/2021
+### Added
+- Super sectors
+- Fetch stock prices for each year and company
+- Database backup button
+- Super sectors chart
+- Allow dividends in different currency
+- Display net/gross return with dividends switch
+### Improved
+- Charts now display percentage
+
 ## 0.7.0 - 19/03/2021
 ### Added
 - Country flags
