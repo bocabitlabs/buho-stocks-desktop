@@ -1,4 +1,4 @@
-import ExchangeRateDAO from "database/daos/exchange-rate";
+import ExchangeRateDAO from "database/daos/exchange-rate-dao/exchange-rate-dao";
 import moment from "moment";
 import { IExchangeRateForm } from "types/exchange-rate";
 import { delay } from "utils/misc";
@@ -6,7 +6,7 @@ import { getHistoricalPrices } from "yahoo-stock-prices-fetch";
 
 export default class ExchangeRateService {
   static add = (item: IExchangeRateForm) => {
-    return ExchangeRateDAO.add(item);
+    return ExchangeRateDAO.create(item);
   };
 
   static getAll = () => {

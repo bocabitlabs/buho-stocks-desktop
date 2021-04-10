@@ -49,7 +49,6 @@ export default class SectorDAO {
 
   static create = (sector: SectorFormFields) => {
     //Call the DB
-    console.debug("Adding new sector")
     const sql = `
     INSERT INTO "sectors"
     (
@@ -69,7 +68,6 @@ export default class SectorDAO {
       , '${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}'
       );
     `;
-    console.debug(sql)
     const results = sendIpcSql(sql, "insert");
     return results;
   };
