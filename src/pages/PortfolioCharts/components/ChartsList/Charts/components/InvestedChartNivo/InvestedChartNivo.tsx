@@ -106,7 +106,6 @@ export default function CurrenciesChart({
             motionStiffness={90}
             motionDamping={15}
             tooltip={(input: any) => {
-              console.log(input.invested);
               return (
                 <div>
                   Invested on {input.data.company}:{" "}

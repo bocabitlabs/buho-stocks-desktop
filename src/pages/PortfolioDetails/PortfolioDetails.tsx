@@ -38,7 +38,6 @@ const PortfolioDetails = () => {
   useEffect(() => {
     if(settings !== null){
       const { defaultCompanyDisplayMode } = settings;
-      console.log(defaultCompanyDisplayMode)
       setDisplayMode(defaultCompanyDisplayMode);
     }
   }, [settings]);

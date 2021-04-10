@@ -129,8 +129,6 @@ export class PortfolioReturns implements IPortfolioReturns {
     if (E3 > 0) {
       amount = (J3 + dividendsAmount - E3) / E3;
     }
-    //=SI(E3>0,(J3-E3)/E3,0)
-    console.info(`${year}: ${J3} + ${dividendsAmount} - ${E3}/${E3}`);
 
     return amount * 100;
   }

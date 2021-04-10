@@ -26,7 +26,6 @@ export default function PortfolioStats(): ReactElement | null {
   const { Option } = Select;
 
   function onChange(value: any) {
-    console.log(`ONCHANGE ${value}`);
     setYear(value);
     if (portfolio !== null) {
       if (value === "all") {

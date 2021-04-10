@@ -25,8 +25,6 @@ export default function PortfolioSelectorMenu(): ReactElement {
   };
 
   const changeIsCollapsed = () => {
-    // setIsCollapsed(!isCollapsed);
-    console.log("Changing collapsed")
     toggleCollapsed();
   };
 

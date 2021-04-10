@@ -46,7 +46,7 @@ ipcMain.on("backup-database", (event, arg, queryType) => {
   database
     .backup(`${path}/backup-${Date.now()}.db`)
     .then(() => {
-      console.info("backup complete!");
+      console.info("Backup complete!");
       event.returnValue = {result: "OK", path};
     })
     .catch((err) => {

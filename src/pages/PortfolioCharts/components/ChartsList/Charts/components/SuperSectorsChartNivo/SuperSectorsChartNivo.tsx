@@ -33,7 +33,6 @@ export default function SuperSectorsChartNivo({
     };
 
     const grouped = groupBy(tempData, "superSectorName");
-    console.log(grouped);
 
     const newGroups = Object.entries(grouped).map(([k, v]) => {
       const value: string = v as string;

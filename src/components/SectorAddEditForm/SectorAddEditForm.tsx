@@ -32,7 +32,6 @@ function SectorAddEditForm({
   useEffect(() => {
     const sectors = fetchSectors();
     setSectors(sectors);
-    console.log(sectors)
     if (sectorId) {
       const newSector = getSectorById(sectorId);
       if (newSector) {
@@ -55,9 +54,7 @@ function SectorAddEditForm({
     if (sectorId) {
       changes = updateSector(sectorId, newSector);
     } else {
-      console.log(newSector)
       changes = addSector(newSector);
-      console.debug(changes)
     }
     if (changes.changes) {
       fetchSectors();

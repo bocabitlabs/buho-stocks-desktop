@@ -21,13 +21,12 @@ const saveFile = (dataToSave) => {
     })
     .then((file) => {
       // Stating whether dialog operation was cancelled or not.
-      console.log(file.canceled);
+      console.debug(file.canceled);
       if (!file.canceled) {
-        console.log(file.filePath.toString());
         // Creating and Writing to the sample.txt file
         fs.writeFile(file.filePath.toString(), dataToSave, function (err) {
           if (err) throw err;
-          console.log("Saved!");
+          console.info(`File Saved on ${file.filePath.toString()}!`);
         });
       }
     })

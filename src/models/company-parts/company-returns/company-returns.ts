@@ -90,7 +90,6 @@ export class CompanyReturns implements ICompanyReturns {
     } else {
       totalReturn = portfolioValue - totalInvested;
     }
-    console.log(`${portfolioValue} - ${totalInvested}`);
     return totalReturn;
   }
 
@@ -119,9 +118,6 @@ export class CompanyReturns implements ICompanyReturns {
     let amount =
       portfolioValueCurrentYear -
       (portfolioValuePreviousYear + totalInvestedOnCurrentYear);
-    console.log(
-      `${portfolioValueCurrentYear} - (${portfolioValuePreviousYear} + ${totalInvestedOnCurrentYear})`
-    );
     return amount;
   }
 
@@ -196,9 +192,6 @@ export class CompanyReturns implements ICompanyReturns {
     if (Q3 + E4 !== 0) {
       returnPercentage = (Q4 - (Q3 + E4)) / (Q3 + E4);
     }
-    console.log(
-      `${Q4} -(${Q3} + ${E4})/ ((${Q3} + ${E4})) = ${returnPercentage * 100}`
-    );
 
     return returnPercentage * 100;
   }
@@ -230,9 +223,6 @@ export class CompanyReturns implements ICompanyReturns {
     if (Q3 + E4 !== 0) {
       returnPercentage = (Q4 + F4 - (Q3 + E4)) / (Q3 + E4);
     }
-    console.log(
-      `${Q4} -(${Q3} + ${E4})/ ((${Q3} + ${E4})) = ${returnPercentage * 100}`
-    );
 
     return returnPercentage * 100;
   }

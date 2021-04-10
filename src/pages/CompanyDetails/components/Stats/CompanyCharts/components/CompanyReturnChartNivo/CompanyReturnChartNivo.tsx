@@ -83,8 +83,6 @@ export default function PortfolioReturnChartNivo({
     return <Spin/>
   }
 
-  console.log(chartData)
-
   if (chartData.length > 0) {
     return (
       <>

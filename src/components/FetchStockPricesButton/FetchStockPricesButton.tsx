@@ -24,7 +24,6 @@ export default function FetchStockPricesButton({
 
   const handleOnClick = async () => {
     setLoading(true);
-    console.log("On Click");
     for (let company of companies) {
       if (company.closed) {
         continue;
@@ -36,7 +35,6 @@ export default function FetchStockPricesButton({
         );
         var currentYear = moment().format("YYYY");
 
-        // console.log(result)
         let initialDate = "01-12-" + year.toString();
         let endDate = "31-12-" + year.toString();
 
@@ -96,7 +94,6 @@ export default function FetchStockPricesButton({
                 company.currencyAbbreviation !==
                 company.portfolioCurrencyAbbreviation
               ) {
-                console.log("Using exchage: " + exchangeName);
                 const exchageRate = await ExchangeRateService.getFromAPIWeekly(
                   initialDate,
                   endDate,

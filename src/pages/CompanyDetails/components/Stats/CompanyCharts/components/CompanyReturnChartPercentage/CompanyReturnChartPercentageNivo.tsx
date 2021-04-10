@@ -64,9 +64,6 @@ export default function CompanyReturnChartPercentageNivo({
         yearReturn.push({ x: element.toString(), y: value });
       });
 
-      // console.log("DATA2")
-      // console.log(data2)
-
       const years3 = [...years];
       years3.reverse().forEach((element) => {
         const value = company.returns.getReturnPercentageCumulativeForYear(

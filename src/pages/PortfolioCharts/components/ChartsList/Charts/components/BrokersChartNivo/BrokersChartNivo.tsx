@@ -34,7 +34,6 @@ export default function CurrenciesChart({
     };
 
     const grouped = groupBy(tempData, "broker");
-    console.log(grouped);
 
     const newGroups = Object.entries(grouped).map(([k, v]) => {
       const value: string = v as string;

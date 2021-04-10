@@ -67,7 +67,6 @@ export default function Stats({ company }: Props): React.ReactElement | null {
   );
 
   function onChange(value: any) {
-    console.log(`ONCHANGE ${value}`);
     setYear(value);
     if (company !== null) {
       if (value === "all") {
