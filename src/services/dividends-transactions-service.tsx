@@ -1,5 +1,5 @@
 import { DividendsTransaction, DividendsTransactionFormProps } from "types/dividends-transaction";
-import DividendsTransactionsDAO from "database/daos/dividends-transactions-dao";
+import DividendsTransactionsDAO from "database/daos/dividends-transactions-dao/dividends-transactions-dao";
 
 export default class DividendsTransactionsService {
   static create = (transaction: DividendsTransactionFormProps) => {
@@ -17,10 +17,6 @@ export default class DividendsTransactionsService {
 
   static getAll = (companyId: string) => {
     return DividendsTransactionsDAO.getAll(companyId);
-  };
-
-  static getDividendsTransactionsByCompanyId = (companyId: string) => {
-    return DividendsTransactionsDAO.getByCompanyId(companyId);
   };
 
   static getById = (transactionId: string) => {

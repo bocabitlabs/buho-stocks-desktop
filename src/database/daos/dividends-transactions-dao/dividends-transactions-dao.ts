@@ -4,7 +4,7 @@ import {
   DividendsTransaction,
   DividendsTransactionFormProps
 } from "types/dividends-transaction";
-import { deleteById } from "./operations/operations";
+import { deleteById } from "../operations/operations";
 
 export default class DividendsTransactionsDAO {
   static create = (transaction: DividendsTransactionFormProps) => {
@@ -119,20 +119,6 @@ export default class DividendsTransactionsDAO {
     FROM "dividendsTransactions"
     WHERE dividendsTransactions.id = '${transactionId}';
     `;
-    const results = sendIpcSql(sql, "get");
-    return results;
-  };
-
-  static getByCompanyId = (companyId: string) => {
-    const sql = `
-      SELECT
-      sum(dividendsTransactions.price * dividendsTransactions.count - dividendsTransactions.commission) as dividendsNet
-      , sum((dividendsTransactions.price * dividendsTransactions.count - dividendsTransactions.commission) * dividendsTransactions.exchangeRate) as dividendsNetBaseCurrency
-      , sum(dividendsTransactions.price * dividendsTransactions.count) as dividendsGross
-      , sum(dividendsTransactions.price * dividendsTransactions.count * dividendsTransactions.exchangeRate) as dividendsGrossBaseCurrency
-	  FROM dividendsTransactions
-    WHERE dividends.companyId = '${companyId}';
-      `;
     const results = sendIpcSql(sql, "get");
     return results;
   };
