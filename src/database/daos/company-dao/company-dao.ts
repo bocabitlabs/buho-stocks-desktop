@@ -1,10 +1,10 @@
 import moment from "moment";
 import sendIpcSql from "message-control/renderer";
 import { ICompany, CompanyFormFields } from "types/company";
-import { deleteById } from "./operations/operations";
+import { deleteById } from "../operations/operations";
 
 export default class CompanyDAO {
-  addCompany = (company: CompanyFormFields) => {
+  static create = (company: CompanyFormFields) => {
     //Call the DB
     const sql = `INSERT INTO "companies"
     ("name"
@@ -44,7 +44,7 @@ export default class CompanyDAO {
     return result;
   };
 
-  exportAll = () => {
+  static exportAll = () => {
     //Call the DB
     console.debug("Export all companies");
     const sql = `
@@ -90,7 +90,7 @@ export default class CompanyDAO {
     return result;
   };
 
-  getCompanies = (portfolioId: string) => {
+  static getAll = (portfolioId: string) => {
     //Call the DB
     const sql = `
     SELECT companies.*
@@ -140,7 +140,7 @@ export default class CompanyDAO {
     }
     return results;
   };
-  getCompany = (companyId: string): ICompany => {
+  static getById = (companyId: string): ICompany => {
     //Call the DB
     const sql = `
     SELECT companies.*
@@ -175,13 +175,13 @@ export default class CompanyDAO {
     return results;
   };
 
-  deleteById = (id: string) => {
+  static deleteById = (id: string) => {
     //Call the DB
     const results = deleteById("companies", id);
     return results;
   };
 
-  update = (companyId: string, company: CompanyFormFields) => {
+  static update = (companyId: string, company: CompanyFormFields) => {
     const sql = `
     UPDATE companies
     SET

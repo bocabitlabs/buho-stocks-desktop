@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { PortfolioFormFields } from "types/portfolio";
-import { deleteById } from "./operations/operations";
+import { deleteById } from "../operations/operations";
 
 export default class PortfolioDAO {
   static create = (portfolio: PortfolioFormFields) => {

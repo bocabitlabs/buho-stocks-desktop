@@ -6,19 +6,19 @@ import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
 import { SharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
-import CompanyDAO from "../database/daos/company-dao";
+import CompanyDAO from "../database/daos/company-dao/company-dao";
 import { ICompany, CompanyFormFields } from "../types/company";
 import RightsTransactionsService from "./rights-transactions-service";
 import StockPriceService from "./stock-price-service";
 
 export default class CompanyService {
   addCompany = (company: CompanyFormFields): IAddProps => {
-    const result = new CompanyDAO().addCompany(company);
+    const result = CompanyDAO.create(company);
     return result;
   };
 
   exportAll = (): ICompany[] => {
-    const companies = new CompanyDAO().exportAll();
+    const companies = CompanyDAO.exportAll();
     return companies;
   };
 
@@ -34,7 +34,7 @@ export default class CompanyService {
     if (portfolioId === "undefined") {
       return [];
     }
-    const companies = new CompanyDAO().getCompanies(portfolioId);
+    const companies = CompanyDAO.getAll(portfolioId);
     let companiesWithDetails: ICompany[] = [];
     companies.forEach((element: ICompany) => {
       const company = this.getCompanyDetails(element.id);
@@ -46,7 +46,7 @@ export default class CompanyService {
   };
 
   getCompanyDetails = (companyId: string): Company | null => {
-    const result = new CompanyDAO().getCompany(companyId);
+    const result = CompanyDAO.getById(companyId);
     if (result) {
       const sharesTransactions = SharesTransactionsDAO.getAll(companyId);
       const dividendsTransactions = DividendsTransactionsDAO.getAll(companyId);
@@ -64,12 +64,12 @@ export default class CompanyService {
   };
 
   deleteById = (companyId: string) => {
-    const result = new CompanyDAO().deleteById(companyId);
+    const result = CompanyDAO.deleteById(companyId);
     return result;
   };
 
   update = (companyId: string, company: CompanyFormFields) => {
-    return new CompanyDAO().update(companyId, company);
+    return CompanyDAO.update(companyId, company);
   };
 
   static getFirstTransaction = (portfolioId: string) => {

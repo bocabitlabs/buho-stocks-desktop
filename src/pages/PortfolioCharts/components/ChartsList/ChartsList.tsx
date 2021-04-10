@@ -1,4 +1,3 @@
-import { Form, Select } from "antd";
 import { PortfoliosContext } from "contexts/portfolios";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
@@ -9,12 +8,6 @@ export default function ChartsList(): ReactElement | null {
   const { portfolio } = useContext(PortfoliosContext);
   const [year, setYear] = useState("all");
   const [years, setYears] = useState<number[]>([]);
-
-  const { Option } = Select;
-
-  function onChange(value: any) {
-    setYear(value);
-  }
 
   useEffect(() => {
     if (portfolio !== null) {

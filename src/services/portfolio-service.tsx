@@ -1,4 +1,4 @@
-import PortfolioDAO from "database/daos/portfolio-dao";
+import PortfolioDAO from "database/daos/portfolio-dao/portfolio-dao";
 import { Portfolio } from "models/portfolio";
 import { ICompany } from "types/company";
 import { IPortfolio, PortfolioFormFields } from "types/portfolio";
