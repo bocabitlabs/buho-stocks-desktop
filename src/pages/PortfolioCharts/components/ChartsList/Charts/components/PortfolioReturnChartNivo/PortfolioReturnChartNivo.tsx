@@ -94,7 +94,7 @@ export default function PortfolioReturnChartNivo({
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "amount",
+              legend: `amount ${portfolio.currencySymbol}`,
               legendOffset: -40,
               legendPosition: "middle"
             }}

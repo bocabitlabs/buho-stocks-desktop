@@ -1,5 +1,10 @@
 import { Spin, Typography } from "antd";
-import React, { ReactElement, useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  ReactElement,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
 import { IPortfolio } from "types/portfolio";
 import fewColors from "utils/colors";
 import { StringUtils } from "utils/string-utils";
@@ -12,7 +17,7 @@ interface Props {
 
 export default function CurrenciesChart({
   data,
-  portfolio,
+  portfolio
 }: Props): ReactElement {
   const [chartData, setChartData] = useState<any[]>([]);
   const [width, setWidth] = useState(window.innerWidth);
@@ -33,38 +38,54 @@ export default function CurrenciesChart({
 
   useEffect(() => {
     const tempData = [...data];
+    const portfolioValue = portfolio.getPortfolioValue();
 
-    const newGroups = tempData.sort((a: any, b: any) => b.portfolioValue - a.portfolioValue).map((element, key) => {
-      return {
-        id: element.name,
-        company: element.name,
-        label: element.name,
-        amount: element.portfolioValue,
-        color: fewColors[key % fewColors.length]
-      };
-    });
+    const newGroups = tempData
+      .sort((a: any, b: any) => b.portfolioValue - a.portfolioValue)
+      .map((element, key) => {
+        return {
+          id: element.name,
+          company: element.name,
+          label: element.name,
+          amount: (element.portfolioValue / portfolioValue) * 100,
+          value: element.portfolioValue,
+          color: fewColors[key % fewColors.length]
+        };
+      });
     setChartData(newGroups);
   }, [data]);
 
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        <Typography.Title level={3}>Portfolio Value</Typography.Title>
+        <Typography.Title level={3}>% Portfolio Value by company</Typography.Title>
         <div style={{ height: 450, width: width - sidebarWidth - 50 }}>
           <ResponsiveBar
             data={chartData}
-            keys={[ 'amount' ]}
+            keys={["amount"]}
             indexBy="company"
             margin={{ top: 50, right: 50, bottom: 150, left: 60 }}
             padding={0.3}
             valueScale={{ type: "linear" }}
             indexScale={{ type: "band", round: true }}
-            colors={{ scheme: 'category10' }}
-            tooltipFormat={(data)=> (`${StringUtils.getAmountWithSymbol(parseFloat(data.toString()), 2, portfolio.currencySymbol)}`)}
+            colors={{ scheme: "category10" }}
+            tooltipFormat={(data) =>
+              `${StringUtils.getAmountWithSymbol(
+                parseFloat(data.toString()),
+                2,
+                "%"
+              )}`
+            }
             borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
             axisTop={null}
             axisRight={null}
-            labelFormat={(data)=> (`${StringUtils.getAmountWithSymbol(parseFloat(data.toString()), 2, portfolio.currencySymbol)}`)}
+            labelFormat={(data) =>
+              `${StringUtils.getAmountWithSymbol(
+                parseFloat(data.toString()),
+                2,
+                "%"
+              )}`
+            }
             axisBottom={{
               tickSize: 5,
               tickPadding: 5,
@@ -76,7 +97,7 @@ export default function CurrenciesChart({
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "current value",
+              legend: `current value ${portfolio.currencySymbol}`,
               legendPosition: "middle",
               legendOffset: -40
             }}
@@ -86,6 +107,27 @@ export default function CurrenciesChart({
             animate={true}
             motionStiffness={90}
             motionDamping={15}
+            tooltip={(input: any) => {
+              return (
+                <div>
+                  Value of {input.data.company}:{" "}
+                  <strong>
+                    {StringUtils.getAmountWithSymbol(
+                      parseFloat(input.data.value.toString()),
+                      2,
+                      portfolio.currencySymbol
+                    )}
+                  </strong>
+                  (
+                  {StringUtils.getAmountWithSymbol(
+                    parseFloat(input.data.amount.toString()),
+                    2,
+                    "%"
+                  )}
+                  )
+                </div>
+              );
+            }}
           />
         </div>
       </>

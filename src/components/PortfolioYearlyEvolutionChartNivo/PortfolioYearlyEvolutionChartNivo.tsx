@@ -74,11 +74,7 @@ export default function PortfolioYearlyEvolutionChartNivo({
           true
         );
 
-        const tempDividendsData = portfolio.dividends.getDividendsForYear(
-          element.toString(),
-          true
-        );
-        dividendsData.push({ x: element.toString(), y: tempDividendsData });
+        dividendsData.push({ x: element.toString(), y: accumulatedDividendsData });
 
         portfolioValueWithDividends.push({
           x: element.toString(),

@@ -2,6 +2,7 @@ import { Spin, Typography } from "antd";
 import React, { ReactElement, useEffect, useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { IPortfolio } from "types/portfolio";
+import { StringUtils } from "utils/string-utils";
 
 interface Props {
   data: any;
@@ -18,6 +19,7 @@ export default function CurrenciesChart({
 
   useEffect(() => {
     const tempData = [...data];
+    let companiesCount = 0;
 
     var groupBy = function (xs: any, key: any) {
       return xs.reduce(function (rv: any, x: any) {
@@ -26,6 +28,7 @@ export default function CurrenciesChart({
           rv[name] = 0;
         }
         rv[name]++;
+        companiesCount++;
         return rv;
       }, {});
     };
@@ -34,7 +37,8 @@ export default function CurrenciesChart({
     console.log(grouped);
 
     const newGroups = Object.entries(grouped).map(([k, v]) => {
-      return { id: k, label: k, value: v };
+      const value: string = v as string;
+      return { id: k, label: k, value: (parseInt(value)/companiesCount * 100) };
     });
     setChartData(newGroups);
   }, [data]);
@@ -58,102 +62,9 @@ export default function CurrenciesChart({
             radialLabelsLinkColor={{ from: "color" }}
             sliceLabelsSkipAngle={10}
             sliceLabelsTextColor="#333333"
+            sliceLabel={(data)=> (`${StringUtils.getAmountWithSymbol(parseFloat(data.value.toString()), 2, '%')}`)}
+            valueFormat={(value: any) => (`${StringUtils.getAmountWithSymbol(parseFloat(value.toString()), 2, '%')}`)}
             sortByValue
-            // defs={[
-            //   {
-            //     id: "dots",
-            //     type: "patternDots",
-            //     background: "inherit",
-            //     color: "rgba(255, 255, 255, 0.3)",
-            //     size: 4,
-            //     padding: 1,
-            //     stagger: true
-            //   },
-            //   {
-            //     id: "lines",
-            //     type: "patternLines",
-            //     background: "inherit",
-            //     color: "rgba(255, 255, 255, 0.3)",
-            //     rotation: -45,
-            //     lineWidth: 6,
-            //     spacing: 10
-            //   }
-            // ]}
-            // fill={[
-            //   {
-            //     match: {
-            //       id: "ruby"
-            //     },
-            //     id: "dots"
-            //   },
-            //   {
-            //     match: {
-            //       id: "c"
-            //     },
-            //     id: "dots"
-            //   },
-            //   {
-            //     match: {
-            //       id: "go"
-            //     },
-            //     id: "dots"
-            //   },
-            //   {
-            //     match: {
-            //       id: "python"
-            //     },
-            //     id: "dots"
-            //   },
-            //   {
-            //     match: {
-            //       id: "scala"
-            //     },
-            //     id: "lines"
-            //   },
-            //   {
-            //     match: {
-            //       id: "lisp"
-            //     },
-            //     id: "lines"
-            //   },
-            //   {
-            //     match: {
-            //       id: "elixir"
-            //     },
-            //     id: "lines"
-            //   },
-            //   {
-            //     match: {
-            //       id: "javascript"
-            //     },
-            //     id: "lines"
-            //   }
-            // ]}
-            // legends={[
-            //   {
-            //     anchor: "bottom",
-            //     direction: "row",
-            //     justify: false,
-            //     translateX: 0,
-            //     translateY: 56,
-            //     itemsSpacing: 0,
-            //     itemWidth: 100,
-            //     itemHeight: 18,
-            //     itemTextColor: "#999",
-            //     itemDirection: "left-to-right",
-            //     itemOpacity: 1,
-            //     symbolSize: 18,
-            //     symbolShape: "circle",
-            //     effects: [
-            //       {
-            //         on: "hover",
-            //         style: {
-            //           itemTextColor: "#000"
-            //         }
-            //       }
-            //     ]
-            //   }
-            // ]}
           />
         </div>
       </>

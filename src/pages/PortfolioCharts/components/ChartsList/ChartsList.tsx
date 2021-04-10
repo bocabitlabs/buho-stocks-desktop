@@ -37,26 +37,6 @@ export default function ChartsList(): ReactElement | null {
 
   return (
     <div style={{ marginBottom: 16 }}>
-      <div style={{ marginBottom: 16 }}>
-        <Form name="customized_form_controls" layout="inline">
-          <Form.Item>
-            <Select
-              showSearch
-              style={{ width: 200 }}
-              placeholder="Select a year"
-              onChange={onChange}
-              defaultValue="all"
-            >
-              <Option value="all">All</Option>
-              {years.map((element) => (
-                <Option value={element} key={element}>
-                  {element}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
-      </div>
       <Charts portfolio={portfolio} year={year} years={years} />
     </div>
   );

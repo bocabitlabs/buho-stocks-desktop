@@ -20,12 +20,12 @@ export default function CurrenciesChart({
 
   useEffect(() => {
     const tempData = [...data];
-
+    const totalDividends = portfolio.dividends.getDividends()
     const newGroups = tempData.map((element, key) => {
       return {
         id: element.name,
         label: element.name,
-        value: element.dividends,
+        value: element.dividends/totalDividends * 100,
         color: fewColors[key % fewColors.length]
       };
     });
@@ -35,7 +35,7 @@ export default function CurrenciesChart({
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        <Typography.Title level={3}>Dividends</Typography.Title>
+        <Typography.Title level={3}>Dividends by company</Typography.Title>
         <div style={{ height: 600, width: width-300 }}>
           <ResponsivePie
             data={chartData}
@@ -52,7 +52,7 @@ export default function CurrenciesChart({
             sliceLabelsSkipAngle={10}
             sliceLabelsTextColor="#333333"
             sortByValue
-            valueFormat={(data)=> (`${StringUtils.getAmountWithSymbol(parseFloat(data.toString()), 2, portfolio.currencySymbol)}`)}
+            valueFormat={(data)=> (`${StringUtils.getAmountWithSymbol(parseFloat(data.toString()), 2, '%')}`)}
           />
         </div>
       </>

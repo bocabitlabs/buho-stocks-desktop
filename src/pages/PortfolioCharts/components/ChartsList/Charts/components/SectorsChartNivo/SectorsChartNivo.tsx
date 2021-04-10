@@ -2,6 +2,7 @@ import { Spin, Typography } from "antd";
 import React, { ReactElement, useEffect, useState } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { IPortfolio } from "types/portfolio";
+import { StringUtils } from "utils/string-utils";
 
 interface Props {
   data: any;
@@ -18,24 +19,23 @@ export default function CurrenciesChart({
 
   useEffect(() => {
     const tempData = [...data];
-    console.debug(data)
-
+    let companiesCount = 0;
     var groupBy = function (xs: any, key: any) {
       return xs.reduce(function (rv: any, x: any) {
         var name = x[key];
         if (!rv.hasOwnProperty(name)) {
           rv[name] = 0;
         }
+        companiesCount++;
         rv[name]++;
         return rv;
       }, {});
     };
 
     const grouped = groupBy(tempData, "sectorName");
-    console.log(grouped);
-
     const newGroups = Object.entries(grouped).map(([k, v]) => {
-      return { id: k, label: k, value: v };
+      const value: string = v as string;
+      return { id: k, label: k, value: (parseFloat(value)/companiesCount * 100) };
     });
 
     setChartData(newGroups);
@@ -60,6 +60,8 @@ export default function CurrenciesChart({
             radialLabelsLinkColor={{ from: "color" }}
             sliceLabelsSkipAngle={10}
             sliceLabelsTextColor="#333333"
+            sliceLabel={(data)=> (`${StringUtils.getAmountWithSymbol(parseFloat(data.value.toString()), 2, '%')}`)}
+            valueFormat={(value: any) => (`${StringUtils.getAmountWithSymbol(parseFloat(value.toString()), 2, '%')}`)}
             sortByValue
           />
         </div>
