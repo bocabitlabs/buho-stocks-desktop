@@ -1,4 +1,4 @@
-import RightsTransactionsDAO from "database/daos/rights-transactions-dao";
+import RightsTransactionsDAO from "database/daos/rights-transactions-dao/rights-transactions-dao";
 import { RightsTransaction, RightsTransactionFormProps } from "types/rights-transaction";
 
 export default class RightsTransactionsService {
