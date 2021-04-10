@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { ITransactionLogMessageFormProps } from "types/transaction-log";
-import { deleteById } from "../operations";
+import { deleteById } from "../operations/operations";
 
 export default class TransactionLogDAO {
   static create = (element: ITransactionLogMessageFormProps) => {

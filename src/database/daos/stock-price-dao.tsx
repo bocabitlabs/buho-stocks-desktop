@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { StockPriceFormProps } from "types/stock-price";
-import { deleteById } from "./operations";
+import { deleteById } from "./operations/operations";
 
 export default class StockPriceDAO {
   static add = (stockPrice: StockPriceFormProps) => {

@@ -4,7 +4,7 @@ import {
   SharesTransaction,
   SharesTransactionFormProps
 } from "types/shares-transaction";
-import { deleteById } from "./operations";
+import { deleteById } from "./operations/operations";
 
 export default class SharesTransactionsDAO {
   static create = (sharesTransaction: SharesTransactionFormProps) => {

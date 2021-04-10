@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { SectorFormFields } from "types/sector";
-import { deleteById, getById } from "../operations";
+import { deleteById, getById } from "../operations/operations";
 
 export default class SectorDAO {
   static exportAll = () => {

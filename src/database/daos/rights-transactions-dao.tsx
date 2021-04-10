@@ -1,7 +1,7 @@
 import moment from "moment";
 import { RightsTransaction, RightsTransactionFormProps } from "types/rights-transaction";
 import sendIpcSql from "../../message-control/renderer";
-import { deleteById } from "./operations";
+import { deleteById } from "./operations/operations";
 
 export default class RightsTransactionsDAO {
   static create = (rightsTransaction: RightsTransactionFormProps) => {

@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { IExchangeRateForm } from "types/exchange-rate";
-import { deleteById } from "./operations";
+import { deleteById } from "./operations/operations";
 
 export default class ExchangeRateDAO {
   static add = (exchangeRate: IExchangeRateForm) => {

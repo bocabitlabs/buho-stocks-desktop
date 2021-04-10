@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { MarketFormProps } from "types/market";
-import { deleteById, getById } from "../operations";
+import { deleteById, getById } from "../operations/operations";
 
 export default class MarketDAO {
   static create = (market: MarketFormProps) => {

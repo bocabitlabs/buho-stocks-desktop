@@ -4,7 +4,7 @@ import {
   DividendsTransaction,
   DividendsTransactionFormProps
 } from "types/dividends-transaction";
-import { deleteById } from "./operations";
+import { deleteById } from "./operations/operations";
 
 export default class DividendsTransactionsDAO {
   static create = (transaction: DividendsTransactionFormProps) => {

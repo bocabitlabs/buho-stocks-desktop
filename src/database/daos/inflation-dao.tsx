@@ -4,7 +4,7 @@ import sendIpcSql from "../../message-control/renderer";
 import {
   deleteById as deleteByIdOperation,
   getById as getByIdOperation
-} from "./operations";
+} from "./operations/operations";
 
 const addInflation = (inflation: InflationFormFields) => {
   //Call the DB

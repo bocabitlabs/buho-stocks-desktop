@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import { CurrencyFormFields } from "types/currency";
-import { deleteById, getById } from "../operations";
+import { deleteById, getById } from "../operations/operations";
 
 export default class CurrencyDAO {
   static create = (currency: CurrencyFormFields) => {

@@ -1,4 +1,4 @@
-import sendIpcSql from "../../message-control/renderer";
+import sendIpcSql from "../../../message-control/renderer";
 
 
 export const getById = (table: string, id: string) => {

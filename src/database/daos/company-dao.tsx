@@ -1,7 +1,7 @@
 import moment from "moment";
 import sendIpcSql from "message-control/renderer";
 import { ICompany, CompanyFormFields } from "types/company";
-import { deleteById } from "./operations";
+import { deleteById } from "./operations/operations";
 
 export default class CompanyDAO {
   addCompany = (company: CompanyFormFields) => {
