@@ -1,4 +1,4 @@
-import SettingsDAO from "database/daos/settings-dao";
+import SettingsDAO from "database/daos/settings-dao/settings-dao";
 import { ISettings } from "types/settings";
 
 export default class SettingsService {

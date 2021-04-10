@@ -1,6 +1,5 @@
 import sendIpcSql from "message-control/renderer";
 import { ISector } from "types/sector";
-import { TransactionType } from "types/transaction";
 import DividendsTransactionDAO from "./dividends-transactions-dao";
 
 jest.mock("message-control/renderer");
