@@ -12,7 +12,6 @@ import CurrencyAdd from "./pages/CurrencyAdd/CurrencyAdd";
 import CurrencyList from "./pages/CurrencyList/CurrencyList";
 import CompanyDetails from "./pages/CompanyDetails/CompanyDetails";
 import Home from "pages/Home/Home";
-import InflationAdd from "pages/InflationAdd/InflationAdd";
 import MarketAdd from "pages/MarketAdd/MarketAdd";
 import MarketList from "pages/MarketList/MarketList";
 import PortfolioAdd from "pages/PortfolioAdd/PortfolioAdd";
@@ -111,8 +110,6 @@ function App() {
                     path="/markets/:marketId/edit/"
                     component={MarketEdit}
                   />
-                  <Route exact path="/add/inflation" component={InflationAdd} />
-                  {/* <Route exact path="/inflations" component={InflationList} /> */}
 
                   <Route exact path="/sectors" component={SectorList} />
                   <Route exact path="/add/sector" component={SectorAdd} />

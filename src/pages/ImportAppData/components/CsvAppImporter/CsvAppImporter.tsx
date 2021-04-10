@@ -9,7 +9,6 @@ import {
   importCompanies,
   importCurrencies,
   importDividendsTransactions,
-  importInflations,
   importMarkets,
   importPortfolios,
   importRightsTransactions,
@@ -35,7 +34,6 @@ export default function CsvAppImporter(): ReactElement {
   const [shares, setShares] = useState([]);
   const [rights, setRights] = useState([]);
   const [dividends, setDividends] = useState([]);
-  const [inflations, setInflations] = useState([]);
   const [stockPrices, setStockPrices] = useState([]);
 
   const handleOnFileLoad = (data: any) => {
@@ -78,11 +76,6 @@ export default function CsvAppImporter(): ReactElement {
       return element.data[0] === "dividends";
     });
     setDividends(filteredDividends);
-
-    const filteredInflations = data.filter((element: any) => {
-      return element.data[0] === "inflation";
-    });
-    setInflations(filteredInflations);
 
     const filteredStockPrices = data.filter((element: any) => {
       return element.data[0] === "stockPrice";
@@ -168,12 +161,6 @@ export default function CsvAppImporter(): ReactElement {
         `Imported ${importedCount}/${totalCount} dividends transactions`
       );
     }
-    if (checkbox.includes("inflations")) {
-      setImportStep(ImportIds.inflations);
-      const { importedCount, totalCount, notes } = importInflations(inflations);
-      newNotes = [...newNotes, ...notes];
-      setImportStepText(`Imported ${importedCount}/${totalCount} inflations`);
-    }
     if (checkbox.includes("stockPrices")) {
       setImportStep(ImportIds.stockPrices);
       const { importedCount, totalCount, notes } = importStockPrices(
@@ -209,7 +196,6 @@ export default function CsvAppImporter(): ReactElement {
                   sharesCount: shares.length,
                   rightsCount: rights.length,
                   dividendsCount: dividends.length,
-                  inflationsCount: inflations.length,
                   stockPricesCount: stockPrices.length
                 }}
               />

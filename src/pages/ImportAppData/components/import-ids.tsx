@@ -7,6 +7,5 @@ export enum ImportIds{
   shares = 6,
   rights = 7,
   dividends = 8,
-  inflations = 9,
-  stockPrices = 10
+  stockPrices = 9
 }

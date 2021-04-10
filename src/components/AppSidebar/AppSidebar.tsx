@@ -27,7 +27,6 @@ const navLinks: RoutePathProps[] = [
     icon: <DollarCircleOutlined />
   },
   { key: "-3", path: "/sectors", text: "Sectors", icon: <ClusterOutlined /> },
-  // { key: "-4", path: "/inflations", text: "Inflation", icon: <RiseOutlined /> },
   {
     key: "-5",
     path: "/import-export",

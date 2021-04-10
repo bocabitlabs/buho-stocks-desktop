@@ -76,12 +76,6 @@ export default function ProgressSteps({
         content: "Waiting"
       },
       {
-        id: ImportIds.inflations,
-        name: "inflations",
-        title: "Inflations",
-        content: "Waiting"
-      },
-      {
         id: ImportIds.stockPrices,
         name: "stockPrices",
         title: "Stock prices",

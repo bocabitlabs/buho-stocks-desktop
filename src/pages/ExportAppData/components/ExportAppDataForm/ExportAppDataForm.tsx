@@ -6,7 +6,6 @@ import CurrencyService from "services/currency-service";
 import SectorService from "services/sector-service";
 import MarketService from "services/market-service";
 import PortfolioService from "services/portfolio-service";
-import InflationService from "services/inflation/inflation-service";
 import SharesTransactionsService from "services/shares-transactions-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
 import RightsTransactionsService from "services/rights-transactions-service";
@@ -39,14 +38,6 @@ export default function ExportAppDataForm(): ReactElement {
       marketsResults.forEach(function (rowArray) {
         const keys = Object.values(rowArray);
         let row = "market," + keys.join(",");
-        csvContent += row + "\r\n";
-      });
-    }
-    if (checkbox.includes("inflation")) {
-      const inflationsResults = InflationService.exportAll();
-      inflationsResults.forEach(function (rowArray) {
-        const keys = Object.values(rowArray);
-        let row = "inflation," + keys.join(",");
         csvContent += row + "\r\n";
       });
     }
@@ -106,7 +97,6 @@ export default function ExportAppDataForm(): ReactElement {
     { label: "Companies", value: "companies" },
     { label: "Currencies", value: "currencies" },
     { label: "Dividends", value: "dividends" },
-    { label: "Inflations", value: "inflation" },
     { label: "Markets", value: "markets" },
     { label: "Portfolios", value: "portfolios" },
     { label: "Rights", value: "rights" },

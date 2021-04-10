@@ -9,7 +9,6 @@ interface ElementsFoundProps {
   sharesCount: number;
   rightsCount: number;
   dividendsCount: number;
-  inflationsCount: number;
   stockPricesCount: number;
 }
 
@@ -30,7 +29,6 @@ export default function FoundItems({ elementsFound }: Props): ReactElement {
         <li>{elementsFound.sharesCount} shares transactions.</li>
         <li>{elementsFound.rightsCount} rights transactions.</li>
         <li>{elementsFound.dividendsCount} dividends transactions.</li>
-        <li>{elementsFound.inflationsCount} inflations.</li>
         <li>{elementsFound.stockPricesCount} stock prices.</li>
       </ul>
     </div>

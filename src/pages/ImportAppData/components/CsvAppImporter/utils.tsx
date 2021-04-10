@@ -1,7 +1,6 @@
 import CompanyService from "services/company-service";
 import CurrencyService from "services/currency-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
-import InflationService from "services/inflation/inflation-service";
 import MarketService from "services/market-service";
 import PortfolioService from "services/portfolio-service";
 import RightsTransactionsService from "services/rights-transactions-service";
@@ -11,7 +10,6 @@ import StockPriceService from "services/stock-price-service";
 import { CompanyFormFields } from "types/company";
 import { CurrencyFormFields } from "types/currency";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
-import { InflationFormFields } from "types/inflation";
 import { MarketFormProps } from "types/market";
 import { PortfolioFormFields } from "types/portfolio";
 import { RightsTransactionFormProps } from "types/rights-transaction";
@@ -301,29 +299,6 @@ export function importDividendsTransactions(dividends: any[]) {
     }
   });
   console.debug(`Imported ${importedCount} dividends transactions`);
-  return { importedCount, totalCount, notes };
-}
-
-export function importInflations(inflations: any[]) {
-  let importedCount = 0;
-  let totalCount = 0;
-  let notes: string[] = [];
-
-  inflations.forEach((inflationData: any) => {
-    const inflation: InflationFormFields = {
-      year: inflationData.data[1],
-      percentage: inflationData.data[2]
-    };
-    const exists = InflationService.getByYear(inflation.year);
-    if (exists === undefined) {
-      InflationService.add(inflation);
-      importedCount++;
-    } else {
-      notes.push(`Inflations: Year ${inflation.year} already exist. Skipping.`);
-    }
-    totalCount++;
-  });
-  console.debug(`Imported ${importedCount} inflations`);
   return { importedCount, totalCount, notes };
 }
 
