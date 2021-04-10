@@ -4,7 +4,7 @@ import { StockPriceFormProps } from "types/stock-price";
 import { deleteById } from "../operations/operations";
 
 export default class StockPriceDAO {
-  static add = (stockPrice: StockPriceFormProps) => {
+  static create = (stockPrice: StockPriceFormProps) => {
     //Call the DB
     const sql = `
     INSERT INTO stockPrices
@@ -33,7 +33,6 @@ export default class StockPriceDAO {
 
   static exportAll = () => {
     //Call the DB
-    console.debug("Export all stock prices");
     const sql = `
     SELECT
       stockPrices.price as price
@@ -52,7 +51,7 @@ export default class StockPriceDAO {
     return results;
   };
 
-  static getStockPrices = (companyId: string) => {
+  static getAll = (companyId: string) => {
     //Call the DB
     const sql = `
     SELECT *

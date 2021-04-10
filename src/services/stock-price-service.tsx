@@ -1,4 +1,4 @@
-import StockPriceDAO from "database/daos/stock-price-dao";
+import StockPriceDAO from "database/daos/stock-price-dao/stock-price-dao";
 import moment from "moment";
 import { IStockPrice, StockPriceFormProps } from "types/stock-price";
 import { delay } from "utils/misc";
@@ -6,7 +6,7 @@ import { getCurrentData, getHistoricalPrices } from "yahoo-stock-prices-fetch";
 
 export default class StockPriceService {
   static add = (stockPrice: StockPriceFormProps) => {
-    return StockPriceDAO.add(stockPrice);
+    return StockPriceDAO.create(stockPrice);
   };
 
   static exportAll = (): IStockPrice[] => {
@@ -15,7 +15,7 @@ export default class StockPriceService {
   };
 
   static getStockPrices = (companyId: string) => {
-    return StockPriceDAO.getStockPrices(companyId);
+    return StockPriceDAO.getAll(companyId);
   };
 
   static getStockPriceAPI = async (
