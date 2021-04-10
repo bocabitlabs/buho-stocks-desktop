@@ -4,7 +4,7 @@ import {
   SharesTransaction,
   SharesTransactionFormProps
 } from "types/shares-transaction";
-import { deleteById } from "./operations/operations";
+import { deleteById } from "../operations/operations";
 
 export default class SharesTransactionsDAO {
   static create = (sharesTransaction: SharesTransactionFormProps) => {
@@ -101,30 +101,6 @@ export default class SharesTransactionsDAO {
     ORDER BY datetime(sharesTransactions.transactionDate) ASC
     ;
     `;
-    const results = sendIpcSql(sql);
-    return results;
-  };
-
-  static getSharesTransactionsPerYearByCompanyId = (companyId: string) => {
-    const sql = `
-    SELECT
-      strftime('%Y', transactionDate) as 'year'
-      , companyId
-      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.count ELSE 0 END) as sharesBought
-      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.count ELSE 0 END) as sharesSold
-      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.price * sharesTransactions.count ELSE 0 END) as investedAmount
-      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.price * sharesTransactions.count ELSE 0 END * exchangeRate) as investedAmountBaseCurrency
-      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.price * sharesTransactions.count ELSE 0 END) as soldAmount
-      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.price * sharesTransactions.count ELSE 0 END * exchangeRate) as soldAmountBaseCurrency
-      , sum(CASE WHEN sharesTransactions.type='BUY' THEN sharesTransactions.commission ELSE 0 END) as investmentCommission
-      , sum(CASE WHEN sharesTransactions.type='SELL' THEN sharesTransactions.commission ELSE 0 END) as sellCommission
-      , count(price) as transactionsCount
-      FROM  sharesTransactions
-      WHERE sharesTransactions.companyId = '${companyId}'
-      GROUP BY strftime('%Y', transactionDate)
-      ORDER BY strftime('%Y', transactionDate)
-      ;
-      `;
     const results = sendIpcSql(sql);
     return results;
   };

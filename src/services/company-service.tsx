@@ -1,12 +1,12 @@
+import CompanyDAO from "database/daos/company-dao/company-dao";
 import DividendsTransactionsDAO from "database/daos/dividends-transactions-dao";
-import SharesTransactionsDAO from "database/daos/shares-transactions-dao";
+import SharesTransactionsDAO from "database/daos/shares-transaction-dao/shares-transactions-dao";
 import { Company } from "models/company";
 import { IAddProps } from "types/common";
 import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
 import { SharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
-import CompanyDAO from "../database/daos/company-dao/company-dao";
 import { ICompany, CompanyFormFields } from "../types/company";
 import RightsTransactionsService from "./rights-transactions-service";
 import StockPriceService from "./stock-price-service";

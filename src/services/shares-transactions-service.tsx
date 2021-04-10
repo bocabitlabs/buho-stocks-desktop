@@ -1,6 +1,6 @@
 import { SharesTransaction, SharesTransactionFormProps } from "types/shares-transaction";
-import SharesTransactionsDAO from "database/daos/shares-transactions-dao";
 import { IAddProps } from "types/common";
+import SharesTransactionsDAO from "database/daos/shares-transaction-dao/shares-transactions-dao";
 
 export default class SharesTransactionsService {
   static create = (transaction: SharesTransactionFormProps): IAddProps => {
