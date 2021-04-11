@@ -36,9 +36,9 @@ export default function CompanyDetailsRouteHeader({
   const history = useHistory();
   const {
     company,
-    fetchCompany,
+    getById: fetchCompany,
     deleteById: deleteCompany,
-    fetchCompanies
+    getAll: fetchCompanies
   } = useContext(CompaniesContext);
   const [addStockModalVisible, setAddStockModalVisible] = useState(false);
   const [listStockModalVisible, setListStockModalVisible] = useState(false);

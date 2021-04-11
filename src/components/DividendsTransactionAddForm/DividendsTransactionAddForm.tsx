@@ -29,7 +29,7 @@ export default function DividendsTransactionAddForm({
   const [color] = useState("#607d8b");
   const [dividendsSymbol, setDividendsSymbol] = useState("?");
 
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { company, getById: fetchCompany } = useContext(CompaniesContext);
   const { dividendsTransaction, create, getById, update } = useContext(
     DividendsTransactionsContext
   );

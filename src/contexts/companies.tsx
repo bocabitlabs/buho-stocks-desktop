@@ -6,9 +6,9 @@ export type CompaniesContextType = {
   companies: ICompany[];
   company: ICompany | null;
   isLoading: boolean;
-  fetchCompanies: (portfolioId: string) => void;
-  fetchCompany: (companyId: string) => ICompany | null;
-  addCompany: (company: CompanyFormFields) => IAddProps;
+  getAll: (portfolioId: string) => void;
+  getById: (companyId: string) => ICompany | null;
+  create: (company: CompanyFormFields) => IAddProps;
   update: (transactionId: string, transaction: CompanyFormFields) => IAddProps;
   deleteById: (transactionId: string) => IAddProps;
 };
@@ -17,9 +17,9 @@ export const companiesDefaultValue: CompaniesContextType = {
   companies: [],
   company: null,
   isLoading: false,
-  fetchCompanies: () => null,
-  fetchCompany: (): ICompany | null => null,
-  addCompany: (): IAddProps => ({ changes: false }),
+  getAll: () => null,
+  getById: (): ICompany | null => null,
+  create: (): IAddProps => ({ changes: false }),
   update: () => ({changes: false}),
   deleteById: () => ({ changes: false })
 };

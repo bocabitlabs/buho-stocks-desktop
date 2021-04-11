@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
 import { Button, Checkbox, Form, Typography } from "antd";
-import CompanyService from "services/company-service";
+import CompanyService from "services/company-service/company-service";
 import { saveFile } from "message-control/dialog";
-import CurrencyService from "services/currency-service";
+import CurrencyService from "services/currency-service/currency-service";
 import SectorService from "services/sector-service/sector-service";
 import MarketService from "services/market-service";
 import PortfolioService from "services/portfolio-service";
@@ -50,7 +50,7 @@ export default function ExportAppDataForm(): ReactElement {
       });
     }
     if (checkbox.includes("companies")) {
-      const companiesResults = new CompanyService().exportAll();
+      const companiesResults = CompanyService.exportAll();
       companiesResults.forEach(function (rowArray) {
         const keys = Object.values(rowArray);
         let row = "company," + keys.join(",");

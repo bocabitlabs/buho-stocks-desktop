@@ -15,7 +15,7 @@ export default function RightsTransactionEditHeader({
   portfolioId,
   transactionId
 }: Props): ReactElement {
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { company, getById: fetchCompany } = useContext(CompaniesContext);
 
   useEffect(() => {
     fetchCompany(companyId);

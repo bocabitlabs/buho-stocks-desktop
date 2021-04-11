@@ -21,7 +21,7 @@ export default function CompanyDetailsContent({
 }: Props): ReactElement {
   const history = useHistory();
   let query = useQuery();
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { company, getById: fetchCompany } = useContext(CompaniesContext);
 
   useEffect(() => {
     fetchCompany(companyId);

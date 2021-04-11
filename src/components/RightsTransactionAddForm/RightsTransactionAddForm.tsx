@@ -34,7 +34,7 @@ export default function RightsTransactionAddForm({
 }: Props): ReactElement | null {
   // Hooks
   const [form] = Form.useForm();
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { company, getById: fetchCompany } = useContext(CompaniesContext);
   const { create, getById, getAll, rightsTransaction, update } = useContext(
     RightsTransactionContext
   );

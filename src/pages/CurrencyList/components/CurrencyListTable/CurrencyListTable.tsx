@@ -1,7 +1,7 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { CurrenciesContext } from "contexts/currencies";
-import CurrencyService from "services/currency-service";
+import CurrencyService from "services/currency-service/currency-service";
 import { ICurrency } from "types/currency";
 import { Link } from "react-router-dom";
 import CountryFlag from "components/CountryFlag/CountryFlag";

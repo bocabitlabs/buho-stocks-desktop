@@ -35,8 +35,8 @@ function CompanyAddEditForm({
   const { sectors } = useContext(SectorsContext);
   const {
     company,
-    fetchCompany: getCompanyById,
-    addCompany,
+    getById: getCompanyById,
+    create: addCompany,
     update: updateCompany
   } = useContext(CompaniesContext);
 

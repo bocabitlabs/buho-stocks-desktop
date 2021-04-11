@@ -12,7 +12,7 @@ import { Form } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
-import CurrencyService from "services/currency-service";
+import CurrencyService from "services/currency-service/currency-service";
 import ExchangeRateService from "services/exchange-rate";
 import RightsTransactionsService from "services/rights-transactions-service";
 import SharesTransactionsService from "services/shares-transactions-service";

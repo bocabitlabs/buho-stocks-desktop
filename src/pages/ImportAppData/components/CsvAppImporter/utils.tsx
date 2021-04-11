@@ -1,5 +1,5 @@
-import CompanyService from "services/company-service";
-import CurrencyService from "services/currency-service";
+import CompanyService from "services/company-service/company-service";
+import CurrencyService from "services/currency-service/currency-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
 import MarketService from "services/market-service";
 import PortfolioService from "services/portfolio-service";
@@ -158,7 +158,7 @@ export function importCompanies(companies: any[]) {
           countryCode: portfolioData.data[14],
           dividendsCurrencyId: portfolioData.data[15]
         };
-        new CompanyService().addCompany(company);
+        CompanyService.create(company);
         importedCount++;
       } else {
         notes.push(

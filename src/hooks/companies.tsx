@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { IAddProps } from "types/common";
 import { CompaniesContextType } from "contexts/companies";
-import CompanyService from "services/company-service";
+import CompanyService from "services/company-service/company-service";
 import { CompanyFormFields, ICompany } from "types/company";
 
 export function useCompaniesContext(portfolioId: string): CompaniesContextType {
@@ -10,9 +10,9 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchCompanies = useCallback((portfolioId: string) => {
+  const getAll = useCallback((portfolioId: string) => {
     setIsLoading(true);
-    const result = new CompanyService().getCompanies(portfolioId);
+    const result = CompanyService.getAll(portfolioId);
     setCompanies(result);
     setIsLoading(false);
   }, []);
@@ -20,36 +20,36 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
   useEffect(() => {
     setIsLoading(true);
 
-    const result = new CompanyService().getCompanies(portfolioId);
+    const result = CompanyService.getAll(portfolioId);
     setCompanies(result);
     setIsLoading(false);
   }, [portfolioId]);
 
-  const fetchCompany = useCallback((companyId: string) => {
+  const getById = useCallback((companyId: string) => {
     setIsLoading(true);
-    const result = new CompanyService().getCompanyDetails(companyId);
+    const result = CompanyService.getById(companyId);
     setCompany(result);
     setIsLoading(false);
     return result;
   }, []);
 
-  const addCompany = useCallback((company: CompanyFormFields): IAddProps => {
+  const create = useCallback((company: CompanyFormFields): IAddProps => {
     setIsLoading(true);
-    const result = new CompanyService().addCompany(company);
+    const result = CompanyService.create(company);
     setIsLoading(false);
     return result;
   }, []);
 
   const deleteById = useCallback((companyId: string) => {
     setIsLoading(true);
-    const results = new CompanyService().deleteById(companyId);
+    const results = CompanyService.deleteById(companyId);
     setIsLoading(false);
     return results;
   }, []);
 
   const update = useCallback((companyId: string, company: CompanyFormFields) => {
     setIsLoading(true);
-    const result = new CompanyService().update(companyId, company);
+    const result = CompanyService.update(companyId, company);
     setIsLoading(false);
     return result;
   }, []);
@@ -58,9 +58,9 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
     companies,
     company,
     isLoading,
-    fetchCompanies,
-    fetchCompany,
-    addCompany,
+    getAll,
+    getById,
+    create,
     deleteById,
     update
   };

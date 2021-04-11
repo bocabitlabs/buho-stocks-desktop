@@ -3,7 +3,7 @@ import { BaseType } from "antd/lib/typography/Base";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import CompanyService from "services/company-service";
+import CompanyService from "services/company-service/company-service";
 import { ICompany } from "types/company";
 import { StringUtils } from "utils/string-utils";
 
@@ -16,7 +16,7 @@ export default function CompanyCard({ companyId }: Props): ReactElement | null {
   const { portfolio } = useContext(PortfoliosContext);
 
   useEffect(() => {
-    const comp = new CompanyService().getCompanyDetails(companyId);
+    const comp = CompanyService.getById(companyId);
     setCompany(comp);
   }, [companyId]);
 

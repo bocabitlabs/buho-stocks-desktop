@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { CurrenciesContextType } from "contexts/currencies";
-import CurrencyService from "services/currency-service";
+import CurrencyService from "services/currency-service/currency-service";
 import { ICurrency, CurrencyFormFields } from "types/currency";
 
 export function useCurrenciesContext(): CurrenciesContextType {

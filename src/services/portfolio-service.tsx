@@ -2,7 +2,7 @@ import PortfolioDAO from "database/daos/portfolio-dao/portfolio-dao";
 import { Portfolio } from "models/portfolio";
 import { ICompany } from "types/company";
 import { IPortfolio, PortfolioFormFields } from "types/portfolio";
-import CompanyService from "./company-service";
+import CompanyService from "./company-service/company-service";
 
 export default class PortfolioService {
   /**
@@ -42,7 +42,7 @@ export default class PortfolioService {
 
   static getById = (portfolioId: string): IPortfolio | null => {
     const data = PortfolioDAO.getById(portfolioId);
-    const companiesData = new CompanyService().getCompanies(portfolioId);
+    const companiesData = CompanyService.getAll(portfolioId);
     const portfolio = createPortfolioObject(data, companiesData);
     return portfolio;
   };

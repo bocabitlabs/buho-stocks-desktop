@@ -13,7 +13,7 @@ export default function RightsTransactionAddHeader({
   companyId,
   portfolioId
 }: Props): ReactElement {
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { company, getById: fetchCompany } = useContext(CompaniesContext);
 
   useEffect(() => {
     fetchCompany(companyId);

@@ -32,7 +32,7 @@ export default function SharesTransactionAddForm({
 }: Props): ReactElement | null {
   const [form] = Form.useForm();
   const history = useHistory();
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { company, getById: fetchCompany } = useContext(CompaniesContext);
   const {
     sharesTransaction,
     create: addTransaction,

@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function ShareAddHeader({companyId, portfolioId}: Props): React.ReactElement {
-  const { company, fetchCompany } = useContext(CompaniesContext);
+  const { company, getById: fetchCompany } = useContext(CompaniesContext);
 
   useEffect(() => {
     fetchCompany(companyId);

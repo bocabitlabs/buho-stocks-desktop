@@ -17,7 +17,7 @@ export default function CompanyEditHeader({
   const { portfolio, getById: getPortfolioById } = useContext(
     PortfoliosContext
   );
-  const { company, fetchCompany: getCompanyById } = useContext(
+  const { company, getById: getCompanyById } = useContext(
     CompaniesContext
   );
 
