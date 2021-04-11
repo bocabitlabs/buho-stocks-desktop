@@ -1,7 +1,7 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { SectorsContext } from "contexts/sectors";
-import SectorService from "services/sector-service";
+import SectorService from "services/sector-service/sector-service";
 import { ISector } from "types/sector";
 import { Link } from "react-router-dom";
 

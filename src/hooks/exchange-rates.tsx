@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import SectorService from "services/sector-service";
+import SectorService from "services/sector-service/sector-service";
 import { ExchangeRatesContextType } from "contexts/exchange-rates";
 import { IExchangeRate, IExchangeRateForm } from "types/exchange-rate";
 import ExchangeRateService from "services/exchange-rate";

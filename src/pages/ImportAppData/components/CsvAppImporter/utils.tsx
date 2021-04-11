@@ -4,7 +4,7 @@ import DividendsTransactionsService from "services/dividends-transactions-servic
 import MarketService from "services/market-service";
 import PortfolioService from "services/portfolio-service";
 import RightsTransactionsService from "services/rights-transactions-service";
-import SectorService from "services/sector-service";
+import SectorService from "services/sector-service/sector-service";
 import SharesTransactionsService from "services/shares-transactions-service";
 import StockPriceService from "services/stock-price-service";
 import { CompanyFormFields } from "types/company";

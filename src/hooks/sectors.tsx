@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { SectorsContextType } from "contexts/sectors";
-import SectorService from "services/sector-service";
+import SectorService from "services/sector-service/sector-service";
 import { ISector, SectorFormFields } from "types/sector";
 
 export function useSectorsContext(): SectorsContextType {

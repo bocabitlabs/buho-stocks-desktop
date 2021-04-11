@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Typography } from "antd";
 import CompanyService from "services/company-service";
 import { saveFile } from "message-control/dialog";
 import CurrencyService from "services/currency-service";
-import SectorService from "services/sector-service";
+import SectorService from "services/sector-service/sector-service";
 import MarketService from "services/market-service";
 import PortfolioService from "services/portfolio-service";
 import SharesTransactionsService from "services/shares-transactions-service";
