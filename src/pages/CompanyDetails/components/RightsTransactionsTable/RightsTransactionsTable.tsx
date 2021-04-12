@@ -8,7 +8,7 @@ import { RightsTransaction } from "types/rights-transaction";
 import { buySellFormatter } from "utils/table-formatters";
 import { TransactionType } from "types/transaction";
 import { CompaniesContext } from "contexts/companies";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 
 interface IProps {
   portfolioId: string;

@@ -18,7 +18,7 @@ import { CompaniesContext } from "contexts/companies";
 import { RightsTransactionFormProps } from "types/rights-transaction";
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import ExchangeRateService from "services/exchange-rate";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 
 interface Props {
   companyId: string;

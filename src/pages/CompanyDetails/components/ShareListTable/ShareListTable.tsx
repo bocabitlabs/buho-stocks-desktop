@@ -4,7 +4,7 @@ import { SharesTransactionsContext } from "contexts/shares-transactions";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { SharesTransaction } from "types/shares-transaction";
 import { buySellFormatter } from "utils/table-formatters";
 

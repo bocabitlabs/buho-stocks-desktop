@@ -16,7 +16,7 @@ import CurrencyService from "services/currency-service/currency-service";
 import ExchangeRateService from "services/exchange-rate";
 import RightsTransactionsService from "services/rights-transactions-service";
 import SharesTransactionsService from "services/shares-transactions-service";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ICurrency } from "types/currency";
 import { IExchangeRate } from "types/exchange-rate";
 import { IPortfolio } from "types/portfolio";

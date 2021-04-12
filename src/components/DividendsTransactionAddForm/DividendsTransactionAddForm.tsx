@@ -8,7 +8,7 @@ import { CompaniesContext } from "contexts/companies";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import ExchangeRateService from "services/exchange-rate";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 
 interface Props {
   companyId: string;

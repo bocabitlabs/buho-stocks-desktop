@@ -12,7 +12,7 @@ import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import ExchangeRateService from "services/exchange-rate";
 import SharesTransactionsService from "services/shares-transactions-service";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { IPortfolio } from "types/portfolio";
 import { SharesTransactionFormProps } from "types/shares-transaction";
 import { TransactionType } from "types/transaction";

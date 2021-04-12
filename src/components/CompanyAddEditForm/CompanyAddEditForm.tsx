@@ -13,7 +13,7 @@ import { ISector } from "types/sector";
 import { ICurrency } from "types/currency";
 import { IMarket } from "types/market";
 import { CompaniesContext } from "contexts/companies";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import CountrySelector from "components/CountrySelector/CountrySelector";
 import ColorSelector from "components/ColorSelector/ColorSelector";
 

@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import { StringUtils } from "utils/string-utils";
 import { DividendsTransaction } from "types/dividends-transaction";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { CompaniesContext } from "contexts/companies";
 
 interface IProps {

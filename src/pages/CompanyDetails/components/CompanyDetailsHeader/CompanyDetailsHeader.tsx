@@ -20,7 +20,7 @@ import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 import StockPriceAddModal from "../StockPriceAddModal/StockPriceAddModal";
 import StockPriceListModal from "../StockPriceListModal/StockPriceListModal";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { breadcrumbItemRender } from "utils/headers-utils";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 

@@ -1,7 +1,7 @@
 import { Table, Tag } from "antd";
 import moment from "moment";
 import React, { ReactElement, useEffect, useState } from "react";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ITransactionLogMessage } from "types/transaction-log";
 
 interface Props {

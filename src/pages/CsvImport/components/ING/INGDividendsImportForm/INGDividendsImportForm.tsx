@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import CurrencyService from "services/currency-service/currency-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ICurrency } from "types/currency";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { IExchangeRate } from "types/exchange-rate";

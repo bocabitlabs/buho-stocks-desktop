@@ -19,7 +19,7 @@ import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionFormProps } from "types/shares-transaction";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import ExchangeRateService from "services/exchange-rate";
-import TransactionLogService from "services/transaction-log-service";
+import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 
 interface Props {
   companyId: string;
