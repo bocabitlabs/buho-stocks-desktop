@@ -1,7 +1,7 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { MarketsContext } from "contexts/markets";
-import MarketService from "services/market-service";
+import MarketService from "services/market-service/market-service";
 import { IMarket } from "types/market";
 import { Link } from "react-router-dom";
 import CountryFlag from "components/CountryFlag/CountryFlag";

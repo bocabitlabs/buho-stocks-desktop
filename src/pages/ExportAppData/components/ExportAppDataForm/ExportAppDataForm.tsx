@@ -4,7 +4,7 @@ import CompanyService from "services/company-service/company-service";
 import { saveFile } from "message-control/dialog";
 import CurrencyService from "services/currency-service/currency-service";
 import SectorService from "services/sector-service/sector-service";
-import MarketService from "services/market-service";
+import MarketService from "services/market-service/market-service";
 import PortfolioService from "services/portfolio-service";
 import SharesTransactionsService from "services/shares-transactions-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
@@ -34,7 +34,7 @@ export default function ExportAppDataForm(): ReactElement {
       });
     }
     if (checkbox.includes("markets")) {
-      const marketsResults = new MarketService().exportAll();
+      const marketsResults = MarketService.exportAll();
       marketsResults.forEach(function (rowArray) {
         const keys = Object.values(rowArray);
         let row = "market," + keys.join(",");

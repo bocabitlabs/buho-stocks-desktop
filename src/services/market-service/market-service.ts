@@ -6,7 +6,7 @@ export default class MarketService {
     return MarketDAO.create(market);
   };
 
-  exportAll = (): IMarket[] => {
+  static exportAll = (): IMarket[] => {
     const results = MarketDAO.exportAll();
     return results;
   };

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { MarketsContextType } from "contexts/markets";
-import MarketService from "services/market-service";
+import MarketService from "services/market-service/market-service";
 import { IMarket, MarketFormProps } from "types/market";
 
 export function useMarketsContext(): MarketsContextType {
