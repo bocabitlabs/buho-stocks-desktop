@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import { CompaniesContext } from "contexts/companies";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import StockPriceService from "services/stock-price-service";
+import StockPriceService from "services/stock-price-service/stock-price-service";
 import { IStockPrice } from "types/stock-price";
 
 interface Props {
@@ -19,7 +19,7 @@ export default function StockPriceList({
 
   useEffect(() => {
     if (company !== null) {
-      const results = StockPriceService.getStockPrices(company.id);
+      const results = StockPriceService.getAll(company.id);
       setStockPrices(results);
     }
   }, [company]);
@@ -79,7 +79,7 @@ export default function StockPriceList({
         });
       }, 1000);
       if (company !== null) {
-        const results = StockPriceService.getStockPrices(company.id);
+        const results = StockPriceService.getAll(company.id);
         setStockPrices(results);
       }
     } else {

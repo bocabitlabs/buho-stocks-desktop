@@ -3,7 +3,7 @@ import { Button, Checkbox, Modal } from "antd";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import ExchangeRateService from "services/exchange-rate";
-import StockPriceService from "services/stock-price-service";
+import StockPriceService from "services/stock-price-service/stock-price-service";
 import { ICompany } from "types/company";
 import { StockPriceFormProps } from "types/stock-price";
 
@@ -128,7 +128,7 @@ export default function FetchStockPricesButton({
                   ),
                   companyId: company.id
                 };
-                StockPriceService.add(stockPrice);
+                StockPriceService.create(stockPrice);
               }
             } else {
               setMessages((messages) => [

@@ -9,7 +9,7 @@ import PortfolioService from "services/portfolio-service";
 import SharesTransactionsService from "services/shares-transactions-service";
 import DividendsTransactionsService from "services/dividends-transactions-service";
 import RightsTransactionsService from "services/rights-transactions-service";
-import StockPriceService from "services/stock-price-service";
+import StockPriceService from "services/stock-price-service/stock-price-service";
 
 export default function ExportAppDataForm(): ReactElement {
   const onFinish = (values: any) => {

@@ -6,7 +6,7 @@ import PortfolioService from "services/portfolio-service";
 import RightsTransactionsService from "services/rights-transactions-service";
 import SectorService from "services/sector-service/sector-service";
 import SharesTransactionsService from "services/shares-transactions-service";
-import StockPriceService from "services/stock-price-service";
+import StockPriceService from "services/stock-price-service/stock-price-service";
 import { CompanyFormFields } from "types/company";
 import { CurrencyFormFields } from "types/currency";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
@@ -322,7 +322,7 @@ export function importStockPrices(dividends: any[]) {
           transactionDate: portfolioData.data[3],
           companyId: company.id
         };
-        StockPriceService.add(transaction);
+        StockPriceService.create(transaction);
         importedCount++;
       } else {
         notes.push(

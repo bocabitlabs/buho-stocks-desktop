@@ -10,7 +10,7 @@ import { ICompany, CompanyFormFields } from "types/company";
 import { IStockPrice } from "types/stock-price";
 
 import RightsTransactionsService from "../rights-transactions-service";
-import StockPriceService from "../stock-price-service";
+import StockPriceService from "../stock-price-service/stock-price-service";
 
 export default class CompanyService {
   static create = (company: CompanyFormFields): IAddProps => {
@@ -52,7 +52,7 @@ export default class CompanyService {
       const sharesTransactions = SharesTransactionsDAO.getAll(companyId);
       const dividendsTransactions = DividendsTransactionsDAO.getAll(companyId);
       const rightsTransactions = RightsTransactionsService.getAll(companyId);
-      const stockPrices = StockPriceService.getStockPrices(companyId);
+      const stockPrices = StockPriceService.getAll(companyId);
       return createCompany(
         result,
         dividendsTransactions,

@@ -3,7 +3,7 @@ import { CompaniesContext } from "contexts/companies";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import ExchangeRateService from "services/exchange-rate";
-import StockPriceService from "services/stock-price-service";
+import StockPriceService from "services/stock-price-service/stock-price-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { IExchangeRateForm } from "types/exchange-rate";
 import { StockPriceFormProps } from "types/stock-price";
@@ -73,7 +73,7 @@ export default function StockPriceAddForm({
       transactionDate: moment(new Date(transactionDate)).format("YYYY-MM-DD"),
       companyId: company.id
     };
-    const added = StockPriceService.add(stockPrice);
+    const added = StockPriceService.create(stockPrice);
     if (added.changes) {
       TransactionLogService.create({
         type: "Stock price",

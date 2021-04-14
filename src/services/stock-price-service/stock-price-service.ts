@@ -5,7 +5,7 @@ import { delay } from "utils/misc";
 import { getCurrentData, getHistoricalPrices } from "yahoo-stock-prices-fetch";
 
 export default class StockPriceService {
-  static add = (stockPrice: StockPriceFormProps) => {
+  static create = (stockPrice: StockPriceFormProps) => {
     return StockPriceDAO.create(stockPrice);
   };
 
@@ -14,7 +14,7 @@ export default class StockPriceService {
     return results;
   };
 
-  static getStockPrices = (companyId: string) => {
+  static getAll = (companyId: string) => {
     return StockPriceDAO.getAll(companyId);
   };
 
@@ -47,10 +47,13 @@ export default class StockPriceService {
         })
       );
     }
-    return {found, data};
+    return { found, data };
   };
 
-  static getHistoricStockPriceFromAPI = async (transactionDate: string, exchangeName: string) => {
+  static getHistoricStockPriceFromAPI = async (
+    transactionDate: string,
+    exchangeName: string
+  ) => {
     let data: any = undefined;
     let found = false;
     const momentDate = moment(transactionDate, "DD-MM-YYYY");
@@ -58,10 +61,10 @@ export default class StockPriceService {
       delay(2000);
       data = await getHistoricalPrices(
         +momentDate.month(),
-        +momentDate.format('DD'),
+        +momentDate.format("DD"),
         +momentDate.year(),
         +momentDate.month(),
-        +momentDate.format('DD'),
+        +momentDate.format("DD"),
         +momentDate.year(),
         exchangeName,
         "1wk"
@@ -74,13 +77,17 @@ export default class StockPriceService {
     }
     if (data && data.length > 0) {
       found = true;
-      return {found, data: data[0]};
+      return { found, data: data[0] };
     }
 
-    return {found, data: undefined};
+    return { found, data: undefined };
   };
 
-  static getHistoricStockPriceFromAPIStartEnd = async (transactionDate: string, endDate: string, exchangeName: string) => {
+  static getHistoricStockPriceFromAPIStartEnd = async (
+    transactionDate: string,
+    endDate: string,
+    exchangeName: string
+  ) => {
     let data: any = undefined;
     let found = false;
     const momentDate = moment(transactionDate, "DD-MM-YYYY");
@@ -89,10 +96,10 @@ export default class StockPriceService {
       delay(2000);
       data = await getHistoricalPrices(
         +momentDate.month(),
-        +momentDate.format('DD'),
+        +momentDate.format("DD"),
         +momentDate.year(),
         +momentEndDate.month(),
-        +momentEndDate.format('DD'),
+        +momentEndDate.format("DD"),
         +momentEndDate.year(),
         exchangeName,
         "1wk"
@@ -105,11 +112,10 @@ export default class StockPriceService {
     }
     if (data && data.length > 0) {
       found = true;
-
-      return {found, data: data[0]};
+      return { found, data: data[0] };
     }
 
-    return {found, data: undefined};
+    return { found, data: undefined };
   };
 
   static getLastStockPricePerYearByCompanyId = (
@@ -126,5 +132,4 @@ export default class StockPriceService {
   static deleteById = (shareId: string) => {
     return StockPriceDAO.deleteById(shareId);
   };
-
 }
