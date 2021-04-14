@@ -88,8 +88,13 @@ describe("StockPrice Service tests", () => {
     expect(result.found).toStrictEqual(true);
   });
 
-  test("get historic stock price from API", async () => {
+  test("get historic stock price from API with start and end", async () => {
     const result = await Service.getHistoricStockPriceFromAPIStartEnd("01-01-2019", "01-02-2019", "0.5");
+    expect(result.found).toStrictEqual(true);
+  });
+
+  test("get historic stock price from API", async () => {
+    const result = await Service.getHistoricStockPriceFromAPI("01-01-2019", "0.5");
     expect(result.found).toStrictEqual(true);
   });
 
