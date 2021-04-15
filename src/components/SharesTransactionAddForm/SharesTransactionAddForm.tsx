@@ -18,7 +18,7 @@ import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionFormProps } from "types/shares-transaction";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
-import ExchangeRateService from "services/exchange-rate";
+import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 
 interface Props {

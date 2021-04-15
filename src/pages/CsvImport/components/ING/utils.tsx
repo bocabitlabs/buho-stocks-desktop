@@ -1,4 +1,4 @@
-import ExchangeRateService from "services/exchange-rate";
+import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import { ICompany } from "types/company";
 import { IPortfolio } from "types/portfolio";
 import { Moment } from "moment";

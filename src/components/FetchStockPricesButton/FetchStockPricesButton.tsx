@@ -2,7 +2,7 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Modal } from "antd";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
-import ExchangeRateService from "services/exchange-rate";
+import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import StockPriceService from "services/stock-price-service/stock-price-service";
 import { ICompany } from "types/company";
 import { StockPriceFormProps } from "types/stock-price";

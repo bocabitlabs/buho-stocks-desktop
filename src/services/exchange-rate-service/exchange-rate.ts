@@ -5,7 +5,7 @@ import { delay } from "utils/misc";
 import { getHistoricalPrices } from "yahoo-stock-prices-fetch";
 
 export default class ExchangeRateService {
-  static add = (item: IExchangeRateForm) => {
+  static create = (item: IExchangeRateForm) => {
     return ExchangeRateDAO.create(item);
   };
 

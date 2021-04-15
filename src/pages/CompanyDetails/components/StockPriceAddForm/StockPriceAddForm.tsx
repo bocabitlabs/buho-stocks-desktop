@@ -2,7 +2,7 @@ import { Button, DatePicker, Form, InputNumber, message } from "antd";
 import { CompaniesContext } from "contexts/companies";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import ExchangeRateService from "services/exchange-rate";
+import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import StockPriceService from "services/stock-price-service/stock-price-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { IExchangeRateForm } from "types/exchange-rate";
@@ -87,7 +87,7 @@ export default function StockPriceAddForm({
         exchangeValue: exchangeRateValue
       };
       console.debug(newExchangeRate);
-      const result = ExchangeRateService.add(newExchangeRate);
+      const result = ExchangeRateService.create(newExchangeRate);
       console.debug(result);
 
       message.success({

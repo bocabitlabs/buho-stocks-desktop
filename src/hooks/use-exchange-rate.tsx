@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ExchangeRateService from "services/exchange-rate";
+import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import { IExchangeRate } from "types/exchange-rate";
 
 export function useExchangeRate(

@@ -3,7 +3,7 @@ import { Form } from "antd";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import DividendsTransactionsService from "services/dividends-transactions-service";
-import ExchangeRateService from "services/exchange-rate";
+import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { IPortfolio } from "types/portfolio";
