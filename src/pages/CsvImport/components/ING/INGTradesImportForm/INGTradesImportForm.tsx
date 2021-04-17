@@ -44,8 +44,8 @@ function formatINGRowForShares(inputData: string[]) {
   let total = +inputData[9].replace("'", "");
 
   transactionType = validBuyTypes.includes(transactionType)
-    ? TransactionType.BUY
-    : TransactionType.SELL;
+    ? "BUY"
+    : "SELL";
 
   return { companyName, total, transactionDate, count, price, transactionType };
 }
@@ -236,14 +236,14 @@ export default function INGTradesImportForm({
           >
             <Select placeholder="Type">
               <Select.Option
-                key={TransactionType.BUY}
-                value={TransactionType.BUY}
+                key={"BUY"}
+                value={"BUY"}
               >
                 Buy
               </Select.Option>
               <Select.Option
-                key={TransactionType.SELL}
-                value={TransactionType.SELL}
+                key={"SELL"}
+                value={"SELL"}
               >
                 Sell
               </Select.Option>

@@ -17,7 +17,7 @@ export class CompanyShares implements ICompanyShares {
     const buyCount = this.sharesTransactions
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.BUY
+          transaction.type === "BUY"
       )
       .reduce(function (accumulator: number, obj: ISharesTransaction) {
         return accumulator + obj.count;
@@ -26,7 +26,7 @@ export class CompanyShares implements ICompanyShares {
     const sellCount = this.sharesTransactions
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.SELL
+          transaction.type === "SELL"
       )
       .reduce(function (accumulator: number, obj: ISharesTransaction) {
         return accumulator + obj.count;
@@ -39,7 +39,7 @@ export class CompanyShares implements ICompanyShares {
     const buyCount = this.sharesTransactions
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.BUY &&
+          transaction.type === "BUY" &&
           moment(transaction.transactionDate).format("YYYY") === year
       )
       .reduce(function (accumulator: number, obj: ISharesTransaction) {
@@ -49,7 +49,7 @@ export class CompanyShares implements ICompanyShares {
     const sellCount = this.sharesTransactions
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.SELL &&
+          transaction.type === "SELL" &&
           moment(transaction.transactionDate).format("YYYY") === year
       )
       .reduce(function (accumulator: number, obj: ISharesTransaction) {
@@ -63,7 +63,7 @@ export class CompanyShares implements ICompanyShares {
     const buyCount = this.sharesTransactions
       .filter((transaction: ISharesTransaction) => {
         return (
-          transaction.type === TransactionType.BUY &&
+          transaction.type === "BUY" &&
           moment(transaction.transactionDate, "YYYY-MM-DD").isBefore(
             moment(year + "-12-31", "YYYY-MM-DD")
           )
@@ -76,7 +76,7 @@ export class CompanyShares implements ICompanyShares {
     const sellCount = this.sharesTransactions
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.SELL &&
+          transaction.type === "SELL" &&
           moment(transaction.transactionDate, "YYYY-MM-DD").isBefore(
             moment(year + "-12-31", "YYYY-MM-DD")
           )

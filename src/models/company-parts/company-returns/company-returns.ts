@@ -37,7 +37,7 @@ export class CompanyReturns implements ICompanyReturns {
     return this.sharesTransactions
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.SELL
+          transaction.type === "SELL"
       )
       .reduce(function (accumulator: number, obj: ISharesTransaction) {
         let exchangeRate = 1;
@@ -63,7 +63,7 @@ export class CompanyReturns implements ICompanyReturns {
       )
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.SELL
+          transaction.type === "SELL"
       )
       .reduce(function (accumulator: number, obj: ISharesTransaction) {
         let exchangeRate = 1;

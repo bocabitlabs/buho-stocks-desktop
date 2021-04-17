@@ -9,7 +9,4 @@ export interface Transaction {
   notes: string;
 }
 
-export enum TransactionType {
-  BUY = "BUY",
-  SELL = "SELL"
-}
+export type TransactionType = "BUY" | "SELL";

@@ -18,7 +18,7 @@ describe("Company Portfolio Value tests", () => {
       color: "#FFF",
       exchangeRate: 0.5,
       notes: "These are the notes",
-      type: TransactionType.BUY,
+      type: "BUY",
       currencyName: "Dollar",
       currencySymbol: "$"
     },
@@ -32,7 +32,7 @@ describe("Company Portfolio Value tests", () => {
       color: "#FFF",
       exchangeRate: 0.5,
       notes: "These are the notes",
-      type: TransactionType.BUY,
+      type: "BUY",
       currencyName: "Dollar",
       currencySymbol: "$"
     },
@@ -46,7 +46,7 @@ describe("Company Portfolio Value tests", () => {
       color: "#FFF",
       exchangeRate: 0.5,
       notes: "These are the notes",
-      type: TransactionType.SELL,
+      type: "SELL",
       currencyName: "Dollar",
       currencySymbol: "$"
     },
@@ -60,7 +60,7 @@ describe("Company Portfolio Value tests", () => {
       color: "#FFF",
       exchangeRate: 0.5,
       notes: "These are the notes",
-      type: TransactionType.BUY,
+      type: "BUY",
       currencyName: "Dollar",
       currencySymbol: "$"
     }

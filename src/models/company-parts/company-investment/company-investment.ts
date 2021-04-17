@@ -56,7 +56,7 @@ export class CompanyInvestment implements ICompanyInvestment {
     return this.sharesTransactions
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.BUY
+          transaction.type === "BUY"
       )
       .reduce(function (accumulator: number, obj: ISharesTransaction) {
         let exchangeRate = 1;
@@ -82,7 +82,7 @@ export class CompanyInvestment implements ICompanyInvestment {
       )
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.BUY
+          transaction.type === "BUY"
       )
       .reduce(function (accumulator: number, obj: ISharesTransaction) {
         if (inPortfolioCurrency) {
@@ -101,7 +101,7 @@ export class CompanyInvestment implements ICompanyInvestment {
     return this.rightsTransactions
       .filter(
         (transaction: RightsTransaction) =>
-          transaction.type === TransactionType.BUY
+          transaction.type === "BUY"
       )
       .reduce(function (accumulator: number, obj: RightsTransaction) {
         let exchangeRate = 1;
@@ -123,7 +123,7 @@ export class CompanyInvestment implements ICompanyInvestment {
     return this.sharesTransactions
       .filter(
         (transaction: ISharesTransaction) =>
-          transaction.type === TransactionType.BUY &&
+          transaction.type === "BUY" &&
           moment(transaction.transactionDate, "YYYY-MM-DD").isBefore(
             moment(year + "-12-31", "YYYY-MM-DD")
           )

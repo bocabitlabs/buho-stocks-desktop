@@ -85,7 +85,7 @@ export default function IBTradesImportForm({
       color: "#0066cc",
       notes: `Imported from IB CSV on ${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}`,
       companyId: values.company,
-      type: TransactionType.BUY
+      type: "BUY"
     };
     console.debug(transactionDate)
     console.debug(transaction)

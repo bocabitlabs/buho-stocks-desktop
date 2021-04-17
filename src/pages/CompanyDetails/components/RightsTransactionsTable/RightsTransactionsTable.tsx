@@ -161,7 +161,7 @@ export default function RightsTransactionsTable({
       price: share.price,
       commission: share.commission,
       total:
-        share.type === TransactionType.BUY
+        share.type === "BUY"
           ? share.count * share.price + share.commission
           : share.count * share.price - share.commission,
       notes: share.notes,

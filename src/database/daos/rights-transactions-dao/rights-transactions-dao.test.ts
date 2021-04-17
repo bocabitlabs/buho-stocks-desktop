@@ -1,6 +1,5 @@
 import sendIpcSql from "message-control/renderer";
 import { ISector } from "types/sector";
-import { TransactionType } from "types/transaction";
 import RightsTransactionDAO from "./rights-transactions-dao";
 
 jest.mock("message-control/renderer");
@@ -33,7 +32,7 @@ describe("Rights Transactions DAO tests", () => {
   test("add a new element", () => {
     const result = RightsTransactionDAO.create({
       count: 1,
-      type: TransactionType.BUY,
+      type: "BUY",
       commission: 0.5,
       price: 10,
       color: "color",
@@ -53,7 +52,7 @@ describe("Rights Transactions DAO tests", () => {
   test("update by id", () => {
     const result = RightsTransactionDAO.update("1", {
       count: 1,
-      type: TransactionType.BUY,
+      type: "BUY",
       commission: 0.5,
       price: 10,
       color: "color",
