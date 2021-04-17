@@ -1,4 +1,4 @@
-import { DividendsTransaction, DividendsTransactionFormProps } from "types/dividends-transaction";
+import { IDividendsTransaction, DividendsTransactionFormProps } from "types/dividends-transaction";
 import DividendsTransactionsDAO from "database/daos/dividends-transactions-dao/dividends-transactions-dao";
 
 export default class DividendsTransactionsService {
@@ -6,7 +6,7 @@ export default class DividendsTransactionsService {
     return DividendsTransactionsDAO.create(transaction);
   };
 
-  static exportAll = (): DividendsTransaction[] => {
+  static exportAll = (): IDividendsTransaction[] => {
     const results = DividendsTransactionsDAO.exportAll();
     return results;
   };

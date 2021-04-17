@@ -1,4 +1,4 @@
-import { DividendsTransaction } from "./dividends-transaction";
+import { IDividendsTransaction } from "./dividends-transaction";
 import { IRightsTransaction } from "./rights-transaction";
 import { ISharesTransaction } from "./shares-transaction";
 import { IStockPrice } from "./stock-price";
@@ -21,7 +21,7 @@ export interface CompanyFormFields {
 }
 
 export interface ICompanyDividends {
-  dividendsTransactions: DividendsTransaction[];
+  dividendsTransactions: IDividendsTransaction[];
   getDividendsAmount(
     inPortfolioCurrency?: boolean,
     includeCommission?: boolean
@@ -79,7 +79,7 @@ export interface ICompanyPortfolioValue{
 
 export interface ICompanyReturns {
   sharesTransactions: ISharesTransaction[];
-  dividendsTransactions: DividendsTransaction[];
+  dividendsTransactions: IDividendsTransaction[];
   investment: ICompanyInvestment;
   dividends: ICompanyDividends;
   portfolioValue: ICompanyPortfolioValue;
@@ -139,7 +139,7 @@ export interface ICompany extends CompanyFormFields {
   currencySymbol: string;
   stockPrices: IStockPrice[];
   sharesTransactions: ISharesTransaction[];
-  dividendsTransactions: DividendsTransaction[];
+  dividendsTransactions: IDividendsTransaction[];
   rightsTransactions: IRightsTransaction[];
   // Components
   dividends: ICompanyDividends;

@@ -5,13 +5,12 @@ import {
   ICompanyPortfolioValue,
   ICompanyReturns
 } from "types/company";
-import { DividendsTransaction } from "types/dividends-transaction";
+import { IDividendsTransaction } from "types/dividends-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
-import { TransactionType } from "types/transaction";
 
 export class CompanyReturns implements ICompanyReturns {
   sharesTransactions: ISharesTransaction[];
-  dividendsTransactions: DividendsTransaction[];
+  dividendsTransactions: IDividendsTransaction[];
   investment: ICompanyInvestment;
   dividends: ICompanyDividends;
   portfolioValue: ICompanyPortfolioValue;
@@ -20,7 +19,7 @@ export class CompanyReturns implements ICompanyReturns {
   constructor(
     closed: boolean,
     sharesTransaction: ISharesTransaction[],
-    dividendsTransactions: DividendsTransaction[],
+    dividendsTransactions: IDividendsTransaction[],
     investment: ICompanyInvestment,
     dividends: ICompanyDividends,
     portfolioValue: ICompanyPortfolioValue

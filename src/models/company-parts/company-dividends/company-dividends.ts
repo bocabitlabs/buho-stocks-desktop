@@ -1,11 +1,11 @@
 import moment from "moment";
-import { DividendsTransaction } from "types/dividends-transaction";
+import { IDividendsTransaction } from "types/dividends-transaction";
 
 import { ICompanyDividends } from "types/company";
 
 export class CompanyDividends implements ICompanyDividends {
-  dividendsTransactions: DividendsTransaction[];
-  constructor(dividendsTransactions: DividendsTransaction[]) {
+  dividendsTransactions: IDividendsTransaction[];
+  constructor(dividendsTransactions: IDividendsTransaction[]) {
     this.dividendsTransactions = dividendsTransactions;
   }
   getDividendsAmount(
@@ -14,7 +14,7 @@ export class CompanyDividends implements ICompanyDividends {
   ): number {
     const amount = this.dividendsTransactions.reduce(function (
       accumulator: number,
-      obj: DividendsTransaction
+      obj: IDividendsTransaction
     ) {
       let exchangeRate = 1;
       if (inPortfolioCurrency) {
@@ -39,10 +39,10 @@ export class CompanyDividends implements ICompanyDividends {
   ): number {
     const amount = this.dividendsTransactions
       .filter(
-        (transaction: DividendsTransaction) =>
+        (transaction: IDividendsTransaction) =>
           moment(transaction.transactionDate).format("YYYY") === year
       )
-      .reduce(function (accumulator: number, obj: DividendsTransaction) {
+      .reduce(function (accumulator: number, obj: IDividendsTransaction) {
         let exchangeRate = 1;
         if (inPortfolioCurrency) {
           exchangeRate = obj.exchangeRate;
@@ -64,12 +64,12 @@ export class CompanyDividends implements ICompanyDividends {
     includeCommission = true
   ): number {
     const amount = this.dividendsTransactions
-      .filter((transaction: DividendsTransaction) => {
+      .filter((transaction: IDividendsTransaction) => {
         return moment(transaction.transactionDate, "YYYY-MM-DD").isBefore(
           moment(year + "-12-31", "YYYY-MM-DD")
         );
       })
-      .reduce(function (accumulator: number, obj: DividendsTransaction) {
+      .reduce(function (accumulator: number, obj: IDividendsTransaction) {
         let exchangeRate = 1;
         if (inPortfolioCurrency) {
           exchangeRate = obj.exchangeRate;

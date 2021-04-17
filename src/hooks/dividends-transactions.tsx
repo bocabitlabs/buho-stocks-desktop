@@ -1,7 +1,7 @@
 import { DividendsTransactionsContextType } from "contexts/dividends-transactions";
 import { useState, useEffect, useCallback } from "react";
 import {
-  DividendsTransaction,
+  IDividendsTransaction,
   DividendsTransactionFormProps
 } from "types/dividends-transaction";
 import DividendsTransactionsService from "../services/dividends-transactions-service";
@@ -13,9 +13,9 @@ export function useDividendsTransactionsContext(
   const [
     dividendsTransaction,
     setDividendsTransaction
-  ] = useState<DividendsTransaction | null>(null);
+  ] = useState<IDividendsTransaction | null>(null);
   const [dividendsTransactions, setDividendsTransactions] = useState<
-    DividendsTransaction[]
+  IDividendsTransaction[]
   >([]);
   const [isLoading, setIsLoading] = useState(false);
 

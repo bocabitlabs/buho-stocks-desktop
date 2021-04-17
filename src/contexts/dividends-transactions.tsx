@@ -1,15 +1,15 @@
 import { createContext } from "react";
 import { IAddProps } from "types/common";
-import { DividendsTransaction, DividendsTransactionFormProps } from "types/dividends-transaction";
+import { IDividendsTransaction, DividendsTransactionFormProps } from "types/dividends-transaction";
 
 export type DividendsTransactionsContextType = {
-  dividendsTransaction: DividendsTransaction|null;
-  dividendsTransactions: DividendsTransaction[];
+  dividendsTransaction: IDividendsTransaction|null;
+  dividendsTransactions: IDividendsTransaction[];
   isLoading: boolean;
   create: (transaction: DividendsTransactionFormProps) => IAddProps;
   deleteById: (transactionId: string) => IAddProps,
   fetchAll: () => void;
-  getById: (transactionId: string) => DividendsTransaction|null;
+  getById: (transactionId: string) => IDividendsTransaction|null;
   update: (transactionId: string, transaction: DividendsTransactionFormProps) => IAddProps
 };
 

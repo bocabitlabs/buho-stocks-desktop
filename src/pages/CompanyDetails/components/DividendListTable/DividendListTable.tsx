@@ -4,7 +4,7 @@ import React, { useContext, useLayoutEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import { StringUtils } from "utils/string-utils";
-import { DividendsTransaction } from "types/dividends-transaction";
+import { IDividendsTransaction } from "types/dividends-transaction";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { CompaniesContext } from "contexts/companies";
 
@@ -131,7 +131,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
 
   const getData = () => {
     const transactions = dividendsTransactions.map(
-      (transaction: DividendsTransaction) => ({
+      (transaction: IDividendsTransaction) => ({
         id: transaction.id,
         key: transaction.id,
         name: "dividend",

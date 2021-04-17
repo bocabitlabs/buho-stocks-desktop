@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import {
-  DividendsTransaction,
+  IDividendsTransaction,
   DividendsTransactionFormProps
 } from "types/dividends-transaction";
 import { deleteById } from "../operations/operations";
@@ -112,7 +112,7 @@ export default class DividendsTransactionsDAO {
     return results;
   };
 
-  static getById = (transactionId: string): DividendsTransaction => {
+  static getById = (transactionId: string): IDividendsTransaction => {
     //Call the DB
     const sql = `
     SELECT *
