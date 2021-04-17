@@ -4,7 +4,7 @@ import SharesTransactionsDAO from "database/daos/shares-transaction-dao/shares-t
 import { Company } from "models/company";
 import { IAddProps } from "types/common";
 import { DividendsTransaction } from "types/dividends-transaction";
-import { RightsTransaction } from "types/rights-transaction";
+import { IRightsTransaction } from "types/rights-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
 import { ICompany, CompanyFormFields } from "types/company";
 import { IStockPrice } from "types/stock-price";
@@ -81,7 +81,7 @@ function createCompany(
   result: ICompany,
   dividendsTransactions: DividendsTransaction[],
   sharesTransactions: ISharesTransaction[],
-  rightsTransactions: RightsTransaction[],
+  rightsTransactions: IRightsTransaction[],
   stockPrices: IStockPrice[]
 ) {
   result.dividendsTransactions = dividendsTransactions;

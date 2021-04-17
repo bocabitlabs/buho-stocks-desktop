@@ -4,9 +4,8 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import { Link, useHistory } from "react-router-dom";
-import { RightsTransaction } from "types/rights-transaction";
+import { IRightsTransaction } from "types/rights-transaction";
 import { buySellFormatter } from "utils/table-formatters";
-import { TransactionType } from "types/transaction";
 import { CompaniesContext } from "contexts/companies";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 
@@ -151,7 +150,7 @@ export default function RightsTransactionsTable({
   ];
 
   const getData = () => {
-    const shares2 = rightsTransactions.map((share: RightsTransaction) => ({
+    const shares2 = rightsTransactions.map((share: IRightsTransaction) => ({
       id: share.id,
       key: share.id,
       name: "right",

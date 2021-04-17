@@ -2,7 +2,7 @@ import { RightsTransactionsContextType } from "contexts/rights-transactions";
 import { useState, useEffect, useCallback } from "react";
 import RightsTransactionsService from "services/rights-transactions-service/rights-transactions-service";
 import {
-  RightsTransaction,
+  IRightsTransaction,
   RightsTransactionFormProps
 } from "types/rights-transaction";
 
@@ -12,9 +12,9 @@ export function useRightsTransactionsContext(
   const [
     rightsTransaction,
     setRightsTransaction
-  ] = useState<RightsTransaction | null>(null);
+  ] = useState<IRightsTransaction | null>(null);
   const [rightsTransactions, setRightsTransactions] = useState<
-    RightsTransaction[]
+  IRightsTransaction[]
   >([]);
   const [isLoading, setIsLoading] = useState(false);
 

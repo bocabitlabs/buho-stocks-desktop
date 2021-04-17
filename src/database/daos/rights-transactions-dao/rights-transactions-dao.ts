@@ -1,6 +1,6 @@
 import moment from "moment";
-import { RightsTransaction, RightsTransactionFormProps } from "types/rights-transaction";
-import sendIpcSql from "../../../message-control/renderer";
+import { IRightsTransaction, RightsTransactionFormProps } from "types/rights-transaction";
+import sendIpcSql from "message-control/renderer";
 import { deleteById } from "../operations/operations";
 
 export default class RightsTransactionsDAO {
@@ -70,7 +70,7 @@ export default class RightsTransactionsDAO {
     return results;
   };
 
-  static getById = (transactionId: string): RightsTransaction => {
+  static getById = (transactionId: string): IRightsTransaction => {
     //Call the DB
     const sql = `
     SELECT *

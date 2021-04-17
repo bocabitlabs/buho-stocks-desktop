@@ -4,7 +4,7 @@ export interface RightsTransactionFormProps extends Transaction {
   type: TransactionType;
 }
 
-export interface RightsTransaction extends RightsTransactionFormProps {
+export interface IRightsTransaction extends RightsTransactionFormProps {
   id?: string;
   currencyName?: string;
   currencySymbol?: string;

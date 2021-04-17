@@ -1,18 +1,18 @@
 import { createContext } from "react";
 import { IAddProps } from "types/common";
 import {
-  RightsTransaction,
+  IRightsTransaction,
   RightsTransactionFormProps
 } from "types/rights-transaction";
 
 export type RightsTransactionsContextType = {
-  rightsTransaction: RightsTransaction|null;
-  rightsTransactions: RightsTransaction[];
+  rightsTransaction: IRightsTransaction|null;
+  rightsTransactions: IRightsTransaction[];
   isLoading: boolean;
   getAll: () => void;
   create: (rigthTransaction: RightsTransactionFormProps) => IAddProps;
   deleteById: (transactionId: string) => IAddProps;
-  getById: (transactionId: string) => RightsTransaction|null;
+  getById: (transactionId: string) => IRightsTransaction|null;
   update: (
     transactionId: string,
     transaction: RightsTransactionFormProps
