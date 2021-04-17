@@ -1,18 +1,18 @@
 import { createContext } from "react";
 import { IAddProps } from "types/common";
 import {
-  SharesTransaction,
+  ISharesTransaction,
   SharesTransactionFormProps
 } from "types/shares-transaction";
 
 export type SharesTransactionsContextType = {
-  sharesTransaction: SharesTransaction | null;
-  sharesTransactions: SharesTransaction[];
+  sharesTransaction: ISharesTransaction | null;
+  sharesTransactions: ISharesTransaction[];
   isLoading: boolean;
   create: (transaction: SharesTransactionFormProps) => IAddProps;
   deleteById: (transactionId: string) => IAddProps;
   getAll: () => void;
-  getById: (transactionId: string) => SharesTransaction|null;
+  getById: (transactionId: string) => ISharesTransaction|null;
   update: (
     transactionId: string,
     transaction: SharesTransactionFormProps

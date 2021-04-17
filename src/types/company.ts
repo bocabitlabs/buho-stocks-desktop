@@ -1,6 +1,6 @@
 import { DividendsTransaction } from "./dividends-transaction";
 import { RightsTransaction } from "./rights-transaction";
-import { SharesTransaction } from "./shares-transaction";
+import { ISharesTransaction } from "./shares-transaction";
 import { IStockPrice } from "./stock-price";
 
 export interface CompanyFormFields {
@@ -43,7 +43,7 @@ export interface ICompanyDividends {
 }
 
 export interface ICompanyInvestment {
-  sharesTransactions: SharesTransaction[];
+  sharesTransactions: ISharesTransaction[];
   rightsTransactions: RightsTransaction[];
   getTotalInvested(inPortfolioCurrency?: boolean): number;
   getTotalInvestedUntilYear(
@@ -63,7 +63,7 @@ export interface ICompanyStockPrices {
 }
 
 export interface ICompanyShares {
-  sharesTransactions: SharesTransaction[];
+  sharesTransactions: ISharesTransaction[];
   getSharesCount: Function;
   getSharesCountForYear(year: string): number;
   getCumulativeSharesCountUntilYear(year: string): number;
@@ -78,7 +78,7 @@ export interface ICompanyPortfolioValue{
 }
 
 export interface ICompanyReturns {
-  sharesTransactions: SharesTransaction[];
+  sharesTransactions: ISharesTransaction[];
   dividendsTransactions: DividendsTransaction[];
   investment: ICompanyInvestment;
   dividends: ICompanyDividends;
@@ -138,7 +138,7 @@ export interface ICompany extends CompanyFormFields {
   superSectorName: string;
   currencySymbol: string;
   stockPrices: IStockPrice[];
-  sharesTransactions: SharesTransaction[];
+  sharesTransactions: ISharesTransaction[];
   dividendsTransactions: DividendsTransaction[];
   rightsTransactions: RightsTransaction[];
   // Components

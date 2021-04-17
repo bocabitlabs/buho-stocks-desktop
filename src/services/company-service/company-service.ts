@@ -5,7 +5,7 @@ import { Company } from "models/company";
 import { IAddProps } from "types/common";
 import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
-import { SharesTransaction } from "types/shares-transaction";
+import { ISharesTransaction } from "types/shares-transaction";
 import { ICompany, CompanyFormFields } from "types/company";
 import { IStockPrice } from "types/stock-price";
 
@@ -80,7 +80,7 @@ export default class CompanyService {
 function createCompany(
   result: ICompany,
   dividendsTransactions: DividendsTransaction[],
-  sharesTransactions: SharesTransaction[],
+  sharesTransactions: ISharesTransaction[],
   rightsTransactions: RightsTransaction[],
   stockPrices: IStockPrice[]
 ) {

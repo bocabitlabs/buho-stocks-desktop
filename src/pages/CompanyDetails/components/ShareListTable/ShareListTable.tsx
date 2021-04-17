@@ -5,7 +5,7 @@ import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
-import { SharesTransaction } from "types/shares-transaction";
+import { ISharesTransaction } from "types/shares-transaction";
 import { buySellFormatter } from "utils/table-formatters";
 
 interface IProps {
@@ -147,7 +147,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
   ];
 
   const getData = () => {
-    const shares2 = sharesTransactions.map((share: SharesTransaction) => ({
+    const shares2 = sharesTransactions.map((share: ISharesTransaction) => ({
       id: share.id,
       key: share.id,
       name: "share",

@@ -1,4 +1,4 @@
-import { SharesTransaction, SharesTransactionFormProps } from "types/shares-transaction";
+import { ISharesTransaction, SharesTransactionFormProps } from "types/shares-transaction";
 import { IAddProps } from "types/common";
 import SharesTransactionsDAO from "database/daos/shares-transaction-dao/shares-transactions-dao";
 
@@ -11,7 +11,7 @@ export default class SharesTransactionsService {
     return SharesTransactionsDAO.deleteById(transactionId);
   };
 
-  static exportAll = (): SharesTransaction[] => {
+  static exportAll = (): ISharesTransaction[] => {
     const results = SharesTransactionsDAO.exportAll();
     return results;
   };

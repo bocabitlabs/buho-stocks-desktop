@@ -1,11 +1,11 @@
 import moment from "moment";
 import { ICompanyShares } from "types/company";
-import { SharesTransaction } from "types/shares-transaction";
+import { ISharesTransaction } from "types/shares-transaction";
 import { TransactionType } from "types/transaction";
 
 export class CompanyShares implements ICompanyShares {
-  sharesTransactions: SharesTransaction[];
-  constructor(company: SharesTransaction[]) {
+  sharesTransactions: ISharesTransaction[];
+  constructor(company: ISharesTransaction[]) {
     this.sharesTransactions = company;
   }
 
@@ -16,19 +16,19 @@ export class CompanyShares implements ICompanyShares {
   getSharesCount(): number {
     const buyCount = this.sharesTransactions
       .filter(
-        (transaction: SharesTransaction) =>
+        (transaction: ISharesTransaction) =>
           transaction.type === TransactionType.BUY
       )
-      .reduce(function (accumulator: number, obj: SharesTransaction) {
+      .reduce(function (accumulator: number, obj: ISharesTransaction) {
         return accumulator + obj.count;
       }, 0);
 
     const sellCount = this.sharesTransactions
       .filter(
-        (transaction: SharesTransaction) =>
+        (transaction: ISharesTransaction) =>
           transaction.type === TransactionType.SELL
       )
-      .reduce(function (accumulator: number, obj: SharesTransaction) {
+      .reduce(function (accumulator: number, obj: ISharesTransaction) {
         return accumulator + obj.count;
       }, 0);
 
@@ -38,21 +38,21 @@ export class CompanyShares implements ICompanyShares {
   getSharesCountForYear(year: string): number {
     const buyCount = this.sharesTransactions
       .filter(
-        (transaction: SharesTransaction) =>
+        (transaction: ISharesTransaction) =>
           transaction.type === TransactionType.BUY &&
           moment(transaction.transactionDate).format("YYYY") === year
       )
-      .reduce(function (accumulator: number, obj: SharesTransaction) {
+      .reduce(function (accumulator: number, obj: ISharesTransaction) {
         return accumulator + obj.count;
       }, 0);
 
     const sellCount = this.sharesTransactions
       .filter(
-        (transaction: SharesTransaction) =>
+        (transaction: ISharesTransaction) =>
           transaction.type === TransactionType.SELL &&
           moment(transaction.transactionDate).format("YYYY") === year
       )
-      .reduce(function (accumulator: number, obj: SharesTransaction) {
+      .reduce(function (accumulator: number, obj: ISharesTransaction) {
         return accumulator + obj.count;
       }, 0);
 
@@ -61,7 +61,7 @@ export class CompanyShares implements ICompanyShares {
 
   getCumulativeSharesCountUntilYear(year: string): number {
     const buyCount = this.sharesTransactions
-      .filter((transaction: SharesTransaction) => {
+      .filter((transaction: ISharesTransaction) => {
         return (
           transaction.type === TransactionType.BUY &&
           moment(transaction.transactionDate, "YYYY-MM-DD").isBefore(
@@ -69,19 +69,19 @@ export class CompanyShares implements ICompanyShares {
           )
         );
       })
-      .reduce(function (accumulator: number, obj: SharesTransaction) {
+      .reduce(function (accumulator: number, obj: ISharesTransaction) {
         return accumulator + obj.count;
       }, 0);
 
     const sellCount = this.sharesTransactions
       .filter(
-        (transaction: SharesTransaction) =>
+        (transaction: ISharesTransaction) =>
           transaction.type === TransactionType.SELL &&
           moment(transaction.transactionDate, "YYYY-MM-DD").isBefore(
             moment(year + "-12-31", "YYYY-MM-DD")
           )
       )
-      .reduce(function (accumulator: number, obj: SharesTransaction) {
+      .reduce(function (accumulator: number, obj: ISharesTransaction) {
         return accumulator + obj.count;
       }, 0);
 

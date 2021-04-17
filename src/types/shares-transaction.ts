@@ -4,22 +4,8 @@ export interface SharesTransactionFormProps extends Transaction {
   type: TransactionType;
 }
 
-export interface SharesTransaction extends SharesTransactionFormProps{
+export interface ISharesTransaction extends SharesTransactionFormProps{
   id: string;
   currencyName?: string;
   currencySymbol?: string;
-}
-
-export interface YearlyShareFields {
-  year: string;
-  companyId: string;
-  sharesBought: number;
-  sharesSold: number;
-  investedAmount: number;
-  investedAmountBaseCurrency: number;
-  soldAmount: number;
-  soldAmountBaseCurrency: number;
-  investmentCommission: number;
-  sellCommission: number;
-  operationsCount: number;
 }

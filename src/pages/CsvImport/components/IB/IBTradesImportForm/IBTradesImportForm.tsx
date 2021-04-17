@@ -11,7 +11,7 @@ import { Form } from "antd";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
-import SharesTransactionsService from "services/shares-transactions-service";
+import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { IPortfolio } from "types/portfolio";
 import { SharesTransactionFormProps } from "types/shares-transaction";

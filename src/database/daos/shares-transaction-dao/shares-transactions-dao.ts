@@ -1,7 +1,7 @@
 import sendIpcSql from "message-control/renderer";
 import moment from "moment";
 import {
-  SharesTransaction,
+  ISharesTransaction,
   SharesTransactionFormProps
 } from "types/shares-transaction";
 import { deleteById } from "../operations/operations";
@@ -74,7 +74,7 @@ export default class SharesTransactionsDAO {
     return results;
   };
 
-  static getById = (transactionId: string): SharesTransaction => {
+  static getById = (transactionId: string): ISharesTransaction => {
     //Call the DB
     const sql = `
     SELECT *

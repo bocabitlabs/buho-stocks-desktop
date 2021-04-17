@@ -6,11 +6,11 @@ import {
   ICompanyReturns
 } from "types/company";
 import { DividendsTransaction } from "types/dividends-transaction";
-import { SharesTransaction } from "types/shares-transaction";
+import { ISharesTransaction } from "types/shares-transaction";
 import { TransactionType } from "types/transaction";
 
 export class CompanyReturns implements ICompanyReturns {
-  sharesTransactions: SharesTransaction[];
+  sharesTransactions: ISharesTransaction[];
   dividendsTransactions: DividendsTransaction[];
   investment: ICompanyInvestment;
   dividends: ICompanyDividends;
@@ -19,7 +19,7 @@ export class CompanyReturns implements ICompanyReturns {
 
   constructor(
     closed: boolean,
-    sharesTransaction: SharesTransaction[],
+    sharesTransaction: ISharesTransaction[],
     dividendsTransactions: DividendsTransaction[],
     investment: ICompanyInvestment,
     dividends: ICompanyDividends,
@@ -36,10 +36,10 @@ export class CompanyReturns implements ICompanyReturns {
   getReturnFromSales(inPortfolioCurrency = false) {
     return this.sharesTransactions
       .filter(
-        (transaction: SharesTransaction) =>
+        (transaction: ISharesTransaction) =>
           transaction.type === TransactionType.SELL
       )
-      .reduce(function (accumulator: number, obj: SharesTransaction) {
+      .reduce(function (accumulator: number, obj: ISharesTransaction) {
         let exchangeRate = 1;
         if (inPortfolioCurrency) {
           exchangeRate = obj.exchangeRate;
@@ -58,14 +58,14 @@ export class CompanyReturns implements ICompanyReturns {
   getReturnFromSalesForYear(year: string, inPortfolioCurrency = false) {
     return this.sharesTransactions
       .filter(
-        (transaction: SharesTransaction) =>
+        (transaction: ISharesTransaction) =>
           moment(transaction.transactionDate).format("YYYY") === year
       )
       .filter(
-        (transaction: SharesTransaction) =>
+        (transaction: ISharesTransaction) =>
           transaction.type === TransactionType.SELL
       )
-      .reduce(function (accumulator: number, obj: SharesTransaction) {
+      .reduce(function (accumulator: number, obj: ISharesTransaction) {
         let exchangeRate = 1;
         if (inPortfolioCurrency) {
           exchangeRate = obj.exchangeRate;

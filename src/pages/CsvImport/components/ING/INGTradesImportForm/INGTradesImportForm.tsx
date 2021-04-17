@@ -15,7 +15,7 @@ import React, { ReactElement, useState } from "react";
 import CurrencyService from "services/currency-service/currency-service";
 import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import RightsTransactionsService from "services/rights-transactions-service";
-import SharesTransactionsService from "services/shares-transactions-service";
+import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ICurrency } from "types/currency";
 import { IExchangeRate } from "types/exchange-rate";

@@ -9,7 +9,7 @@ import {
 } from "types/company";
 import { DividendsTransaction } from "types/dividends-transaction";
 import { RightsTransaction } from "types/rights-transaction";
-import { SharesTransaction } from "types/shares-transaction";
+import { ISharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
 import { CompanyDividends } from "./company-parts/company-dividends/company-dividends";
 import { CompanyInvestment } from "./company-parts/company-investment/company-investment";
@@ -24,7 +24,7 @@ export class Company implements ICompany {
   currencyName: string;
   sectorName: string;
   currencySymbol: string;
-  sharesTransactions: SharesTransaction[];
+  sharesTransactions: ISharesTransaction[];
   dividendsTransactions: DividendsTransaction[];
   rightsTransactions: RightsTransaction[];
   stockPrices: IStockPrice[];

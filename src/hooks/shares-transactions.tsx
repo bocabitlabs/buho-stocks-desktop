@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import {
-  SharesTransaction,
+  ISharesTransaction,
   SharesTransactionFormProps
 } from "types/shares-transaction";
 import { SharesTransactionsContextType } from "contexts/shares-transactions";
-import SharesTransactionsService from "services/shares-transactions-service";
+import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
 
 export function useSharesTransactionsContext(
   companyId: string
@@ -12,9 +12,9 @@ export function useSharesTransactionsContext(
   const [
     sharesTransaction,
     setSharesTransaction
-  ] = useState<SharesTransaction | null>(null);
+  ] = useState<ISharesTransaction | null>(null);
   const [sharesTransactions, setSharesTransactions] = useState<
-    SharesTransaction[]
+  ISharesTransaction[]
   >([]);
   const [isLoading, setIsLoading] = useState(false);
 
