@@ -7,7 +7,7 @@ import SectorService from "services/sector-service/sector-service";
 import MarketService from "services/market-service/market-service";
 import PortfolioService from "services/portfolio-service";
 import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
-import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transactions-service";
+import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
 import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
 import StockPriceService from "services/stock-price-service/stock-price-service";
 

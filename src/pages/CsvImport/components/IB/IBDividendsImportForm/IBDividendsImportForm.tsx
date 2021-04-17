@@ -2,7 +2,7 @@ import { Button, Col, Input, message, Row, Select, Typography } from "antd";
 import { Form } from "antd";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
-import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transactions-service";
+import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
 import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";

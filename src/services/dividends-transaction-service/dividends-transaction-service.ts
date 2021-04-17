@@ -1,5 +1,5 @@
 import { IDividendsTransaction, DividendsTransactionFormProps } from "types/dividends-transaction";
-import DividendsTransactionsDAO from "database/daos/dividends-transactions-dao/dividends-transactions-dao";
+import DividendsTransactionsDAO from "database/daos/dividends-transaction-dao/dividends-transaction-dao";
 
 export default class DividendsTransactionsService {
   static create = (transaction: DividendsTransactionFormProps) => {

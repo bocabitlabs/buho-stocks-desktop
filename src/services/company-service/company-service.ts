@@ -1,5 +1,5 @@
 import CompanyDAO from "database/daos/company-dao/company-dao";
-import DividendsTransactionsDAO from "database/daos/dividends-transactions-dao/dividends-transactions-dao";
+import DividendsTransactionsDAO from "database/daos/dividends-transaction-dao/dividends-transaction-dao";
 import SharesTransactionsDAO from "database/daos/shares-transaction-dao/shares-transactions-dao";
 import { Company } from "models/company";
 import { IAddProps } from "types/common";

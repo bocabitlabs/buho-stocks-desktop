@@ -7,7 +7,7 @@ import CompanyDetailsContent from "./components/CompanyDetailsContent/CompanyDet
 import CompanyDetailsHeader from "./components/CompanyDetailsHeader/CompanyDetailsHeader";
 import { useSharesTransactionsContext } from "hooks/shares-transactions";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
-import { useDividendsTransactionsContext } from "hooks/dividends-transactions";
+import { useDividendsTransactionsContext } from "hooks/dividends-transaction";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import { useRightsTransactionsContext } from "hooks/rights-transactions";

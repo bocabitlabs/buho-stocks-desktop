@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
-import { useDividendsTransactionsContext } from "hooks/dividends-transactions";
+import { useDividendsTransactionsContext } from "hooks/dividends-transaction";
 import { useCompaniesContext } from "hooks/companies";
 
 import DividendsTransactionEditdHeader from "./components/DividendsTransactionEditHeader/DividendsTransactionEditHeader";

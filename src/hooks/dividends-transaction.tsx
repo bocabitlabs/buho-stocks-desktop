@@ -4,8 +4,8 @@ import {
   IDividendsTransaction,
   DividendsTransactionFormProps
 } from "types/dividends-transaction";
-import DividendsTransactionsService from "../services/dividends-transaction-service/dividends-transactions-service";
-import DividendService from "../services/dividends-transaction-service/dividends-transactions-service";
+import DividendsTransactionsService from "../services/dividends-transaction-service/dividends-transaction-service";
+import DividendService from "../services/dividends-transaction-service/dividends-transaction-service";
 
 export function useDividendsTransactionsContext(
   companyId: string
