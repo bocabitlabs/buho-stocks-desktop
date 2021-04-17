@@ -1,8 +1,7 @@
-import { RightsTransaction } from "types/rights-transaction";
-import { ISharesTransaction, SharesTransactionFormProps } from "types/shares-transaction";
-import Service from "./rights-transactions-service";
+import { IRightsTransaction, RightsTransactionFormProps } from "types/rights-transaction";
+import Service from "./rights-transaction-service";
 
-const returnAllExample: RightsTransaction[] = [
+const returnAllExample: IRightsTransaction[] = [
   {
     id: "1",
     transactionDate: "01-01-2021",
@@ -47,7 +46,7 @@ const returnAllExample: RightsTransaction[] = [
   }
 ];
 
-jest.mock("database/daos/shares-transaction-dao/shares-transactions-dao", () => ({
+jest.mock("database/daos/rights-transaction-dao/rights-transaction-dao", () => ({
   exportAll: () => returnAllExample,
   getAll: () => returnAllExample,
   getById: () => returnAllExample[1],
@@ -57,7 +56,7 @@ jest.mock("database/daos/shares-transaction-dao/shares-transactions-dao", () => 
 }));
 
 
-describe("SharesTransaction Service tests", () => {
+describe("RightsTransaction Service tests", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -83,7 +82,7 @@ describe("SharesTransaction Service tests", () => {
   });
 
   test("create", () => {
-    const newElement: SharesTransactionFormProps = {
+    const newElement: RightsTransactionFormProps = {
       transactionDate: "01-01-2021",
       notes: "This is a message",
       companyId: "1",
@@ -100,7 +99,7 @@ describe("SharesTransaction Service tests", () => {
   });
 
   test("update", () => {
-    const newElement: SharesTransactionFormProps = {
+    const newElement: RightsTransactionFormProps = {
       transactionDate: "01-01-2021",
       notes: "This is a message",
       companyId: "1",

@@ -1,6 +1,6 @@
 import { RightsTransactionsContextType } from "contexts/rights-transactions";
 import { useState, useEffect, useCallback } from "react";
-import RightsTransactionsService from "services/rights-transactions-service/rights-transactions-service";
+import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
 import {
   IRightsTransaction,
   RightsTransactionFormProps

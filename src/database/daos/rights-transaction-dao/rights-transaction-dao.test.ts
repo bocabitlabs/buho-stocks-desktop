@@ -1,6 +1,6 @@
 import sendIpcSql from "message-control/renderer";
 import { ISector } from "types/sector";
-import RightsTransactionDAO from "./rights-transactions-dao";
+import RightsTransactionDAO from "./rights-transaction-dao";
 
 jest.mock("message-control/renderer");
 

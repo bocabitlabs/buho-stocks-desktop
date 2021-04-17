@@ -14,7 +14,7 @@ import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import CurrencyService from "services/currency-service/currency-service";
 import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
-import RightsTransactionsService from "services/rights-transactions-service/rights-transactions-service";
+import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
 import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ICurrency } from "types/currency";

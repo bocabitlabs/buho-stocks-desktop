@@ -9,7 +9,7 @@ import { ISharesTransaction } from "types/shares-transaction";
 import { ICompany, CompanyFormFields } from "types/company";
 import { IStockPrice } from "types/stock-price";
 
-import RightsTransactionsService from "../rights-transactions-service/rights-transactions-service";
+import RightsTransactionsService from "../rights-transaction-service/rights-transaction-service";
 import StockPriceService from "../stock-price-service/stock-price-service";
 
 export default class CompanyService {
