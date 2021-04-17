@@ -1,6 +1,6 @@
 import CompanyService from "services/company-service/company-service";
 import CurrencyService from "services/currency-service/currency-service";
-import DividendsTransactionsService from "services/dividends-transactions-service";
+import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transactions-service";
 import MarketService from "services/market-service/market-service";
 import PortfolioService from "services/portfolio-service";
 import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
