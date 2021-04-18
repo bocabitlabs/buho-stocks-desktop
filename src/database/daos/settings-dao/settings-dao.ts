@@ -4,7 +4,6 @@ import { ISettings } from "types/settings";
 
 export default class SettingsDAO {
   static getSettings = () => {
-    //Call the DB
     const sql = `SELECT * FROM settings WHERE id='1'`;
     const result = sendIpcSql(sql, "get");
     return result;
@@ -25,7 +24,6 @@ export default class SettingsDAO {
     return result.defaultCompanyDisplayMode;
   };
   static addSettings(settings: ISettings) : IAddProps{
-    //Call the DB
     const sql = `INSERT INTO "settings"
     ("selectedPortfolio", "databasePath", "language")
     VALUES ('${settings.selectedPortfolio}', '${settings.databasePath}', '${settings.language}');`;
@@ -36,32 +34,25 @@ export default class SettingsDAO {
   static updateLanguage = (language: string) => {
     //Call the DB
     const sql = `UPDATE "settings" SET "language" = '${language}' WHERE "id" = '1';`;
-
     const results = sendIpcSql(sql, "insert");
     return results;
   };
   static updateDatabasePath = (databasePath: string) => {
-    //Call the DB
-    console.debug("Updating databasePath");
     const sql = `UPDATE "settings" SET "databasePath" = '${databasePath}' WHERE "id" = '1';`;
     const results = sendIpcSql(sql, "insert");
     return results;
   };
   static updateSelectedPortfolio = (selectedPortfolio: string) => {
-    //Call the DB
     const sql = `UPDATE "settings" SET "selectedPortfolio" = '${selectedPortfolio}' WHERE "id" = '1';`;
-
     const results = sendIpcSql(sql, "insert");
     return results;
   };
   static toggleCollapsed = () => {
-    //Call the DB
     const sql = `UPDATE "settings" SET collapsed = ((collapsed | 1) - (collapsed & 1)) WHERE "id" = '1';`;
     const results = sendIpcSql(sql, "insert");
     return results;
   };
   static setDefaultCompanyDisplayMode = (value: string) => {
-    //Call the DB
     const sql = `UPDATE "settings" SET defaultCompanyDisplayMode = '${value}' WHERE "id" = '1';`;
     const results = sendIpcSql(sql, "insert");
     return results;

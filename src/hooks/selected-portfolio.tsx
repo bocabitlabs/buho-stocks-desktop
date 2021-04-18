@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { SelectedPortfolioContextType } from "contexts/selected-portfolio";
-import SettingsService from "services/settings-service";
+import SettingsService from "services/settings-service/settings-service";
 
 export function useSelectedPortfolioContext(): SelectedPortfolioContextType {
   const [selectedPortfolio, setSelectedPortfolio] = useState<string>("");
