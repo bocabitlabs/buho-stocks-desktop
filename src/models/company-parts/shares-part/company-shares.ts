@@ -1,7 +1,6 @@
 import moment from "moment";
-import { ICompanyShares } from "types/company";
+import { ICompanyShares } from "types/company-parts/shares-part/shares-part";
 import { ISharesTransaction } from "types/shares-transaction";
-import { TransactionType } from "types/transaction";
 
 export class CompanyShares implements ICompanyShares {
   sharesTransactions: ISharesTransaction[];

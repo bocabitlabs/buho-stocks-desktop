@@ -1,10 +1,9 @@
 import moment from "moment";
-import {
-  ICompanyDividends,
-  ICompanyInvestment,
-  ICompanyPortfolioValue,
-  ICompanyReturns
-} from "types/company";
+import { ICompanyDividends } from "types/company-parts/dividends-part/dividends-part";
+import { ICompanyInvestment } from "types/company-parts/investment-part/investment-part";
+import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/portfolio-value-part";
+import { ICompanyReturns } from "types/company-parts/returns-part/returns-part";
+
 import { IDividendsTransaction } from "types/dividends-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
 

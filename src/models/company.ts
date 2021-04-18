@@ -1,22 +1,20 @@
-import {
-  ICompanyReturns,
-  ICompany,
-  ICompanyDividends,
-  ICompanyInvestment,
-  ICompanyShares,
-  ICompanyStockPrices,
-  ICompanyPortfolioValue
-} from "types/company";
+import { ICompany } from "types/company";
+import { ICompanyDividends } from "types/company-parts/dividends-part/dividends-part";
+import { ICompanyInvestment } from "types/company-parts/investment-part/investment-part";
+import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/portfolio-value-part";
+import { ICompanyReturns } from "types/company-parts/returns-part/returns-part";
+import { ICompanyShares } from "types/company-parts/shares-part/shares-part";
+import { ICompanyStockPrices } from "types/company-parts/stock-prices-part/stock-prices-part";
 import { IDividendsTransaction } from "types/dividends-transaction";
 import { IRightsTransaction } from "types/rights-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
-import { CompanyDividends } from "./company-parts/company-dividends/company-dividends";
-import { CompanyInvestment } from "./company-parts/company-investment/company-investment";
-import { CompanyPortfolioValue } from "./company-parts/company-portfolio-value/company-portfolio-value";
-import { CompanyReturns } from "./company-parts/company-returns/company-returns";
-import { CompanyShares } from "./company-parts/company-shares/company-shares";
-import { CompanyStockPrices } from "./company-parts/company-stock-prices/company-stock-prices";
+import { CompanyDividends } from "./company-parts/dividends-part/company-dividends";
+import { CompanyInvestment } from "./company-parts/investment-part/company-investment";
+import { CompanyPortfolioValue } from "./company-parts/portfolio-value-part/company-portfolio-value";
+import { CompanyReturns } from "./company-parts/returns-part/company-returns";
+import { CompanyShares } from "./company-parts/shares-part/company-shares";
+import { CompanyStockPrices } from "./company-parts/stock-prices-part/company-stock-prices";
 
 export class Company implements ICompany {
   id: string;

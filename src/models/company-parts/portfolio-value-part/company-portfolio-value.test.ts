@@ -1,13 +1,12 @@
-import { ICompanyPortfolioValue } from "types/company";
-import { SharesTransaction } from "types/shares-transaction";
+import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/portfolio-value-part";
+import { ISharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
-import { TransactionType } from "types/transaction";
-import { CompanyShares } from "../company-shares/company-shares";
-import { CompanyStockPrices } from "../company-stock-prices/company-stock-prices";
+import { CompanyShares } from "../shares-part/company-shares";
+import { CompanyStockPrices } from "../stock-prices-part/company-stock-prices";
 import { CompanyPortfolioValue } from "./company-portfolio-value";
 
 describe("Company Portfolio Value tests", () => {
-  const sharesTransactions: SharesTransaction[] = [
+  const sharesTransactions: ISharesTransaction[] = [
     {
       id: "1",
       count: 10,
@@ -129,26 +128,36 @@ describe("Company Portfolio Value tests", () => {
 
   test("get the portfolio value for 2019", () => {
     const year = 2019;
-    expect(companyValue?.getPortfolioValueForYear(year.toString())).toStrictEqual(10);
+    expect(
+      companyValue?.getPortfolioValueForYear(year.toString())
+    ).toStrictEqual(10);
   });
 
   test("get the portfolio value for 2019 in portfolio currency", () => {
     const year = 2019;
-    expect(companyValue?.getPortfolioValueForYear(year.toString(), true)).toStrictEqual(5);
+    expect(
+      companyValue?.getPortfolioValueForYear(year.toString(), true)
+    ).toStrictEqual(5);
   });
 
   test("get the portfolio value for 2020", () => {
     const year = 2020;
-    expect(companyValue?.getPortfolioValueForYear(year.toString())).toStrictEqual(60);
+    expect(
+      companyValue?.getPortfolioValueForYear(year.toString())
+    ).toStrictEqual(60);
   });
 
   test("get the portfolio value for 2020 in portfolio currency", () => {
     const year = 2020;
-    expect(companyValue?.getPortfolioValueForYear(year.toString(), true)).toStrictEqual(30);
+    expect(
+      companyValue?.getPortfolioValueForYear(year.toString(), true)
+    ).toStrictEqual(30);
   });
 
   test("get the portfolio value for 2021", () => {
     const year = 2021;
-    expect(companyValue?.getPortfolioValueForYear(year.toString())).toStrictEqual(80);
+    expect(
+      companyValue?.getPortfolioValueForYear(year.toString())
+    ).toStrictEqual(80);
   });
 });

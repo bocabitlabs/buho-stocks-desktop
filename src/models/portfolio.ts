@@ -1,5 +1,8 @@
 import { ICompany } from "types/company";
-import { IPortfolio, IPortfolioDividends, IPortfolioInvestments, IPortfolioReturns } from "types/portfolio";
+import { IPortfolio } from "types/portfolio";
+import { IPortfolioDividends } from "types/portfolio-parts/dividends-part/dividends-part";
+import { IPortfolioInvestments } from "types/portfolio-parts/investments-part/investments-part";
+import { IPortfolioReturns } from "types/portfolio-parts/returns-part/returns-part";
 import { PortfolioDividends } from "./portfolio-parts/portfolio-dividends";
 import { PortfolioInvestments } from "./portfolio-parts/portfolio-investments";
 import { PortfolioReturns } from "./portfolio-parts/portfolio-returns";
@@ -39,7 +42,9 @@ export class Portfolio implements IPortfolio {
     const totalPortfolioValue = this.companies
       .filter((company) => !company.closed)
       .reduce(function (accumulator: number, obj: ICompany) {
-        return accumulator + obj.portfolioValue.getPortfolioValue(inBaseCurrency);
+        return (
+          accumulator + obj.portfolioValue.getPortfolioValue(inBaseCurrency)
+        );
       }, 0);
     return totalPortfolioValue;
   }
@@ -49,11 +54,13 @@ export class Portfolio implements IPortfolio {
     let accumulated = this.companies
       .filter((company) => !company.closed)
       .reduce(function (accumulator: number, obj: ICompany) {
-        return accumulator + obj.portfolioValue.getPortfolioValueForYear(year, inBaseCurrency);
+        return (
+          accumulator +
+          obj.portfolioValue.getPortfolioValueForYear(year, inBaseCurrency)
+        );
       }, 0);
     console.debug(`Portfolio value: for year ${year} = ${accumulated}`);
 
     return accumulated;
   }
-
 }

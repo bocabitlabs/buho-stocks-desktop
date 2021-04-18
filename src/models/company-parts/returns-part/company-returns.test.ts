@@ -1,18 +1,17 @@
-import { ICompanyReturns } from "types/company";
-import { SharesTransaction } from "types/shares-transaction";
+import { ICompanyReturns } from "types/company-parts/returns-part/returns-part";
+import { IDividendsTransaction } from "types/dividends-transaction";
+import { IRightsTransaction } from "types/rights-transaction";
+import { ISharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
-import { TransactionType } from "types/transaction";
-import { CompanyShares } from "../company-shares/company-shares";
-import { CompanyStockPrices } from "../company-stock-prices/company-stock-prices";
-import { CompanyPortfolioValue } from "../company-portfolio-value/company-portfolio-value";
+import { CompanyDividends } from "../dividends-part/company-dividends";
+import { CompanyInvestment } from "../investment-part/company-investment";
+import { CompanyPortfolioValue } from "../portfolio-value-part/company-portfolio-value";
+import { CompanyShares } from "../shares-part/company-shares";
+import { CompanyStockPrices } from "../stock-prices-part/company-stock-prices";
 import { CompanyReturns } from "./company-returns";
-import { DividendsTransaction } from "types/dividends-transaction";
-import { CompanyInvestment } from "../company-investment/company-investment";
-import { RightsTransaction } from "types/rights-transaction";
-import { CompanyDividends } from "../company-dividends/company-dividends";
 
 describe("Company Returns tests", () => {
-  const sharesTransactions: SharesTransaction[] = [
+  const sharesTransactions: ISharesTransaction[] = [
     {
       id: "1",
       count: 10,
@@ -80,7 +79,7 @@ describe("Company Returns tests", () => {
     }
   ];
 
-  const dividendsTransactions: DividendsTransaction[] = [
+  const dividendsTransactions: IDividendsTransaction[] = [
     {
       id: "1",
       count: 10,
@@ -122,7 +121,7 @@ describe("Company Returns tests", () => {
     }
   ];
 
-  const rightsTransactions: RightsTransaction[] = [];
+  const rightsTransactions: IRightsTransaction[] = [];
   let companyReturns: ICompanyReturns | null = null;
 
   beforeEach(() => {
@@ -184,7 +183,7 @@ describe("Company Returns tests", () => {
 });
 
 describe("Company Portfolio Value tests with sales", () => {
-  const sharesTransactions: SharesTransaction[] = [
+  const sharesTransactions: ISharesTransaction[] = [
     {
       id: "1",
       count: 10,
@@ -245,8 +244,8 @@ describe("Company Portfolio Value tests with sales", () => {
     }
   ];
 
-  const dividendsTransactions: DividendsTransaction[] = [];
-  const rightsTransactions: RightsTransaction[] = [];
+  const dividendsTransactions: IDividendsTransaction[] = [];
+  const rightsTransactions: IRightsTransaction[] = [];
   let companyReturns: ICompanyReturns | null = null;
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import moment from "moment";
+import { ICompanyDividends } from "types/company-parts/dividends-part/dividends-part";
 import { IDividendsTransaction } from "types/dividends-transaction";
 
-import { ICompanyDividends } from "types/company";
 
 export class CompanyDividends implements ICompanyDividends {
   dividendsTransactions: IDividendsTransaction[];

@@ -1,46 +1,13 @@
 import { ICompany } from "./company";
+import { IPortfolioDividends } from "./portfolio-parts/dividends-part/dividends-part";
+import { IPortfolioInvestments } from "./portfolio-parts/investments-part/investments-part";
+import { IPortfolioReturns } from "./portfolio-parts/returns-part/returns-part";
 
 export interface PortfolioFormFields {
   name: string;
   description: string;
   color: string;
   currencyId: number;
-}
-
-export interface IPortfolioDividends {
-  getDividends(inBaseCurrency?: boolean): number;
-  getDividendsForYear(year?: string, inBaseCurrency?: boolean): number;
-  getCumulativeDividendsForYear(
-    year?: string,
-    inBaseCurrency?: boolean
-  ): number;
-  getCumulativePortfolioDividendsAmountForYear(
-    year?: string,
-    inBaseCurrency?: boolean
-  ): number;
-  getMonthlyDividendsForYear(year: string, inBaseCurrency?: boolean): number;
-}
-
-export interface IPortfolioReturns {
-  getReturnForYear(year: string, inBaseCurrency?: boolean): number;
-  getReturnPercentageCumulativeForYear(
-    year: string,
-    inBaseCurrency?: boolean
-  ): number;
-  getReturnPercentageForYear(year: string, inBaseCurrency?: boolean): number;
-  getReturnWithDividends(inBaseCurrency?: boolean): number;
-  getReturnWithDividendsPercentage(inBaseCurrency?: boolean): number;
-  getReturnWithDividendsForYear(year: string, inBaseCurrency?: boolean): number;
-  getReturnPercentageWithDividendsForYearCumulative(
-    year: string,
-    inBaseCurrency?: boolean
-  ): number;
-}
-
-export interface IPortfolioInvestments {
-  getTotalInvested(inBaseCurrency?: boolean): number;
-  getTotalInvestedOnYear(year: string, inBaseCurrency?: boolean): number;
-  getTotalInvestedUntilYear(year: string, inBaseCurrency?: boolean): number;
 }
 
 export interface IPortfolio extends PortfolioFormFields {
@@ -50,6 +17,7 @@ export interface IPortfolio extends PortfolioFormFields {
   currencyAbbreviation: string;
   currencyCountryCode: string;
   companies: ICompany[];
+  // Composition
   dividends: IPortfolioDividends;
   returns: IPortfolioReturns;
   investments: IPortfolioInvestments;

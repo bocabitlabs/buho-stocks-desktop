@@ -1,5 +1,6 @@
 import { ICompany } from "types/company";
-import { IPortfolio, IPortfolioDividends } from "types/portfolio";
+import { IPortfolio } from "types/portfolio";
+import { IPortfolioDividends } from "types/portfolio-parts/dividends-part/dividends-part";
 
 export class PortfolioDividends implements IPortfolioDividends {
   portfolio: IPortfolio;

@@ -1,5 +1,6 @@
 import { ICompany } from "types/company";
-import { IPortfolio, IPortfolioReturns } from "types/portfolio";
+import { IPortfolio } from "types/portfolio";
+import { IPortfolioReturns } from "types/portfolio-parts/returns-part/returns-part";
 
 export class PortfolioReturns implements IPortfolioReturns {
   portfolio: IPortfolio;

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { ICompanyStockPrices } from "types/company";
+import { ICompanyStockPrices } from "types/company-parts/stock-prices-part/stock-prices-part";
 import { IStockPrice } from "types/stock-price";
 
 export class CompanyStockPrices implements ICompanyStockPrices {

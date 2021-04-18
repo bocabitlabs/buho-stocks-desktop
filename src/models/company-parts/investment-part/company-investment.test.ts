@@ -1,11 +1,10 @@
-import { ICompanyInvestment } from "types/company";
-import { RightsTransaction } from "types/rights-transaction";
-import { SharesTransaction } from "types/shares-transaction";
-import { TransactionType } from "types/transaction";
+import { ICompanyInvestment } from "types/company-parts/investment-part/investment-part";
+import { IRightsTransaction } from "types/rights-transaction";
+import { ISharesTransaction } from "types/shares-transaction";
 import { CompanyInvestment } from "./company-investment";
 
 describe("Company Investment tests", () => {
-  const sharesTransactions: SharesTransaction[] = [
+  const sharesTransactions: ISharesTransaction[] = [
     {
       id: "1",
       count: 10,
@@ -63,7 +62,7 @@ describe("Company Investment tests", () => {
       currencySymbol: "$"
     }
   ];
-  const rightsTransactions: RightsTransaction[] = [
+  const rightsTransactions: IRightsTransaction[] = [
     {
       id: "1",
       count: 10,

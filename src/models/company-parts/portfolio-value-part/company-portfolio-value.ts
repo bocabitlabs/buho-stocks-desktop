@@ -1,4 +1,6 @@
-import { ICompanyPortfolioValue, ICompanyShares, ICompanyStockPrices } from "types/company";
+import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/portfolio-value-part";
+import { ICompanyShares } from "types/company-parts/shares-part/shares-part";
+import { ICompanyStockPrices } from "types/company-parts/stock-prices-part/stock-prices-part";
 
 export class CompanyPortfolioValue implements ICompanyPortfolioValue {
   prices: ICompanyStockPrices;

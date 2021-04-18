@@ -1,11 +1,11 @@
-import { ICompanyShares } from "types/company";
-import { SharesTransaction } from "types/shares-transaction";
-import { TransactionType } from "types/transaction";
+
+import { ICompanyShares } from "types/company-parts/shares-part/shares-part";
+import { ISharesTransaction } from "types/shares-transaction";
 import { CompanyShares } from "./company-shares";
 
 describe("Company Shares tests", () => {
 
-  const sharesTransactions: SharesTransaction[] = [
+  const sharesTransactions: ISharesTransaction[] = [
     {
       id: "1",
       count: 10,

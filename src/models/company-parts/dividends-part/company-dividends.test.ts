@@ -1,10 +1,10 @@
-import { ICompanyDividends } from "types/company";
-import { DividendsTransaction } from "types/dividends-transaction";
+import { ICompanyDividends } from "types/company-parts/dividends-part/dividends-part";
+import { IDividendsTransaction } from "types/dividends-transaction";
 import { CompanyDividends } from "./company-dividends";
 
 describe("Company Dividends tests", () => {
 
-  const dividendsTransactions: DividendsTransaction[] = [
+  const dividendsTransactions: IDividendsTransaction[] = [
     {
       id: "1",
       count: 10,

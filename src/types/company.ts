@@ -1,3 +1,9 @@
+import { ICompanyDividends } from "./company-parts/dividends-part/dividends-part";
+import { ICompanyInvestment } from "./company-parts/investment-part/investment-part";
+import { ICompanyPortfolioValue } from "./company-parts/portfolio-value/portfolio-value-part";
+import { ICompanyReturns } from "./company-parts/returns-part/returns-part";
+import { ICompanyShares } from "./company-parts/shares-part/shares-part";
+import { ICompanyStockPrices } from "./company-parts/stock-prices-part/stock-prices-part";
 import { IDividendsTransaction } from "./dividends-transaction";
 import { IRightsTransaction } from "./rights-transaction";
 import { ISharesTransaction } from "./shares-transaction";
@@ -20,111 +26,6 @@ export interface CompanyFormFields {
   alternativeTickers: string;
 }
 
-export interface ICompanyDividends {
-  dividendsTransactions: IDividendsTransaction[];
-  getDividendsAmount(
-    inPortfolioCurrency?: boolean,
-    includeCommission?: boolean
-  ): number;
-  getCumulativeDividendsAmountForYear(
-    year: string,
-    inPortfolioCurrency?: boolean,
-    includeCommission?: boolean
-  ): number;
-  getDividendsAmountForYear(
-    year: string,
-    inPortfolioCurrency?: boolean,
-    includeCommission?: boolean
-  ): number;
-  getMonthlyDividendsForYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): number;
-}
-
-export interface ICompanyInvestment {
-  sharesTransactions: ISharesTransaction[];
-  rightsTransactions: IRightsTransaction[];
-  getTotalInvested(inPortfolioCurrency?: boolean): number;
-  getTotalInvestedUntilYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): number;
-  getTotalInvestedOnYear(year: string, inPortfolioCurrency?: boolean): number;
-}
-
-export interface ICompanyStockPrices {
-  stockPrices: IStockPrice[];
-  getLatestStockPrice(inPortfolioCurrency?: boolean): IStockPrice | null;
-  getLatestStockPriceForYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): IStockPrice | null;
-}
-
-export interface ICompanyShares {
-  sharesTransactions: ISharesTransaction[];
-  getSharesCount: Function;
-  getSharesCountForYear(year: string): number;
-  getCumulativeSharesCountUntilYear(year: string): number;
-}
-
-export interface ICompanyPortfolioValue{
-  prices: ICompanyStockPrices;
-  shares: ICompanyShares;
-  companyName: string;
-  getPortfolioValue(inPortfolioCurrency?: boolean): number;
-  getPortfolioValueForYear(year: string, inPortfolioCurrency?: boolean): number;
-}
-
-export interface ICompanyReturns {
-  sharesTransactions: ISharesTransaction[];
-  dividendsTransactions: IDividendsTransaction[];
-  investment: ICompanyInvestment;
-  dividends: ICompanyDividends;
-  portfolioValue: ICompanyPortfolioValue;
-  closed: boolean;
-
-  getReturn(inPortfolioCurrency?: boolean): number;
-  getReturnForYear(year: string, inPortfolioCurrency?: boolean): number;
-  getReturnWithDividends(
-    inPortfolioCurrency?: boolean,
-    includeCommission?: boolean
-  ): number;
-  getReturnWithDividendsForYear(
-    year: string,
-    inPortfolioCurrency?: boolean,
-    includeCommission?: boolean
-  ): number;
-  getReturnWithDividendsPercentage(
-    inPortfolioCurrency?: boolean,
-    includeCommission?: boolean
-  ): number;
-  getReturnFromSalesForYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): number;
-  getReturnFromSales(inPortfolioCurrency?: boolean): number;
-  getReturnPercentage(inPortfolioCurrency?: boolean): number;
-  getReturnPercentageForYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): number;
-  getReturnPercentageForYearWithDiviends(
-    year: string,
-    inPortfolioCurrency?: boolean,
-    includeCommission?: boolean
-  ): number;
-  getReturnPercentageCumulativeForYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): number;
-  getReturnPercentageCumulativeWithDividendsForYear(
-    year: string,
-    inPortfolioCurrency?: boolean
-  ): number;
-}
-
 export interface ICompany extends CompanyFormFields {
   id: string;
   portfolioName: string;
@@ -141,7 +42,7 @@ export interface ICompany extends CompanyFormFields {
   sharesTransactions: ISharesTransaction[];
   dividendsTransactions: IDividendsTransaction[];
   rightsTransactions: IRightsTransaction[];
-  // Components
+  // Composition
   dividends: ICompanyDividends;
   investment: ICompanyInvestment;
   shares: ICompanyShares;
