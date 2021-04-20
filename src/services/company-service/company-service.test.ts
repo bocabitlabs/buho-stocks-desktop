@@ -1,71 +1,112 @@
 import Service from "./company-service";
+import { CompanyFormFields } from "types/company";
 
-// const dividendsPart: ICompanyDividends = {
-//   dividendsTransactions: [],
-//   getDividendsAmount: jest.fn(),
-//   getCumulativeDividendsAmountForYear: jest.fn(),
-//   getDividendsAmountForYear: jest.fn(),
-//   getMonthlyDividendsForYear: jest.fn()
-// };
+const mockExpectedReturnForGetId = {
+  alternativeTickers: undefined,
+  broker: undefined,
+  closed: false,
+  color: undefined,
+  countryCode: "es",
+  currencyAbbreviation: undefined,
+  currencyId: undefined,
+  currencyName: undefined,
+  currencySymbol: undefined,
+  description: "This is the description",
+  dividends: {
+    dividendsTransactions: []
+  },
+  dividendsCurrencyAbbreviation: undefined,
+  dividendsCurrencyId: undefined,
+  dividendsCurrencySymbol: undefined,
+  dividendsTransactions: undefined,
+  id: "1",
+  investment: {
+    rightsTransactions: [],
+    sharesTransactions: []
+  },
+  marketId: undefined,
+  name: "Good Company",
+  portfolioCurrencyAbbreviation: undefined,
+  portfolioCurrencySymbol: undefined,
+  portfolioId: undefined,
+  portfolioName: undefined,
+  portfolioValue: {
+    companyName: undefined,
+    prices: {
+      stockPrices: undefined
+    },
+    shares: {
+      sharesTransactions: []
+    }
+  },
+  prices: {
+    stockPrices: []
+  },
+  returns: {
+    closed: undefined,
+    dividends: {
+      dividendsTransactions: []
+    },
+    dividendsTransactions: [],
+    investment: {
+      rightsTransactions: [],
+      sharesTransactions: []
+    },
+    portfolioValue: {
+      companyName: undefined,
+      prices: {
+        stockPrices: []
+      },
+      shares: {
+        sharesTransactions: []
+      }
+    },
+    sharesTransactions: []
+  },
+  rightsTransactions: [],
+  sectorId: undefined,
+  sectorName: undefined,
+  shares: {
+    sharesTransactions: []
+  },
+  sharesTransactions: [],
+  stockPrices: [],
+  superSectorName: undefined,
+  ticker: "GC",
+  url: undefined
+};
 
-// const investmentPart: ICompanyInvestment = {
-//   sharesTransactions: [],
-//   rightsTransactions: [],
-//   getTotalInvested: jest.fn(),
-//   getTotalInvestedUntilYear: jest.fn(),
-//   getTotalInvestedOnYear: jest.fn(),
-// };
-
-// const stockPricesPart: ICompanyStockPrices = {
-//   stockPrices: [],
-//   getLatestStockPrice: jest.fn(),
-//   getLatestStockPriceForYear: jest.fn(),
-// };
-
-// const sharesPart: ICompanyShares = {
-//   sharesTransactions: [],
-//   getSharesCount: jest.fn(),
-//   getSharesCountForYear: jest.fn(),
-//   getCumulativeSharesCountUntilYear: jest.fn()
-// };
-
-// const portfolioPart: ICompanyPortfolioValue = {
-//   shares: sharesPart,
-//   prices: stockPricesPart,
-//   companyName: "CompanyName",
-//   getPortfolioValue: jest.fn(),
-//   getPortfolioValueForYear: jest.fn()
-// };
-// const returnAllExample: ICompany[] = [
-//   {
-//     id: "1",
-//     portfolioName: "Portfolio",
-//     portfolioCurrencySymbol: "$",
-//     portfolioCurrencyAbbreviation: "USD",
-//     dividendsCurrencySymbol: "$",
-//     dividendsCurrencyAbbreviation: "USD",
-//     currencyName: "US Dolar",
-//     currencyAbbreviation: "USD",
-//     sectorName: "Software",
-//     superSectorName: "Technology",
-//     currencySymbol: "USD",
-//     stockPrices: [],
-//     sharesTransactions: [],
-//     dividendsTransactions: [],
-//     rightsTransactions: [],
-//     dividends: dividendsPart
-//   }
-// ];
 jest.mock("database/daos/company-dao/company-dao", () => ({
-  getAll: () => []
-  // exportAll: () => returnAllExample.collapsed,
-  // getByTicker: () => returnAllExample.selectedPortfolio,
-  // getByTickerPortfolio: () => returnAllExample.defaultCompanyDisplayMode,
-  // getById: () => returnAllExample.defaultCompanyDisplayMode,
-  // create: () => ({ changes: 1 }),
-  // getFirstTransaction: () => () => returnAllExample.defaultCompanyDisplayMode,
-  // update: () => ({ changes: 1 }),
-  // deleteById: () => ({ changes: 1 })
+  getAll: () => [],
+  exportAll: () => [],
+  getByTicker: () => ({}),
+  getByTickerPortfolio: () => ({}),
+  getById: () => (mockExpectedReturnForGetId),
+  create: () => ({ changes: 1 }),
+  getFirstTransaction: () => ({}),
+  update: () => ({ changes: 1 }),
+  deleteById: () => ({ changes: 1 })
+}));
+
+jest.mock("database/daos/shares-transaction-dao/shares-transactions-dao", () => ({
+  getAll: () => [],
+}));
+
+jest.mock("database/daos/dividends-transaction-dao/dividends-transaction-dao", () => ({
+  getAll: () => [],
+}));
+
+jest.mock("database/daos/rights-transaction-dao/rights-transaction-dao", () => ({
+  getAll: () => [],
+}));
+
+jest.mock("services/stock-price-service/stock-price-service", () => ({
+  getAll: () => [],
+}));
+
+jest.mock("yahoo-stock-prices-fetch", () => ({
+  getCurrentData: () => jest.fn(),
+  getHistoricalPrices: async () => [1, 2, 3]
 }));
 
 describe("CompanyService tests", () => {
@@ -74,50 +115,82 @@ describe("CompanyService tests", () => {
   });
 
   test("getAll return all results", () => {
-    // const result = Service.getAll("1");
-    expect(1).toStrictEqual(1);
+    const result = Service.getAll("1");
+    expect(result).toStrictEqual([]);
   });
 
-  // test("getIsCollapsed return collapsed", () => {
-  //   const result = Service.getIsCollapsed();
-  //   expect(result).toStrictEqual(returnAllExample.collapsed);
-  // });
+  test("exportAll return all results", () => {
+    const result = Service.exportAll();
+    expect(result).toStrictEqual([]);
+  });
 
-  // test("getSelectedPortfolio return collapsed", () => {
-  //   const result = Service.getSelectedPortfolio();
-  //   expect(result).toStrictEqual(returnAllExample.selectedPortfolio);
-  // });
+  test("getByTicker return", () => {
+    const result = Service.getByTicker("IBM");
+    expect(result).toStrictEqual({});
+  });
 
-  // test("addSettings", () => {
-  //   const newElement: ISettings = {
-  //     selectedPortfolio: "1",
-  //     collapsed: true,
-  //     defaultCompanyDisplayMode: "card",
-  //     databasePath: "",
-  //     language: "en"
-  //   };
+  test("getByTickerAndPortfolio return", () => {
+    const result = Service.getByTickerPortfolio("IBM", "1");
+    expect(result).toStrictEqual({});
+  });
 
-  //   const result = Service.addSettings(newElement);
-  //   expect(result).toStrictEqual({ changes: 1 });
-  // });
+  test("getFirstTransaction return", () => {
+    const result = Service.getFirstTransaction("1");
+    expect(result).toStrictEqual({});
+  });
 
-  // test("update selected portfolio", () => {
-  //   const result = Service.updateSelectedPortfolio("2");
-  //   expect(result).toStrictEqual({ changes: 1 });
-  // });
+  test("getById return", () => {
+    const result = Service.getById("1");
+    expect(result?.ticker).toStrictEqual("GC");
+    expect(result?.name).toStrictEqual("Good Company");
+    expect(result?.closed).toStrictEqual(false);
+  });
 
-  // test("update database path", () => {
-  //   const result = Service.updateDatabasePath("/foo/bar");
-  //   expect(result).toStrictEqual({ changes: 1 });
-  // });
+  test("create", () => {
+    const newElement: CompanyFormFields = {
+      countryCode: "es",
+      name: "Good company",
+      ticker: "GC",
+      broker: "IN",
+      closed: false,
+      url: "",
+      description: "Bla bla",
+      currencyId: "1",
+      dividendsCurrencyId: "1",
+      marketId: "2",
+      sectorId: "3",
+      color: "#000",
+      portfolioId: "1",
+      alternativeTickers: ""
+    };
 
-  // test("toggle collapsed", () => {
-  //   const result = Service.toggleCollapsed();
-  //   expect(result).toStrictEqual({ changes: 1 });
-  // });
+    const result = Service.create(newElement);
+    expect(result).toStrictEqual({ changes: 1 });
+  });
 
-  // test("set default company display mode", () => {
-  //   const result = Service.setDefaultCompanyDisplayMode("card");
-  //   expect(result).toStrictEqual({ changes: 1 });
-  // });
+  test("update selected portfolio", () => {
+    const newElement: CompanyFormFields = {
+      countryCode: "es",
+      name: "Good company",
+      ticker: "GC",
+      broker: "IN",
+      closed: false,
+      url: "",
+      description: "Bla bla",
+      currencyId: "1",
+      dividendsCurrencyId: "1",
+      marketId: "2",
+      sectorId: "3",
+      color: "#000",
+      portfolioId: "1",
+      alternativeTickers: ""
+    };
+    const result = Service.update("2", newElement);
+    expect(result).toStrictEqual({ changes: 1 });
+  });
+
+  test("delete", () => {
+    const result = Service.deleteById("1");
+    expect(result).toStrictEqual({ changes: 1 });
+  });
 });

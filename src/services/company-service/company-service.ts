@@ -73,8 +73,8 @@ export default class CompanyService {
     return CompanyDAO.update(companyId, company);
   };
 
-  static getFirstTransaction = (portfolioId: string) => {
-    return CompanyDAO.getFirstTransaction(portfolioId);
+  static getFirstTransaction = (companyId: string) => {
+    return CompanyDAO.getFirstTransaction(companyId);
   };
 }
 function createCompany(
