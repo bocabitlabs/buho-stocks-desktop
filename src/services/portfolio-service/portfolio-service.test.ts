@@ -1,6 +1,8 @@
 import Service from "./portfolio-service";
 import { CompanyFormFields } from "types/company";
 import { IPortfolio, PortfolioFormFields } from "types/portfolio";
+import PortfolioDAO from "database/daos/portfolio-dao/portfolio-dao";
+import CompanyDAO from "database/daos/company-dao/company-dao";
 
 const mockExpectedReturnForGetId = {
   color: "#fff",
@@ -21,9 +23,8 @@ jest.mock("database/daos/portfolio-dao/portfolio-dao", () => ({
   getAll: () => [],
   exportAll: () => [],
   getByName: () => ({}),
-  // getByTickerPortfolio: () => ({}),
   getById: () => mockExpectedReturnForGetId,
-  // create: () => ({ changes: 1 }),
+  create: () => ({ changes: 1 }),
   getFirstTransaction: () => ({}),
   update: () => ({ changes: 1 }),
   deleteById: () => ({ changes: 1 })
@@ -31,31 +32,9 @@ jest.mock("database/daos/portfolio-dao/portfolio-dao", () => ({
 
 jest.mock("database/daos/company-dao/company-dao", () => ({
   getAll: () => [mockCompany],
-  // exportAll: () => [],
-  // getByTicker: () => ({}),
-  // getByTickerPortfolio: () => ({}),
   getById: () => mockCompany,
-  // create: () => ({ changes: 1 }),
-  // getFirstTransaction: () => ({}),
   update: () => ({ changes: 1 })
-  // deleteById: () => ({ changes: 1 })
 }));
-
-// jest.mock("database/daos/shares-transaction-dao/shares-transactions-dao", () => ({
-//   getAll: () => [],
-// }));
-
-// jest.mock("database/daos/dividends-transaction-dao/dividends-transaction-dao", () => ({
-//   getAll: () => [],
-// }));
-
-// jest.mock("database/daos/rights-transaction-dao/rights-transaction-dao", () => ({
-//   getAll: () => [],
-// }));
-
-// jest.mock("services/stock-price-service/stock-price-service", () => ({
-//   getAll: () => [],
-// }));
 
 jest.mock("yahoo-stock-prices-fetch", () => ({
   getCurrentData: () => jest.fn(),
@@ -64,13 +43,37 @@ jest.mock("yahoo-stock-prices-fetch", () => ({
 
 describe("PortfolioService tests", () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
-  test("getAll return all results", () => {
+  test("getAll return all results empty", () => {
     const result = Service.getAll();
     expect(result).toStrictEqual([]);
   });
+
+  test("getAll return undefined results", () => {
+    const mockAddListener = jest.spyOn(PortfolioDAO, "getAll");
+    mockAddListener.mockImplementation(() => {
+      return undefined;
+    });
+    const result = Service.getAll();
+    expect(result).toStrictEqual([]);
+  });
+
+  // test("getAll return null", () => {
+  //   const mockAddListener = jest.spyOn(PortfolioDAO, "getAll");
+  //   const mockGetById = jest.spyOn(Service, "getById");
+
+  //   mockAddListener.mockImplementation(() => {
+  //     return [1,2,3];
+  //   });
+
+  //   mockGetById.mockImplementation(() => {
+  //     return null;
+  //   });
+  //   const result = Service.getAll();
+  //   expect(result).toStrictEqual([]);
+  // });
 
   test("exportAll return all results", () => {
     const result = Service.exportAll();
@@ -83,6 +86,17 @@ describe("PortfolioService tests", () => {
   });
 
   test("getById return", () => {
+    const mockGetById = jest.spyOn(PortfolioDAO, "getById");
+    mockGetById.mockImplementation(() => {
+      console.log("Called new mock!");
+      return mockExpectedReturnForGetId;
+    });
+    const mockGetByIdCompany = jest.spyOn(CompanyDAO, "getAll");
+    mockGetByIdCompany.mockImplementation(() => {
+      console.log("Call mock com panyById");
+      return [mockCompany];
+    });
+
     const result = Service.getById("1");
     expect(result?.color).toStrictEqual(mockExpectedReturnForGetId.color);
     expect(result?.name).toStrictEqual(mockExpectedReturnForGetId.name);
@@ -91,6 +105,24 @@ describe("PortfolioService tests", () => {
     );
     expect(result?.companies.length).toStrictEqual(1);
   });
+
+  // test("get by id undefined", () => {
+  //   console.log("get undefined")
+  //   const mockGetById = jest.spyOn(PortfolioDAO, "getById");
+  //   mockGetById.mockImplementation(() => {
+  //     console.log("Called mockGetById");
+  //     return mockExpectedReturnForGetId;
+  //   });
+  //   const mockGetByIdCompany = jest.spyOn(CompanyDAO, "getAll");
+  //   mockGetByIdCompany.mockImplementation(() => {
+  //     console.log("Call mock com panyById")
+  //     return ([mockCompany]);
+  //   });
+
+  //   const result = Service.getById("1");
+  //   console.log(result)
+  //   expect(result).toStrictEqual(null);
+  // });
 
   test("delete by ID", () => {
     const result = Service.deleteById("1");
@@ -113,32 +145,15 @@ describe("PortfolioService tests", () => {
     expect(result).toStrictEqual({});
   });
 
-  // test("getById return", () => {
-  //   const result = Service.getById("1");
-  //   expect(result?.ticker).toStrictEqual("GC");
-  //   expect(result?.name).toStrictEqual("Good Company");
-  //   expect(result?.closed).toStrictEqual(false);
-  // });
+  test("create", () => {
+    const newElement: PortfolioFormFields = {
+      name: "Good company",
+      description: "This is description",
+      color: "#000",
+      currencyId: 1
+    };
 
-  // test("create", () => {
-  //   const newElement: CompanyFormFields = {
-  //     countryCode: "es",
-  //     name: "Good company",
-  //     ticker: "GC",
-  //     broker: "IN",
-  //     closed: false,
-  //     url: "",
-  //     description: "Bla bla",
-  //     currencyId: "1",
-  //     dividendsCurrencyId: "1",
-  //     marketId: "2",
-  //     sectorId: "3",
-  //     color: "#000",
-  //     portfolioId: "1",
-  //     alternativeTickers: ""
-  //   };
-
-  //   const result = Service.create(newElement);
-  //   expect(result).toStrictEqual({ changes: 1 });
-  // });
+    const result = Service.create(newElement);
+    expect(result).toStrictEqual({ changes: 1 });
+  });
 });
