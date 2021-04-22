@@ -5,7 +5,7 @@ import { saveFile } from "message-control/dialog";
 import CurrencyService from "services/currency-service/currency-service";
 import SectorService from "services/sector-service/sector-service";
 import MarketService from "services/market-service/market-service";
-import PortfolioService from "services/portfolio-service";
+import PortfolioService from "services/portfolio-service/portfolio-service";
 import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
 import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
 import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
@@ -42,7 +42,7 @@ export default function ExportAppDataForm(): ReactElement {
       });
     }
     if (checkbox.includes("portfolios")) {
-      const portfoliosResults = new PortfolioService().exportAll();
+      const portfoliosResults = PortfolioService.exportAll();
       portfoliosResults.forEach(function (rowArray) {
         const keys = Object.values(rowArray);
         let row = "portfolio," + keys.join(",");

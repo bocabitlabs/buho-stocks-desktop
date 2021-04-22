@@ -6,7 +6,7 @@ import React, { ReactElement, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { PortfoliosContext } from "contexts/portfolios";
-import PortfolioService from "services/portfolio-service";
+import PortfolioService from "services/portfolio-service/portfolio-service";
 import {
   DeleteOutlined,
   EditOutlined,

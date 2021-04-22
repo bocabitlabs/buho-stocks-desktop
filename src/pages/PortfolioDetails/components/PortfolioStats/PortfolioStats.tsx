@@ -4,7 +4,7 @@ import PortfolioYearlyEvolutionChartNivo from "components/PortfolioYearlyEvoluti
 import { PortfoliosContext } from "contexts/portfolios";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import PortfolioService from "services/portfolio-service";
+import PortfolioService from "services/portfolio-service/portfolio-service";
 import { ICompany } from "types/company";
 import { StringUtils } from "utils/string-utils";
 

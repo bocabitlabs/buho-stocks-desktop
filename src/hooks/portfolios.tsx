@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { PortfoliosContextType } from "contexts/portfolios";
-import PortfolioService from "services/portfolio-service";
+import PortfolioService from "services/portfolio-service/portfolio-service";
 import { IPortfolio, PortfolioFormFields } from "types/portfolio";
 
 export function usePortfoliosContext(): PortfoliosContextType {

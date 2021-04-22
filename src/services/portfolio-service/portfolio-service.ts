@@ -2,7 +2,7 @@ import PortfolioDAO from "database/daos/portfolio-dao/portfolio-dao";
 import { Portfolio } from "models/portfolio";
 import { ICompany } from "types/company";
 import { IPortfolio, PortfolioFormFields } from "types/portfolio";
-import CompanyService from "./company-service/company-service";
+import CompanyService from "../company-service/company-service";
 
 export default class PortfolioService {
   /**
@@ -18,7 +18,7 @@ export default class PortfolioService {
     return PortfolioDAO.getByName(name);
   };
 
-  exportAll = (): IPortfolio[] => {
+  static exportAll = (): IPortfolio[] => {
     const results = PortfolioDAO.exportAll();
     return results;
   };
