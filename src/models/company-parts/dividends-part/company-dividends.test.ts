@@ -85,6 +85,36 @@ describe("Company Dividends tests", () => {
     expect(companyDividends?.getDividendsAmount(true, false)).toStrictEqual(20);
   });
 
+  test("get the dividends amount for year", () => {
+    // 40 - 4
+    expect(companyDividends?.getDividendsAmountForYear("2020")).toStrictEqual(9);
+  });
+
+  test("get the dividends amount for year with commission", () => {
+    // 40 - 4
+    expect(companyDividends?.getDividendsAmountForYear("2020", false, true)).toStrictEqual(9);
+  });
+
+  test("get the dividends amount for year in portfolio currency", () => {
+    // 40 - 4
+    expect(companyDividends?.getDividendsAmountForYear("2020", true)).toStrictEqual(4);
+  });
+
+  test("get comulative dividends amount for year", () => {
+    // 40 - 4
+    expect(companyDividends?.getCumulativeDividendsAmountForYear("2020")).toStrictEqual(18);
+  });
+
+  test("get comulative dividends amount for year in portfolio currency", () => {
+    // 40 - 4
+    expect(companyDividends?.getCumulativeDividendsAmountForYear("2020", true)).toStrictEqual(8);
+  });
+
+  test("get comulative dividends amount for year in portfolio currency with commission", () => {
+    // 40 - 4
+    expect(companyDividends?.getCumulativeDividendsAmountForYear("2020", true, true)).toStrictEqual(8);
+  });
+
   // test("get the dividends amount for year", () => {
   //   // 40 - 4
   //   const year = 2019;
