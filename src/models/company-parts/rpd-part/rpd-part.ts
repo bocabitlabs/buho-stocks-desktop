@@ -13,8 +13,8 @@ export class CompanyRpd implements ICompanyRpd {
 
   constructor(
     dividendsTransactions: IDividendsTransaction[],
-    sharesTransactions: ISharesTransaction[],
-    rightsTransactions: IRightsTransaction[]
+    rightsTransactions: IRightsTransaction[],
+    sharesTransactions: ISharesTransaction[]
   ) {
     this.dividends = new CompanyDividends(dividendsTransactions);
     this.investment = new CompanyInvestment(

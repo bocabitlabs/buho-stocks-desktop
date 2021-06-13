@@ -123,8 +123,8 @@ export class Company implements ICompany {
     );
     this.rpd = new CompanyRpd(
       this.dividendsTransactions,
-      this.sharesTransactions,
-      this.rightsTransactions
+      this.rightsTransactions,
+      this.sharesTransactions
     );
   }
 }

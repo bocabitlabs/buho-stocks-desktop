@@ -88,12 +88,10 @@ describe("PortfolioService tests", () => {
   test("getById return", () => {
     const mockGetById = jest.spyOn(PortfolioDAO, "getById");
     mockGetById.mockImplementation(() => {
-      console.log("Called new mock!");
       return mockExpectedReturnForGetId;
     });
     const mockGetByIdCompany = jest.spyOn(CompanyDAO, "getAll");
     mockGetByIdCompany.mockImplementation(() => {
-      console.log("Call mock com panyById");
       return [mockCompany];
     });
 
