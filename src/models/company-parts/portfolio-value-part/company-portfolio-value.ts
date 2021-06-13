@@ -1,16 +1,20 @@
 import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/portfolio-value-part";
 import { ICompanyShares } from "types/company-parts/shares-part/shares-part";
 import { ICompanyStockPrices } from "types/company-parts/stock-prices-part/stock-prices-part";
+import { ISharesTransaction } from "types/shares-transaction";
+import { IStockPrice } from "types/stock-price";
+import { CompanyShares } from "../shares-part/company-shares";
+import { CompanyStockPrices } from "../stock-prices-part/company-stock-prices";
 
 export class CompanyPortfolioValue implements ICompanyPortfolioValue {
-  prices: ICompanyStockPrices;
   shares: ICompanyShares;
   companyName: string;
+  prices: ICompanyStockPrices;
 
-  constructor(name: string, prices: ICompanyStockPrices, shares: ICompanyShares) {
+  constructor(name: string, stockPrices: IStockPrice[], sharesList: ISharesTransaction[]) {
     this.companyName = name;
-    this.prices = prices;
-    this.shares = shares;
+    this.prices = new CompanyStockPrices(stockPrices);
+    this.shares = new CompanyShares(sharesList)
   }
 
   getPortfolioValue(inPortfolioCurrency = false): number {

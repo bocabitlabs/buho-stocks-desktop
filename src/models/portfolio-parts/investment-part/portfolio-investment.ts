@@ -1,16 +1,18 @@
 import { ICompany } from "types/company";
-import { IPortfolio } from "types/portfolio";
-import { IPortfolioInvestments } from "types/portfolio-parts/investments-part/investments-part";
+import { IPortfolioInvestments } from "types/portfolio-parts/investments-part/investment-part";
 
 
-export class PortfolioInvestments implements IPortfolioInvestments {
-  portfolio: IPortfolio;
-  constructor(portfolio: IPortfolio) {
-    this.portfolio = portfolio;
+/**
+ *
+ */
+export class PortfolioInvestment implements IPortfolioInvestments {
+  companies: ICompany[];
+  constructor(companies: ICompany[]) {
+    this.companies = companies;
   }
 
   getTotalInvested(inBaseCurrency: boolean) {
-    const totalInvested = this.portfolio.companies.reduce(function (
+    const totalInvested = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
@@ -21,7 +23,7 @@ export class PortfolioInvestments implements IPortfolioInvestments {
   }
 
   getTotalInvestedOnYear(year: string, inBaseCurrency: boolean) {
-    const totalInvested = this.portfolio.companies.reduce(function (
+    const totalInvested = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
@@ -35,7 +37,7 @@ export class PortfolioInvestments implements IPortfolioInvestments {
   }
 
   getTotalInvestedUntilYear(year: string, inBaseCurrency = false): number {
-    const totalInvested = this.portfolio.companies.reduce(function (
+    const totalInvested = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {

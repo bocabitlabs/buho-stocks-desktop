@@ -5,9 +5,16 @@ import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/port
 import { ICompanyReturns } from "types/company-parts/returns-part/returns-part";
 
 import { IDividendsTransaction } from "types/dividends-transaction";
+import { IRightsTransaction } from "types/rights-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
+import { IStockPrice } from "types/stock-price";
+import { CompanyDividends } from "../dividends-part/company-dividends";
+import { CompanyInvestment } from "../investment-part/company-investment";
+import { CompanyPortfolioValue } from "../portfolio-value-part/company-portfolio-value";
+
 
 export class CompanyReturns implements ICompanyReturns {
+  rightsTransactions: IRightsTransaction[];
   sharesTransactions: ISharesTransaction[];
   dividendsTransactions: IDividendsTransaction[];
   investment: ICompanyInvestment;
@@ -17,18 +24,26 @@ export class CompanyReturns implements ICompanyReturns {
 
   constructor(
     closed: boolean,
-    sharesTransaction: ISharesTransaction[],
+    companyName: string,
     dividendsTransactions: IDividendsTransaction[],
-    investment: ICompanyInvestment,
-    dividends: ICompanyDividends,
-    portfolioValue: ICompanyPortfolioValue
+    rightsTransactions: IRightsTransaction[],
+    sharesTransactions: ISharesTransaction[],
+    stockPrices: IStockPrice[],
   ) {
     this.closed = closed;
-    this.sharesTransactions = sharesTransaction;
+    this.rightsTransactions = rightsTransactions;
+    this.sharesTransactions = sharesTransactions;
     this.dividendsTransactions = dividendsTransactions;
-    this.investment = investment;
-    this.dividends = dividends;
-    this.portfolioValue = portfolioValue;
+    this.investment = new CompanyInvestment(
+      this.sharesTransactions,
+      this.rightsTransactions
+    );
+    this.dividends = new CompanyDividends(dividendsTransactions);
+    this.portfolioValue = new CompanyPortfolioValue(
+      companyName,
+      stockPrices,
+      sharesTransactions
+    );
   }
 
   getReturnFromSales(inPortfolioCurrency = false) {

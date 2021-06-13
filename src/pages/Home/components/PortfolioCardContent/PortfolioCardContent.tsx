@@ -27,7 +27,7 @@ export default function PortfolioCardContent({
     return null;
   }
 
-  const portfolioValue = currentPortfolio.getPortfolioValue(true);
+  const portfolioValue = currentPortfolio.value.getPortfolioValue(true);
   const portfolioReturn = currentPortfolio.returns.getReturnWithDividends(true);
   const portfolioReturnPercentage = currentPortfolio.returns.getReturnWithDividendsPercentage(
     true

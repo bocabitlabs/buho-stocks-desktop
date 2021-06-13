@@ -1,8 +1,6 @@
 import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/portfolio-value-part";
 import { ISharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
-import { CompanyShares } from "../shares-part/company-shares";
-import { CompanyStockPrices } from "../stock-prices-part/company-stock-prices";
 import { CompanyPortfolioValue } from "./company-portfolio-value";
 
 describe("Company Portfolio Value tests", () => {
@@ -106,13 +104,11 @@ describe("Company Portfolio Value tests", () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-    const companyStockPrices = new CompanyStockPrices(prices);
-    const companyShares = new CompanyShares(sharesTransactions);
 
     companyValue = new CompanyPortfolioValue(
       "Example Company",
-      companyStockPrices,
-      companyShares
+      prices,
+      sharesTransactions
     );
   });
 

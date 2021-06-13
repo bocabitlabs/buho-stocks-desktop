@@ -1,13 +1,14 @@
 import { IDividendsTransaction } from "types/dividends-transaction";
+import { IRightsTransaction } from "types/rights-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
 import { ICompanyDividends } from "../dividends-part/dividends-part";
 import { ICompanyInvestment } from "../investment-part/investment-part";
 import { ICompanyPortfolioValue } from "../portfolio-value/portfolio-value-part";
 
 export interface ICompanyReturns {
+  rightsTransactions: IRightsTransaction[];
   sharesTransactions: ISharesTransaction[];
   dividendsTransactions: IDividendsTransaction[];
-  investment: ICompanyInvestment;
   dividends: ICompanyDividends;
   portfolioValue: ICompanyPortfolioValue;
   closed: boolean;

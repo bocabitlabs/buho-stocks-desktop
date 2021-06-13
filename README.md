@@ -1,17 +1,24 @@
 # Buho-Stocks
 
-<img src="logo.png" align="right"
-     alt="Buho-Stocks logo" height="100">
+<p align="center"><img src="logo.png" alt="Buho-Stocks logo" height="200"></p>
 
-Multi platform (and offline) desktop application to manage and track a stocks portfolio for [Buy & Hold investment](https://en.wikipedia.org/wiki/Buy_and_hold) purposes.
+<p align="center">Multi platform (and offline) desktop application to manage and track a stocks portfolio with dividends and return for a <a href="https://en.wikipedia.org/wiki/Buy_and_hold" title="Wikipedia">Buy & Hold investment</a> investment strategy.</p>
+<p align="center">
+<img src="https://github.com/bocabitlabs/buho-stocks/workflows/Continuous%20Integration/badge.svg" alt="Continuous Integration Status"/>
+<a href="https://codecov.io/gh/bocabitlabs/buho-stocks" title="CodeCov"><img src="https://codecov.io/gh/bocabitlabs/buho-stocks/branch/master/graph/badge.svg" alt="codecov"/></a>
+</p>
 
-
-![Continuous Integration](https://github.com/bocabitlabs/buho-stocks/workflows/Continuous%20Integration/badge.svg) [![codecov](https://codecov.io/gh/bocabitlabs/buho-stocks/branch/master/graph/badge.svg)](https://codecov.io/gh/bocabitlabs/buho-stocks)
-
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#install">Install</a> •
+  <a href="#development">Development</a> •
+  <a href="#links">Links</a> •
+  <a href="#attributions">Attributions</a>
+</p>
 
 <hr/>
 
-![App Preview](./docs/images/preview.gif)
+<p align="center"><img src="./docs/images/preview.gif" alt="Buho-Stocks preview"></p>
 
 ## 🎁 Features
 
@@ -22,9 +29,12 @@ Multi platform (and offline) desktop application to manage and track a stocks po
 - Import CSV files from Interactive Brokers and ING (Spain).
 - Export app data to CSV.
 - Fetch stock prices and exchange rates from a external source in real time.
-- Multiple charts
+- Multiple charts: dividends, returns, sectors, currencies...
 - Database backup on the selected location
-- <del>Support for inflation.</del>
+- <del>Support for inflation.</del> Removed to minimize app complexity.
+- Planned: Support for multiple languages
+
+
 
 
 ## 🔧 Install

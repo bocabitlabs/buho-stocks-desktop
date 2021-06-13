@@ -3,8 +3,10 @@ import { ICompanyDividends } from "types/company-parts/dividends-part/dividends-
 import { ICompanyInvestment } from "types/company-parts/investment-part/investment-part";
 import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/portfolio-value-part";
 import { ICompanyReturns } from "types/company-parts/returns-part/returns-part";
+import { ICompanyRpd } from "types/company-parts/rpd-part/rpd-part";
 import { ICompanyShares } from "types/company-parts/shares-part/shares-part";
 import { ICompanyStockPrices } from "types/company-parts/stock-prices-part/stock-prices-part";
+import { ICompanyYoc } from "types/company-parts/yoc-part/yoc-part";
 import { IDividendsTransaction } from "types/dividends-transaction";
 import { IRightsTransaction } from "types/rights-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
@@ -13,8 +15,10 @@ import { CompanyDividends } from "./company-parts/dividends-part/company-dividen
 import { CompanyInvestment } from "./company-parts/investment-part/company-investment";
 import { CompanyPortfolioValue } from "./company-parts/portfolio-value-part/company-portfolio-value";
 import { CompanyReturns } from "./company-parts/returns-part/company-returns";
+import { CompanyRpd } from "./company-parts/rpd-part/rpd-part";
 import { CompanyShares } from "./company-parts/shares-part/company-shares";
 import { CompanyStockPrices } from "./company-parts/stock-prices-part/company-stock-prices";
+import { CompanyYoc } from "./company-parts/yoc-part/company-yoc";
 
 export class Company implements ICompany {
   id: string;
@@ -48,10 +52,12 @@ export class Company implements ICompany {
   returns: ICompanyReturns;
   dividends: ICompanyDividends;
   investment: ICompanyInvestment;
+  rpd: ICompanyRpd;
   shares: ICompanyShares;
   prices: ICompanyStockPrices;
   portfolioValue: ICompanyPortfolioValue;
   superSectorName: string;
+  yoc: ICompanyYoc;
 
   constructor(parameters: ICompany) {
     this.id = parameters.id;
@@ -99,36 +105,26 @@ export class Company implements ICompany {
     this.prices = new CompanyStockPrices(this.stockPrices);
     this.portfolioValue = new CompanyPortfolioValue(
       this.name,
-      this.prices,
-      this.shares
+      this.stockPrices,
+      this.sharesTransactions
     );
     this.returns = new CompanyReturns(
       this.closed,
-      this.sharesTransactions,
+      this.name,
       this.dividendsTransactions,
-      this.investment,
-      this.dividends,
-      this.portfolioValue
+      this.rightsTransactions,
+      this.sharesTransactions,
+      this.stockPrices
     );
-  }
-
-  getYoc(inPortfolioCurrency = false): number {
-    const dividendsAmount = this.dividends.getDividendsAmount(
-      inPortfolioCurrency
+    this.yoc = new CompanyYoc(
+      this.dividendsTransactions,
+      this.sharesTransactions,
+      this.rightsTransactions
     );
-    const totalInvested = this.investment.getTotalInvested(inPortfolioCurrency);
-
-    const yoc = (dividendsAmount / totalInvested) * 100;
-    return yoc;
-  }
-
-  getRpd(inPortfolioCurrency = false): number {
-    const dividendsAmount = this.dividends.getDividendsAmount(
-      inPortfolioCurrency
+    this.rpd = new CompanyRpd(
+      this.dividendsTransactions,
+      this.sharesTransactions,
+      this.rightsTransactions
     );
-    const totalInvested = this.investment.getTotalInvested(inPortfolioCurrency);
-
-    const rpd = (dividendsAmount / totalInvested) * 100;
-    return rpd;
   }
 }

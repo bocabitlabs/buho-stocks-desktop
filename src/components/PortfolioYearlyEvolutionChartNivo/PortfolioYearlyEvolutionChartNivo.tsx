@@ -51,7 +51,7 @@ export default function PortfolioYearlyEvolutionChartNivo({
 
       const years1 = [...years];
       years1.reverse().forEach((element) => {
-        const tempPortfolioValue = portfolio.getPortfolioValueForYear(
+        const tempPortfolioValue = portfolio.value.getPortfolioValueForYear(
           element.toString(),
           true
         );

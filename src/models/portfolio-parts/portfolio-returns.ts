@@ -45,7 +45,7 @@ export class PortfolioReturns implements IPortfolioReturns {
     const totalInvested = this.portfolio.investments.getTotalInvested(
       inBaseCurrency
     );
-    const portfolioValue = this.portfolio.getPortfolioValue(inBaseCurrency);
+    const portfolioValue = this.portfolio.value.getPortfolioValue(inBaseCurrency);
     let returnFromSales = this.getReturnFromSales(inBaseCurrency);
     let totalReturn = 0;
 
@@ -61,7 +61,7 @@ export class PortfolioReturns implements IPortfolioReturns {
       year,
       inBaseCurrency
     );
-    const portfolioValue = this.portfolio.getPortfolioValueForYear(
+    const portfolioValue = this.portfolio.value.getPortfolioValueForYear(
       year,
       inBaseCurrency
     );
@@ -76,11 +76,11 @@ export class PortfolioReturns implements IPortfolioReturns {
 
   getReturnPercentageForYear(year: string, inBaseCurrency = false): number {
     console.debug(`getReturnPercentageForYear`);
-    const J2 = this.portfolio.getPortfolioValueForYear(
+    const J2 = this.portfolio.value.getPortfolioValueForYear(
       (parseInt(year) - 1).toString(),
       inBaseCurrency
     );
-    const J3 = this.portfolio.getPortfolioValueForYear(year, inBaseCurrency);
+    const J3 = this.portfolio.value.getPortfolioValueForYear(year, inBaseCurrency);
     const B3 = this.portfolio.investments.getTotalInvestedOnYear(
       year,
       inBaseCurrency
@@ -98,7 +98,7 @@ export class PortfolioReturns implements IPortfolioReturns {
     year: string,
     inBaseCurrency = false
   ): number {
-    const J3 = this.portfolio.getPortfolioValueForYear(year, inBaseCurrency);
+    const J3 = this.portfolio.value.getPortfolioValueForYear(year, inBaseCurrency);
     const E3 = this.portfolio.investments.getTotalInvestedUntilYear(
       year,
       inBaseCurrency
@@ -116,7 +116,7 @@ export class PortfolioReturns implements IPortfolioReturns {
     year: string,
     inBaseCurrency = false
   ): number {
-    const J3 = this.portfolio.getPortfolioValueForYear(year, inBaseCurrency);
+    const J3 = this.portfolio.value.getPortfolioValueForYear(year, inBaseCurrency);
     const E3 = this.portfolio.investments.getTotalInvestedUntilYear(
       year,
       inBaseCurrency

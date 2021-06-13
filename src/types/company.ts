@@ -2,8 +2,10 @@ import { ICompanyDividends } from "./company-parts/dividends-part/dividends-part
 import { ICompanyInvestment } from "./company-parts/investment-part/investment-part";
 import { ICompanyPortfolioValue } from "./company-parts/portfolio-value/portfolio-value-part";
 import { ICompanyReturns } from "./company-parts/returns-part/returns-part";
+import { ICompanyRpd } from "./company-parts/rpd-part/rpd-part";
 import { ICompanyShares } from "./company-parts/shares-part/shares-part";
 import { ICompanyStockPrices } from "./company-parts/stock-prices-part/stock-prices-part";
+import { ICompanyYoc } from "./company-parts/yoc-part/yoc-part";
 import { IDividendsTransaction } from "./dividends-transaction";
 import { IRightsTransaction } from "./rights-transaction";
 import { ISharesTransaction } from "./shares-transaction";
@@ -49,7 +51,6 @@ export interface ICompany extends CompanyFormFields {
   prices: ICompanyStockPrices;
   portfolioValue: ICompanyPortfolioValue;
   returns: ICompanyReturns;
-
-  getYoc(inPortfolioCurrency?: boolean): number;
-  getRpd(inPortfolioCurrency?: boolean): number;
+  yoc: ICompanyYoc;
+  rpd: ICompanyRpd;
 }

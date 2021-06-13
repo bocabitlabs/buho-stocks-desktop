@@ -38,7 +38,7 @@ export default function CurrenciesChart({
 
   useEffect(() => {
     const tempData = [...data];
-    const portfolioValue = portfolio.getPortfolioValue();
+    const portfolioValue = portfolio.value.getPortfolioValue();
 
     const newGroups = tempData
       .sort((a: any, b: any) => b.portfolioValue - a.portfolioValue)

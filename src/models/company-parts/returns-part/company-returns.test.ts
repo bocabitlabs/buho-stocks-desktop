@@ -3,11 +3,6 @@ import { IDividendsTransaction } from "types/dividends-transaction";
 import { IRightsTransaction } from "types/rights-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
 import { IStockPrice } from "types/stock-price";
-import { CompanyDividends } from "../dividends-part/company-dividends";
-import { CompanyInvestment } from "../investment-part/company-investment";
-import { CompanyPortfolioValue } from "../portfolio-value-part/company-portfolio-value";
-import { CompanyShares } from "../shares-part/company-shares";
-import { CompanyStockPrices } from "../stock-prices-part/company-stock-prices";
 import { CompanyReturns } from "./company-returns";
 
 describe("Company Returns tests", () => {
@@ -126,28 +121,14 @@ describe("Company Returns tests", () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-    const companyStockPrices = new CompanyStockPrices(prices);
-    const companyShares = new CompanyShares(sharesTransactions);
-
-    const companyValue = new CompanyPortfolioValue(
-      "Example Company",
-      companyStockPrices,
-      companyShares
-    );
-
-    const companyInvestment = new CompanyInvestment(
-      sharesTransactions,
-      rightsTransactions
-    );
-    const companyDividends = new CompanyDividends(dividendsTransactions);
 
     companyReturns = new CompanyReturns(
       false,
-      sharesTransactions,
+      "Example company",
       dividendsTransactions,
-      companyInvestment,
-      companyDividends,
-      companyValue
+      rightsTransactions,
+      sharesTransactions,
+      prices
     );
   });
 
@@ -250,28 +231,14 @@ describe("Company Portfolio Value tests with sales", () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-    const companyStockPrices = new CompanyStockPrices(prices);
-    const companyShares = new CompanyShares(sharesTransactions);
-
-    const companyValue = new CompanyPortfolioValue(
-      "Example Company",
-      companyStockPrices,
-      companyShares
-    );
-
-    const companyInvestment = new CompanyInvestment(
-      sharesTransactions,
-      rightsTransactions
-    );
-    const companyDividends = new CompanyDividends(dividendsTransactions);
 
     companyReturns = new CompanyReturns(
       false,
-      sharesTransactions,
+      "Example company",
       dividendsTransactions,
-      companyInvestment,
-      companyDividends,
-      companyValue
+      rightsTransactions,
+      sharesTransactions,
+      prices
     );
   });
 

@@ -26,8 +26,8 @@ export default function Stats({ company }: Props): React.ReactElement | null {
   );
   const [displayGrossValue, setDisplayGrossValue] = useState("net");
 
-  // const companyRpd = company.getRpd(true);
-  // const companyYoc = company.getYoc(true);
+  // const companyRpd = company.rpd.getRpd(true);
+  // const companyYoc = company.yoc.getYoc(true);
 
   const { Option } = Select;
 
