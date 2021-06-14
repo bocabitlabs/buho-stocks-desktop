@@ -107,8 +107,8 @@ describe("Company Portfolio Value tests", () => {
 
     companyValue = new CompanyPortfolioValue(
       "Example Company",
-      prices,
-      sharesTransactions
+      sharesTransactions,
+      prices
     );
   });
 

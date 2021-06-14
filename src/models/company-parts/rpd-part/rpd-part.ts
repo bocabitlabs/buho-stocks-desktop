@@ -28,7 +28,6 @@ export class CompanyRpd implements ICompanyRpd {
       inPortfolioCurrency
     );
     const totalInvested = this.investment.getTotalInvested(inPortfolioCurrency);
-
     const rpd = (dividendsAmount / totalInvested) * 100;
     return rpd;
   }

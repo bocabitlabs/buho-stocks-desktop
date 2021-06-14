@@ -28,7 +28,7 @@ export interface CompanyFormFields {
   alternativeTickers: string;
 }
 
-export interface ICompany extends CompanyFormFields {
+export interface ICompanyAttrs extends CompanyFormFields{
   id: string;
   portfolioName: string;
   portfolioCurrencySymbol: string;
@@ -44,6 +44,9 @@ export interface ICompany extends CompanyFormFields {
   sharesTransactions: ISharesTransaction[];
   dividendsTransactions: IDividendsTransaction[];
   rightsTransactions: IRightsTransaction[];
+}
+
+export interface ICompany extends ICompanyAttrs {
   // Composition
   dividends: ICompanyDividends;
   investment: ICompanyInvestment;
@@ -54,3 +57,5 @@ export interface ICompany extends CompanyFormFields {
   yoc: ICompanyYoc;
   rpd: ICompanyRpd;
 }
+
+

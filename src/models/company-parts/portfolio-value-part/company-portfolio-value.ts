@@ -11,7 +11,7 @@ export class CompanyPortfolioValue implements ICompanyPortfolioValue {
   companyName: string;
   prices: ICompanyStockPrices;
 
-  constructor(name: string, stockPrices: IStockPrice[], sharesList: ISharesTransaction[]) {
+  constructor(name: string,  sharesList: ISharesTransaction[], stockPrices: IStockPrice[]) {
     this.companyName = name;
     this.prices = new CompanyStockPrices(stockPrices);
     this.shares = new CompanyShares(sharesList)

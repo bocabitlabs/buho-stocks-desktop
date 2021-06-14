@@ -1,9 +1,10 @@
-import { ICompanyRpd } from "types/company-parts/rpd-part/rpd-part";
+import { ICompanyYoc } from "types/company-parts/yoc-part/yoc-part";
 import { IDividendsTransaction } from "types/dividends-transaction";
 import { ISharesTransaction } from "types/shares-transaction";
-import { CompanyRpd } from "./rpd-part";
+import { IStockPrice } from "types/stock-price";
+import { CompanyYoc } from "./company-yoc";
 
-describe("Company RPD tests", () => {
+describe("Company YOC tests", () => {
   const sharesTransactions: ISharesTransaction[] = [
     {
       id: "1",
@@ -135,47 +136,67 @@ describe("Company RPD tests", () => {
       currencySymbol: "$"
     }
   ];
-  let companyRpd: ICompanyRpd | null = null;
+
+  const prices: IStockPrice[] = [
+    {
+      id: "1",
+      price: 1,
+      companyId: "1",
+      transactionDate: "2019-01-01",
+      exchangeRate: 0.5
+    },
+    {
+      id: "1",
+      price: 3,
+      companyId: "1",
+      transactionDate: "2020-05-02",
+      exchangeRate: 0.5
+    },
+    {
+      id: "1",
+      price: 2,
+      companyId: "1",
+      transactionDate: "2020-01-02",
+      exchangeRate: 0.5
+    },
+    {
+      id: "1",
+      price: 3,
+      companyId: "1",
+      transactionDate: "2021-03-01",
+      exchangeRate: 0.5
+    },
+    {
+      id: "1",
+      price: 4,
+      companyId: "1",
+      transactionDate: "2021-04-01",
+      exchangeRate: 0.5
+    }
+  ];
+
+  let companyYoc: ICompanyYoc | null = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
 
-    companyRpd = new CompanyRpd(
+    companyYoc = new CompanyYoc(
+      "Example Company",
       dividendsTransactions,
-      [],
       sharesTransactions,
+      prices,
     );
   });
 
-  test("get rpd", () => {
-    // 30 invested +  3 commission = 33
+  test("get yoc", () => {
+    // 30 value * 4 = 120
     // 30 dividends - 3 commission = 27
-    expect(companyRpd?.getRpd()).toStrictEqual((27/33)*100);
+    expect(companyYoc?.getYoc()).toStrictEqual((27/120)*100);
   });
 
-  test("get rpd with some rights", () => {
-    // 30 invested +  3 commission = 33 (shares)
-    // 30 invested +  3 commission = 33 (rights)
-    // 30 dividends - 3 commission = 27
-    companyRpd = new CompanyRpd(
-      dividendsTransactions,
-      rightsTransactions,
-      sharesTransactions,
-    );
-    expect(companyRpd?.getRpd()).toStrictEqual((27/66)*100);
+  test("get yoc in portfolio currency", () => {
+    // 30 value * 4 = 60 (120 * 0.5)
+    // 30 dividends - 3 commission = 13.5 (27 * 0.5)
+    expect(companyYoc?.getYoc(true)).toStrictEqual((13.5/60)*100);
   });
-
-  test("get rpd with some rights in portfolio currency", () => {
-    // 30 invested +  3 commission = 33 (shares) (33 * 0.5)
-    // 30 invested +  3 commission = 33 (rights) (33 *0.5)
-    // 30 dividends - 3 commission = 27 (27 * 0.5)
-    companyRpd = new CompanyRpd(
-      dividendsTransactions,
-      rightsTransactions,
-      sharesTransactions,
-    );
-    const inPortfolioCurrency = true
-    expect(companyRpd?.getRpd(inPortfolioCurrency)).toStrictEqual((13.5/(16.5 + 16.5))*100);
-  });
-
 });

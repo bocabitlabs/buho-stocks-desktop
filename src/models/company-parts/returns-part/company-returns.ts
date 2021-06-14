@@ -41,8 +41,8 @@ export class CompanyReturns implements ICompanyReturns {
     this.dividends = new CompanyDividends(dividendsTransactions);
     this.portfolioValue = new CompanyPortfolioValue(
       companyName,
-      stockPrices,
-      sharesTransactions
+      sharesTransactions,
+      stockPrices
     );
   }
 
@@ -57,9 +57,6 @@ export class CompanyReturns implements ICompanyReturns {
         if (inPortfolioCurrency) {
           exchangeRate = obj.exchangeRate;
         }
-        console.debug(
-          `${accumulator} + ${obj.count} * ${obj.price} * ${exchangeRate} - (${obj.commission} * ${exchangeRate})`
-        );
         return (
           accumulator +
           (obj.count * (obj.price * exchangeRate) -
@@ -175,7 +172,6 @@ export class CompanyReturns implements ICompanyReturns {
   getReturnPercentage(inPortfolioCurrency = false): number {
     const totalReturn = this.getReturn(inPortfolioCurrency);
     const totalInvested = this.investment.getTotalInvested(inPortfolioCurrency);
-
     if (totalInvested === 0) {
       return 0;
     }

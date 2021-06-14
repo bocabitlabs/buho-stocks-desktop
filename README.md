@@ -22,16 +22,20 @@
 
 ## 🎁 Features
 
-- Unlimited portfolios.
-- Unlimited companies per portfolio.
-- Handle stock transactions, dividends and rights.
-- Multiple currencies, exchange rates (from ECB) and sectors.
-- Import CSV files from Interactive Brokers and ING (Spain).
-- Export app data to CSV.
-- Fetch stock prices and exchange rates from a external source in real time.
-- Multiple charts: dividends, returns, sectors, currencies...
-- Database backup on the selected location
-- <del>Support for inflation.</del> Removed to minimize app complexity.
+| Feature  | Description  |
+|---|---|
+| Unlimited portfolios  |   |
+| Unlimited companies per portfolio  |   |
+| Support for stock transactions, dividends and rights | |
+| Unlimited currencies | |
+| Unlimited sectors and subsectors | |
+| Historical Exchange rates from ECB | |
+| Import CSV files from Interactive Brokers and ING (Spain) | |
+| Export data to CSV | |
+| Fetch stock prices and exchange rates from a external source in real time. |
+| Multiple charts: dividends, returns, sectors, currencies... | |
+| Database backup | |
+
 - Planned: Support for multiple languages
 
 

@@ -137,6 +137,28 @@ describe("Company Returns tests", () => {
     expect(companyReturns?.getReturn()).toStrictEqual(87);
   });
 
+  test("get return percentage", () => {
+    // 87 / 33
+    expect(companyReturns?.getReturnPercentage()).toStrictEqual(87/33 *100);
+  });
+
+  test("get return with dividends", () => {
+    // Return: 87
+    // Dividends: 27
+    expect(
+      companyReturns?.getReturnWithDividends()
+    ).toStrictEqual(87+27);
+  });
+
+  test("get return with dividends in portfolio currency", () => {
+    // Return: 87 (87 *0.5 = 43.5)
+    // Dividends: 27 (27 * 0.5 = 13.5)
+    const inPortfolioCurrency = true;
+    expect(
+      companyReturns?.getReturnWithDividends(inPortfolioCurrency)
+    ).toStrictEqual(43.5 + 13.5);
+  });
+
   test("get the return for 2019", () => {
     // 20 * 4
     const year = 2019;
@@ -144,6 +166,14 @@ describe("Company Returns tests", () => {
     expect(companyReturns?.getReturnForYear(year.toString())).toStrictEqual(
       20 - 11
     );
+  });
+
+  test("get return with dividends for year 2019", () => {
+    // Return: 9
+    // Dividends: 9
+    expect(
+      companyReturns?.getReturnWithDividendsForYear("2019")
+    ).toStrictEqual(9+9);
   });
 
   test("get the return for 2020", () => {
@@ -154,12 +184,44 @@ describe("Company Returns tests", () => {
     );
   });
 
+  test("get return percentage for year 2020", () => {
+    expect(companyReturns?.getReturnPercentageForYear("2020")).toStrictEqual(93.54838709677419);
+  });
+
+  test("get return with dividends for year 2020", () => {
+    // Return: 29
+    // Dividends: 18
+    expect(
+      companyReturns?.getReturnWithDividendsForYear("2020")
+    ).toStrictEqual(29+18);
+  });
+
+  test("get return percentage with dividends for year 2020", () => {
+    expect(companyReturns?.getReturnPercentageForYearWithDiviends("2020")).toStrictEqual(122.58064516129032);
+  });
+
+  test("get return percentage accumulative for year 2020", () => {
+    expect(companyReturns?.getReturnPercentageCumulativeForYear("2020")).toStrictEqual(172.72727272727272);
+  });
+
+  test("get return percentage accumulative with dividends for year 2020", () => {
+    expect(companyReturns?.getReturnPercentageCumulativeWithDividendsForYear("2020")).toStrictEqual(254.54545454545453);
+  });
+
   test("get the return for 2021", () => {
     const year = 2021;
     // 60 (4*30) - (20 +11))
     expect(companyReturns?.getReturnForYear(year.toString())).toStrictEqual(
       120 - (60 + 11)
     );
+  });
+
+  test("get return with dividends for year 2021", () => {
+    // Return: 49
+    // Dividends: 27
+    expect(
+      companyReturns?.getReturnWithDividendsForYear("2021")
+    ).toStrictEqual(49+27);
   });
 });
 

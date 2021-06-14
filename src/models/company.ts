@@ -1,4 +1,4 @@
-import { ICompany } from "types/company";
+import { ICompany, ICompanyAttrs } from "types/company";
 import { ICompanyDividends } from "types/company-parts/dividends-part/dividends-part";
 import { ICompanyInvestment } from "types/company-parts/investment-part/investment-part";
 import { ICompanyPortfolioValue } from "types/company-parts/portfolio-value/portfolio-value-part";
@@ -19,6 +19,7 @@ import { CompanyRpd } from "./company-parts/rpd-part/rpd-part";
 import { CompanyShares } from "./company-parts/shares-part/company-shares";
 import { CompanyStockPrices } from "./company-parts/stock-prices-part/company-stock-prices";
 import { CompanyYoc } from "./company-parts/yoc-part/company-yoc";
+
 
 export class Company implements ICompany {
   id: string;
@@ -59,7 +60,7 @@ export class Company implements ICompany {
   superSectorName: string;
   yoc: ICompanyYoc;
 
-  constructor(parameters: ICompany) {
+  constructor(parameters: ICompanyAttrs) {
     this.id = parameters.id;
 
     this.countryCode = parameters.countryCode;
@@ -105,8 +106,8 @@ export class Company implements ICompany {
     this.prices = new CompanyStockPrices(this.stockPrices);
     this.portfolioValue = new CompanyPortfolioValue(
       this.name,
-      this.stockPrices,
-      this.sharesTransactions
+      this.sharesTransactions,
+      this.stockPrices
     );
     this.returns = new CompanyReturns(
       this.closed,
@@ -117,9 +118,10 @@ export class Company implements ICompany {
       this.stockPrices
     );
     this.yoc = new CompanyYoc(
+      this.name,
       this.dividendsTransactions,
       this.sharesTransactions,
-      this.rightsTransactions
+      this.stockPrices
     );
     this.rpd = new CompanyRpd(
       this.dividendsTransactions,
