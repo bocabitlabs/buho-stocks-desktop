@@ -5,9 +5,5 @@ export interface IPortfolioDividends {
     year?: string,
     inBaseCurrency?: boolean
   ): number;
-  getCumulativePortfolioDividendsAmountForYear(
-    year?: string,
-    inBaseCurrency?: boolean
-  ): number;
   getMonthlyDividendsForYear(year: string, inBaseCurrency?: boolean): number;
 }

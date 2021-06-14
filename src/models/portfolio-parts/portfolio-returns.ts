@@ -121,7 +121,7 @@ export class PortfolioReturns implements IPortfolioReturns {
       year,
       inBaseCurrency
     );
-    const dividendsAmount = this.portfolio.dividends.getCumulativePortfolioDividendsAmountForYear(
+    const dividendsAmount = this.portfolio.dividends.getCumulativeDividendsForYear(
       year,
       inBaseCurrency
     );
@@ -144,7 +144,7 @@ export class PortfolioReturns implements IPortfolioReturns {
 
   getReturnWithDividendsForYear(year: string, inBaseCurrency = false): number {
     const totalReturn = this.getReturnForYear(year, inBaseCurrency);
-    const dividendsAmount = this.portfolio.dividends.getCumulativePortfolioDividendsAmountForYear(
+    const dividendsAmount = this.portfolio.dividends.getCumulativeDividendsForYear(
       year,
       inBaseCurrency
     );

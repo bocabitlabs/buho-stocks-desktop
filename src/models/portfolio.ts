@@ -3,7 +3,7 @@ import { IPortfolio } from "types/portfolio";
 import { IPortfolioDividends } from "types/portfolio-parts/dividends-part/dividends-part";
 import { IPortfolioInvestments } from "types/portfolio-parts/investments-part/investment-part";
 import { IPortfolioReturns } from "types/portfolio-parts/returns-part/returns-part";
-import { PortfolioDividends } from "./portfolio-parts/portfolio-dividends";
+import { PortfolioDividends } from "./portfolio-parts/dividends-part/portfolio-dividends";
 import { PortfolioInvestment } from "./portfolio-parts/investment-part/portfolio-investment";
 import { PortfolioReturns } from "./portfolio-parts/portfolio-returns";
 import { IPortfolioValue } from "types/portfolio-parts/value-part/portfolio-value-part";
@@ -36,7 +36,7 @@ export class Portfolio implements IPortfolio {
     this.color = parameters.color;
     this.currencyId = parameters.currencyId;
     this.companies = parameters.companies;
-    this.dividends = new PortfolioDividends(this);
+    this.dividends = new PortfolioDividends(this.companies);
     this.returns = new PortfolioReturns(this);
     this.investments = new PortfolioInvestment(this.companies);
     this.value = new PortfolioValue(this.companies)

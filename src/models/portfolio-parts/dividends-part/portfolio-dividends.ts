@@ -1,14 +1,13 @@
 import { ICompany } from "types/company";
-import { IPortfolio } from "types/portfolio";
 import { IPortfolioDividends } from "types/portfolio-parts/dividends-part/dividends-part";
 
 export class PortfolioDividends implements IPortfolioDividends {
-  portfolio: IPortfolio;
-  constructor(portfolio: IPortfolio) {
-    this.portfolio = portfolio;
+  companies: ICompany[];
+  constructor(companies: ICompany[]) {
+    this.companies = companies;
   }
   getDividends(inBaseCurrency = false): number {
-    const amount = this.portfolio.companies.reduce(function (
+    const amount = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
@@ -22,7 +21,7 @@ export class PortfolioDividends implements IPortfolioDividends {
   }
 
   getDividendsForYear(year: string, inBaseCurrency = false): number {
-    const amount = this.portfolio.companies.reduce(function (
+    const amount = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
@@ -36,24 +35,7 @@ export class PortfolioDividends implements IPortfolioDividends {
   }
 
   getCumulativeDividendsForYear(year: string, inBaseCurrency = false): number {
-    const amount = this.portfolio.companies.reduce(function (
-      accumulator: number,
-      obj: ICompany
-    ) {
-      return (
-        accumulator +
-        obj.dividends.getCumulativeDividendsAmountForYear(year, inBaseCurrency)
-      );
-    },
-    0);
-    return amount;
-  }
-
-  getCumulativePortfolioDividendsAmountForYear(
-    year: string,
-    inBaseCurrency = false
-  ): number {
-    const amount = this.portfolio.companies.reduce(function (
+    const amount = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
@@ -67,7 +49,7 @@ export class PortfolioDividends implements IPortfolioDividends {
   }
 
   getMonthlyDividendsForYear(year: string, inBaseCurrency = false): number {
-    const amount = this.portfolio.companies.reduce(function (
+    const amount = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {

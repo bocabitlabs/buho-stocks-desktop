@@ -39,7 +39,6 @@ export default class PortfolioDAO {
 
   static exportAll = () => {
     //Call the DB
-    console.debug("Export all portfolios");
     const sql = `
     SELECT portfolios.name as name
     , portfolios.color as color
