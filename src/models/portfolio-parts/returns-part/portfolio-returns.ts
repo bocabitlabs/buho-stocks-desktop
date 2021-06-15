@@ -1,14 +1,26 @@
 import { ICompany } from "types/company";
-import { IPortfolio } from "types/portfolio";
+import { IPortfolioDividends } from "types/portfolio-parts/dividends-part/dividends-part";
+import { IPortfolioInvestments } from "types/portfolio-parts/investments-part/investment-part";
 import { IPortfolioReturns } from "types/portfolio-parts/returns-part/returns-part";
+import { IPortfolioValue } from "types/portfolio-parts/value-part/portfolio-value-part";
+import { PortfolioDividends } from "../dividends-part/portfolio-dividends";
+import { PortfolioInvestment } from "../investment-part/portfolio-investment";
+import { PortfolioValue } from "../value-part/portfolio-value-part";
 
 export class PortfolioReturns implements IPortfolioReturns {
-  portfolio: IPortfolio;
-  constructor(portfolio: IPortfolio) {
-    this.portfolio = portfolio;
+  companies: ICompany[];
+  dividends: IPortfolioDividends;
+  investments: IPortfolioInvestments;
+  value: IPortfolioValue;
+
+  constructor(companies: ICompany[]) {
+    this.companies = companies;
+    this.dividends = new PortfolioDividends(this.companies);
+    this.investments = new PortfolioInvestment(this.companies);
+    this.value = new PortfolioValue(this.companies)
   }
   getReturnFromSalesForYear(year: string, inBaseCurrency: boolean) {
-    const totalInvested = this.portfolio.companies.reduce(function (
+    const totalInvested = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
@@ -28,7 +40,7 @@ export class PortfolioReturns implements IPortfolioReturns {
   }
 
   private getReturnFromSales = (inBaseCurrency = false) => {
-    const totalInvested = this.portfolio.companies.reduce(function (
+    const totalInvested = this.companies.reduce(function (
       accumulator: number,
       obj: ICompany
     ) {
@@ -42,10 +54,10 @@ export class PortfolioReturns implements IPortfolioReturns {
   };
 
   getReturn(inBaseCurrency = false): number {
-    const totalInvested = this.portfolio.investments.getTotalInvested(
+    const totalInvested = this.investments.getTotalInvested(
       inBaseCurrency
     );
-    const portfolioValue = this.portfolio.value.getPortfolioValue(inBaseCurrency);
+    const portfolioValue = this.value.getPortfolioValue(inBaseCurrency);
     let returnFromSales = this.getReturnFromSales(inBaseCurrency);
     let totalReturn = 0;
 
@@ -57,11 +69,11 @@ export class PortfolioReturns implements IPortfolioReturns {
   getReturnForYear(year: string, inBaseCurrency = false): number {
     let totalReturn = 0;
 
-    const totalInvested = this.portfolio.investments.getTotalInvestedUntilYear(
+    const totalInvested = this.investments.getTotalInvestedUntilYear(
       year,
       inBaseCurrency
     );
-    const portfolioValue = this.portfolio.value.getPortfolioValueForYear(
+    const portfolioValue = this.value.getPortfolioValueForYear(
       year,
       inBaseCurrency
     );
@@ -76,12 +88,12 @@ export class PortfolioReturns implements IPortfolioReturns {
 
   getReturnPercentageForYear(year: string, inBaseCurrency = false): number {
     console.debug(`getReturnPercentageForYear`);
-    const J2 = this.portfolio.value.getPortfolioValueForYear(
+    const J2 = this.value.getPortfolioValueForYear(
       (parseInt(year) - 1).toString(),
       inBaseCurrency
     );
-    const J3 = this.portfolio.value.getPortfolioValueForYear(year, inBaseCurrency);
-    const B3 = this.portfolio.investments.getTotalInvestedOnYear(
+    const J3 = this.value.getPortfolioValueForYear(year, inBaseCurrency);
+    const B3 = this.investments.getTotalInvestedOnYear(
       year,
       inBaseCurrency
     );
@@ -98,8 +110,8 @@ export class PortfolioReturns implements IPortfolioReturns {
     year: string,
     inBaseCurrency = false
   ): number {
-    const J3 = this.portfolio.value.getPortfolioValueForYear(year, inBaseCurrency);
-    const E3 = this.portfolio.investments.getTotalInvestedUntilYear(
+    const J3 = this.value.getPortfolioValueForYear(year, inBaseCurrency);
+    const E3 = this.investments.getTotalInvestedUntilYear(
       year,
       inBaseCurrency
     );
@@ -116,12 +128,12 @@ export class PortfolioReturns implements IPortfolioReturns {
     year: string,
     inBaseCurrency = false
   ): number {
-    const J3 = this.portfolio.value.getPortfolioValueForYear(year, inBaseCurrency);
-    const E3 = this.portfolio.investments.getTotalInvestedUntilYear(
+    const J3 = this.value.getPortfolioValueForYear(year, inBaseCurrency);
+    const E3 = this.investments.getTotalInvestedUntilYear(
       year,
       inBaseCurrency
     );
-    const dividendsAmount = this.portfolio.dividends.getCumulativeDividendsForYear(
+    const dividendsAmount = this.dividends.getCumulativeDividendsForYear(
       year,
       inBaseCurrency
     );
@@ -136,7 +148,7 @@ export class PortfolioReturns implements IPortfolioReturns {
 
   getReturnWithDividends(inBaseCurrency = false): number {
     const totalReturn = this.getReturn(inBaseCurrency);
-    const dividendsAmount = this.portfolio.dividends.getDividends(
+    const dividendsAmount = this.dividends.getDividends(
       inBaseCurrency
     );
     return totalReturn + dividendsAmount;
@@ -144,7 +156,7 @@ export class PortfolioReturns implements IPortfolioReturns {
 
   getReturnWithDividendsForYear(year: string, inBaseCurrency = false): number {
     const totalReturn = this.getReturnForYear(year, inBaseCurrency);
-    const dividendsAmount = this.portfolio.dividends.getCumulativeDividendsForYear(
+    const dividendsAmount = this.dividends.getCumulativeDividendsForYear(
       year,
       inBaseCurrency
     );
@@ -158,7 +170,7 @@ export class PortfolioReturns implements IPortfolioReturns {
 
   getReturnPercentage(inBaseCurrency = false): number {
     const totalReturn = this.getReturn(inBaseCurrency);
-    const totalInvested = this.portfolio.investments.getTotalInvested(
+    const totalInvested = this.investments.getTotalInvested(
       inBaseCurrency
     );
 
@@ -173,7 +185,7 @@ export class PortfolioReturns implements IPortfolioReturns {
 
   getReturnWithDividendsPercentage(inBaseCurrency = false): number {
     const totalReturn = this.getReturnWithDividends(inBaseCurrency);
-    const totalInvested = this.portfolio.investments.getTotalInvested(
+    const totalInvested = this.investments.getTotalInvested(
       inBaseCurrency
     );
 

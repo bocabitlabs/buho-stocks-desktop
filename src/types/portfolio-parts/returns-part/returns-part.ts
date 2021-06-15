@@ -6,6 +6,7 @@ export interface IPortfolioReturns {
   ): number;
   getReturnPercentageForYear(year: string, inBaseCurrency?: boolean): number;
   getReturnWithDividends(inBaseCurrency?: boolean): number;
+  getReturnPercentage(inPortfolioCurrency?: boolean): number;
   getReturnWithDividendsPercentage(inBaseCurrency?: boolean): number;
   getReturnWithDividendsForYear(year: string, inBaseCurrency?: boolean): number;
   getReturnPercentageWithDividendsForYearCumulative(
