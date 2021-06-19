@@ -2,7 +2,7 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import { useSectorsContext } from "hooks/sectors";
+import { useSectorsContext } from "hooks/sectors/use-sectors-context";
 import { useParams } from "react-router-dom";
 import { SectorsContext } from "contexts/sectors";
 import SectorEditHeader from "./components/SectorEditHeader/SectorEditHeader";

@@ -35,7 +35,7 @@ jest.mock("database/daos/transaction-log-dao/transaction-log-dao", () => ({
   update: () => ({ changes: 1 })
 }));
 
-describe("SectorService tests", () => {
+describe("SectorsService tests", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

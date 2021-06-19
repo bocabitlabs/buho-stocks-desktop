@@ -1,7 +1,7 @@
-import SectorDAO from "database/daos/sector-dao/sector-dao";
+import SectorDAO from "database/daos/sectors/sectors-dao";
 import { ISector, SectorFormFields } from "types/sector";
 
-export default class SectorService {
+export default class SectorsService {
   static create = (company: SectorFormFields) => {
     return SectorDAO.create(company);
   };

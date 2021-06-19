@@ -7,7 +7,7 @@ import { CompaniesContext } from "../../contexts/companies";
 import { useCompaniesContext } from "../../hooks/companies";
 import CompanyAddHeader from "./components/CompanyAddHeader/CompanyAddHeader";
 import { useCurrenciesContext } from "../../hooks/currencies";
-import { useSectorsContext } from "../../hooks/sectors";
+import { useSectorsContext } from "../../hooks/sectors/use-sectors-context";
 import { useMarketsContext } from "../../hooks/markets";
 import { SectorsContext } from "../../contexts/sectors";
 import { CurrenciesContext } from "../../contexts/currencies";

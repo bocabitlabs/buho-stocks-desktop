@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { SectorsContextType } from "contexts/sectors";
-import SectorService from "services/sector-service/sector-service";
+import SectorsService from "services/sectors/sectors-service";
 import { ISector, SectorFormFields } from "types/sector";
 
 export function useSectorsContext(): SectorsContextType {
@@ -9,13 +9,13 @@ export function useSectorsContext(): SectorsContextType {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const results = SectorService.getAll();
+    const results = SectorsService.getAll();
     setSectors(results);
   }, []);
 
   const fetchSectors = useCallback(() => {
     setIsLoading(true);
-    const results = SectorService.getAll();
+    const results = SectorsService.getAll();
     setSectors(results);
     return results;
   }, []);
@@ -23,7 +23,7 @@ export function useSectorsContext(): SectorsContextType {
   const create = useCallback(
     (sector: SectorFormFields) => {
       setIsLoading(true);
-      const results = SectorService.create(sector);
+      const results = SectorsService.create(sector);
       setSectors(results);
       return results;
     },
@@ -32,7 +32,7 @@ export function useSectorsContext(): SectorsContextType {
 
   const getById = useCallback((id: string) => {
     setIsLoading(true);
-    const result = SectorService.getById(id);
+    const result = SectorsService.getById(id);
     setSector(result);
     setIsLoading(false);
     return result;
@@ -40,7 +40,7 @@ export function useSectorsContext(): SectorsContextType {
 
   const update = useCallback((id: string, sector: SectorFormFields) => {
     setIsLoading(true);
-    const result = SectorService.update(id, sector);
+    const result = SectorsService.update(id, sector);
     setIsLoading(false);
     return result;
   }, []);

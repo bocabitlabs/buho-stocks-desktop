@@ -27,6 +27,7 @@ export default function StockPriceListModal({
       visible={visible}
       onOk={handleOk}
       onCancel={handleCancel}
+      width={1000}
     >
       <StockPriceList currencySymbol={currencySymbol} />
     </Modal>

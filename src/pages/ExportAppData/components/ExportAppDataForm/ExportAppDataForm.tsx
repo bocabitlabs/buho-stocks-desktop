@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Typography } from "antd";
 import CompanyService from "services/company-service/company-service";
 import { saveFile } from "message-control/dialog";
 import CurrencyService from "services/currency-service/currency-service";
-import SectorService from "services/sector-service/sector-service";
+import SectorsService from "services/sectors/sectors-service";
 import MarketService from "services/market-service/market-service";
 import PortfolioService from "services/portfolio-service/portfolio-service";
 import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
@@ -18,7 +18,7 @@ export default function ExportAppDataForm(): ReactElement {
 
     let csvContent = "";
     if (checkbox.includes("sectors")) {
-      const sectorsResults = SectorService.exportAll();
+      const sectorsResults = SectorsService.exportAll();
       sectorsResults.forEach(function (rowArray) {
         const keys = Object.values(rowArray);
         let row = "sector," + keys.join(",");

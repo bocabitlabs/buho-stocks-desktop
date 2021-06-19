@@ -1,5 +1,5 @@
 import { ISector, SectorFormFields } from "types/sector";
-import SectorService from "./sector-service";
+import SectorsService from "./sectors-service";
 
 const returnAllExample: ISector[] = [
   {
@@ -25,7 +25,7 @@ const returnAllExample: ISector[] = [
   }
 ];
 
-jest.mock("database/daos/sector-dao/sector-dao", () => ({
+jest.mock("database/daos/sectors/sectors-dao", () => ({
   exportAll: () => returnAllExample,
   getAll: () => returnAllExample,
   getById: () => returnAllExample[1],
@@ -35,33 +35,33 @@ jest.mock("database/daos/sector-dao/sector-dao", () => ({
   update: () => ({ changes: 1 })
 }));
 
-describe("SectorService tests", () => {
+describe("SectorsService tests", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
   test("getAll return all results", () => {
-    const result = SectorService.getAll();
+    const result = SectorsService.getAll();
     expect(result).toStrictEqual(returnAllExample);
   });
 
   test("get by id", () => {
-    const result = SectorService.getById("1");
+    const result = SectorsService.getById("1");
     expect(result).toStrictEqual(returnAllExample[1]);
   });
 
   test("get by name", () => {
-    const result = SectorService.getByName("2");
+    const result = SectorsService.getByName("2");
     expect(result).toStrictEqual(returnAllExample[2]);
   });
 
     test("delete by id", () => {
-    const result = SectorService.deleteById("1");
+    const result = SectorsService.deleteById("1");
     expect(result).toStrictEqual({changes: 1});
   });
 
   test("export all", () => {
-    const result = SectorService.exportAll();
+    const result = SectorsService.exportAll();
     expect(result).toStrictEqual(returnAllExample);
   });
 
@@ -72,7 +72,7 @@ describe("SectorService tests", () => {
       isSuperSector: false
     };
 
-    const result = SectorService.create(newElement);
+    const result = SectorsService.create(newElement);
     expect(result).toStrictEqual({changes: 1});
   });
 
@@ -83,7 +83,7 @@ describe("SectorService tests", () => {
       isSuperSector: false
     };
 
-    const result = SectorService.update("1", newElement);
+    const result = SectorsService.update("1", newElement);
     expect(result).toStrictEqual({changes: 1});
   });
 });

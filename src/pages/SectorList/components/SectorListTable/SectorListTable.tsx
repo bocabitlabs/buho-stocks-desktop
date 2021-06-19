@@ -1,7 +1,7 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { SectorsContext } from "contexts/sectors";
-import SectorService from "services/sector-service/sector-service";
+import SectorsService from "services/sectors/sectors-service";
 import { ISector } from "types/sector";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ export default function SectorListTable() {
   const key = "updatable";
 
   function confirm(recordId: string) {
-    const result = SectorService.deleteById(recordId);
+    const result = SectorsService.deleteById(recordId);
     if (result.changes) {
       fetchSectors();
       message.success({

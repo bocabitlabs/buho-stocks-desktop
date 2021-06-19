@@ -4,7 +4,7 @@ import DividendsTransactionsService from "services/dividends-transaction-service
 import MarketService from "services/market-service/market-service";
 import PortfolioService from "services/portfolio-service/portfolio-service";
 import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
-import SectorService from "services/sector-service/sector-service";
+import SectorsService from "services/sectors/sectors-service";
 import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
 import StockPriceService from "services/stock-price-service/stock-price-service";
 import { CompanyFormFields } from "types/company";
@@ -28,9 +28,9 @@ export function importSectors(sectors: any[]) {
       isSuperSector: sectorData.data[3],
       superSectorId: sectorData.data[4]
     };
-    const exists = SectorService.getByName(sector.name);
+    const exists = SectorsService.getByName(sector.name);
     if (exists === undefined) {
-      SectorService.create(sector);
+      SectorsService.create(sector);
       importedCount++;
     } else {
       notes.push(`Sectors: Sector ${sector.name} already exists. Skipping.`);
@@ -136,7 +136,7 @@ export function importCompanies(companies: any[]) {
   companies.forEach((portfolioData: any) => {
     const exists = CompanyService.getByTicker(portfolioData.data[3]);
     if (exists === undefined) {
-      const sector = SectorService.getByName(portfolioData.data[8]);
+      const sector = SectorsService.getByName(portfolioData.data[8]);
       const currency = CurrencyService.getByName(portfolioData.data[9]);
       const portfolio = PortfolioService.getByName(portfolioData.data[11]);
       const market = MarketService.getByName(portfolioData.data[12]);

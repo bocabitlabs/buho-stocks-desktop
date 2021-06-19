@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import SectorService from "services/sector-service/sector-service";
+import SectorsService from "services/sectors/sectors-service";
 import { ExchangeRatesContextType } from "contexts/exchange-rates";
 import { IExchangeRate, IExchangeRateForm } from "types/exchange-rate";
 import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
@@ -17,7 +17,7 @@ export function useSectorsContext(): ExchangeRatesContextType {
   const add = useCallback(
     (sector: IExchangeRateForm) => {
       setIsLoading(true);
-      const results = SectorService.getAll();
+      const results = SectorsService.getAll();
       setExchangeRates(results);
     },
     []

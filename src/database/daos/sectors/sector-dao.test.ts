@@ -1,6 +1,6 @@
 import sendIpcSql from "message-control/renderer";
 import { ISector } from "types/sector";
-import SectorDAO from "./sector-dao";
+import SectorDAO from "./sectors-dao";
 
 jest.mock("message-control/renderer");
 

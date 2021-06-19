@@ -4,7 +4,7 @@ import { Layout } from "antd";
 
 import SectorAddHeader from "./components/SectorAddHeader/SectorAddHeader";
 import SectorAddEditForm from "components/SectorAddEditForm/SectorAddEditForm";
-import { useSectorsContext } from "hooks/sectors";
+import { useSectorsContext } from "hooks/sectors/use-sectors-context";
 import { SectorsContext } from "contexts/sectors";
 
 const AddSector = () => {
