@@ -1,18 +1,17 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { SectorsContext } from "contexts/sectors";
-import SectorsService from "services/sectors/sectors-service";
 import { ISector } from "types/sector";
 import { Link } from "react-router-dom";
 
 export default function SectorListTable() {
-  const { sectors, fetchSectors } = useContext(SectorsContext);
+  const { sectors, getAll, deleteById } = useContext(SectorsContext);
   const key = "updatable";
 
   function confirm(recordId: string) {
-    const result = SectorsService.deleteById(recordId);
+    const result = deleteById(recordId);
     if (result.changes) {
-      fetchSectors();
+      getAll();
       message.success({
         content: "Sector has been deleted",
         key,

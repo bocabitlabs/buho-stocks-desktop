@@ -3,7 +3,7 @@ import { BaseType } from "antd/lib/typography/Base";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import CompanyService from "services/company-service/company-service";
+import CompanyService from "services/companies/companies-service";
 import { ICompany } from "types/company";
 import { StringUtils } from "utils/string-utils";
 

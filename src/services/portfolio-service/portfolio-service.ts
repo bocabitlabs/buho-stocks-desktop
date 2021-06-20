@@ -2,7 +2,7 @@ import PortfolioDAO from "database/daos/portfolio-dao/portfolio-dao";
 import { Portfolio } from "models/portfolio";
 import { ICompany } from "types/company";
 import { IPortfolio, PortfolioFormFields } from "types/portfolio";
-import CompanyService from "../company-service/company-service";
+import CompanyService from "services/companies/companies-service";
 
 export default class PortfolioService {
   /**

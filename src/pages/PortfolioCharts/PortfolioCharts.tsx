@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, Space } from "antd";
 
 import { useHistory, useParams } from "react-router-dom";
-import { useCompaniesContext } from "hooks/companies";
+import { useCompaniesContext } from "hooks/companies/use-companies-context";
 import { CompaniesContext } from "contexts/companies";
 import PortfolioChartsHeader from "./components/PortfolioChartsHeader/PortfolioChartsHeader";
 import ChartsList from "./components/ChartsList/ChartsList";

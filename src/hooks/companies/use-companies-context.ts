@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { IAddProps } from "types/common";
 import { CompaniesContextType } from "contexts/companies";
-import CompanyService from "services/company-service/company-service";
+import CompanyService from "services/companies/companies-service";
 import { CompanyFormFields, ICompany } from "types/company";
 
 export function useCompaniesContext(portfolioId: string): CompaniesContextType {
@@ -15,6 +15,7 @@ export function useCompaniesContext(portfolioId: string): CompaniesContextType {
     const result = CompanyService.getAll(portfolioId);
     setCompanies(result);
     setIsLoading(false);
+    return result;
   }, []);
 
   useEffect(() => {

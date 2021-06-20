@@ -62,10 +62,10 @@ describe("useSectorsContext tests", () => {
     expect(result.current.sector).toBe(null);
   });
 
-  it("verifies that fetchSectors returns the sector", () => {
+  it("verifies that getAll returns the sector", () => {
     const { result } = renderHook(() => useSectorsContext());
     act(() => {
-      expect(result.current.fetchSectors()).toBe(returnAllExample);
+      expect(result.current.getAll()).toBe(returnAllExample);
     });
   });
 
@@ -95,6 +95,13 @@ describe("useSectorsContext tests", () => {
     const { result } = renderHook(() => useSectorsContext());
     act(() => {
       expect(result.current.update("1", returnAllExample[1])).toEqual({"changes": 1});
+    });
+  });
+
+  it("deletes a sector and returns changes", () => {
+    const { result } = renderHook(() => useSectorsContext());
+    act(() => {
+      expect(result.current.deleteById("1")).toEqual({"changes": 1});
     });
   });
 });

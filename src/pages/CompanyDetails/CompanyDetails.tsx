@@ -2,7 +2,7 @@ import { Layout } from "antd";
 import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
-import { useCompaniesContext } from "hooks/companies";
+import { useCompaniesContext } from "hooks/companies/use-companies-context";
 import CompanyDetailsContent from "./components/CompanyDetailsContent/CompanyDetailsContent";
 import CompanyDetailsHeader from "./components/CompanyDetailsHeader/CompanyDetailsHeader";
 import { useSharesTransactionsContext } from "hooks/shares-transactions";

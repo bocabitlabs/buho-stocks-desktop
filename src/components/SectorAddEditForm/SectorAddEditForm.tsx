@@ -24,13 +24,13 @@ function SectorAddEditForm({
   const {
     sector,
     create: addSector,
-    fetchSectors,
+    getAll,
     getById: getSectorById,
     update: updateSector
   } = useContext(SectorsContext);
 
   useEffect(() => {
-    const sectors = fetchSectors();
+    const sectors = getAll();
     setSectors(sectors);
     if (sectorId) {
       const newSector = getSectorById(sectorId);
@@ -38,7 +38,7 @@ function SectorAddEditForm({
         setColor(newSector.color);
       }
     }
-  }, [sectorId, getSectorById, fetchSectors]);
+  }, [sectorId, getSectorById, getAll]);
 
   const handleSubmit = (values: any) => {
     message.loading({ content: "Adding sector...", key });
@@ -57,7 +57,7 @@ function SectorAddEditForm({
       changes = addSector(newSector);
     }
     if (changes.changes) {
-      fetchSectors();
+      getAll();
       if (!sectorId) {
         message.success({ content: "Sector has been added", key });
       } else {

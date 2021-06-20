@@ -2,7 +2,7 @@ import { Col, Form, Row, Select, Statistic, Switch, Typography } from "antd";
 import { BaseType } from "antd/lib/typography/Base";
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
-import CompanyService from "services/company-service/company-service";
+import CompanyService from "services/companies/companies-service";
 import { ICompany } from "types/company";
 import { IStockPrice } from "types/stock-price";
 import { StringUtils } from "utils/string-utils";

@@ -1,4 +1,4 @@
-import CompanyService from "services/company-service/company-service";
+import CompanyService from "services/companies/companies-service";
 import CurrencyService from "services/currency-service/currency-service";
 import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
 import MarketService from "services/market-service/market-service";

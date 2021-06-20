@@ -4,7 +4,7 @@ import { Layout } from "antd";
 
 import { useParams } from "react-router-dom";
 import { useSharesTransactionsContext } from "hooks/shares-transactions";
-import { useCompaniesContext } from "hooks/companies";
+import { useCompaniesContext } from "hooks/companies/use-companies-context";
 import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import SharesTransactionEditHeader from "./components/SharesTransactionEditHeader/SharesTransactionEditHeader";

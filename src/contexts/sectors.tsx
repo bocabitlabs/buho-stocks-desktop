@@ -6,8 +6,9 @@ export type SectorsContextType = {
   sector: ISector|null;
   sectors: ISector[];
   isLoading: boolean;
-  fetchSectors: () => ISector[];
+  getAll: () => ISector[];
   create: (sector: SectorFormFields) => IAddProps;
+  deleteById: (transactionId: string) => IAddProps;
   getById: (currencyId: string) => ISector | null;
   update: (currencyId: string, sector: SectorFormFields) => IAddProps;
 };
@@ -16,8 +17,9 @@ export const sectorsDefaultValue: SectorsContextType = {
   sector: null,
   sectors: [],
   isLoading: false,
-  fetchSectors: () => [],
+  getAll: () => [],
   create: () => ({ changes: false }),
+  deleteById: () => ({ changes: false }),
   getById: (): ISector | null => null,
   update: () => ({ changes: false })
 };

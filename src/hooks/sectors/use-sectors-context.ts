@@ -13,7 +13,7 @@ export function useSectorsContext(): SectorsContextType {
     setSectors(results);
   }, []);
 
-  const fetchSectors = useCallback(() => {
+  const getAll = useCallback(() => {
     setIsLoading(true);
     const results = SectorsService.getAll();
     setSectors(results);
@@ -29,6 +29,13 @@ export function useSectorsContext(): SectorsContextType {
     },
     []
   );
+
+  const deleteById = useCallback((sectorId: string) => {
+    setIsLoading(true);
+    const results = SectorsService.deleteById(sectorId);
+    setIsLoading(false);
+    return results;
+  }, []);
 
   const getById = useCallback((id: string) => {
     setIsLoading(true);
@@ -49,8 +56,9 @@ export function useSectorsContext(): SectorsContextType {
     sector,
     sectors,
     isLoading,
-    fetchSectors,
+    getAll,
     create,
+    deleteById,
     getById,
     update
   };

@@ -1,4 +1,4 @@
-import Service from "./company-service";
+import Service from "./companies-service";
 import { CompanyFormFields } from "types/company";
 
 const mockExpectedReturnForGetId = {

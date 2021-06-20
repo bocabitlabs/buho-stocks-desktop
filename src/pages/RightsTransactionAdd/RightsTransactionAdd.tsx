@@ -3,7 +3,7 @@ import React from "react";
 import { Layout } from "antd";
 
 import { useParams } from "react-router-dom";
-import { useCompaniesContext } from "../../hooks/companies";
+import { useCompaniesContext } from "../../hooks/companies/use-companies-context";
 import { CompaniesContext } from "../../contexts/companies";
 import RightsTransactionAddHeader from "./components/RightsTransactionAddHeader/RightsTransactionAddHeader";
 import { useRightsTransactionsContext } from "hooks/rights-transactions";

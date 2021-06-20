@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { Button, Checkbox, Form, Typography } from "antd";
-import CompanyService from "services/company-service/company-service";
+import CompanyService from "services/companies/companies-service";
 import { saveFile } from "message-control/dialog";
 import CurrencyService from "services/currency-service/currency-service";
 import SectorsService from "services/sectors/sectors-service";

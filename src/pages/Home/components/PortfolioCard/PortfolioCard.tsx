@@ -1,5 +1,5 @@
 import { CompaniesContext } from "contexts/companies";
-import { useCompaniesContext } from "hooks/companies";
+import { useCompaniesContext } from "hooks/companies/use-companies-context";
 import React, { ReactElement } from "react";
 import { IPortfolio } from "types/portfolio";
 import PortfolioCardContent from "../PortfolioCardContent/PortfolioCardContent";
