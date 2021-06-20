@@ -2,7 +2,7 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import { useCurrenciesContext } from "hooks/currencies";
+import { useCurrenciesContext } from "hooks/currencies/use-currencies-context";
 import { CurrenciesContext } from "contexts/currencies";
 import CurrencyAddHeader from "./components/CurrencyAddHeader/CurrencyAddHeader";
 import CurrencyAddEditForm from "components/CurrencyAddEditForm/CurrencyAddEditForm";

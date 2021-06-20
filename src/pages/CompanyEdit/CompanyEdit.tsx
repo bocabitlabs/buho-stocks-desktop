@@ -5,7 +5,7 @@ import { Layout } from "antd";
 import { useParams } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 import { useCompaniesContext } from "hooks/companies/use-companies-context";
-import { useCurrenciesContext } from "hooks/currencies";
+import { useCurrenciesContext } from "hooks/currencies/use-currencies-context";
 import { useSectorsContext } from "hooks/sectors/use-sectors-context";
 import { useMarketsContext } from "hooks/markets";
 import { SectorsContext } from "contexts/sectors";

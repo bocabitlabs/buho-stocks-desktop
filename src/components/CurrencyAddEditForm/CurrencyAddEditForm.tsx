@@ -24,7 +24,7 @@ function CurrencyAddEditForm({
   const {
     currency,
     create: addCurrency,
-    fetchCurrencies,
+    getAll: fetchCurrencies,
     getById: getCurrencyById,
     update: updateCurrency
   } = useContext(CurrenciesContext);

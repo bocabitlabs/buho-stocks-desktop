@@ -2,8 +2,8 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import { useCurrenciesContext } from "../../hooks/currencies";
-import { CurrenciesContext } from "../../contexts/currencies";
+import { useCurrenciesContext } from "hooks/currencies/use-currencies-context";
+import { CurrenciesContext } from "contexts/currencies";
 import CurrencyListHeader from "./components/CurrencyListHeader/CurrencyListHeader";
 import CurrencyListTable from "./components/CurrencyListTable/CurrencyListTable";
 

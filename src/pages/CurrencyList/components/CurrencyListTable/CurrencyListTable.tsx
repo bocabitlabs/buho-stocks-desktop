@@ -1,19 +1,18 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { CurrenciesContext } from "contexts/currencies";
-import CurrencyService from "services/currency-service/currency-service";
 import { ICurrency } from "types/currency";
 import { Link } from "react-router-dom";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 
 export default function CurrencyListTable() {
-  const { currencies, fetchCurrencies } = useContext(CurrenciesContext);
+  const { currencies, getAll: getAllCurrencies, deleteById: deleteCurrencyById } = useContext(CurrenciesContext);
   const key = "updatable";
 
   function confirm(recordId: string) {
-    const result = CurrencyService.deleteById(recordId);
+    const result = deleteCurrencyById(recordId);
     if (result.changes) {
-      fetchCurrencies();
+      getAllCurrencies();
       message.success({
         content: "Currency has been deleted",
         key,

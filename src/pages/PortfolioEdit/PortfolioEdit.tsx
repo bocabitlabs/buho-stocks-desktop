@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { CurrenciesContext } from "contexts/currencies";
 import { PortfoliosContext } from "contexts/portfolios";
 
-import { useCurrenciesContext } from "hooks/currencies";
+import { useCurrenciesContext } from "hooks/currencies/use-currencies-context";
 import { usePortfoliosContext } from "hooks/portfolios";
 
 import PortfolioEditHeader from "./components/PortfolioEditHeader/PortfolioEditHeader";

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { CurrenciesContextType } from "contexts/currencies";
-import CurrencyService from "services/currency-service/currency-service";
+import CurrencyService from "services/currencies/currencies-service";
 import { ICurrency, CurrencyFormFields } from "types/currency";
 
 export function useCurrenciesContext(): CurrenciesContextType {
@@ -15,11 +15,12 @@ export function useCurrenciesContext(): CurrenciesContextType {
     setIsLoading(false);
   }, []);
 
-  const fetchCurrencies = useCallback(() => {
+  const getAll = useCallback(() => {
     setIsLoading(true);
     const currencies = CurrencyService.getAll();
     setCurrencies(currencies);
     setIsLoading(false);
+    return currencies;
   }, []);
 
   const create = useCallback((currency: CurrencyFormFields) => {
@@ -27,6 +28,13 @@ export function useCurrenciesContext(): CurrenciesContextType {
     const result = CurrencyService.create(currency);
     setIsLoading(false);
     return result;
+  }, []);
+
+  const deleteById = useCallback((sectorId: string) => {
+    setIsLoading(true);
+    const results = CurrencyService.deleteById(sectorId);
+    setIsLoading(false);
+    return results;
   }, []);
 
   const getById = useCallback((id: string) => {
@@ -48,8 +56,9 @@ export function useCurrenciesContext(): CurrenciesContextType {
     currency,
     currencies,
     isLoading,
-    fetchCurrencies,
+    getAll,
     create,
+    deleteById,
     getById,
     update
   };

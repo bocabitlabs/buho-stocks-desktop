@@ -3,7 +3,7 @@ import React from "react";
 import { Layout } from "antd";
 
 import { CurrenciesContext } from "contexts/currencies";
-import { useCurrenciesContext } from "hooks/currencies";
+import { useCurrenciesContext } from "hooks/currencies/use-currencies-context";
 import PortfolioAddHeader from "./components/PortfolioAddHeader/PortfolioAddHeader";
 import PortfolioAddEditForm from "components/PortfolioAddEditForm/PortfolioAddEditForm";
 

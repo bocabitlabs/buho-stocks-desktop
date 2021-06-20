@@ -2,7 +2,7 @@ import { Button, Col, Input, message, Row, Select, Typography } from "antd";
 import { Form } from "antd";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
-import CurrencyService from "services/currency-service/currency-service";
+import CurrencyService from "services/currencies/currencies-service";
 import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ICurrency } from "types/currency";

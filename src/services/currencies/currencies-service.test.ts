@@ -1,4 +1,4 @@
-import CurrencyService from "./currency-service";
+import CurrencyService from "./currencies-service";
 import { ICurrency, CurrencyFormFields } from "types/currency";
 
 const returnAllExample: ICurrency[] = [
