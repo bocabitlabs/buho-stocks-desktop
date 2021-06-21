@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { MarketsContextType } from "contexts/markets";
-import MarketService from "services/market-service/market-service";
+import MarketService from "services/markets/markets-service";
 import { IMarket, MarketFormProps } from "types/market";
 
 export function useMarketsContext(): MarketsContextType {
@@ -14,11 +14,12 @@ export function useMarketsContext(): MarketsContextType {
   }, []);
 
 
-  const fetchMarkets = useCallback(() => {
+  const getAll = useCallback(() => {
     setIsLoading(true);
     const result = MarketService.getAll();
     setMarkets(result);
     setIsLoading(false);
+    return result;
   }, []);
 
   const create = useCallback((market: MarketFormProps) => {
@@ -26,6 +27,13 @@ export function useMarketsContext(): MarketsContextType {
     const result = MarketService.create(market);
     setIsLoading(false);
     return result
+  }, []);
+
+  const deleteById = useCallback((id: string) => {
+    setIsLoading(true);
+    const results = MarketService.deleteById(id);
+    setIsLoading(false);
+    return results;
   }, []);
 
   const getById = useCallback((id: string) => {
@@ -47,8 +55,9 @@ export function useMarketsContext(): MarketsContextType {
     market,
     markets,
     isLoading,
-    fetchMarkets,
+    getAll,
     create,
+    deleteById,
     getById,
     update
   };

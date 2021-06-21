@@ -23,7 +23,7 @@ function MarketAddEditForm({
   const {
     market,
     create: addMarket,
-    fetchMarkets,
+    getAll: fetchMarkets,
     getById: getMarketById,
     update: updateMarket
   } = useContext(MarketsContext);

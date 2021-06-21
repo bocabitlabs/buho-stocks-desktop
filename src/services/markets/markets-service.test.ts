@@ -1,5 +1,5 @@
 import { IMarket, MarketFormProps } from "types/market";
-import Service from "./market-service";
+import Service from "./markets-service";
 
 const returnAllExample: IMarket[] = [
   {

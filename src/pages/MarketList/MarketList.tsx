@@ -3,7 +3,7 @@ import React from "react";
 import { Layout } from "antd";
 
 import { MarketsContext } from "contexts/markets";
-import { useMarketsContext } from "hooks/markets";
+import { useMarketsContext } from "hooks/markets/use-markets-context";
 import MarketListHeader from "./components/MarketListHeader/MarketListHeader";
 import MarketListTable from "./components/MarketListTable/MarketListTable";
 

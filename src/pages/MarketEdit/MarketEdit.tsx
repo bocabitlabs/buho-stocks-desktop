@@ -4,7 +4,7 @@ import { Layout } from "antd";
 
 import MarketAddEditForm from "components/MarketAddEditForm/MarketAddEditForm";
 import MarketEditHeader from "./components/MarketEditHeader/MarketEditHeader";
-import { useMarketsContext } from "hooks/markets";
+import { useMarketsContext } from "hooks/markets/use-markets-context";
 import { useParams } from "react-router-dom";
 import { MarketsContext } from "contexts/markets";
 

@@ -1,17 +1,16 @@
 import { Button, message, Popconfirm, Space, Table } from "antd";
 import React, { useContext } from "react";
 import { MarketsContext } from "contexts/markets";
-import MarketService from "services/market-service/market-service";
 import { IMarket } from "types/market";
 import { Link } from "react-router-dom";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 
 export default function MarketListTable() {
-  const { markets, fetchMarkets } = useContext(MarketsContext);
+  const { markets, getAll: fetchMarkets, deleteById: deleteMarketById } = useContext(MarketsContext);
   const key = "updatable";
 
   function confirm(recordId: string) {
-    const result = MarketService.deleteById(recordId);
+    const result = deleteMarketById(recordId);
     if (result.changes) {
       fetchMarkets();
       message.success({
