@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { SettingsContextType } from "contexts/settings";
-import SettingsService from "services/settings-service/settings-service";
+import SettingsService from "services/settings/settings-service";
 
 import { ISettings } from "types/settings";
 

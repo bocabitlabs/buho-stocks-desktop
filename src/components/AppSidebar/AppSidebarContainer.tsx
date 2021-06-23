@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { IsCollapsedContext } from "../../contexts/is-collapsed";
-import { useIsCollapsedContext } from "../../hooks/is-collapsed";
+import { useIsCollapsedContext } from "../../hooks/is-collapsed/use-is-collapsed-context";
 import AppSidebar from "./AppSidebar";
 
 export default function AppSidebarContainer(): ReactElement {
