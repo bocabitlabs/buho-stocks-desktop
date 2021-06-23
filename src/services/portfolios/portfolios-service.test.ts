@@ -1,6 +1,5 @@
-import Service from "./portfolio-service";
-import { CompanyFormFields } from "types/company";
-import { IPortfolio, PortfolioFormFields } from "types/portfolio";
+import Service from "./portfolios-service";
+import { PortfolioFormFields } from "types/portfolio";
 import PortfolioDAO from "database/daos/portfolio-dao/portfolio-dao";
 import CompanyDAO from "database/daos/company-dao/company-dao";
 

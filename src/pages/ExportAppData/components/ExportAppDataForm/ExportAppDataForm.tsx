@@ -5,7 +5,7 @@ import { saveFile } from "message-control/dialog";
 import CurrencyService from "services/currencies/currencies-service";
 import SectorsService from "services/sectors/sectors-service";
 import MarketService from "services/markets/markets-service";
-import PortfolioService from "services/portfolio-service/portfolio-service";
+import PortfolioService from "services/portfolios/portfolios-service";
 import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
 import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
 import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";

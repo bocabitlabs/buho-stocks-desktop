@@ -7,7 +7,7 @@ import { CurrenciesContext } from "contexts/currencies";
 import { PortfoliosContext } from "contexts/portfolios";
 
 import { useCurrenciesContext } from "hooks/currencies/use-currencies-context";
-import { usePortfoliosContext } from "hooks/portfolios";
+import { usePortfoliosContext } from "hooks/portfolios/use-portfolios-context";
 
 import PortfolioEditHeader from "./components/PortfolioEditHeader/PortfolioEditHeader";
 import PortfolioAddEditForm from "components/PortfolioAddEditForm/PortfolioAddEditForm";

@@ -2,7 +2,7 @@ import { Select } from "antd";
 import { Form } from "antd";
 import React, { ReactElement, useEffect, useState } from "react";
 
-import PortfolioService from "services/portfolio-service/portfolio-service";
+import PortfolioService from "services/portfolios/portfolios-service";
 import { IPortfolio } from "types/portfolio";
 
 import { IBDividendsImport } from "../IB/IBDividendsImport/IBDividendsImport";

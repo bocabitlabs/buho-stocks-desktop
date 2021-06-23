@@ -2,7 +2,7 @@ import CompanyService from "services/companies/companies-service";
 import CurrencyService from "services/currencies/currencies-service";
 import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
 import MarketService from "services/markets/markets-service";
-import PortfolioService from "services/portfolio-service/portfolio-service";
+import PortfolioService from "services/portfolios/portfolios-service";
 import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
 import SectorsService from "services/sectors/sectors-service";
 import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";

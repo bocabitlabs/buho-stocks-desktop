@@ -1,7 +1,7 @@
 import { PortfoliosContext } from "contexts/portfolios";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import PortfolioService from "services/portfolio-service/portfolio-service";
+import PortfolioService from "services/portfolios/portfolios-service";
 import Charts from "./Charts/Charts";
 
 export default function ChartsList(): ReactElement | null {
