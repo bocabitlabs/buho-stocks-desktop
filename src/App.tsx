@@ -5,7 +5,7 @@ import { Layout } from "antd";
 
 import TopNavbar from "./components/TopNavbar/TopNavbar";
 import AppSidebar from "./components/AppSidebar/AppSidebar";
-import { useSelectedPortfolioContext } from "./hooks/selected-portfolio";
+import { useSelectedPortfolioContext } from "./hooks/selected-portfolio/use-selected-portfolio-context";
 import { SelectedPortfolioContext } from "./contexts/selected-portfolio";
 import CompanyAdd from "./pages/CompanyAdd/CompanyAdd";
 import CurrencyAdd from "./pages/CurrencyAdd/CurrencyAdd";

@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 
-import { ISector, SectorFormFields } from "types/sector";
+import { ISector } from "types/sector";
 import { useSectorsContext } from "./use-sectors-context";
 
 const returnAllExample: ISector[] = [

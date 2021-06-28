@@ -6,11 +6,11 @@ import { SelectedPortfolioContext } from "contexts/selected-portfolio";
 import { IPortfolio } from "types/portfolio";
 
 export default function PortfolioSelector(): ReactElement {
-  const { selectedPortfolio, update } = useContext(SelectedPortfolioContext);
+  const { selectedPortfolio, update: updateSelectedPortfolio } = useContext(SelectedPortfolioContext);
   const { portfolios } = useContext(PortfoliosContext);
 
   function handleChange(value: string) {
-    update(value);
+    updateSelectedPortfolio(value);
   }
 
   return (
