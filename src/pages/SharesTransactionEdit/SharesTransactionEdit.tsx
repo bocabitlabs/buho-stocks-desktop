@@ -3,7 +3,7 @@ import React from "react";
 import { Layout } from "antd";
 
 import { useParams } from "react-router-dom";
-import { useSharesTransactionsContext } from "hooks/shares-transactions";
+import { useSharesTransactionsContext } from "hooks/shares-transactions/use-shares-transactions-context";
 import { useCompaniesContext } from "hooks/companies/use-companies-context";
 import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionsContext } from "contexts/shares-transactions";

@@ -23,7 +23,7 @@ export function useSectorsContext(): ExchangeRatesContextType {
     []
   );
 
-  const fetchAll = useCallback(() => {
+  const getAll = useCallback(() => {
     setIsLoading(true);
     const results = ExchangeRateService.getAll();
     setExchangeRates(results);
@@ -41,7 +41,7 @@ export function useSectorsContext(): ExchangeRatesContextType {
     exchangeRates,
     exchangeRate,
     isLoading,
-    fetchAll,
+    getAll,
     add,
     get
   };

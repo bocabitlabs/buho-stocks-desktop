@@ -1,11 +1,11 @@
 import CompanyService from "services/companies/companies-service";
 import CurrencyService from "services/currencies/currencies-service";
-import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
+import DividendsTransactionsService from "services/dividends-transactions/dividends-transactions-service";
 import MarketService from "services/markets/markets-service";
 import PortfolioService from "services/portfolios/portfolios-service";
-import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
+import RightsTransactionsService from "services/rights-transactions/rights-transactions-service";
 import SectorsService from "services/sectors/sectors-service";
-import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
+import SharesTransactionsService from "services/shares-transactions/shares-transactions-service";
 import StockPriceService from "services/stock-price-service/stock-price-service";
 import { CompanyFormFields } from "types/company";
 import { CurrencyFormFields } from "types/currency";

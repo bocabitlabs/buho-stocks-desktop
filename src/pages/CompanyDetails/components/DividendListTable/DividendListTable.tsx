@@ -14,7 +14,7 @@ interface IProps {
 }
 
 export default function DividendListTable({ portfolioId, companyId }: IProps) {
-  const { dividendsTransactions, deleteById, fetchAll } = useContext(
+  const { dividendsTransactions, deleteById, getAll: getAllDividendsTransactions } = useContext(
     DividendsTransactionsContext
   );
   const { company } = useContext(CompaniesContext);
@@ -55,7 +55,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
           portfolioId: +company.portfolioId
         });
       }
-      fetchAll();
+      getAllDividendsTransactions();
       history.push({
         pathname: `/portfolios/${portfolioId}/companies/${companyId}`,
         state: {

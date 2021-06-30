@@ -14,15 +14,14 @@ import moment from "moment";
 import React, { ReactElement, useState } from "react";
 import CurrencyService from "services/currencies/currencies-service";
 import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
-import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
-import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
+import RightsTransactionsService from "services/rights-transactions/rights-transactions-service";
+import SharesTransactionsService from "services/shares-transactions/shares-transactions-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ICurrency } from "types/currency";
 import { IExchangeRate } from "types/exchange-rate";
 import { IPortfolio } from "types/portfolio";
 import { RightsTransactionFormProps } from "types/rights-transaction";
 import { SharesTransactionFormProps } from "types/shares-transaction";
-import { TransactionType } from "types/transaction";
 import {
   getCommission,
   getCompanyFromTransaction,

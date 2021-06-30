@@ -4,7 +4,7 @@ import {
   SharesTransactionFormProps
 } from "types/shares-transaction";
 import { SharesTransactionsContextType } from "contexts/shares-transactions";
-import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
+import SharesTransactionsService from "services/shares-transactions/shares-transactions-service";
 
 export function useSharesTransactionsContext(
   companyId: string
@@ -35,6 +35,7 @@ export function useSharesTransactionsContext(
     const results = SharesTransactionsService.getAll(companyId);
     setSharesTransactions(results);
     setIsLoading(false);
+    return results;
   }, [companyId]);
 
   const deleteById = useCallback((transactionId: string) => {

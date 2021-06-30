@@ -6,9 +6,9 @@ import CurrencyService from "services/currencies/currencies-service";
 import SectorsService from "services/sectors/sectors-service";
 import MarketService from "services/markets/markets-service";
 import PortfolioService from "services/portfolios/portfolios-service";
-import SharesTransactionsService from "services/shares-transactions-service/shares-transactions-service";
-import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
-import RightsTransactionsService from "services/rights-transaction-service/rights-transaction-service";
+import SharesTransactionsService from "services/shares-transactions/shares-transactions-service";
+import DividendsTransactionsService from "services/dividends-transactions/dividends-transactions-service";
+import RightsTransactionsService from "services/rights-transactions/rights-transactions-service";
 import StockPriceService from "services/stock-price-service/stock-price-service";
 
 export default function ExportAppDataForm(): ReactElement {

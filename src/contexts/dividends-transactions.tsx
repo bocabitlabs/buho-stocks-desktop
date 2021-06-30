@@ -8,7 +8,7 @@ export type DividendsTransactionsContextType = {
   isLoading: boolean;
   create: (transaction: DividendsTransactionFormProps) => IAddProps;
   deleteById: (transactionId: string) => IAddProps,
-  fetchAll: () => void;
+  getAll: () => void;
   getById: (transactionId: string) => IDividendsTransaction|null;
   update: (transactionId: string, transaction: DividendsTransactionFormProps) => IAddProps
 };
@@ -19,7 +19,7 @@ export const dividendsTransactionsDefaultValue: DividendsTransactionsContextType
   isLoading: false,
   create: () => ({changes: false}),
   deleteById: () => ({changes: false}),
-  fetchAll: () => null,
+  getAll: () => null,
   getById: (transactionId: string) => null,
   update: () => ({changes: false})
 };
