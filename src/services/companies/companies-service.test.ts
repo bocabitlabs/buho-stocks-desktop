@@ -100,7 +100,7 @@ jest.mock("database/daos/rights-transaction-dao/rights-transaction-dao", () => (
   getAll: () => [],
 }));
 
-jest.mock("services/stock-prices/stock-price-service", () => ({
+jest.mock("services/stock-prices/stock-prices-service", () => ({
   getAll: () => [],
 }));
 
