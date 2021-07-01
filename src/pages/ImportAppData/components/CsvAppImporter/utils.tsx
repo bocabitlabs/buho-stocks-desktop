@@ -6,7 +6,7 @@ import PortfolioService from "services/portfolios/portfolios-service";
 import RightsTransactionsService from "services/rights-transactions/rights-transactions-service";
 import SectorsService from "services/sectors/sectors-service";
 import SharesTransactionsService from "services/shares-transactions/shares-transactions-service";
-import StockPriceService from "services/stock-price-service/stock-prices-service";
+import StockPriceService from "services/stock-prices/stock-prices-service";
 import { CompanyFormFields } from "types/company";
 import { CurrencyFormFields } from "types/currency";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";

@@ -4,7 +4,7 @@ import { CompaniesContext } from "contexts/companies";
 import { ExchangeRatesContext } from "contexts/exchange-rates";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import StockPriceService from "services/stock-price-service/stock-prices-service";
+import StockPriceService from "services/stock-prices/stock-prices-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { IExchangeRateForm } from "types/exchange-rate";
 import { StockPriceFormProps } from "types/stock-price";

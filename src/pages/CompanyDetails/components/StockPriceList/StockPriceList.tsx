@@ -2,7 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import { CompaniesContext } from "contexts/companies";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import StockPriceService from "services/stock-price-service/stock-prices-service";
+import StockPriceService from "services/stock-prices/stock-prices-service";
 import { IStockPrice } from "types/stock-price";
 
 interface Props {

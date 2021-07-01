@@ -10,7 +10,7 @@ import { ICompany, CompanyFormFields } from "types/company";
 import { IStockPrice } from "types/stock-price";
 
 import RightsTransactionsService from "services/rights-transactions/rights-transactions-service";
-import StockPriceService from "services/stock-price-service/stock-prices-service";
+import StockPriceService from "services/stock-prices/stock-prices-service";
 
 export default class CompanyService {
   static create = (company: CompanyFormFields): IAddProps => {

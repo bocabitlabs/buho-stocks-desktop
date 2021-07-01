@@ -3,7 +3,7 @@ import { Button, Checkbox, Modal } from "antd";
 import ExchangeRatesAPIClient from "api/exchange-rates/exchange-rates-api-client";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
-import StockPriceService from "services/stock-price-service/stock-prices-service";
+import StockPriceService from "services/stock-prices/stock-prices-service";
 import { ICompany } from "types/company";
 import { StockPriceFormProps } from "types/stock-price";
 
