@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useCompaniesContext } from "../../hooks/companies/use-companies-context";
 import { CompaniesContext } from "../../contexts/companies";
 import RightsTransactionAddHeader from "./components/RightsTransactionAddHeader/RightsTransactionAddHeader";
-import { useRightsTransactionsContext } from "hooks/rights-transactions";
+import { useRightsTransactionsContext } from "hooks/rights-transactions/use-rights-transactions-context";
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import RightsTransactionAddForm from "components/RightsTransactionAddForm/RightsTransactionAddForm";
 

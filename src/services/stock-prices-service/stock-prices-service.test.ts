@@ -1,5 +1,5 @@
 import { IStockPrice, StockPriceFormProps } from "types/stock-price";
-import Service from "./stock-price-service";
+import Service from "./stock-prices-service";
 import YahooFetch from "yahoo-stock-prices-fetch";
 
 const returnAllExample: IStockPrice[] = [

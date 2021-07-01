@@ -1,9 +1,10 @@
 import { Button, DatePicker, Form, InputNumber, message } from "antd";
+import ExchangeRatesAPIClient from "api/exchange-rates/exchange-rates-api-client";
 import { CompaniesContext } from "contexts/companies";
+import { ExchangeRatesContext } from "contexts/exchange-rates";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
-import StockPriceService from "services/stock-price-service/stock-price-service";
+import StockPriceService from "services/stock-price-service/stock-prices-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { IExchangeRateForm } from "types/exchange-rate";
 import { StockPriceFormProps } from "types/stock-price";
@@ -21,6 +22,8 @@ export default function StockPriceAddForm({
   const dateFormat = "DD/MM/YYYY";
   const key = "updatable";
   const { company } = useContext(CompaniesContext);
+  const { create: addExchangeRate } = useContext(ExchangeRatesContext);
+
   const [transactionDate, setTransactionDate] = useState<string>(
     moment(new Date()).format("DD-MM-YYYY")
   );
@@ -46,7 +49,7 @@ export default function StockPriceAddForm({
       company?.currencyAbbreviation !== company?.portfolioCurrencyAbbreviation
     ) {
       setGettingExchangeRate(true);
-      const result = await ExchangeRateService.getFromAPI(
+      const result = await ExchangeRatesAPIClient.getHistoricalPrice(
         transactionDate,
         exchangeName
       );
@@ -87,7 +90,7 @@ export default function StockPriceAddForm({
         exchangeValue: exchangeRateValue
       };
       console.debug(newExchangeRate);
-      const result = ExchangeRateService.create(newExchangeRate);
+      const result = addExchangeRate(newExchangeRate);
       console.debug(result);
 
       message.success({

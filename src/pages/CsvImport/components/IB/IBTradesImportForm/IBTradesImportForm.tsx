@@ -8,9 +8,9 @@ import {
   Typography
 } from "antd";
 import { Form } from "antd";
+import { ExchangeRatesContext } from "contexts/exchange-rates";
 import moment from "moment";
-import React, { ReactElement, useState } from "react";
-import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
+import React, { ReactElement, useContext, useState } from "react";
 import SharesTransactionsService from "services/shares-transactions/shares-transactions-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { IPortfolio } from "types/portfolio";
@@ -37,6 +37,7 @@ export default function IBTradesImportForm({
 }: Props): ReactElement {
   const [form] = Form.useForm();
   const [formSent, setFormSent] = useState(false);
+  const {get: getExchangeRate} = useContext(ExchangeRatesContext)
   const key = "updatable";
 
   const companyName = inputData[5];
@@ -59,11 +60,11 @@ export default function IBTradesImportForm({
     let exchangeRateValue = 1;
     if (companyCurrency !== portfolioCurrency) {
       const formattedTransactionDate = transactionDate.format("DD/MM/YYYY");
-      const exchangeRate = ExchangeRateService.get(
+      const exchangeRate = getExchangeRate(
         formattedTransactionDate.replace(/\//g, "-"),
         exchangeName
       );
-      if (exchangeRate !== undefined) {
+      if (exchangeRate !== undefined && exchangeRate !== null) {
         exchangeRateValue = exchangeRate.exchangeValue;
       } else {
         exchangeRateValue = 1;

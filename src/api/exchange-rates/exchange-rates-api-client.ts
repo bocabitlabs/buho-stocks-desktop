@@ -1,33 +1,22 @@
-import ExchangeRateDAO from "database/daos/exchange-rate-dao/exchange-rate-dao";
 import moment from "moment";
-import { IExchangeRateForm } from "types/exchange-rate";
 import { delay } from "utils/misc";
 import { getHistoricalPrices } from "yahoo-stock-prices-fetch";
 
-export default class ExchangeRateService {
-  static create = (item: IExchangeRateForm) => {
-    return ExchangeRateDAO.create(item);
-  };
-
-  static getAll = () => {
-    return ExchangeRateDAO.getAll();
-  };
-
-  static get = (transactionDate: string, exchangeName: string) => {
-    return ExchangeRateDAO.get(transactionDate, exchangeName);
-  };
-
-  static getFromAPI = async (transactionDate: string, exchangeName: string) => {
+export default class ExchangeRatesAPIClient {
+  static getHistoricalPrice = async (
+    transactionDate: string,
+    exchangeName: string
+  ) => {
     let data: any = undefined;
     const momentDate = moment(transactionDate, "DD-MM-YYYY");
     try {
       delay(1000);
       data = await getHistoricalPrices(
         +momentDate.month(),
-        +momentDate.format('DD'),
+        +momentDate.format("DD"),
         +momentDate.year(),
         +momentDate.month(),
-        +momentDate.format('DD'),
+        +momentDate.format("DD"),
         +momentDate.year(),
         exchangeName + "=X",
         "1d"
@@ -44,7 +33,11 @@ export default class ExchangeRateService {
     return undefined;
   };
 
-  static getFromAPIWeekly = async (transactionDate: string, endDate: string, exchangeName: string) => {
+  static getHistoricalPriceWeekly = async (
+    transactionDate: string,
+    endDate: string,
+    exchangeName: string
+  ) => {
     let data: any = undefined;
     const momentDate = moment(transactionDate, "DD-MM-YYYY");
     const momentEndDate = moment(endDate, "DD-MM-YYYY");
@@ -52,10 +45,10 @@ export default class ExchangeRateService {
       delay(1000);
       data = await getHistoricalPrices(
         +momentDate.month(),
-        +momentDate.format('DD'),
+        +momentDate.format("DD"),
         +momentDate.year(),
         +momentEndDate.month(),
-        +momentEndDate.format('DD'),
+        +momentEndDate.format("DD"),
         +momentEndDate.year(),
         exchangeName + "=X",
         "1wk"
@@ -70,9 +63,5 @@ export default class ExchangeRateService {
     }
 
     return undefined;
-  };
-
-  static deleteById = (itemId: string) => {
-    return ExchangeRateDAO.deleteById(itemId);
   };
 }

@@ -6,8 +6,7 @@ export type ExchangeRatesContextType = {
   exchangeRate: IExchangeRate|null;
   isLoading: boolean;
   getAll: () => void;
-  get: (transactionDate: string, exchangeName: string) => void,
-  add: (exchangeRate: IExchangeRateForm) => void;
+  get: (transactionDate: string, exchangeName: string) => IExchangeRate|null,
 };
 
 export const defaultValue: ExchangeRatesContextType = {
@@ -16,7 +15,6 @@ export const defaultValue: ExchangeRatesContextType = {
   isLoading: false,
   getAll: () => null,
   get: () => null,
-  add: () => null
 };
 
 export const ExchangeRatesContext = createContext<ExchangeRatesContextType>(

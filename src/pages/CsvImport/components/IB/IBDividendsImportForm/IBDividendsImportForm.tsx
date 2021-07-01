@@ -1,9 +1,9 @@
 import { Button, Col, Input, message, Row, Select, Typography } from "antd";
 import { Form } from "antd";
+import { ExchangeRatesContext } from "contexts/exchange-rates";
 import moment from "moment";
-import React, { ReactElement, useState } from "react";
-import DividendsTransactionsService from "services/dividends-transaction-service/dividends-transaction-service";
-import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
+import React, { ReactElement, useContext, useState } from "react";
+import DividendsTransactionsService from "services/dividends-transactions/dividends-transactions-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { DividendsTransactionFormProps } from "types/dividends-transaction";
 import { IPortfolio } from "types/portfolio";
@@ -21,6 +21,7 @@ export default function IBDividendsImportForm({
 }: Props): ReactElement {
   const [form] = Form.useForm();
   const [formSent, setFormSent] = useState(false);
+  const {get: getExchangeRate, exchangeRate} = useContext(ExchangeRatesContext)
   const key = "updatable";
 
   const priceMatch = inputData[4].match(/[+-]?\d+(\.\d+)/);
@@ -68,7 +69,7 @@ export default function IBDividendsImportForm({
       let tries = 1;
       let tempDate = transactionDate;
       do {
-        exchangeRate = ExchangeRateService.get(
+        exchangeRate = getExchangeRate(
           tempDate.format("DD-MM-YYYY"),
           exchangeName
         );
@@ -76,7 +77,7 @@ export default function IBDividendsImportForm({
         tries++;
       } while (exchangeRate === undefined && tries < 5);
 
-      if (exchangeRate !== undefined) {
+      if (exchangeRate !== undefined && exchangeRate !== null) {
         exchangeRateValue = exchangeRate.exchangeValue;
       } else {
         exchangeRateValue = 1;

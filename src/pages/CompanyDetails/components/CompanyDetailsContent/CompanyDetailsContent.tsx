@@ -3,7 +3,7 @@ import React, { ReactElement, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { CompaniesContext } from "contexts/companies";
-import { useQuery } from "hooks/use-query";
+import { useQueryParameters } from "hooks/query-parameters/use-query-parameters";
 
 import ShareListTable from "../ShareListTable/ShareListTable";
 import DividendListTable from "../DividendListTable/DividendListTable";
@@ -20,7 +20,7 @@ export default function CompanyDetailsContent({
   portfolioId
 }: Props): ReactElement {
   const history = useHistory();
-  let query = useQuery();
+  let query = useQueryParameters();
   const { company, getById: fetchCompany } = useContext(CompaniesContext);
 
   useEffect(() => {

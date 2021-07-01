@@ -10,10 +10,10 @@ import {
 } from "antd";
 import { Form } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { ExchangeRatesContext } from "contexts/exchange-rates";
 import moment from "moment";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import CurrencyService from "services/currencies/currencies-service";
-import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import RightsTransactionsService from "services/rights-transactions/rights-transactions-service";
 import SharesTransactionsService from "services/shares-transactions/shares-transactions-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
@@ -56,8 +56,9 @@ export default function INGTradesImportForm({
   const [form] = Form.useForm();
   const [formSent, setFormSent] = useState(false);
   const [isRightsTransaction, setIsRightsTransaction] = useState(false);
+  const {get: getExchangeRate} = useContext(ExchangeRatesContext)
   const key = "updatable";
-  let exchangeRate: IExchangeRate | undefined;
+  let exchangeRate: IExchangeRate | undefined | null;
 
   // Format all the fields
   let {
@@ -81,11 +82,11 @@ export default function INGTradesImportForm({
   let commission = getCommission(total, count, price);
   // Get the exchange rate for the transaction
   const getExchangeRateForTransaction = () => {
-    let newExchangeRate: IExchangeRate | undefined = undefined;
+    let newExchangeRate: IExchangeRate | undefined | null = undefined;
     if (company) {
       let temporalExchangeName =
         company.currencyAbbreviation + portfolio.currencyAbbreviation;
-      newExchangeRate = ExchangeRateService.get(
+      newExchangeRate = getExchangeRate(
         transactionDate.format("DD-MM-YYYY"),
         temporalExchangeName
       );

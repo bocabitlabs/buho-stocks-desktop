@@ -1,4 +1,4 @@
-import Service from "./exchange-rate";
+import Service from "./exchange-rates-service";
 import { IExchangeRate, IExchangeRateForm } from "types/exchange-rate";
 
 const returnAllExample: IExchangeRate[] = [
@@ -69,19 +69,5 @@ describe("ExchangeRate Service tests", () => {
   test("get last stock by id", () => {
     const result = Service.get("01-02-2020", "USDEUR");
     expect(result).toStrictEqual(returnAllExample[1]);
-  });
-
-  test("get stock price from API", async () => {
-    const result = await Service.getFromAPI("01-02-2020", "USDEUR");
-    expect(result).toStrictEqual(1);
-  });
-
-  test("get historic stock price from API with start and end", async () => {
-    const result = await Service.getFromAPIWeekly(
-      "01-01-2019",
-      "01-02-2019",
-      "USDEUR"
-    );
-    expect(result).toStrictEqual(1);
   });
 });

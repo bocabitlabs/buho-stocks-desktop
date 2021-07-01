@@ -10,7 +10,9 @@ import { SharesTransactionsContext } from "contexts/shares-transactions";
 import { useDividendsTransactionsContext } from "hooks/dividends-transactions/use-dividends-transactions-context";
 import { DividendsTransactionsContext } from "contexts/dividends-transactions";
 import { RightsTransactionContext } from "contexts/rights-transactions";
-import { useRightsTransactionsContext } from "hooks/rights-transactions";
+import { useRightsTransactionsContext } from "hooks/rights-transactions/use-rights-transactions-context";
+import { useExchangeRatesContext } from "hooks/exchange-rates/use-exchange-rates-context";
+import { ExchangeRatesContext } from "contexts/exchange-rates";
 
 export interface Props {
   portfolioId: string;
@@ -25,10 +27,11 @@ export default function CompanyDetails(): ReactElement {
     companyId
   );
   const rightsTransactionsContext = useRightsTransactionsContext(companyId);
+  const exchangeRatesContext = useExchangeRatesContext();
 
   return (
-      <CompaniesContext.Provider value={companiesContext}>
-        <CompanyDetailsHeader companyId={companyId} portfolioId={portfolioId} />
+    <CompaniesContext.Provider value={companiesContext}>
+      <ExchangeRatesContext.Provider value={exchangeRatesContext}>
         <SharesTransactionsContext.Provider value={sharesContext}>
           <DividendsTransactionsContext.Provider
             value={dividendsTransactionsContext}
@@ -36,6 +39,10 @@ export default function CompanyDetails(): ReactElement {
             <RightsTransactionContext.Provider
               value={rightsTransactionsContext}
             >
+              <CompanyDetailsHeader
+                companyId={companyId}
+                portfolioId={portfolioId}
+              />
               <Layout
                 style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}
               >
@@ -47,6 +54,7 @@ export default function CompanyDetails(): ReactElement {
             </RightsTransactionContext.Provider>
           </DividendsTransactionsContext.Provider>
         </SharesTransactionsContext.Provider>
-      </CompaniesContext.Provider>
+      </ExchangeRatesContext.Provider>
+    </CompaniesContext.Provider>
   );
 }

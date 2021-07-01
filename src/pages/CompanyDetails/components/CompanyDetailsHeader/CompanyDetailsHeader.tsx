@@ -29,7 +29,7 @@ interface Props {
   companyId: string;
 }
 
-export default function CompanyDetailsRouteHeader({
+export default function CompanyDetailsHeader({
   portfolioId,
   companyId
 }: Props): ReactElement | null {

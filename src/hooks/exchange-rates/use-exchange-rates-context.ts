@@ -1,40 +1,32 @@
 import { useState, useEffect, useCallback } from "react";
-import SectorsService from "services/sectors/sectors-service";
 import { ExchangeRatesContextType } from "contexts/exchange-rates";
-import { IExchangeRate, IExchangeRateForm } from "types/exchange-rate";
-import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
+import { IExchangeRate } from "types/exchange-rate";
+import ExchangeRatesService from "services/exchange-rates/exchange-rates-service";
 
-export function useSectorsContext(): ExchangeRatesContextType {
+export function useExchangeRatesContext(): ExchangeRatesContextType {
   const [exchangeRates, setExchangeRates] = useState<IExchangeRate[]>([]);
   const [exchangeRate, setExchangeRate] = useState<IExchangeRate| null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const results = ExchangeRateService.getAll();
+    const results = ExchangeRatesService.getAll();
     setExchangeRates(results);
   }, []);
 
-  const add = useCallback(
-    (sector: IExchangeRateForm) => {
-      setIsLoading(true);
-      const results = SectorsService.getAll();
-      setExchangeRates(results);
-    },
-    []
-  );
-
   const getAll = useCallback(() => {
     setIsLoading(true);
-    const results = ExchangeRateService.getAll();
+    const results = ExchangeRatesService.getAll();
     setExchangeRates(results);
     setIsLoading(false);
+    return results;
   }, []);
 
   const get = useCallback((transactionDate: string, exchangeName: string) => {
     setIsLoading(true);
-    const result = ExchangeRateService.get(transactionDate, exchangeName);
+    const result = ExchangeRatesService.get(transactionDate, exchangeName);
     setExchangeRate(result);
     setIsLoading(false);
+    return result;
   }, []);
 
   return {
@@ -42,7 +34,6 @@ export function useSectorsContext(): ExchangeRatesContextType {
     exchangeRate,
     isLoading,
     getAll,
-    add,
     get
   };
 }

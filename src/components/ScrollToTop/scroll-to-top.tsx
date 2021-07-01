@@ -12,7 +12,6 @@ function ScrollToTop() {
     };
   }, [history]);
 
-
   return null;
 }
 

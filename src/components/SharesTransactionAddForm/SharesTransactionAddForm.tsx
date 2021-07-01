@@ -18,8 +18,8 @@ import { useHistory } from "react-router-dom";
 import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionFormProps } from "types/shares-transaction";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
-import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
+import ExchangeRatesAPIClient from "api/exchange-rates/exchange-rates-api-client";
 
 interface Props {
   companyId: string;
@@ -51,7 +51,7 @@ export default function SharesTransactionAddForm({
   const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
   const getExchangeRate = async () => {
     setGettingExchangeRate(true);
-    const result = await ExchangeRateService.getFromAPI(
+    const result = await ExchangeRatesAPIClient.getHistoricalPrice(
       transactionDate,
       exchangeName
     );

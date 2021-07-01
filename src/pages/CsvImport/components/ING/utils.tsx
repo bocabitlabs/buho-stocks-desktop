@@ -1,4 +1,4 @@
-import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
+import ExchangeRatesService from "services/exchange-rates/exchange-rates-service";
 import { ICompany } from "types/company";
 import { IPortfolio } from "types/portfolio";
 import { Moment } from "moment";
@@ -33,7 +33,7 @@ export const getTotalAmountInCompanyCurrency = (
     // First, exchage it to EUR, which is the ING total's currency
     let temporalExchangeName =
       INGDefaultCurrency + company.currencyAbbreviation;
-    const newExchangeRate = ExchangeRateService.get(
+    const newExchangeRate = ExchangeRatesService.get(
       transactionDate.format("DD-MM-YYYY"),
       temporalExchangeName
     );
@@ -54,7 +54,7 @@ export const getPriceInCompanyCurrency = (
     // First, exchage it to EUR, which is the ING total's currency
     let temporalExchangeName =
       INGDefaultCurrency + company.currencyAbbreviation;
-    const newExchangeRate = ExchangeRateService.get(
+    const newExchangeRate = ExchangeRatesService.get(
       transactionDate.format("DD-MM-YYYY"),
       temporalExchangeName
     );

@@ -8,6 +8,7 @@ interface IUpdateResponse{
 export type SettingsContextType = {
   settings: ISettings | null;
   toggleCollapsed: () => void;
+  getSettings: () => ISettings|null;
   setDefaultCompanyDisplayMode: (value: string) => void;
   isLoading: boolean;
   updateDatabasePath: (newValue: string) => IUpdateResponse;
@@ -16,6 +17,7 @@ export type SettingsContextType = {
 export const settingsDefaultValue: SettingsContextType = {
   settings: null,
   isLoading: false,
+  getSettings: () => null,
   toggleCollapsed: () => null,
   setDefaultCompanyDisplayMode: (value: string) => null,
   updateDatabasePath: () => ({changes: false})

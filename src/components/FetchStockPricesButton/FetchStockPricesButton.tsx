@@ -1,9 +1,9 @@
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Modal } from "antd";
+import ExchangeRatesAPIClient from "api/exchange-rates/exchange-rates-api-client";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
-import ExchangeRateService from "services/exchange-rate-service/exchange-rate";
-import StockPriceService from "services/stock-price-service/stock-price-service";
+import StockPriceService from "services/stock-price-service/stock-prices-service";
 import { ICompany } from "types/company";
 import { StockPriceFormProps } from "types/stock-price";
 
@@ -94,7 +94,7 @@ export default function FetchStockPricesButton({
                 company.currencyAbbreviation !==
                 company.portfolioCurrencyAbbreviation
               ) {
-                const exchageRate = await ExchangeRateService.getFromAPIWeekly(
+                const exchageRate = await ExchangeRatesAPIClient.getHistoricalPriceWeekly(
                   initialDate,
                   endDate,
                   exchangeName

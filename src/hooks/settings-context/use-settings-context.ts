@@ -9,14 +9,15 @@ export function useSettingsContext(): SettingsContextType {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    updateSettings();
+    getSettings();
   }, []);
 
-  const updateSettings = () => {
+  const getSettings = () => {
     setIsLoading(true);
     const settings = SettingsService.getSettings();
     setSettings(settings);
     setIsLoading(false);
+    return settings;
   }
 
   const updateDatabasePath = (newPath: string) => {
@@ -30,7 +31,7 @@ export function useSettingsContext(): SettingsContextType {
   const toggleCollapsed = useCallback(() => {
     const result = SettingsService.toggleCollapsed();
     if(result.changes){
-      updateSettings();
+      getSettings();
     }
   }, []);
 
@@ -38,13 +39,14 @@ export function useSettingsContext(): SettingsContextType {
   const setDefaultCompanyDisplayMode = useCallback((value: string) => {
     const result = SettingsService.setDefaultCompanyDisplayMode(value);
     if(result.changes){
-      updateSettings();
+      getSettings();
     }
   }, []);
 
   return {
     settings,
     isLoading,
+    getSettings,
     updateDatabasePath,
     toggleCollapsed,
     setDefaultCompanyDisplayMode

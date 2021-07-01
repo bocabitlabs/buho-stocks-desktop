@@ -42,6 +42,7 @@ export function useRightsTransactionsContext(
     const results = RightsTransactionsService.getAll(companyId);
     setRightsTransactions(results);
     setIsLoading(false);
+    return results;
   }, [companyId]);
 
   const getById = useCallback((transactionId: string) => {
