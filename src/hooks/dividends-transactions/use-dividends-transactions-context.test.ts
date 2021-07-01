@@ -20,11 +20,6 @@ describe("useDividendsTransactionsContext tests", () => {
     jest.resetAllMocks();
   });
 
-  // test("getAll return all results", () => {
-  //   const result = SectorsService.getAll();
-  //   expect(result).toStrictEqual(returnAllExample);
-  // });
-
   it("verifies the component initial values when it loads", () => {
     const { result } = renderHook(() => useDividendsTransactionsContext("1"));
     expect(result.current.isLoading).toBe(false);

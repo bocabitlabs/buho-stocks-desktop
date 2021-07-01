@@ -1,5 +1,3 @@
-import { renderHook, act } from "@testing-library/react-hooks";
-
 import { useQueryParameters } from "./use-query-parameters";
 
 jest.mock("react-router-dom", () => ({

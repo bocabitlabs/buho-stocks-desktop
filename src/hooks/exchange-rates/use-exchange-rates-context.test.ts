@@ -7,6 +7,7 @@ jest.mock(
   () => ({
     getAll: () => [],
     get: () => ({hello: "world"}),
+    create: () => ({ changes: 1 }),
   })
 );
 
@@ -29,11 +30,24 @@ describe("useExchangeRatesContext tests", () => {
     });
   });
 
-  it("gets a exchangeRate", () => {
+  it("gets a rights transaction", () => {
     const { result } = renderHook(() => useExchangeRatesContext());
     act(() => {
       expect(
         result.current.get("2020-01-19", "EURUSD")).toEqual({hello: "world"});
+    });
+  });
+
+  it("creates a exchange rate", () => {
+    const { result } = renderHook(() => useExchangeRatesContext());
+    act(() => {
+      expect(
+        result.current.create({
+          transactionDate: "2021-05-06",
+          exchangeName: "EURUSD",
+          exchangeValue: 0.5
+        })
+      ).toEqual({"changes": 1});
     });
   });
 });
