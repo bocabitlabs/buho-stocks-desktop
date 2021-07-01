@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Descriptions, Layout, PageHeader } from "antd";
 
 import SettingsForm from "./components/SettingsForm/SettingsForm";
-import { useSettingsContext } from "hooks/settings-context/use-settings-context";
+import { useSettingsContext } from "hooks/settings/use-settings-context";
 import { SettingsContext } from "contexts/settings";
 import { version } from "utils/app-info";
 import { HomeOutlined } from "@ant-design/icons";

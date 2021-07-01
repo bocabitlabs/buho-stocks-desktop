@@ -16,7 +16,8 @@ jest.mock("services/settings/settings-service", () => ({
   getSettings: () => (returnAllExample),
   setDefaultCompanyDisplayMode: () => returnAllExample.defaultCompanyDisplayMode,
   updateDatabasePath: () => returnAllExample.databasePath,
-  updateLanguage: () => returnAllExample.language
+  updateLanguage: () => returnAllExample.language,
+  toggleCollapsed: () => ({ changes: 1 })
 }));
 
 describe("useCurrenciesContext tests", () => {
@@ -41,6 +42,14 @@ describe("useCurrenciesContext tests", () => {
     act(() => {
       result.current.updateDatabasePath("/")
     });
+  });
+
+  it("verifies that isCollapsed can be set", () => {
+    const { result } = renderHook(() => useSettingsContext());
+    act(() => {
+      result.current.toggleCollapsed()
+    });
+    expect(result.current.settings?.collapsed).toBe(true);
   });
 
 });

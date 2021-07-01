@@ -8,11 +8,11 @@ export function useIsCollapsedContext(): IsCollapsedContextType {
   useEffect(() => {
     const result = SettingsService.getIsCollapsed();
     setIsCollapsed(result);
-  }, [])
+  }, []);
 
   const toggleCollapsed = useCallback(() => {
     const result = SettingsService.toggleCollapsed();
-    if(result.changes){
+    if (result.changes) {
       const result = SettingsService.getIsCollapsed();
       setIsCollapsed(result);
     }

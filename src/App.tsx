@@ -39,7 +39,7 @@ import CurrencyEdit from "pages/CurrencyEdit/CurrencyEdit";
 import SectorEdit from "pages/SectorEdit/SectorEdit";
 import MarketEdit from "pages/MarketEdit/MarketEdit";
 import PortfolioEdit from "pages/PortfolioEdit/PortfolioEdit";
-import { useSettingsContext } from "hooks/settings-context/use-settings-context";
+import { useSettingsContext } from "hooks/settings/use-settings-context";
 import { SettingsContext } from "contexts/settings";
 import PortfolioCharts from "pages/PortfolioCharts/PortfolioCharts";
 
