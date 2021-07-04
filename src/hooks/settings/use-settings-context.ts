@@ -28,6 +28,16 @@ export function useSettingsContext(): SettingsContextType {
     return result;
   };
 
+  const updateLanguage = (newPath: string) => {
+    setIsLoading(true);
+    const result = SettingsService.updateLanguage(newPath);
+    if(result.changes){
+      getSettings();
+    }
+    setIsLoading(false);
+    return result;
+  };
+
   const toggleCollapsed = useCallback(() => {
     const result = SettingsService.toggleCollapsed();
     if(result.changes){
@@ -48,6 +58,7 @@ export function useSettingsContext(): SettingsContextType {
     isLoading,
     getSettings,
     updateDatabasePath,
+    updateLanguage,
     toggleCollapsed,
     setDefaultCompanyDisplayMode
   };

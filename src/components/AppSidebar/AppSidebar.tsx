@@ -9,7 +9,11 @@ import {
 import { Layout, Menu } from "antd";
 import React, { ReactElement, useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 import { SettingsContext } from "contexts/settings";
+
+
 interface RoutePathProps {
   key: string;
   path: string;
@@ -48,7 +52,7 @@ export default function AppSidebar(): ReactElement {
   const { settings } = useContext(SettingsContext);
   const [isCollapsed, setIsCollapsed] = useState(false)
   const sidebarRef = useRef(null);
-
+  const { t, i18n } = useTranslation();
 
   const [selectedKey, setSelectedKey] = useState(
     navLinks.find((item) => location.pathname.startsWith(item.path))?.key || ""
@@ -93,7 +97,7 @@ export default function AppSidebar(): ReactElement {
       >
         {navLinks.map((item) => (
           <Menu.Item key={item.key} icon={item.icon}>
-            {item.text}
+            {t(item.text)}
           </Menu.Item>
         ))}
       </Menu>

@@ -1,13 +1,15 @@
 import { Button, PageHeader } from "antd";
 import React, { ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 export default function HomeRouteHeader(): ReactElement {
   const history = useHistory();
+  const { t } = useTranslation();
 
   return (
     <PageHeader
-      title="HOME"
+      title={t("Home")}
       extra={[
         <Button
           key={"portfolio-add-header"}
@@ -15,7 +17,7 @@ export default function HomeRouteHeader(): ReactElement {
             history.push("/add/portfolio");
           }}
         >
-          Add Portfolio
+          {t("Add portfolio")}
         </Button>,
         <Button
           key={"currency-add-header"}
@@ -23,7 +25,7 @@ export default function HomeRouteHeader(): ReactElement {
             history.push("/add/currency");
           }}
         >
-          Add Currency
+          {t("Add currency")}
         </Button>,
         <Button
           key={"market-add-header"}
@@ -31,7 +33,7 @@ export default function HomeRouteHeader(): ReactElement {
             history.push("/add/market");
           }}
         >
-          Add market
+          {t("Add market")}
         </Button>
       ]}
     />

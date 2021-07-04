@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
@@ -42,6 +42,8 @@ import PortfolioEdit from "pages/PortfolioEdit/PortfolioEdit";
 import { useSettingsContext } from "hooks/settings/use-settings-context";
 import { SettingsContext } from "contexts/settings";
 import PortfolioCharts from "pages/PortfolioCharts/PortfolioCharts";
+import SettingsService from "services/settings/settings-service";
+import { useTranslation } from "react-i18next";
 
 function App() {
   /**
@@ -50,6 +52,13 @@ function App() {
   const settingsContext = useSettingsContext();
   const selectedPortfolioContext = useSelectedPortfolioContext();
   const portfoliosContext = usePortfoliosContext();
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    const settings = SettingsService.getSettings()
+    i18n.changeLanguage(settings.language);
+  }, [i18n])
+
 
   return (
     <Layout>

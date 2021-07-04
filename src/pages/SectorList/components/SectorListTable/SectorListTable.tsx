@@ -1,11 +1,13 @@
-import { Button, message, Popconfirm, Space, Table } from "antd";
+import { Button, message, Popconfirm, Space, Table, Tag } from "antd";
 import React, { useContext } from "react";
 import { SectorsContext } from "contexts/sectors";
 import { ISector } from "types/sector";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function SectorListTable() {
   const { sectors, getAll, deleteById } = useContext(SectorsContext);
+  const { t } = useTranslation();
   const key = "updatable";
 
   function confirm(recordId: string) {
@@ -13,7 +15,7 @@ export default function SectorListTable() {
     if (result.changes) {
       getAll();
       message.success({
-        content: "Sector has been deleted",
+        content: t("Sector has been deleted"),
         key,
         duration: 2
       });
@@ -32,21 +34,31 @@ export default function SectorListTable() {
       )
     },
     {
-      title: "Name",
+      title: t("Name"),
       dataIndex: "name",
       key: "name",
-      render: (text: string, record: any) => <Link to={`/sectors/${record.id}/edit`}>{text}</Link>,
+      render: (text: string, record: any) => (
+        <Link to={`/sectors/${record.id}/edit`}>{t(text)}</Link>
+      ),
       sorter: (a: ISector, b: ISector) => a.name.localeCompare(b.name)
     },
     {
-      title: "Super sector",
+      title: t("Super sector"),
       dataIndex: "superSectorName",
       key: "superSectorName",
-      render: (text: string, record: any) => record.isSuperSector? "Is a super sector": <Link to={`/sectors/${record.id}/edit`}>{text}</Link>,
-      sorter: (a: ISector, b: ISector) => (a.superSectorName && b.superSectorName)? a.superSectorName.localeCompare(b.superSectorName): -1
+      render: (text: string, record: any) =>
+        record.isSuperSector ? (
+          <Tag color="green">{t("Is a super sector")}</Tag>
+        ) : (
+          <Link to={`/sectors/${record.id}/edit`}>{t(text)}</Link>
+        ),
+      sorter: (a: ISector, b: ISector) =>
+        a.superSectorName && b.superSectorName
+          ? a.superSectorName.localeCompare(b.superSectorName)
+          : -1
     },
     {
-      title: "Action",
+      title: t("Action"),
       key: "action",
       render: (text: string, record: any) => (
         <Space size="middle">
@@ -58,7 +70,7 @@ export default function SectorListTable() {
             cancelText="No"
           >
             <Button danger type="text">
-              Delete
+              {t("Delete")}
             </Button>
           </Popconfirm>
         </Space>

@@ -20,9 +20,11 @@
     "electron-is-dev": "1.2.0",
     "electron-log": "^4.3.0",
     "electron-squirrel-startup": "^1.0.0",
+    "i18next": "^20.3.2",
     "material-colors": "^1.2.6",
     "react": "^17.0.1",
     "react-flag-icon-css": "^1.0.25",
+    "react-i18next": "^11.11.0",
     "yahoo-stock-prices-fetch": "^1.4.4"
   },
   "scripts": {

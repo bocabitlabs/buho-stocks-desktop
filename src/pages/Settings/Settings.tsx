@@ -8,22 +8,24 @@ import { SettingsContext } from "contexts/settings";
 import { version } from "utils/app-info";
 import { HomeOutlined } from "@ant-design/icons";
 import { breadcrumbItemRender } from "utils/headers-utils";
+import { useTranslation } from "react-i18next";
 
 const Settings = () => {
   const settingsContext = useSettingsContext();
+  const { t } = useTranslation();
 
   const routes = [
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
     {
       path: `/settings`,
       name: "settings",
-      breadcrumbName: "Settings"
+      breadcrumbName: t("Settings")
     }
   ];
 
@@ -33,15 +35,15 @@ const Settings = () => {
     <SettingsContext.Provider value={settingsContext}>
       <PageHeader
         className="site-page-header"
-        title="Settings"
+        title={t("Settings")}
         breadcrumb={{
           routes,
           itemRender: breadcrumbItemRender
         }}
       />
       <Layout style={{ padding: "0 24px 24px", backgroundColor: "#fff" }}>
-        <Descriptions title="App Info">
-          <Descriptions.Item label="Version">{version}</Descriptions.Item>
+        <Descriptions title={t("App Info")}>
+          <Descriptions.Item label={t("Version")}>{version}</Descriptions.Item>
         </Descriptions>
         <SettingsForm />
       </Layout>
