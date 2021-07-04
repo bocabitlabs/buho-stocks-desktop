@@ -2,8 +2,8 @@ import React from "react";
 
 import { Layout } from "antd";
 
-import { useSectorsContext } from "../../hooks/sectors/use-sectors-context";
-import { SectorsContext } from "../../contexts/sectors";
+import { useSectorsContext } from "hooks/sectors/use-sectors-context";
+import { SectorsContext } from "contexts/sectors";
 import SectorListHeader from "./components/SectorListHeader/SectorListHeader";
 import SectorListTable from "./components/SectorListTable/SectorListTable";
 

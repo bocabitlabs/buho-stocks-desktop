@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { SectorsContext } from "contexts/sectors";
 import ColorSelector from "components/ColorSelector/ColorSelector";
 import { ISector } from "types/sector";
+import { useTranslation } from "react-i18next";
 
 interface AddEditFormProps {
   sectorId?: string;
@@ -17,8 +18,7 @@ function SectorAddEditForm({
   const history = useHistory();
   const [color, setColor] = useState("#607d8b");
   const [sectors, setSectors] = useState<ISector[]>([]);
-
-
+  const { t } = useTranslation();
   const key = "updatable";
 
   const {
@@ -41,7 +41,7 @@ function SectorAddEditForm({
   }, [sectorId, getSectorById, getAll]);
 
   const handleSubmit = (values: any) => {
-    message.loading({ content: "Adding sector...", key });
+    message.loading({ content: t("Adding sector..."), key });
 
     const { name, isSuperSector, superSectorId } = values;
     const newSector = {
@@ -59,13 +59,13 @@ function SectorAddEditForm({
     if (changes.changes) {
       getAll();
       if (!sectorId) {
-        message.success({ content: "Sector has been added", key });
+        message.success({ content: t("Sector has been added"), key });
       } else {
-        message.success({ content: "Sector has been updated", key });
+        message.success({ content: t("Sector has been updated"), key });
       }
       history.push("/sectors");
     } else {
-      message.error({ content: "Unable to add the sector", key });
+      message.error({ content: t("Unable to add the sector"), key });
     }
   };
 
@@ -81,6 +81,7 @@ function SectorAddEditForm({
     <Form
       form={form}
       name="basic"
+      layout="vertical"
       onFinish={handleSubmit}
       initialValues={{
         name: sector?.name,
@@ -90,9 +91,9 @@ function SectorAddEditForm({
     >
       <Form.Item
         name="name"
-        label="Name"
+        label={t("Name")}
         rules={[
-          { required: true, message: "Please input the name of the sector" }
+          { required: true, message: t("Please input the name of the sector") }
         ]}
       >
         <Input type="text" />
@@ -100,7 +101,7 @@ function SectorAddEditForm({
       <Form.Item
         label={
           <div>
-            Color:{" "}
+            {t("Color")}:{" "}
             <svg
               width="35"
               height="35"
@@ -122,12 +123,12 @@ function SectorAddEditForm({
       >
         <ColorSelector color={color} handleColorChange={handleColorChange} />
       </Form.Item>
-      <Form.Item label="Is super sector" name="isSuperSector" valuePropName="checked">
+      <Form.Item label={t("Is a super sector")} name="isSuperSector" valuePropName="checked">
         <Switch />
       </Form.Item>
-      <Form.Item name="superSectorId" label="Super sector">
+      <Form.Item name="superSectorId" label={t("Super sector")}>
         <Select
-          placeholder="Select it's super sector"
+          placeholder={t("Select its super sector")}
           allowClear
         >
           {sectors &&
@@ -143,7 +144,7 @@ function SectorAddEditForm({
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          {sectorId ? "Edit Sector" : "Add Sector"}
+          {sectorId ? t("Save changes") : t("Add sector")}
         </Button>
       </Form.Item>
     </Form>

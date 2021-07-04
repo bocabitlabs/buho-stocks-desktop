@@ -2,6 +2,7 @@ import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import { SectorsContext } from "contexts/sectors";
 import React, { ReactElement, useContext, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { breadcrumbItemRender } from "utils/headers-utils";
 
 interface Props {
@@ -11,6 +12,8 @@ interface Props {
 export default function SectorEditHeader({
   sectorId
 }: Props) : ReactElement | null {
+  const { t } = useTranslation();
+
   const { sector, getById: getSectorById } = useContext(
     SectorsContext
   );
@@ -27,26 +30,26 @@ export default function SectorEditHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
     {
       path: "/sectors",
       name: "sectors",
-      breadcrumbName: "Sectors"
+      breadcrumbName: t("Sectors")
     },
     {
       path: `/sectors/${sectorId}/edit`,
       name: "edit",
-      breadcrumbName: "Edit"
+      breadcrumbName: t("Edit")
     }
   ];
 
   return (
     <PageHeader
       className="site-page-header"
-      title="Edit sector"
+      title={t("Edit sector")}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender
