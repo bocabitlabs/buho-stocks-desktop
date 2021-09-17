@@ -127,3 +127,5 @@ yarn publish
 
 [GPL 3](LICENSE)
 
+All 3rd party logos are property of their owners.
+
