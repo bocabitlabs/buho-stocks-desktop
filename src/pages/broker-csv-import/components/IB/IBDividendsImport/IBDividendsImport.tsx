@@ -2,7 +2,7 @@ import { Typography } from "antd";
 import React, { useState } from "react";
 import { CSVReader } from "react-papaparse";
 import { IPortfolio } from "types/portfolio";
-import IBDividendsImportForm from "../IBDividendsImportForm/IBDividendsImportForm";
+import IBDividendsImportForm from "./IBDividendsImportForm/IBDividendsImportForm";
 
 interface Props {
   portfolio: IPortfolio;
@@ -15,8 +15,10 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
   const rowNotAllowedFilters = ["Total", ""];
   const [data, setData] = useState([]);
   const [commissionsData, setCommissionsData] = useState([]);
+  const [uploaded, setUploaded] = useState(false);
 
   const handleOnFileLoad = (data: any) => {
+    setUploaded(true);
     const filteredData = data.filter((element: any) => {
       return (
         rowHeaders.includes(element.data[0]) &&
@@ -83,13 +85,13 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
     <div>
       <div style={{ marginBottom: 16 }}>
         <CSVReader onDrop={handleOnFileLoad} onError={handleOnError} noDrag>
-          <span>Click to upload.</span>
+          <span>Click to upload a csv file with dividends data from Interactive Brokers.</span>
         </CSVReader>
       </div>
       {data.length > 0 && commissionsData && (
         <div>
           <Typography.Title level={4}>
-            Importing dividends from IB:
+            Importing dividends from Interactive Brokers:
           </Typography.Title>
           <ol>
             {data.map((element: any) => {
@@ -104,7 +106,7 @@ export const IBDividendsImport = ({ portfolio }: Props) => {
           </ol>
         </div>
       )}
-      {data.length === 0 && (
+      {uploaded === true && data.length === 0 && (
         <div>
           <Typography.Title level={4}>No dividends found</Typography.Title>
         </div>

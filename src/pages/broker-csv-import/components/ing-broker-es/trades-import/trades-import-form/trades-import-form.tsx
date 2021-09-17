@@ -13,6 +13,7 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { ExchangeRatesContext } from "contexts/exchange-rates";
 import moment from "moment";
 import React, { ReactElement, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import CurrencyService from "services/currencies/currencies-service";
 import RightsTransactionsService from "services/rights-transactions/rights-transactions-service";
 import SharesTransactionsService from "services/shares-transactions/shares-transactions-service";
@@ -26,14 +27,38 @@ import {
   getCommission,
   getCompanyFromTransaction,
   getTotalAmountInCompanyCurrency
-} from "../utils";
+} from "../../utils";
 
 interface Props {
   inputData: Array<string>;
   portfolio: IPortfolio;
 }
 
-function formatINGRowForShares(inputData: string[]) {
+type TransactionType = "BUY"|"SELL";
+
+interface FormattedINGRow {
+  companyName: string;
+  total: number;
+  transactionDate: moment.Moment;
+  count: number;
+  price: number;
+  transactionType: TransactionType;
+}
+
+/**
+ * Handle each row on the ING's CSV format
+ *
+ * 0: transaction date: DD/MM/YYYY
+ * 1: transaction type: COMPRA, ALTA POR CANJE
+ * 3: company name: The name of the company (E.g VISCOFAN) or the name of the rights emission (E.g TEF.D 06.21)
+ * 6: shares count: The number of shares affected by the transaction
+ * 7: price: Price per share
+ * 9: total: Total amount including commission
+ *
+ * @param inputData string[]
+ * @returns
+ */
+function formatINGRowForShares(inputData: string[]): FormattedINGRow {
   const transactionDate = moment(inputData[0], "DD/MM/YYYY");
   const validBuyTypes = ["COMPRA", "ALTA POR CANJE"];
   let transactionType = inputData[1];
@@ -42,21 +67,20 @@ function formatINGRowForShares(inputData: string[]) {
   const price = +inputData[7];
   let total = +inputData[9].replace("'", "");
 
-  transactionType = validBuyTypes.includes(transactionType)
-    ? "BUY"
-    : "SELL";
+  transactionType = validBuyTypes.includes(transactionType) ? "BUY" : "SELL" ;
 
-  return { companyName, total, transactionDate, count, price, transactionType };
+  return { companyName, total, transactionDate, count, price, transactionType: transactionType as TransactionType };
 }
 
 export default function INGTradesImportForm({
   inputData,
   portfolio
 }: Props): ReactElement {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [formSent, setFormSent] = useState(false);
   const [isRightsTransaction, setIsRightsTransaction] = useState(false);
-  const {get: getExchangeRate} = useContext(ExchangeRatesContext)
+  const { get: getExchangeRate } = useContext(ExchangeRatesContext);
   const key = "updatable";
   let exchangeRate: IExchangeRate | undefined | null;
 
@@ -110,7 +134,9 @@ export default function INGTradesImportForm({
           "YYYY-MM-DD"
         ),
         color: "#0066cc",
-        notes: "CSV imported from ING",
+        notes: `CSV imported from ING on ${moment(new Date()).format(
+          "YYYY-MM-DD HH:mm:ss"
+        )}`,
         companyId: values.company,
         type: values.transactionType
       };
@@ -125,7 +151,9 @@ export default function INGTradesImportForm({
           "YYYY-MM-DD"
         ),
         color: "#0066cc",
-        notes: `CSV imported from ING on ${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}`,
+        notes: `CSV imported from ING on ${moment(new Date()).format(
+          "YYYY-MM-DD HH:mm:ss"
+        )}`,
         companyId: values.company,
         type: values.transactionType
       };
@@ -140,9 +168,9 @@ export default function INGTradesImportForm({
           portfolioId: +company.portfolioId
         });
       }
-      message.success({ content: "Transaction has been added", key });
+      message.success({ content: t("Transaction has been added"), key });
     } else {
-      message.error({ content: "Unable to add the transaction", key });
+      message.error({ content: t("Unable to add the transaction"), key });
     }
     setFormSent(true);
   };
@@ -174,17 +202,19 @@ export default function INGTradesImportForm({
         <Col span={12}>
           <Form.Item
             name="count"
-            label="Count"
-            rules={[{ required: true, message: "Please input the company" }]}
+            label={t("Count")}
+            rules={[
+              { required: true, message: t("Please input the shares count") }
+            ]}
           >
-            <Input placeholder="Count" />
+            <Input placeholder={t("Count")} />
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item
             name="price"
-            label="Price"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label={t("Price")}
+            rules={[{ required: true, message: t("Please input the price") }]}
           >
             <Input placeholder="Price" />
           </Form.Item>
@@ -192,19 +222,21 @@ export default function INGTradesImportForm({
         <Col span={12}>
           <Form.Item
             name="commission"
-            label="Commission"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label={t("Commission")}
+            rules={[
+              { required: true, message: t("Please input the commission") }
+            ]}
           >
-            <Input placeholder="Commission" />
+            <Input placeholder={t("Commission")} />
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item
             name="company"
-            label="Company"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label={t("Company")}
+            rules={[{ required: true, message: t("Please input the company") }]}
           >
-            <Select placeholder="Company">
+            <Select placeholder={t("Company")}>
               {portfolio.companies.map((element) => (
                 <Select.Option key={element.id} value={element.id}>
                   {element.name} ({element.ticker})
@@ -216,10 +248,12 @@ export default function INGTradesImportForm({
         <Col span={12}>
           <Form.Item
             name="currency"
-            label="Currency"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label={t("Currency")}
+            rules={[
+              { required: true, message: t("Please input the currency") }
+            ]}
           >
-            <Select placeholder="Currency">
+            <Select placeholder={t("Currency")}>
               {currencies.map((element: ICurrency) => (
                 <Select.Option key={element.id} value={element.abbreviation}>
                   {element.name} ({element.abbreviation})
@@ -231,21 +265,17 @@ export default function INGTradesImportForm({
         <Col span={12}>
           <Form.Item
             name="transactionType"
-            label="Type"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label={t("Type")}
+            rules={[
+              { required: true, message: "Please input the transaction type" }
+            ]}
           >
-            <Select placeholder="Type">
-              <Select.Option
-                key={"BUY"}
-                value={"BUY"}
-              >
-                Buy
+            <Select placeholder={t("Type")}>
+              <Select.Option key={"BUY"} value={"BUY"}>
+                {t("Buy")}
               </Select.Option>
-              <Select.Option
-                key={"SELL"}
-                value={"SELL"}
-              >
-                Sell
+              <Select.Option key={"SELL"} value={"SELL"}>
+                {t("Sell")}
               </Select.Option>
             </Select>
           </Form.Item>
@@ -253,17 +283,22 @@ export default function INGTradesImportForm({
         <Col span={12}>
           <Form.Item
             name="transactionDate"
-            label="Date"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label={t("Date")}
+            rules={[
+              {
+                required: true,
+                message: t("Please input the transaction date")
+              }
+            ]}
             help="Format: DD/MM/YYYY"
           >
-            <Input placeholder="Date" />
+            <Input placeholder={t("Date")} />
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item name="isRightsTransaction">
             <Checkbox onChange={isRightsTransactionChange}>
-              Is a rights transaction
+              {t("Is a rights transaction")}
             </Checkbox>
           </Form.Item>
         </Col>
@@ -271,7 +306,7 @@ export default function INGTradesImportForm({
         <Col span={12}>
           <Form.Item>
             <Button type="primary" htmlType="submit" disabled={formSent}>
-              Add transaction
+              {t("Add transaction")}
             </Button>
           </Form.Item>
         </Col>

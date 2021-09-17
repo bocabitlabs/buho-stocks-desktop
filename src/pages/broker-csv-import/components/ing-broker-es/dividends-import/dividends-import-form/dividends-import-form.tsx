@@ -2,6 +2,7 @@ import { Button, Col, Input, message, Row, Select, Typography } from "antd";
 import { Form } from "antd";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
+import { useTranslation } from "react-i18next";
 import CurrencyService from "services/currencies/currencies-service";
 import DividendsTransactionsService from "services/dividends-transactions/dividends-transactions-service";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
@@ -14,7 +15,7 @@ import {
   getCompanyFromTransaction,
   getPriceInCompanyCurrency,
   getTotalAmountInCompanyCurrency
-} from "../utils";
+} from "../../utils";
 
 interface Props {
   inputData: Array<string>;
@@ -26,6 +27,7 @@ export default function INGDividendsImportForm({
   portfolio
 }: Props): ReactElement {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
   const [formSent, setFormSent] = useState(false);
   const key = "updatable";
   const transactionDate = moment(inputData[0], "DD/MM/YYYY");
@@ -70,7 +72,7 @@ export default function INGDividendsImportForm({
     if (added.changes) {
       if (company) {
         TransactionLogService.create({
-          type: "Dividends transaction",
+          type: t("Dividends transaction"),
           message: `Added dividends from  ING CSV: "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId
         });

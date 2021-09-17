@@ -5,7 +5,7 @@ import React, { ReactElement } from "react";
 import CsvImportContent from "./components/CsvImportContent/CsvImportContent";
 import CsvImportHeader from "./components/CsvImportHeader/CsvImportHeader";
 
-export default function CsvImport(): ReactElement {
+export default function BrokerCsvImport(): ReactElement {
   const exchangeRatesContext = useExchangeRatesContext();
 
   return (

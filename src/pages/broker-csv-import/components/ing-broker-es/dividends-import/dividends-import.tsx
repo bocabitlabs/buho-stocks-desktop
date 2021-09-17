@@ -1,8 +1,9 @@
 import { Typography } from "antd";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CSVReader } from "react-papaparse";
 import { IPortfolio } from "types/portfolio";
-import INGDividendsImportForm from "../INGDividendsImportForm/INGDividendsImportForm";
+import INGDividendsImportForm from "./dividends-import-form/dividends-import-form";
 
 interface Props {
   portfolio: IPortfolio;
@@ -10,8 +11,13 @@ interface Props {
 
 export const INGDividendsImport = ({ portfolio }: Props) => {
   const [data, setData] = useState([]);
+  const { t } = useTranslation();
+  const [uploaded, setUploaded] = useState(false);
+
   const validTransactionTypes = ["DIVIDENDO"];
+
   const handleOnFileLoad = (data: any) => {
+    setUploaded(true);
     const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/;
 
     const filteredData = data.filter((element: any) => {
@@ -32,13 +38,13 @@ export const INGDividendsImport = ({ portfolio }: Props) => {
     <div>
       <div style={{ marginBottom: 16 }}>
         <CSVReader onDrop={handleOnFileLoad} onError={handleOnError} noDrag>
-          <span>Click to upload.</span>
+          <span>{t("Click to upload a CSV file with dividends data from ING (es).")}</span>
         </CSVReader>
       </div>
       {data.length > 0 && (
         <div>
           <Typography.Title level={4}>
-            Importing dividends from ING:
+            {t("Importing dividends from ING")}:
           </Typography.Title>
           <ol>
             {data.map((element: any, key) => {
@@ -53,9 +59,9 @@ export const INGDividendsImport = ({ portfolio }: Props) => {
           </ol>
         </div>
       )}
-      {data.length === 0 && (
+      {uploaded && data.length === 0 && (
         <div>
-          <Typography.Title level={4}>No dividends found</Typography.Title>
+          <Typography.Title level={4}>{t("No dividends found")}</Typography.Title>
         </div>
       )}
     </div>

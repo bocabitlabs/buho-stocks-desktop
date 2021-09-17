@@ -25,7 +25,7 @@ import DividendsTransactionAdd from "pages/DividendsTransactionAdd/DividendsTran
 import DividendsTransactionEdit from "pages/DividendsTransactionEdit/DividendsTransactionEdit";
 import SharesTransactionEdit from "pages/SharesTransactionEdit/SharesTransactionEdit";
 import RightsTransactionEdit from "pages/RightsTransactionEdit/RightsTransactionEdit";
-import CsvImport from "pages/CsvImport/CsvImport";
+import CsvImport from "pages/broker-csv-import/broker-csv-import";
 import { usePortfoliosContext } from "hooks/portfolios/use-portfolios-context";
 import { PortfoliosContext } from "contexts/portfolios";
 import ImportExport from "pages/ImportExport/ImportExport";

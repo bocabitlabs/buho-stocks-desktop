@@ -1,39 +1,41 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import React, { ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { breadcrumbItemRender } from "utils/headers-utils";
 
 export default function CsvImportHeader(): ReactElement {
+  const { t } = useTranslation();
 
   const routes = [
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
     {
       path: "/import-export",
       name: "import-export",
-      breadcrumbName: "Import & Export"
+      breadcrumbName: t("Import & Export")
     },
     {
       path: "/import",
       name: "import",
-      breadcrumbName: "Import"
+      breadcrumbName: t("Import")
     },
     {
       path: "/import/broker",
       name: "import-broker",
-      breadcrumbName: "Broker"
+      breadcrumbName: t("Broker")
     }
   ];
 
   return (
     <PageHeader
       className="site-page-header"
-      title="CSV Import"
+      title={t("CSV Import")}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender

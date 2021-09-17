@@ -21,7 +21,7 @@ export default function IBDividendsImportForm({
 }: Props): ReactElement {
   const [form] = Form.useForm();
   const [formSent, setFormSent] = useState(false);
-  const {get: getExchangeRate, exchangeRate} = useContext(ExchangeRatesContext)
+  const { get: getExchangeRate } = useContext(ExchangeRatesContext);
   const key = "updatable";
 
   const priceMatch = inputData[4].match(/[+-]?\d+(\.\d+)/);
