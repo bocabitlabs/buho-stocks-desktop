@@ -8,6 +8,7 @@ import { Menu } from "antd";
 import { SelectedPortfolioContext } from "contexts/selected-portfolio";
 import { SettingsContext } from "contexts/settings";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PortfolioSelector from "../PortfolioSelector/PortfolioSelector";
 
@@ -17,6 +18,8 @@ export default function PortfolioSelectorMenu(): ReactElement {
   const { toggleCollapsed,  } = useContext(SettingsContext);
   const { settings } = useContext(SettingsContext);
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const { t } = useTranslation();
+
 
   const openPortfolio = () => {
     if (selectedPortfolio) {
@@ -43,16 +46,16 @@ export default function PortfolioSelectorMenu(): ReactElement {
 
       <PortfolioSelector />
       <Menu.Item
-        title="Open the selected portfolio"
+        title={t("Open the selected portfolio")}
         key="open-portfolio"
         onClick={openPortfolio}
         disabled={selectedPortfolio === "" ? true : false}
         icon={<FolderOpenOutlined />}
       >
-        Open portfolio
+        {t("Open portfolio")}
       </Menu.Item>
       <Menu.Item
-        title="Add a portfolio"
+        title={t("Add portfolio")}
         onClick={() => history.push(`/add/portfolio/`)}
         key="add-portfolio"
         icon={<FolderAddOutlined />}
