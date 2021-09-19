@@ -4,17 +4,19 @@ import { MarketsContext } from "contexts/markets";
 import { IMarket } from "types/market";
 import { Link } from "react-router-dom";
 import CountryFlag from "components/CountryFlag/CountryFlag";
+import { useTranslation } from "react-i18next";
 
 export default function MarketListTable() {
   const { markets, getAll: fetchMarkets, deleteById: deleteMarketById } = useContext(MarketsContext);
   const key = "updatable";
+  const { t } = useTranslation();
 
   function confirm(recordId: string) {
     const result = deleteMarketById(recordId);
     if (result.changes) {
       fetchMarkets();
       message.success({
-        content: "Market has been deleted",
+        content: t("Market has been deleted"),
         key,
         duration: 2
       });
@@ -33,39 +35,39 @@ export default function MarketListTable() {
       )
     },
     {
-      title: "Name",
+      title: t("Name"),
       dataIndex: "name",
       key: "name",
       render: (text: string, record: any) => <Link to={`/markets/${record.id}/edit`}>{text}</Link>,
       sorter: (a: IMarket, b: IMarket) => a.name.localeCompare(b.name)
     },
     {
-      title: "Description",
+      title: t("Description"),
       dataIndex: "description",
       key: "description",
       sorter: (a: IMarket, b: IMarket) => a.description.localeCompare(b.description)
     },
     {
-      title: "Region",
+      title: t("Region"),
       dataIndex: "region",
       key: "region",
       render: (text: string, record: any) => (<CountryFlag code={text}/>),
       sorter: (a: IMarket, b: IMarket) => a.region.localeCompare(b.region)
     },
     {
-      title: "Opening Time",
+      title: t("Opening Time"),
       dataIndex: "openTime",
       key: "openTime",
       sorter: (a: IMarket, b: IMarket) => a.openTime.localeCompare(b.openTime)
     },
     {
-      title: "Closing Time",
+      title: t("Closing Time"),
       dataIndex: "closeTime",
       key: "closeTime",
       sorter: (a: IMarket, b: IMarket) => a.closeTime.localeCompare(b.closeTime)
     },
     {
-      title: "Action",
+      title: t("Action"),
       key: "action",
       render: (text: string, record: any) => (
         <Space size="middle">
