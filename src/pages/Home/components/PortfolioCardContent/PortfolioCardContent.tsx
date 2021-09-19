@@ -3,6 +3,7 @@ import { BaseType } from "antd/lib/typography/Base";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { IPortfolio } from "types/portfolio";
 import { StringUtils } from "utils/string-utils";
 
@@ -17,6 +18,7 @@ export default function PortfolioCardContent({
   const [currentPortfolio, setCurrentPortfolio] = useState<IPortfolio | null>(
     null
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     const result = getPortfolioById(portfolioId);
@@ -59,7 +61,7 @@ export default function PortfolioCardContent({
         <CountryFlag code={currentPortfolio.currencyCountryCode}/>
       }
     >
-      {currentPortfolio.companies.length} companies
+      {currentPortfolio.companies.length} {t("companies")}
       <Statistic
         value={portfolioValue}
         suffix={currentPortfolio.currencySymbol}

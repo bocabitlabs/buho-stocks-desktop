@@ -3,6 +3,7 @@ import { Button, Checkbox, Modal } from "antd";
 import ExchangeRatesAPIClient from "api/exchange-rates/exchange-rates-api-client";
 import moment from "moment";
 import React, { ReactElement, useState } from "react";
+import { useTranslation } from "react-i18next";
 import StockPriceService from "services/stock-prices/stock-prices-service";
 import { ICompany } from "types/company";
 import { StockPriceFormProps } from "types/stock-price";
@@ -20,7 +21,9 @@ export default function FetchStockPricesButton({
   const [force, setForce] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
+  const { t } = useTranslation();
   const [currentMessage, setCurrentMessage] = useState("Start Fetching");
+
 
   const handleOnClick = async () => {
     setLoading(true);
@@ -157,7 +160,7 @@ export default function FetchStockPricesButton({
       <Button
         icon={<ReloadOutlined />}
         onClick={showModal}
-        title={"Fetch stock prices"}
+        title={t("Fetch stock prices")}
       />
       <Modal
         title="Update stock prices"

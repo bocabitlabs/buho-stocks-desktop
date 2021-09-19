@@ -17,6 +17,7 @@ import {
 } from "@ant-design/icons";
 import { breadcrumbItemRender } from "utils/headers-utils";
 import CountryFlag from "components/CountryFlag/CountryFlag";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   portfolioId: string;
@@ -28,6 +29,7 @@ export default function PortfolioDetailsHeader({
   const history = useHistory();
   const { portfolio, getAll, getById } = useContext(PortfoliosContext);
   const key = "updatable";
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (portfolioId === undefined || portfolioId === null) {
@@ -40,7 +42,7 @@ export default function PortfolioDetailsHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
@@ -56,7 +58,7 @@ export default function PortfolioDetailsHeader({
     if (result.changes) {
       getAll();
       message.success({
-        content: "Portfolio has been deleted",
+        content: t("Portfolio has been deleted"),
         key,
         duration: 2
       });
@@ -90,7 +92,7 @@ export default function PortfolioDetailsHeader({
             history.push(`/portfolios/${portfolioId}/companies/add`);
           }}
         >
-          Company
+          {t("Company")}
         </Button>,
         <Button
           key={"company-view-logs"}
@@ -98,15 +100,15 @@ export default function PortfolioDetailsHeader({
           onClick={() => {
             history.push(`/portfolios/${portfolioId}/log`);
           }}
-          title="View company logs"
+          title={t("View company logs")}
         />,
         <Button
-        icon={<LineChartOutlined />}
-        onClick={() => {
-          history.push(`/portfolios/${portfolioId}/charts`);
-        }}
-        title="View portfolio charts"
-      />,
+          icon={<LineChartOutlined />}
+          onClick={() => {
+            history.push(`/portfolios/${portfolioId}/charts`);
+          }}
+          title={t("View portfolio charts")}
+        />,
         <Button
           key={"edit"}
           icon={<EditOutlined />}
@@ -114,18 +116,18 @@ export default function PortfolioDetailsHeader({
             history.push(`/portfolios/${portfolioId}/edit`);
           }}
         >
-          Edit
+          {t("Edit")}
         </Button>,
         <Popconfirm
           key={"portfolio-delete-header"}
           title="Delete this portfolio?"
           onConfirm={confirm}
           onCancel={cancel}
-          okText="Yes"
-          cancelText="No"
+          okText={t("Yes")}
+          cancelText={t("No")}
         >
           <Button icon={<DeleteOutlined />} danger>
-            Delete
+            {t("Delete")}
           </Button>
         </Popconfirm>
       ]}

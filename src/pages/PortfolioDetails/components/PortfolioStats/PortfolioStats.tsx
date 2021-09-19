@@ -4,6 +4,7 @@ import PortfolioYearlyEvolutionChartNivo from "components/PortfolioYearlyEvoluti
 import { PortfoliosContext } from "contexts/portfolios";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import PortfolioService from "services/portfolios/portfolios-service";
 import { ICompany } from "types/company";
 import { StringUtils } from "utils/string-utils";
@@ -22,8 +23,9 @@ export default function PortfolioStats(): ReactElement | null {
   ] = useState<number>(0);
 
   const [data, setData] = useState<any[]>([]);
-
   const { Option } = Select;
+  const { t } = useTranslation();
+
 
   function onChange(value: any) {
     setYear(value);
@@ -142,11 +144,11 @@ export default function PortfolioStats(): ReactElement | null {
             <Select
               showSearch
               style={{ width: 200 }}
-              placeholder="Select a year"
+              placeholder={t("Select a year")}
               onChange={onChange}
               defaultValue="all"
             >
-              <Option value="all">All</Option>
+              <Option value="all">{t("All")}</Option>
               {years.map((element) => (
                 <Option value={element} key={element}>
                   {element}
@@ -165,7 +167,7 @@ export default function PortfolioStats(): ReactElement | null {
       <Row gutter={24}>
         <Col span={4}>
           <Statistic
-            title="Invested"
+            title={t("Invested")}
             value={investmentPerYear}
             suffix={portfolio.currencySymbol}
             precision={2}
@@ -173,7 +175,7 @@ export default function PortfolioStats(): ReactElement | null {
         </Col>
         <Col span={4}>
           <Statistic
-            title="Portfolio Value"
+            title={t("Portfolio Value")}
             value={portfolioValue}
             suffix={portfolio.currencySymbol}
             precision={2}
@@ -181,7 +183,7 @@ export default function PortfolioStats(): ReactElement | null {
         </Col>
         <Col span={4}>
           <Statistic
-            title="Dividends"
+            title={t("Dividends")}
             value={dividendsPerYear}
             suffix={portfolio.currencySymbol}
             precision={2}
@@ -190,7 +192,7 @@ export default function PortfolioStats(): ReactElement | null {
         {year !== "all" && (
           <Col span={5}>
             <Statistic
-              title="Dividends per month"
+              title={t("Dividends per month")}
               value={dividendsPerMonth}
               suffix={portfolio.currencySymbol}
               precision={2}
@@ -199,7 +201,7 @@ export default function PortfolioStats(): ReactElement | null {
         )}
         <Col span={4}>
           <Statistic
-            title="Return"
+            title={t("Return")}
             value={portfolioReturnPercentage}
             suffix={"%"}
             precision={2}

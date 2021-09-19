@@ -10,6 +10,7 @@ import CompanyCardList from "./components/CompanyCardList/CompanyCardList";
 import PortfolioStats from "./components/PortfolioStats/PortfolioStats";
 import CompanyTableList from "./components/CompanyTableList/CompanyTableList";
 import { SettingsContext } from "contexts/settings";
+import { useTranslation } from "react-i18next";
 
 export interface IPortfolioRouteParams {
   id: string;
@@ -21,6 +22,8 @@ const PortfolioDetails = () => {
   const {setDefaultCompanyDisplayMode} = useContext(SettingsContext)
   const [displayMode, setDisplayMode] = useState("card")
   const history = useHistory();
+  const { t } = useTranslation();
+
   if (id === undefined) {
     history.push(`/`);
   }
@@ -50,8 +53,8 @@ const PortfolioDetails = () => {
           <PortfolioStats />
           <Row>
             <Switch
-              checkedChildren="Card view"
-              unCheckedChildren="Table view"
+              checkedChildren={t("Card view")}
+              unCheckedChildren={t("Table view")}
               defaultChecked={displayMode === "table"}
               onChange={toggle}
             />
