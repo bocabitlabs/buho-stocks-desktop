@@ -52,7 +52,7 @@ export default function AppSidebar(): ReactElement {
   const { settings } = useContext(SettingsContext);
   const [isCollapsed, setIsCollapsed] = useState(false)
   const sidebarRef = useRef(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [selectedKey, setSelectedKey] = useState(
     navLinks.find((item) => location.pathname.startsWith(item.path))?.key || ""

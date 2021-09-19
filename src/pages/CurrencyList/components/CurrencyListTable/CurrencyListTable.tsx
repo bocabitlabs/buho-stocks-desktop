@@ -4,17 +4,19 @@ import { CurrenciesContext } from "contexts/currencies";
 import { ICurrency } from "types/currency";
 import { Link } from "react-router-dom";
 import CountryFlag from "components/CountryFlag/CountryFlag";
+import { useTranslation } from "react-i18next";
 
 export default function CurrencyListTable() {
   const { currencies, getAll: getAllCurrencies, deleteById: deleteCurrencyById } = useContext(CurrenciesContext);
   const key = "updatable";
+  const { t } = useTranslation();
 
   function confirm(recordId: string) {
     const result = deleteCurrencyById(recordId);
     if (result.changes) {
       getAllCurrencies();
       message.success({
-        content: "Currency has been deleted",
+        content: t("Currency has been deleted"),
         key,
         duration: 2
       });
@@ -33,33 +35,33 @@ export default function CurrencyListTable() {
       )
     },
     {
-      title: "Name",
+      title: t("Name"),
       dataIndex: "name",
       key: "name",
       render: (text: string, record: any) => <Link to={`/currencies/${record.id}/edit`}>{text}</Link>,
       sorter: (a: ICurrency, b: ICurrency) => a.name.localeCompare(b.name),
     },
     {
-      title: "Abbreviation",
+      title: t("Abbreviation"),
       dataIndex: "abbreviation",
       key: "abbreviation",
       sorter: (a: ICurrency, b: ICurrency) => a.abbreviation.localeCompare(b.abbreviation),
     },
     {
-      title: "Symbol",
+      title: t("Symbol"),
       dataIndex: "symbol",
       key: "symbol",
       sorter: (a: ICurrency, b: ICurrency) => a.symbol.localeCompare(b.symbol),
     },
     {
-      title: "Region",
+      title: t("Region"),
       dataIndex: "country",
       key: "country",
       render: (text: string, record: any) => (<CountryFlag code={text}/>),
       sorter: (a: ICurrency, b: ICurrency) => a.country.localeCompare(b.country)
     },
     {
-      title: "Action",
+      title: t("Action"),
       key: "action",
       render: (text: string, record: any) => (
         <Space size="middle">
@@ -70,7 +72,7 @@ export default function CurrencyListTable() {
             okText="Yes"
             cancelText="No"
           >
-            <Button danger type="text">Delete</Button>
+            <Button danger type="text">{t("Delete")}</Button>
           </Popconfirm>
         </Space>
       )
