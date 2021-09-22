@@ -1,6 +1,7 @@
 import { ResponsiveLine } from "@nivo/line";
 import { Spin, Typography } from "antd";
 import React, { ReactElement, useEffect, useLayoutEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { IPortfolio } from "types/portfolio";
 import { StringUtils } from "utils/string-utils";
 
@@ -18,6 +19,8 @@ export default function PortfolioReturnChartNivo({
   const [chartData, setChartData] = useState<any[]>([]);
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+  const { t } = useTranslation();
+
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);
@@ -55,11 +58,11 @@ export default function PortfolioReturnChartNivo({
 
       const newData = [
         {
-          id: "with dividends",
+          id: t("with dividends"),
           data: dataOne
         },
         {
-          id: "no dividends",
+          id: t("without dividends"),
           data: dataTwo
         }
       ];
@@ -75,7 +78,7 @@ export default function PortfolioReturnChartNivo({
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        <Typography.Title level={3}>Net Returns</Typography.Title>
+        <Typography.Title level={3}>{t("Net Returns")}</Typography.Title>
         <div style={{ height: 400, width: width - sidebarWidth - 50 }}>
           <ResponsiveLine
             data={chartData}
@@ -94,7 +97,7 @@ export default function PortfolioReturnChartNivo({
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: `amount ${portfolio.currencySymbol}`,
+              legend: `${t("value")} ${portfolio.currencySymbol}`,
               legendOffset: -40,
               legendPosition: "middle"
             }}

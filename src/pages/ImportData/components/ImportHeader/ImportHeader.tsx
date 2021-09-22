@@ -1,34 +1,37 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import React, { ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { breadcrumbItemRender } from "utils/headers-utils";
 
 
 export default function ImportDataHeader(): ReactElement {
+  const { t } = useTranslation();
+
   const routes = [
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
     {
       path: "/import-export",
       name: "import-export",
-      breadcrumbName: "Import & Export"
+      breadcrumbName: t("Import & Export")
     },
     {
       path: "/import",
       name: "import",
-      breadcrumbName: "Import data"
+      breadcrumbName: t("Import data")
     }
   ];
 
   return (
     <PageHeader
       className="site-page-header"
-      title="Import data"
+      title={t("Import data")}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender

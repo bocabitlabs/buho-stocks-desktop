@@ -17,6 +17,7 @@ export default function ColorSelector({
 
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);

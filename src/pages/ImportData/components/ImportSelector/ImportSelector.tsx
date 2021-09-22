@@ -1,11 +1,14 @@
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Divider } from "antd";
 import React, { ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
 
 export default function ImportDataSelector(): ReactElement {
   const history = useHistory();
+  const { t } = useTranslation();
+
   return (
     <div>
       <Button
@@ -14,16 +17,16 @@ export default function ImportDataSelector(): ReactElement {
         icon={<DownloadOutlined />}
         size="large"
       >
-        Import App Data
+        {t("Import App Data")}
       </Button>
-      <Divider type="vertical">OR</Divider>
+      <Divider type="vertical">{t("OR")}</Divider>
       <Button
         onClick={() => history.push('/import/broker')}
         type="primary"
         icon={<DownloadOutlined />}
         size="large"
       >
-        Import from Broker
+        {t("Import from Broker")}
       </Button>
     </div>
   );

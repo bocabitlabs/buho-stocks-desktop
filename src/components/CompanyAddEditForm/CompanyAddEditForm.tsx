@@ -16,6 +16,7 @@ import { CompaniesContext } from "contexts/companies";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import CountrySelector from "components/CountrySelector/CountrySelector";
 import ColorSelector from "components/ColorSelector/ColorSelector";
+import { useTranslation } from "react-i18next";
 
 interface CompanyAddEditFormProps {
   portfolioId: string;
@@ -33,6 +34,8 @@ function CompanyAddEditForm({
   const { currencies } = useContext(CurrenciesContext);
   const { markets } = useContext(MarketsContext);
   const { sectors } = useContext(SectorsContext);
+  const { t } = useTranslation();
+
   const {
     company,
     getById: getCompanyById,
@@ -95,18 +98,18 @@ function CompanyAddEditForm({
     if (changes.changes) {
       if (!companyId) {
         TransactionLogService.create({
-          type: "Add company",
-          message: `Added company "${newCompany.name} (${newCompany.ticker})"`,
+          type: t("Add company"),
+          message: `${t("Added company")} "${newCompany.name} (${newCompany.ticker})"`,
           portfolioId: +newCompany.portfolioId
         });
-        message.success({ content: "Company has been added", key });
+        message.success({ content: t("Company has been added"), key });
         history.push(`/portfolios/${portfolioId}`);
       } else {
-        message.success({ content: "Company has been updated", key });
+        message.success({ content: t("Company has been updated"), key });
         history.push(`/portfolios/${portfolioId}/companies/${companyId}`);
       }
     } else {
-      message.error({ content: "Unable to add/edit the  company", key });
+      message.error({ content: t("Unable to add/edit the  company"), key });
     }
   };
 
@@ -144,7 +147,7 @@ function CompanyAddEditForm({
     >
       <Form.Item
         name="name"
-        label="Company Name"
+        label={t("Company Name")}
         rules={[
           { required: true, message: "Please input the name of the company" }
         ]}
@@ -153,7 +156,7 @@ function CompanyAddEditForm({
       </Form.Item>
       <Form.Item
         name="ticker"
-        label="Main Ticker"
+        label={t("Main Ticker")}
         rules={[
           { required: true, message: "Please input the company's ticker" }
         ]}
@@ -162,14 +165,14 @@ function CompanyAddEditForm({
       </Form.Item>
       <Form.Item
         name="alternativeTickers"
-        label="Alternative tickers"
+        label={t("Alternative tickers")}
         help={
-          "These tickers will used to get real time information of the current company."
+          t("These tickers will used to get real time information of the current company.")
         }
       >
         <Input type="text" placeholder="MSFT, IBE.MC, UNA.AS" />
       </Form.Item>
-      <Form.Item name="countryCode" label="Country">
+      <Form.Item name="countryCode" label={t("Country")}>
         <CountrySelector
           handleChange={handleCountryChange}
           initialValue={company?.countryCode}
@@ -177,9 +180,9 @@ function CompanyAddEditForm({
       </Form.Item>
       <Form.Item
         name="broker"
-        label="Broker"
+        label={t("Broker")}
         rules={[
-          { required: true, message: "Please input the company's broker" }
+          { required: true, message: t("Please input the company's broker") }
         ]}
       >
         <Input type="text" />
@@ -187,7 +190,7 @@ function CompanyAddEditForm({
       <Form.Item
         label={
           <div>
-            Color:{" "}
+            {t("Color")}:{" "}
             <svg
               width="35"
               height="35"
@@ -209,12 +212,12 @@ function CompanyAddEditForm({
       >
         <ColorSelector color={color} handleColorChange={handleColorChange} />
       </Form.Item>
-      <Form.Item label="Closed" name="closed" valuePropName="checked">
+      <Form.Item label={t("Close positions")} name="closed" valuePropName="checked">
         <Switch />
       </Form.Item>
-      <Form.Item name="sectorId" label="Sector" rules={[{ required: true }]}>
+      <Form.Item name="sectorId" label={t("Sector")} rules={[{ required: true }]}>
         <Select
-          placeholder="Select a option and change input text above"
+          placeholder={t("Select an option")}
           allowClear
         >
           {sectors &&
@@ -230,11 +233,11 @@ function CompanyAddEditForm({
       </Form.Item>
       <Form.Item
         name="currencyId"
-        label="Currency"
+        label={t("Currency")}
         rules={[{ required: true }]}
       >
         <Select
-          placeholder="Select a option and change input text above"
+          placeholder="Select an option"
           allowClear
         >
           {currencies &&
@@ -250,12 +253,14 @@ function CompanyAddEditForm({
       </Form.Item>
       <Form.Item
         name="dividendsCurrencyId"
-        label="Dividends currency"
-        rules={[{ required: true }]}
+        label={t("Dividends currency")}
+        rules={[{ required: false }]}
+        help={t("Select the currency of the dividends if it's different from the company's one")}
       >
         <Select
-          placeholder="Select the currency of the dividends if it's different from the company's one"
+          placeholder={t("Select an option")}
           allowClear
+
         >
           {currencies &&
             currencies.map((currency: ICurrency, index: number) => (
@@ -268,9 +273,9 @@ function CompanyAddEditForm({
             ))}
         </Select>
       </Form.Item>
-      <Form.Item name="marketId" label="Market" rules={[{ required: true }]}>
+      <Form.Item name="marketId" label={t("Market")} rules={[{ required: true }]}>
         <Select
-          placeholder="Select a option and change input text above"
+          placeholder={t("Select a option")}
           allowClear
         >
           {markets &&
@@ -284,19 +289,19 @@ function CompanyAddEditForm({
             ))}
         </Select>
       </Form.Item>
-      <Form.Item name="url" label="url">
+      <Form.Item name="url" label={t("URL")}>
         <Input type="text" />
       </Form.Item>
       <Form.Item
         name="description"
-        label="Description"
+        label={t("Description")}
         rules={[{ required: false, message: "" }]}
       >
         <TextArea placeholder="" />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          {companyId ? "Edit Company" : "Add Company"}
+          {companyId ? t("Edit company") : t("Add company")}
         </Button>
       </Form.Item>
     </Form>

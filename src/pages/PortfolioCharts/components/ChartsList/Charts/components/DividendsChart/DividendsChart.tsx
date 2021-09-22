@@ -4,6 +4,7 @@ import { ResponsivePie } from "@nivo/pie";
 import { IPortfolio } from "types/portfolio";
 import fewColors from "utils/colors";
 import { StringUtils } from "utils/string-utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   data: any;
@@ -17,6 +18,7 @@ export default function CurrenciesChart({
   width
 }: Props): ReactElement {
   const [chartData, setChartData] = useState<any[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const tempData = [...data];
@@ -35,7 +37,7 @@ export default function CurrenciesChart({
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        <Typography.Title level={3}>Dividends by company</Typography.Title>
+        <Typography.Title level={3}>{t("Dividends by company")}</Typography.Title>
         <div style={{ height: 600, width: width-300 }}>
           <ResponsivePie
             data={chartData}

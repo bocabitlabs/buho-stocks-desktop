@@ -3,6 +3,7 @@ import { CompaniesContext } from "contexts/companies";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import moment from "moment";
 import React, { useContext, useLayoutEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ISharesTransaction } from "types/shares-transaction";
@@ -23,6 +24,8 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
 
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+  const { t } = useTranslation();
+
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);
@@ -53,7 +56,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
 
       if (company) {
         TransactionLogService.create({
-          type: "Shares transaction",
+          type: t("Shares transaction"),
           message: `Removed shares transaction "${company.name} (${company.ticker})": ${recordId}`,
           portfolioId: +company.portfolioId
         });
@@ -61,13 +64,13 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
 
       getAll();
       message.success({
-        content: "Share has been deleted",
+        content: t("Share has been deleted"),
         key,
         duration: 2
       });
     } else {
       message.error({
-        content: "Unable to remove shares",
+        content: t("Unable to remove shares"),
         key,
         duration: 2
       });
@@ -83,7 +86,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
       render: (text: string, record: any) => buySellFormatter(text)
     },
     {
-      title: "Date",
+      title: t("Date"),
       dataIndex: "transactionDate",
       key: "transactionDate",
       width: 70,
@@ -91,14 +94,14 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
         moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
-      title: "Number of Shares",
+      title: t("Number of Shares"),
       dataIndex: "sharesNumber",
       key: "sharesNumber",
       width: 70,
       render: (text: string, record: any) => text
     },
     {
-      title: "Price (g)",
+      title: t("Gross price"),
       dataIndex: "priceShare",
       key: "priceShare",
       width: 70,
@@ -106,7 +109,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
         `${text.toFixed(2)} ${record.currencySymbol}`
     },
     {
-      title: "Commission",
+      title: t("Commission"),
       dataIndex: "commission",
       key: "commission",
       width: 70,
@@ -114,7 +117,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
         `${text.toFixed(2)} ${record.currencySymbol}`
     },
     {
-      title: "Total",
+      title: t("Total"),
       dataIndex: "total",
       key: "total",
       width: 70,
@@ -122,24 +125,24 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
         `${text.toFixed(2)} ${record.currencySymbol}`
     },
     {
-      title: "Action",
+      title: t("Action"),
       key: "action",
       width: 70,
       render: (text: string, record: any) => (
         <Space>
           <Popconfirm
-            key={`sector-delete-${record.key}`}
-            title={`Delete sector ${record.name}?`}
+            key={`shares-delete-${record.key}`}
+            title={`Delete shares transaction ${record.name}?`}
             onConfirm={() => confirm(record.key)}
-            okText="Yes"
-            cancelText="No"
+            okText={t("Yes")}
+            cancelText={t("No")}
           >
-            <Button>Delete</Button>
+            <Button>{t("Delete")}</Button>
           </Popconfirm>
           <Link
             to={`/portfolios/${portfolioId}/companies/${companyId}/shares/${record.key}/edit`}
           >
-            Edit
+            {t("Edit")}
           </Link>
         </Space>
       )

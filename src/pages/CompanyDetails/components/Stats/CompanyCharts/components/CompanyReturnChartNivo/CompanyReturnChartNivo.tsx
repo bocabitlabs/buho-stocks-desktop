@@ -1,6 +1,7 @@
 import { ResponsiveLine } from "@nivo/line";
 import { Spin, Typography } from "antd";
 import React, { ReactElement, useEffect, useLayoutEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ICompany } from "types/company";
 import { StringUtils } from "utils/string-utils";
 
@@ -16,6 +17,8 @@ export default function PortfolioReturnChartNivo({
   const [chartData, setChartData] = useState<any[]>([]);
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+  const { t } = useTranslation();
+
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);
@@ -60,15 +63,15 @@ export default function PortfolioReturnChartNivo({
 
       const newData = [
         {
-          id: "portfolio value",
+          id: t("portfolio value"),
           data: dataOne
         },
         {
-          id: "+ dividends",
+          id: t("+ dividends"),
           data: dataTwo
         },
         {
-          id: "+ dividends cumulative",
+          id: t("+ dividends cumulative"),
           data: data3
         }
       ];

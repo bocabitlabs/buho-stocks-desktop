@@ -1,5 +1,6 @@
 import { Modal } from "antd";
 import React, { ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import StockPriceList from "../StockPriceList/StockPriceList";
 
 interface Props {
@@ -13,6 +14,9 @@ export default function StockPriceListModal({
   visible,
   setVisible
 }: Props): ReactElement {
+
+  const { t } = useTranslation();
+
   const handleOk = (e: any) => {
     setVisible(false);
   };
@@ -23,7 +27,7 @@ export default function StockPriceListModal({
 
   return (
     <Modal
-      title="Stock prices"
+      title={t("Stock prices")}
       visible={visible}
       onOk={handleOk}
       onCancel={handleCancel}

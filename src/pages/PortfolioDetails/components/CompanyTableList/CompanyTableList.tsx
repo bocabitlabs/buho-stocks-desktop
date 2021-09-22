@@ -3,6 +3,7 @@ import CountryFlag from "components/CountryFlag/CountryFlag";
 import { CompaniesContext } from "contexts/companies";
 import { Company } from "models/company";
 import React, { ReactElement, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { ICompany } from "types/company";
 import { StringUtils } from "utils/string-utils";
@@ -13,10 +14,11 @@ interface Props {
 
 export default function CompanyTableList({ portfolioId }: Props): ReactElement {
   const { companies } = useContext(CompaniesContext);
+  const { t } = useTranslation();
 
   const columns: any = [
     {
-      title: "Country",
+      title: t("Country"),
       dataIndex: "countryCode",
       key: "countryCode",
       render: (text: string, record: any) => <CountryFlag code={text} />,
@@ -36,7 +38,7 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
       )
     },
     {
-      title: "Name",
+      title: t("Name"),
       dataIndex: "name",
       key: "name",
       render: (text: string, record: any) => (
@@ -53,7 +55,7 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
                 style={{ fontSize: "0.8em" }}
                 title={record.superSectorName}
               >
-                {record.superSectorName}
+                {t(record.superSectorName)}
               </Typography.Text>
             </>
           )}
@@ -62,21 +64,21 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
       sorter: (a: Company, b: Company) => a.name.localeCompare(b.name)
     },
     {
-      title: "Ticker",
+      title: t("Ticker"),
       dataIndex: "ticker",
       key: "ticker",
       render: (text: string, record: any) => text,
       sorter: (a: Company, b: Company) => a.ticker.localeCompare(b.ticker)
     },
     {
-      title: "Shares",
+      title: t("Shares"),
       dataIndex: "shares",
       key: "shares",
       render: (text: string, record: any) => text,
       sorter: (a: any, b: any) => a.shares - b.shares
     },
     {
-      title: "Invested",
+      title: t("Invested"),
       dataIndex: "invested",
       key: "invested",
       render: (text: string, record: any) =>
@@ -88,7 +90,7 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
       sorter: (a: any, b: any) => a.invested - b.invested
     },
     {
-      title: "Portfolio value",
+      title: t("Portfolio Value"),
       dataIndex: "portfolioValue",
       key: "portfolioValue",
       render: (text: string, record: any) =>
@@ -100,7 +102,7 @@ export default function CompanyTableList({ portfolioId }: Props): ReactElement {
       sorter: (a: any, b: any) => a.portfolioValue - b.portfolioValue
     },
     {
-      title: "Return",
+      title: t("Return"),
       dataIndex: "return",
       key: "return",
       render: (text: string, record: any) =>

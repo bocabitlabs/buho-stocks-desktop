@@ -4,6 +4,7 @@ import React, {
   useRef,
   useState
 } from "react";
+import { useTranslation } from "react-i18next";
 import { ImportIds } from "../import-ids";
 
 interface Props {
@@ -19,72 +20,73 @@ export default function ProgressSteps({
 }: Props): React.ReactElement {
   const myRef = useRef<HTMLDivElement>(null);
   const [importSteps, setImportSteps] = useState<any>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     let steps = [
       {
         id: 0,
         name: "start",
-        title: "Start"
+        title: t("Start")
       },
       {
         id: ImportIds.sectors,
         name: "sectors",
-        title: "Sectors",
-        content: "Waiting"
+        title: t("Sectors"),
+        content: t("Waiting")
       },
       {
         id: ImportIds.markets,
         name: "markets",
-        title: "Markets",
-        content: "Waiting"
+        title: t("Markets"),
+        content: t("Waiting")
       },
       {
         id: ImportIds.currencies,
         name: "currencies",
-        title: "Currencies",
-        content: "Waiting"
+        title: t("Currencies"),
+        content: t("Waiting")
       },
       {
         id: ImportIds.portfolios,
         name: "portfolios",
-        title: "Portfolios",
-        content: "Waiting"
+        title: t("Portfolios"),
+        content: t("Waiting")
       },
       {
         id: ImportIds.companies,
         name: "companies",
-        title: "Companies",
-        content: "Waiting"
+        title: t("Companies"),
+        content: t("Waiting")
       },
       {
         id: ImportIds.shares,
         name: "shares",
-        title: "Shares transactions",
-        content: "Waiting"
+        title: t("Shares transactions"),
+        content: t("Waiting")
       },
       {
         id: ImportIds.rights,
         name: "rights",
-        title: "Rights transactions",
-        content: "Waiting"
+        title: t("Rights transactions"),
+        content: t("Waiting")
       },
       {
         id: ImportIds.dividends,
         name: "dividends",
-        title: "Dividends transactions",
-        content: "Waiting"
+        title: t("Dividends transactions"),
+        content: t("Waiting")
       },
       {
         id: ImportIds.stockPrices,
         name: "stockPrices",
-        title: "Stock prices",
-        content: "Waiting"
+        title: t("Stock prices"),
+        content: t("Waiting")
       },
       {
         id: 11,
         name: "completed",
-        title: "Done"
+        title: t("Done")
       }
     ];
     const newSteps = steps.filter((element) => {

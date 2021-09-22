@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ElementsFoundProps {
   sectorsCount: number;
@@ -17,19 +18,21 @@ interface Props {
 }
 
 export default function FoundItems({ elementsFound }: Props): ReactElement {
+  const { t } = useTranslation();
+
   return (
     <div>
       Found:
       <ul>
-        <li>{elementsFound.sectorsCount} sectors.</li>
-        <li>{elementsFound.marketsCount} markets.</li>
-        <li>{elementsFound.currenciesCount} currencies.</li>
-        <li>{elementsFound.portfoliosCount} portfolios.</li>
-        <li>{elementsFound.companiesCount} companies.</li>
-        <li>{elementsFound.sharesCount} shares transactions.</li>
-        <li>{elementsFound.rightsCount} rights transactions.</li>
-        <li>{elementsFound.dividendsCount} dividends transactions.</li>
-        <li>{elementsFound.stockPricesCount} stock prices.</li>
+        <li>{elementsFound.sectorsCount} {t("sectors")}.</li>
+        <li>{elementsFound.marketsCount} {t("markets")}.</li>
+        <li>{elementsFound.currenciesCount} {t("currencies")}.</li>
+        <li>{elementsFound.portfoliosCount} {t("portfolios")}.</li>
+        <li>{elementsFound.companiesCount} {t("companies")}.</li>
+        <li>{elementsFound.sharesCount} {t("shares transactions")}.</li>
+        <li>{elementsFound.rightsCount} {t("rights transactions")}.</li>
+        <li>{elementsFound.dividendsCount} {t("dividends transactions")}.</li>
+        <li>{elementsFound.stockPricesCount} {t("stock prices")}.</li>
       </ul>
     </div>
   );

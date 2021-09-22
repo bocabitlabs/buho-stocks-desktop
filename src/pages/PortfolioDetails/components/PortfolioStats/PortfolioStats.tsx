@@ -26,7 +26,6 @@ export default function PortfolioStats(): ReactElement | null {
   const { Option } = Select;
   const { t } = useTranslation();
 
-
   function onChange(value: any) {
     setYear(value);
     if (portfolio !== null) {
@@ -89,7 +88,9 @@ export default function PortfolioStats(): ReactElement | null {
       console.debug("Get values for all");
       let newDividendsPerYear = portfolio.dividends.getDividends(true);
       let newDividendsPerMonth = 0;
-      let newTotalInvestedPerYear = portfolio.investments.getTotalInvested(true);
+      let newTotalInvestedPerYear = portfolio.investments.getTotalInvested(
+        true
+      );
       let newValue = portfolio.value.getPortfolioValue(true);
       const newPortfolioReturnPercentage = portfolio.returns.getReturnWithDividendsPercentage(
         true
@@ -117,7 +118,10 @@ export default function PortfolioStats(): ReactElement | null {
         value.toString(),
         true
       );
-      let newValue = portfolio.value.getPortfolioValueForYear(value.toString(), true);
+      let newValue = portfolio.value.getPortfolioValueForYear(
+        value.toString(),
+        true
+      );
 
       const newPortfolioReturnPercentage = portfolio.returns.getReturnPercentageWithDividendsForYearCumulative(
         value.toString(),
@@ -175,7 +179,7 @@ export default function PortfolioStats(): ReactElement | null {
         </Col>
         <Col span={4}>
           <Statistic
-            title={t("Portfolio Value")}
+            title={t("Portfolio value")}
             value={portfolioValue}
             suffix={portfolio.currencySymbol}
             precision={2}

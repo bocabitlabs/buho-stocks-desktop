@@ -7,6 +7,7 @@ import { StringUtils } from "utils/string-utils";
 import { IDividendsTransaction } from "types/dividends-transaction";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { CompaniesContext } from "contexts/companies";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   portfolioId: string;
@@ -19,6 +20,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
   );
   const { company } = useContext(CompaniesContext);
   const history = useHistory();
+  const { t } = useTranslation();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
@@ -50,7 +52,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
     if (result.changes) {
       if (company) {
         TransactionLogService.create({
-          type: "Dividends transaction",
+          type: t("Dividends transaction"),
           message: `Removed dividends transaction "${company.name} (${company.ticker})": ${recordId}`,
           portfolioId: +company.portfolioId
         });
@@ -59,7 +61,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
       history.push({
         pathname: `/portfolios/${portfolioId}/companies/${companyId}`,
         state: {
-          message: { type: "success", text: "Dividend has been deleted" }
+          message: { type: "success", text: t("Dividends transaction has been deleted") }
         }
       });
     }
@@ -67,7 +69,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
 
   const columns = [
     {
-      title: "Date",
+      title: t("Date"),
       dataIndex: "transactionDate",
       key: "transactionDate",
       width: 70,
@@ -75,13 +77,13 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
         moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
-      title: "Number of Shares",
+      title: t("Number of Shares"),
       dataIndex: "count",
       key: "count",
       width: 70
     },
     {
-      title: "Price (g)",
+      title: t("Gross price"),
       dataIndex: "price",
       key: "price",
       width: 70,
@@ -89,7 +91,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
         StringUtils.getAmountWithSymbol(text, 2, record.dividendsCurrencySymbol)
     },
     {
-      title: "Commission",
+      title: t("Commission"),
       dataIndex: "commission",
       key: "commission",
       width: 70,
@@ -97,7 +99,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
         StringUtils.getAmountWithSymbol(text, 2, record.dividendsCurrencySymbol)
     },
     {
-      title: "Total",
+      title: t("Total"),
       dataIndex: "total",
       key: "total",
       width: 70,
@@ -105,7 +107,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
         StringUtils.getAmountWithSymbol(text, 2, record.dividendsCurrencySymbol)
     },
     {
-      title: "Action",
+      title: t("Action"),
       key: "action",
       width: 70,
       render: (text: string, record: any) => (
@@ -114,15 +116,15 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
             key={`sector-delete-${record.key}`}
             title={`Delete sector ${record.name}?`}
             onConfirm={() => confirm(record.key)}
-            okText="Yes"
-            cancelText="No"
+            okText={t("Yes")}
+            cancelText={t("No")}
           >
-            <Button>Delete</Button>
+            <Button>{t("Delete")}</Button>
           </Popconfirm>
           <Link
             to={`/portfolios/${portfolioId}/companies/${companyId}/dividends/${record.key}/edit`}
           >
-            Edit
+            {t("Edit")}
           </Link>
         </Space>
       )

@@ -9,6 +9,7 @@ import ShareListTable from "../ShareListTable/ShareListTable";
 import DividendListTable from "../DividendListTable/DividendListTable";
 import RightsTransactionsTable from "../RightsTransactionsTable/RightsTransactionsTable";
 import Stats from "../Stats/Stats";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   companyId: string;
@@ -22,6 +23,7 @@ export default function CompanyDetailsContent({
   const history = useHistory();
   let query = useQueryParameters();
   const { company, getById: fetchCompany } = useContext(CompaniesContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchCompany(companyId);
@@ -32,7 +34,7 @@ export default function CompanyDetailsContent({
       {company && (
         <>
           <Typography.Paragraph>
-            {company.sectorName} - {company.superSectorName}
+            {t(company.sectorName)} - {t(company.superSectorName)}
           </Typography.Paragraph>
           <Typography.Paragraph>
             {company.description !== "undefined" &&
@@ -47,7 +49,7 @@ export default function CompanyDetailsContent({
               console.debug("Tab click");
             }}
           >
-            <Tabs.TabPane tab="Shares" key="shares">
+            <Tabs.TabPane tab={t("Shares")} key="shares">
               <Button
                 key={"add-shares-button"}
                 type={"primary"}
@@ -58,14 +60,14 @@ export default function CompanyDetailsContent({
                 }}
                 style={{ marginBottom: 16 }}
               >
-                + Shares
+                {t("+ Shares")}
               </Button>
               <ShareListTable
                 portfolioId={company.portfolioId}
                 companyId={companyId}
               />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Dividends" key="dividends">
+            <Tabs.TabPane tab={t("Dividends")} key="dividends">
               <Button
                 key={"add-dividends-button"}
                 type={"primary"}
@@ -76,14 +78,14 @@ export default function CompanyDetailsContent({
                 }}
                 style={{ marginBottom: 16 }}
               >
-                + Dividends
+                {t("+ Dividends")}
               </Button>
               <DividendListTable
                 portfolioId={company.portfolioId}
                 companyId={companyId}
               />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Rights" key="rights">
+            <Tabs.TabPane tab={t("Rights")} key="rights">
               <Button
                 key={"add-rights-button"}
                 type={"primary"}
@@ -94,7 +96,7 @@ export default function CompanyDetailsContent({
                 }}
                 style={{ marginBottom: 16 }}
               >
-                + Rights
+                {t("+ Rights")}
               </Button>
               <RightsTransactionsTable
                 portfolioId={company.portfolioId}

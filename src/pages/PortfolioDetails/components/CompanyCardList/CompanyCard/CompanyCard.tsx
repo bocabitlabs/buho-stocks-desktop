@@ -3,6 +3,7 @@ import { BaseType } from "antd/lib/typography/Base";
 import CountryFlag from "components/CountryFlag/CountryFlag";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import CompanyService from "services/companies/companies-service";
 import { ICompany } from "types/company";
 import { StringUtils } from "utils/string-utils";
@@ -14,6 +15,8 @@ interface Props {
 export default function CompanyCard({ companyId }: Props): ReactElement | null {
   const [company, setCompany] = useState<ICompany | null>(null);
   const { portfolio } = useContext(PortfoliosContext);
+  const { t } = useTranslation();
+
 
   useEffect(() => {
     const comp = CompanyService.getById(companyId);
@@ -47,7 +50,7 @@ export default function CompanyCard({ companyId }: Props): ReactElement | null {
         extra={<CountryFlag code={company.countryCode} />}
         title={company.name}
       >
-        {company.shares.getSharesCount()} shares
+        {company.shares.getSharesCount()} {t("shares")}
         <Statistic
           value={portfolioValue}
           suffix={portfolio.currencySymbol}

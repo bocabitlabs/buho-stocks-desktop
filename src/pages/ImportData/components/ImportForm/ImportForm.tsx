@@ -1,9 +1,12 @@
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Divider } from "antd";
 import React, { ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 
 
 export default function ImportDataForm(): ReactElement {
+  const { t } = useTranslation();
+
   return (
     <div>
       <Button
@@ -12,16 +15,16 @@ export default function ImportDataForm(): ReactElement {
         icon={<DownloadOutlined />}
         size="large"
       >
-        Import App Data
+        {t("Import App Data")}
       </Button>
-      <Divider type="vertical">OR</Divider>
+      <Divider type="vertical">{t("OR")}</Divider>
       <Button
         onClick={() => null}
         type="primary"
         icon={<DownloadOutlined />}
         size="large"
       >
-        Import from Broker
+        {t("Import from Broker")}
       </Button>
     </div>
   );

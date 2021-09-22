@@ -23,6 +23,7 @@ import StockPriceListModal from "../StockPriceListModal/StockPriceListModal";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { breadcrumbItemRender } from "utils/headers-utils";
 import CountryFlag from "components/CountryFlag/CountryFlag";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   portfolioId: string;
@@ -43,6 +44,8 @@ export default function CompanyDetailsHeader({
   const [addStockModalVisible, setAddStockModalVisible] = useState(false);
   const [listStockModalVisible, setListStockModalVisible] = useState(false);
   const key = "updatable";
+  const { t } = useTranslation();
+
 
   useEffect(() => {
     fetchCompany(companyId);
@@ -56,7 +59,7 @@ export default function CompanyDetailsHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
@@ -87,14 +90,14 @@ export default function CompanyDetailsHeader({
           showAddStockPriceModal();
         }}
       >
-        Add stock price
+        {t("Add stock price")}
       </Menu.Item>
       <Menu.Item
         onClick={() => {
           showListStockPriceModal();
         }}
       >
-        List stock prices
+        {t("List stock prices")}
       </Menu.Item>
     </Menu>
   );
@@ -125,13 +128,13 @@ export default function CompanyDetailsHeader({
     const result = deleteCompany(companyId);
     if (result.changes) {
       TransactionLogService.create({
-        type: "Remove company",
+        type: t("Remove company"),
         message: `Removed company "${comapnyName} (${companyticker}) - #${companyId}"`,
         portfolioId: +portfolioId
       });
       fetchCompanies(portfolioId);
       message.success({
-        content: "Company has been deleted",
+        content: t("Company has been deleted"),
         key,
         duration: 2
       });
@@ -167,17 +170,17 @@ export default function CompanyDetailsHeader({
               );
             }}
           >
-            Edit
+            {t("Edit")}
           </Button>,
           <Popconfirm
             key={"delete-header"}
-            title="Delete this company? All it's content will be removed too."
+            title={t("Delete this company? All it's content will be removed too.")}
             onConfirm={confirm}
-            okText="Yes"
-            cancelText="No"
+            okText={t("Yes")}
+            cancelText={t("No")}
           >
             <Button icon={<DeleteOutlined />} danger>
-              Delete
+              {t("Delete")}
             </Button>
           </Popconfirm>,
           <DropdownMenu key="more" />

@@ -3,6 +3,7 @@ import { Select } from "antd";
 
 import FlagIcon from "utils/flag-icon";
 import countries from "utils/countries";
+import { useTranslation } from "react-i18next";
 
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function CountrySelector({ handleChange, initialValue }: Props): ReactElement {
+  const { t } = useTranslation();
 
   const getLabel = (element: any) => (
     <div className="demo-option-label-item">
@@ -28,7 +30,7 @@ export default function CountrySelector({ handleChange, initialValue }: Props): 
   return (
     <div>
       <Select
-        placeholder="Select a country"
+        placeholder={t("Select a country")}
         style={{ width: "100%" }}
         onChange={handleChange}
         optionLabelProp="label"

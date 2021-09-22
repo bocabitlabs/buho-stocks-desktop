@@ -3,6 +3,7 @@ import React, { ReactElement, useEffect, useLayoutEffect, useState } from "react
 import { ResponsivePie } from "@nivo/pie";
 import { IPortfolio } from "types/portfolio";
 import { StringUtils } from "utils/string-utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   data: any;
@@ -16,6 +17,8 @@ export default function CurrenciesChart({
   const [chartData, setChartData] = useState<any[]>([]);
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+  const { t } = useTranslation();
+
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);
@@ -56,7 +59,7 @@ export default function CurrenciesChart({
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        <Typography.Title level={4}>Currencies</Typography.Title>
+        <Typography.Title level={4}>{t("Currencies")}</Typography.Title>
         <div style={{ height: 300, width: width/2-sidebarWidth }}>
           <ResponsivePie
             data={chartData}

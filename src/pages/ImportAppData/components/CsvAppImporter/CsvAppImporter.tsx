@@ -1,5 +1,6 @@
 import { Collapse, Row, Col } from "antd";
 import React, { ReactElement, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CSVReader } from "react-papaparse";
 import CsvAppImporterForm from "../CsvAppImporterForm/CsvAppImporterForm";
 import FoundItems from "../FoundItems/FoundItems";
@@ -35,6 +36,8 @@ export default function CsvAppImporter(): ReactElement {
   const [rights, setRights] = useState([]);
   const [dividends, setDividends] = useState([]);
   const [stockPrices, setStockPrices] = useState([]);
+  const { t } = useTranslation();
+
 
   const handleOnFileLoad = (data: any) => {
     const filteredSectors = data.filter((element: any) => {
@@ -178,7 +181,7 @@ export default function CsvAppImporter(): ReactElement {
       <Row gutter={[16, 32]}>
         <Col span={24}>
           <CSVReader onDrop={handleOnFileLoad} onError={handleOnError} noDrag>
-            <span>Click to upload.</span>
+            <span>{t("Click to upload.")}</span>
           </CSVReader>
         </Col>
       </Row>
@@ -220,7 +223,7 @@ export default function CsvAppImporter(): ReactElement {
               <Col span={24}>
                 <Collapse>
                   <Collapse.Panel
-                    header="View import notes"
+                    header={t("View import notes")}
                     key="1"
                     style={{ width: "100%" }}
                   >

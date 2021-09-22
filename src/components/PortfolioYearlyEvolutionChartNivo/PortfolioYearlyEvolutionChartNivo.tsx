@@ -6,6 +6,7 @@ import React, {
   useLayoutEffect,
   useState
 } from "react";
+import { useTranslation } from "react-i18next";
 import { IPortfolio } from "types/portfolio";
 import { StringUtils } from "utils/string-utils";
 
@@ -25,6 +26,8 @@ export default function PortfolioYearlyEvolutionChartNivo({
   const [chartData, setChartData] = useState<any[]>([]);
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+  const { t } = useTranslation();
+
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);
@@ -84,22 +87,22 @@ export default function PortfolioYearlyEvolutionChartNivo({
 
       const newData = [
         {
-          id: "portfolio value",
+          id: t("portfolio value"),
           // color: "hsl(160, 70%, 50%)",
           data: portfolioValueData
         },
         {
-          id: "portfolio value + dividends",
+          id: t("portfolio value + dividends"),
           // color: "hsl(160, 70%, 50%)",
           data: portfolioValueWithDividends
         },
         {
-          id: "accum investment",
+          id: t("accumulated investment"),
           // color: "hsl(160, 70%, 50%)",
           data: accumInvestmentData
         },
         {
-          id: "dividends",
+          id: t("dividends"),
           // color: "hsl(160, 70%, 50%)",
           data: dividendsData
         }
@@ -116,7 +119,7 @@ export default function PortfolioYearlyEvolutionChartNivo({
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        {showTitle && <Typography.Title level={3}>Portfolio valuation</Typography.Title>}
+        {showTitle && <Typography.Title level={3}>{t("Portfolio valuation")}</Typography.Title>}
         <div style={{ height: 400, width: width - sidebarWidth - 50 }}>
           <ResponsiveLine
             data={chartData}
@@ -141,7 +144,7 @@ export default function PortfolioYearlyEvolutionChartNivo({
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "amount",
+              legend: t("value"),
               legendOffset: -40,
               legendPosition: "middle"
             }}

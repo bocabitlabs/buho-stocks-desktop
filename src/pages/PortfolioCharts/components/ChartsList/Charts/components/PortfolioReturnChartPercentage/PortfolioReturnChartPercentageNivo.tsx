@@ -1,6 +1,7 @@
 import { ResponsiveLine } from "@nivo/line";
 import { Spin, Typography } from "antd";
 import React, { ReactElement, useEffect, useLayoutEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { IPortfolio } from "types/portfolio";
 import { StringUtils } from "utils/string-utils";
 
@@ -18,6 +19,8 @@ export default function PortfolioReturnChartPercentageNivo({
   const [chartData, setChartData] = useState<any[]>([]);
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+  const { t } = useTranslation();
+
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);
@@ -54,11 +57,11 @@ export default function PortfolioReturnChartPercentageNivo({
 
       const newData = [
         {
-          id: "cumulative",
+          id: t("cumulative"),
           data: dataOne
         },
         {
-          id: "per year",
+          id: t("per year"),
           data: dataTwo
         }
       ];
@@ -73,7 +76,7 @@ export default function PortfolioReturnChartPercentageNivo({
   if (data.length > 0 && chartData.length > 0) {
     return (
       <>
-        <Typography.Title level={3}>Returns %</Typography.Title>
+        <Typography.Title level={3}>{t("Return %")}</Typography.Title>
         <div style={{ height: 400, width: width - sidebarWidth - 50 }}>
           <ResponsiveLine
             data={chartData}
@@ -90,7 +93,7 @@ export default function PortfolioReturnChartPercentageNivo({
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "amount",
+              legend: t("value"),
               legendOffset: -40,
               legendPosition: "middle"
             }}

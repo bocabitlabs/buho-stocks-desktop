@@ -10,8 +10,11 @@ import SharesTransactionsService from "services/shares-transactions/shares-trans
 import DividendsTransactionsService from "services/dividends-transactions/dividends-transactions-service";
 import RightsTransactionsService from "services/rights-transactions/rights-transactions-service";
 import StockPriceService from "services/stock-prices/stock-prices-service";
+import { useTranslation } from "react-i18next";
 
 export default function ExportAppDataForm(): ReactElement {
+  const { t } = useTranslation();
+
   const onFinish = (values: any) => {
     const { checkbox } = values;
     console.debug("Exporting...");
@@ -94,30 +97,29 @@ export default function ExportAppDataForm(): ReactElement {
   };
 
   const options = [
-    { label: "Companies", value: "companies" },
-    { label: "Currencies", value: "currencies" },
-    { label: "Dividends", value: "dividends" },
-    { label: "Markets", value: "markets" },
-    { label: "Portfolios", value: "portfolios" },
-    { label: "Rights", value: "rights" },
-    { label: "Sectors", value: "sectors" },
-    { label: "Shares", value: "shares" },
-    { label: "Stock Prices", value: "stockPrices" }
+    { label: t("Companies"), value: "companies" },
+    { label: t("Currencies"), value: "currencies" },
+    { label: t("Dividends"), value: "dividends" },
+    { label: t("Markets"), value: "markets" },
+    { label: t("Portfolios"), value: "portfolios" },
+    { label: t("Rights"), value: "rights" },
+    { label: t("Sectors"), value: "sectors" },
+    { label: t("Shares"), value: "shares" },
+    { label: t("Stock Prices"), value: "stockPrices" }
   ];
 
   return (
     <Form onFinish={onFinish}>
       <Typography.Text>
-        Select below all the elements that you want to export. All the elements
-        of that type will be included on the export CSV file.
+        {t(`Select below all the elements that you want to export. All the elements of that type will be included on the export CSV file.`)}
       </Typography.Text>
-      <Form.Item name="checkbox" label="Elements to export">
+      <Form.Item name="checkbox" label={t("Elements to export")}>
         <Checkbox.Group options={options} />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Export
+          {t("Export")}
         </Button>
       </Form.Item>
     </Form>

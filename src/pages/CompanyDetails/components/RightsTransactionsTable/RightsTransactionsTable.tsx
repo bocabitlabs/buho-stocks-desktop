@@ -8,6 +8,7 @@ import { IRightsTransaction } from "types/rights-transaction";
 import { buySellFormatter } from "utils/table-formatters";
 import { CompaniesContext } from "contexts/companies";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   portfolioId: string;
@@ -27,6 +28,8 @@ export default function RightsTransactionsTable({
 
   const [width, setWidth] = useState(window.innerWidth);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+  const { t } = useTranslation();
+
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);
@@ -56,7 +59,7 @@ export default function RightsTransactionsTable({
 
       if (company) {
         TransactionLogService.create({
-          type: "Rights transaction",
+          type: t("Rights transaction"),
           message: `Removed rights transaction "${company.name} (${company.ticker})": ${recordId}`,
           portfolioId: +company.portfolioId
         });
@@ -64,13 +67,13 @@ export default function RightsTransactionsTable({
 
       getAll();
       message.success({
-        content: "Transaction has been deleted",
+        content: t("Transaction has been deleted"),
         key,
         duration: 2
       });
     } else {
       message.error({
-        content: "Unable to remove transaction",
+        content: t("Unable to remove transaction"),
         key,
         duration: 2
       });
@@ -86,7 +89,7 @@ export default function RightsTransactionsTable({
       render: (text: string, record: any) => buySellFormatter(text)
     },
     {
-      title: "Date",
+      title: t("Date"),
       dataIndex: "transactionDate",
       key: "transactionDate",
       width: 70,
@@ -94,14 +97,14 @@ export default function RightsTransactionsTable({
         moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
-      title: "Number of Rights",
+      title: t("Number of Rights"),
       dataIndex: "count",
       key: "count",
       width: 70,
       render: (text: string, record: any) => text
     },
     {
-      title: "Price (g)",
+      title: t("Gross price"),
       dataIndex: "price",
       key: "price",
       width: 70,
@@ -109,7 +112,7 @@ export default function RightsTransactionsTable({
         `${text.toFixed(2)} ${record.currencySymbol}`
     },
     {
-      title: "Commission",
+      title: t("Commission"),
       dataIndex: "commission",
       key: "commission",
       width: 70,
@@ -117,7 +120,7 @@ export default function RightsTransactionsTable({
         `${text.toFixed(2)} ${record.currencySymbol}`
     },
     {
-      title: "Total",
+      title: t("Total"),
       dataIndex: "total",
       key: "total",
       width: 70,
@@ -125,24 +128,24 @@ export default function RightsTransactionsTable({
         `${text.toFixed(2)} ${record.currencySymbol}`
     },
     {
-      title: "Action",
+      title: t("Action"),
       key: "action",
       width: 70,
       render: (text: string, record: any) => (
         <Space>
           <Popconfirm
             key={`sector-delete-${record.key}`}
-            title={`Delete sector ${record.name}?`}
+            title={`Delete rights transaction ${record.name}?`}
             onConfirm={() => confirm(record.key)}
-            okText="Yes"
-            cancelText="No"
+            okText={t("Yes")}
+            cancelText={t("No")}
           >
-            <Button>Delete</Button>
+            <Button>{t("Delete")}</Button>
           </Popconfirm>
           <Link
             to={`/portfolios/${portfolioId}/companies/${companyId}/rights/${record.key}/edit`}
           >
-            Edit
+            {t("Edit")}
           </Link>
         </Space>
       )

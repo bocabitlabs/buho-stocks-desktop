@@ -15,6 +15,7 @@ export interface IPortfolioRouteParams {
 const PortfolioCharts = () => {
   const { portfolioId } = useParams<IPortfolioRouteParams>();
   const history = useHistory();
+
   if (portfolioId === undefined) {
     history.push(`/`);
   }

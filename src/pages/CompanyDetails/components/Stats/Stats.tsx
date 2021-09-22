@@ -2,6 +2,7 @@ import { Col, Form, Row, Select, Statistic, Switch, Typography } from "antd";
 import { BaseType } from "antd/lib/typography/Base";
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import CompanyService from "services/companies/companies-service";
 import { ICompany } from "types/company";
 import { IStockPrice } from "types/stock-price";
@@ -30,6 +31,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
   // const companyYoc = company.yoc.getYoc(true);
 
   const { Option } = Select;
+  const { t } = useTranslation();
 
   const getValuesForAll = useCallback(
     (withCommission = true) => {
@@ -183,7 +185,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
               onChange={onChange}
               defaultValue="all"
             >
-              <Option value="all">All</Option>
+              <Option value="all">{t("All")}</Option>
               {years.map((element) => (
                 <Option value={element} key={element}>
                   {element}
@@ -193,8 +195,8 @@ export default function Stats({ company }: Props): React.ReactElement | null {
           </Form.Item>
           <Form.Item>
             <Switch
-              checkedChildren="Show gross values"
-              unCheckedChildren="Show net values"
+              checkedChildren={t("Show gross values")}
+              unCheckedChildren={t("Show net values")}
               defaultChecked={displayGrossValue === "gross"}
               onChange={toggleNet}
             />
@@ -206,11 +208,11 @@ export default function Stats({ company }: Props): React.ReactElement | null {
           <Statistic title="New Shares" value={sharesCount} />
         </Col> */}
         <Col span={6}>
-          <Statistic title="Accum. Shares" value={accumulatedShares} />
+          <Statistic title={t("Accum. Shares")} value={accumulatedShares} />
         </Col>
         <Col span={6}>
           <Statistic
-            title="Dividends"
+            title={t("Dividends")}
             value={dividendsAmount}
             suffix={company.portfolioCurrencySymbol}
             precision={2}
@@ -226,7 +228,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
         </Col> */}
         <Col span={6}>
           <Statistic
-            title="Accum. invest"
+            title={t("Accum. investment")}
             value={accumulatedInvestment}
             suffix={company.portfolioCurrencySymbol}
             precision={2}
@@ -235,7 +237,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
         {latestStockPrice ? (
           <Col span={6}>
             <Statistic
-              title="Stock Price"
+              title={t("Stock price")}
               value={latestStockPrice.price}
               suffix={company.portfolioCurrencySymbol}
               precision={2}
@@ -248,12 +250,12 @@ export default function Stats({ company }: Props): React.ReactElement | null {
           </Col>
         ) : (
           <Col span={6}>
-            <Statistic title="Stock Price" value={"Not set"} />
+            <Statistic title={t("Stock price")} value={"Not set"} />
           </Col>
         )}
         <Col span={6}>
           <Statistic
-            title="Portfolio Value"
+            title={t("Portfolio value")}
             value={portfolioValue}
             suffix={company.portfolioCurrencySymbol}
             precision={2}
@@ -261,7 +263,7 @@ export default function Stats({ company }: Props): React.ReactElement | null {
         </Col>
         <Col span={6}>
           <Statistic
-            title="Return w. div"
+            title={t("Return with dividends")}
             value={companyReturn}
             suffix={company.portfolioCurrencySymbol}
             precision={2}

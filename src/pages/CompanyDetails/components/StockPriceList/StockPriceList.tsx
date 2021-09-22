@@ -2,6 +2,7 @@ import { Button, message, Popconfirm, Space, Table } from "antd";
 import { CompaniesContext } from "contexts/companies";
 import moment from "moment";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import StockPriceService from "services/stock-prices/stock-prices-service";
 import { IStockPrice } from "types/stock-price";
 
@@ -16,6 +17,7 @@ export default function StockPriceList({
 
   const [stockPrices, setStockPrices] = useState<IStockPrice[]>([]);
   const key = "updatable";
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (company !== null) {
@@ -30,7 +32,7 @@ export default function StockPriceList({
 
   const columns = [
     {
-      title: "Date",
+      title: t("Date"),
       dataIndex: "transactionDate",
       key: "transactionDate",
       width: 70,
@@ -38,30 +40,30 @@ export default function StockPriceList({
         moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
-      title: "Stock Price",
+      title: t("Stock Price"),
       dataIndex: "price",
       key: "price",
       render: (text: string, record: any) => `${text} ${currencySymbol}`
     },
     {
-      title: "Exchange Rate",
+      title: t("Exchange rate"),
       dataIndex: "exchangeRate",
       key: "exchangeRate",
       render: (text: string, record: any) => text
     },
     {
-      title: "Action",
+      title: t("Action"),
       key: "action",
       render: (text: string, record: any) => (
         <Space size="middle">
           <Popconfirm
             key={`stock-delete-${record.key}`}
-            title={`Delete stock price?`}
+            title={t("Delete stock price?")}
             onConfirm={() => confirm(record.key)}
-            okText="Yes"
-            cancelText="No"
+            okText={t("Yes")}
+            cancelText={t("No")}
           >
-            <Button>Delete</Button>
+            <Button>{t("Delete")}</Button>
           </Popconfirm>
         </Space>
       )
@@ -73,7 +75,7 @@ export default function StockPriceList({
     if (added.changes) {
       setTimeout(() => {
         message.success({
-          content: "Stock price removed",
+          content: t("Stock price removed"),
           key,
           duration: 2
         });
@@ -85,7 +87,7 @@ export default function StockPriceList({
     } else {
       setTimeout(() => {
         message.error({
-          content: "Unable to remove stock price",
+          content: t("Unable to remove stock price"),
           key,
           duration: 2
         });
