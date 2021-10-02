@@ -6,6 +6,7 @@ import { CurrenciesContext } from "contexts/currencies";
 import { ICurrency } from "types/currency";
 import { PortfoliosContext } from "contexts/portfolios";
 import ColorSelector from "components/ColorSelector/ColorSelector";
+import { useTranslation } from "react-i18next";
 
 interface AddEditFormProps {
   portfolioId?: string;
@@ -16,6 +17,7 @@ function PortfolioAddEditForm({
 }: AddEditFormProps): ReactElement | null {
   const [form] = Form.useForm();
   const history = useHistory();
+  const { t } = useTranslation();
 
   const { currencies } = useContext(CurrenciesContext);
   const {
@@ -39,7 +41,7 @@ function PortfolioAddEditForm({
   }, [portfolioId, getPortfolioById]);
 
   const handleAdd = (values: any) => {
-    message.loading({ content: "Adding portfolio...", key });
+    message.loading({ content: t("Adding portfolio..."), key });
 
     const { name, description, currencyId } = values;
     const newPortfolio = {
@@ -59,13 +61,13 @@ function PortfolioAddEditForm({
     if (changes.changes) {
       getAllPortfolios();
       if (!currencyId) {
-        message.success({ content: "Portfolio has been added", key });
+        message.success({ content: t("Portfolio has been added"), key });
       } else {
-        message.success({ content: "Portfolio has been updated", key });
+        message.success({ content: t("Portfolio has been updated"), key });
       }
       history.push("/home");
     } else {
-      message.success({ content: "Unable to add the portfolio", key });
+      message.success({ content: t("Unable to add the portfolio"), key });
     }
   };
 
@@ -81,6 +83,7 @@ function PortfolioAddEditForm({
     <Form
       form={form}
       name="basic"
+      layout="vertical"
       onFinish={handleAdd}
       initialValues={{
         name: portfolio?.name,
@@ -90,9 +93,9 @@ function PortfolioAddEditForm({
     >
       <Form.Item
         name="name"
-        label="Name"
+        label={t("Name")}
         rules={[
-          { required: true, message: "Please input the name of the portfolio" }
+          { required: true, message: t("Please input the name of the portfolio") }
         ]}
       >
         <Input type="text" />
@@ -100,7 +103,7 @@ function PortfolioAddEditForm({
       <Form.Item
         label={
           <div>
-            Color:{" "}
+            {t("Color")}:{" "}
             <svg
               width="35"
               height="35"
@@ -124,20 +127,20 @@ function PortfolioAddEditForm({
       </Form.Item>
       <Form.Item
         name="description"
-        label="Description"
+        label={t("Description")}
         rules={[
-          { required: true, message: "Please input the portfolio description" }
+          { required: true, message: t("Please input the portfolio description") }
         ]}
       >
         <Input type="text" />
       </Form.Item>
       <Form.Item
         name="currencyId"
-        label="Currency"
+        label={t("Currency")}
         rules={[{ required: true }]}
       >
         <Select
-          placeholder="Select a option and change input text above"
+          placeholder={t("Select a currency")}
           allowClear
         >
           {currencies &&
@@ -153,7 +156,7 @@ function PortfolioAddEditForm({
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          {portfolioId ? "Edit Portfolio" : "Add Portfolio"}
+          {portfolioId ? t("Edit portfolio") : t("Add portfolio")}
         </Button>
       </Form.Item>
     </Form>
