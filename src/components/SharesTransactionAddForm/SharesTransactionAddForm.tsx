@@ -224,7 +224,7 @@ export default function SharesTransactionAddForm({
         name="type"
         label="Operation's type:"
         rules={[
-          { required: true, message: "Please input the type of operation" }
+          { required: true, message: "Please input the type of transaction" }
         ]}
       >
         <Select placeholder="Select a option">

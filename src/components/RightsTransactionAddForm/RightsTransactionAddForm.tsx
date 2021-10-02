@@ -19,6 +19,7 @@ import { RightsTransactionFormProps } from "types/rights-transaction";
 import { RightsTransactionContext } from "contexts/rights-transactions";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import ExchangeRatesAPIClient from "api/exchange-rates/exchange-rates-api-client";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   companyId: string;
@@ -39,6 +40,8 @@ export default function RightsTransactionAddForm({
     RightsTransactionContext
   );
   const history = useHistory();
+  const { t } = useTranslation();
+
   // State
   const [color] = useState("#607d8b");
   const key = "updatable";
@@ -113,17 +116,17 @@ export default function RightsTransactionAddForm({
     let updateMessage = "";
     if (transactionId) {
       changes = update(transactionId, transaction);
-      updateMessage = "Rights transaction has been updated";
+      updateMessage = t("Rights transaction has been updated");
     } else {
       changes = create(transaction);
-      updateMessage = "Rights transaction has been added";
+      updateMessage = t("Rights transaction has been added");
     }
     if (changes.changes) {
 
       if(!transactionId){
         TransactionLogService.create({
-          type: "Rights transaction",
-          message: `Added rights "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          type: t("Rights transaction"),
+          message: `${t("Added rights")} "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId
         });
       }
@@ -141,7 +144,7 @@ export default function RightsTransactionAddForm({
       });
     } else {
       message.error({
-        content: "Unable to add/edit the transaction",
+        content: t("Unable to add/edit the transaction"),
         key,
         style: {
           marginTop: "60px"
@@ -212,18 +215,18 @@ export default function RightsTransactionAddForm({
     >
       <Form.Item
         name="count"
-        label="Number of Rights"
+        label={t("Number of Rights")}
         rules={[
-          { required: true, message: "Please input the number of shares" }
+          { required: true, message: t("Please input the number of rights") }
         ]}
       >
         <InputNumber min={0} step={1} style={{ width: "100%" }} />
       </Form.Item>
       <Form.Item
         name="price"
-        label="Price per right"
+        label={t("Price per right")}
         rules={[
-          { required: true, message: "Please input the price per share" }
+          { required: true, message: t("Please input the price per right") }
         ]}
       >
         <InputNumber
@@ -236,21 +239,21 @@ export default function RightsTransactionAddForm({
       </Form.Item>
       <Form.Item
         name="type"
-        label="Operation's type"
+        label={t("Operation's type")}
         rules={[
-          { required: true, message: "Please input the type of operation" }
+          { required: true, message: t("Please input the type of transaction") }
         ]}
       >
-        <Select placeholder="Select a option" style={{ width: "20em" }}>
-          <Select.Option value="BUY">Buy</Select.Option>
-          <Select.Option value="SELL">Sell</Select.Option>
+        <Select placeholder={t("Select a option")} style={{ width: "20em" }}>
+          <Select.Option value="BUY">{t("Buy")}</Select.Option>
+          <Select.Option value="SELL">{t("Sell")}</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item
         name="commission"
-        label="Total commission"
+        label={t("Total commission")}
         rules={[
-          { required: true, message: "Please input the total commission" }
+          { required: true, message: t("Please input the total commission") }
         ]}
       >
         <InputNumber
@@ -263,18 +266,18 @@ export default function RightsTransactionAddForm({
       </Form.Item>
       <Form.Item
         name="transactionDate"
-        label="Operation's date"
+        label={t("Transaction's date")}
         rules={[
-          { required: true, message: "Please input the date of the operation" }
+          { required: true, message: t("Please input the date of the transaction") }
         ]}
       >
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
       </Form.Item>
       <Form.Item
         name="exchangeRate"
-        label="Exchange rate"
+        label={t("Exchange rate")}
         rules={[
-          { required: true, message: "Please input the price per share" }
+          { required: true, message: t("Please input the exchange rate") }
         ]}
       >
         <InputNumber
@@ -290,19 +293,17 @@ export default function RightsTransactionAddForm({
           onClick={getExchangeRate}
           loading={gettingExchangeRate}
         >
-          Get exchange rate ({exchangeName})
+          {t("Get exchange rate")} ({exchangeName})
         </Button>
       </Form.Item>
 
       {company.broker.toLowerCase().includes("ing") && (
         <div>
-          <Divider plain>Only ING</Divider>
+          <Divider plain>{t("ING only")}</Divider>
           <Typography.Text type="secondary">
-            ING doesn't include a commission field, so it needs to be
-            calculated. Commission and price will be recalculated from total.
+            {t(`ING doesn't include a commission field, so it needs to be calculated. Commission and price will be recalculated from total.`)}
           </Typography.Text>
-
-          <Form.Item name="total" label="Total:">
+          <Form.Item name="total" label={t("Total")}>
             <Input style={{ width: "20em" }} />
           </Form.Item>
           <Form.Item>
@@ -311,19 +312,19 @@ export default function RightsTransactionAddForm({
               htmlType="button"
               onClick={updateFieldsForING}
             >
-              Update Values from total
+              {t("Obtain Values from total")}
             </Button>
           </Form.Item>
           <Divider plain />
         </div>
       )}
-      <Form.Item name="notes" label="Notes">
+      <Form.Item name="notes" label={t("Notes")}>
         <TextArea rows={4} />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          {transactionId ? "Edit Transaction" : "Add Transaction"}
+          {transactionId ? t("Edit transaction") : t("Add transaction")}
         </Button>
       </Form.Item>
     </Form>
