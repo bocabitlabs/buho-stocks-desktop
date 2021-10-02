@@ -35,14 +35,12 @@ function CompanyAddEditForm({
   const { markets } = useContext(MarketsContext);
   const { sectors } = useContext(SectorsContext);
   const { t } = useTranslation();
-
   const {
     company,
     getById: getCompanyById,
     create: addCompany,
     update: updateCompany
   } = useContext(CompaniesContext);
-
   const history = useHistory();
   const [color, setColor] = useState(company ? company.color : "#607d8b");
   const [countryCode, setCountryCode] = useState("");

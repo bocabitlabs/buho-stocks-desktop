@@ -6,6 +6,7 @@ import { MarketsContext } from "contexts/markets";
 import moment from "moment";
 import CountrySelector from "components/CountrySelector/CountrySelector";
 import ColorSelector from "components/ColorSelector/ColorSelector";
+import { useTranslation } from "react-i18next";
 
 interface AddEditFormProps {
   marketId?: string;
@@ -18,6 +19,8 @@ function MarketAddEditForm({
   const history = useHistory();
   const [color, setColor] = useState("#607d8b");
   const [region, setRegion] = useState("");
+  const { t } = useTranslation();
+
 
   const key = "updatable";
   const {
@@ -57,13 +60,13 @@ function MarketAddEditForm({
     if (changes.changes) {
       fetchMarkets();
       if (!marketId) {
-        message.success({ content: "Market has been added", key });
+        message.success({ content: t("Market has been added"), key });
       } else {
-        message.success({ content: "Market has been updated", key });
+        message.success({ content: t("Market has been updated"), key });
       }
       history.push("/markets");
     } else {
-      message.success({ content: "Unable to add the market", key });
+      message.success({ content: t("Unable to add the market"), key });
     }
   };
 
@@ -95,21 +98,21 @@ function MarketAddEditForm({
     >
       <Form.Item
         name="name"
-        label="Name"
+        label={t("Name")}
         rules={[
-          { required: true, message: "Please input the name of the market" }
+          { required: true, message: t("Please input the name of the market") }
         ]}
       >
         <Input type="text" placeholder="NYSE, NASDAQ,..." />
       </Form.Item>
       <Form.Item
         name="description"
-        label="Description"
+        label={t("Description")}
         rules={[{ required: false }]}
       >
         <Input type="text" />
       </Form.Item>
-      <Form.Item name="region" label="Country">
+      <Form.Item name="region" label={t("Country")}>
         <CountrySelector
           handleChange={handleCountryChange}
           initialValue={market?.region}
@@ -118,7 +121,7 @@ function MarketAddEditForm({
       <Form.Item
         label={
           <div>
-            Color:{" "}
+            {t("Color")}:{" "}
             <svg
               width="35"
               height="35"
@@ -142,23 +145,23 @@ function MarketAddEditForm({
       </Form.Item>
       <Form.Item
         name="openTime"
-        label="Opening time"
-        rules={[{ required: true, message: "Please input the opening time" }]}
+        label={t("Opening time")}
+        rules={[{ required: true, message: t("Please input the opening time") }]}
       >
         {/* <Input type="text" placeholder="HH:mm" /> */}
         <TimePicker name="openTime" format="HH:mm" />
       </Form.Item>
       <Form.Item
         name="closeTime"
-        label="Closing time"
-        rules={[{ required: true, message: "Please input the closing time" }]}
+        label={t("Closing time")}
+        rules={[{ required: true, message: t("Please input the closing time") }]}
       >
         {/* <Input type="time" placeholder="HH:mm" /> */}
         <TimePicker name="closeTime" format="HH:mm" />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          {marketId ? "Update market" : "Add market"}
+          {marketId ? t("Update market") : t("Add market")}
         </Button>
       </Form.Item>
     </Form>

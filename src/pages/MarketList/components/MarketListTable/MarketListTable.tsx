@@ -55,13 +55,13 @@ export default function MarketListTable() {
       sorter: (a: IMarket, b: IMarket) => a.region.localeCompare(b.region)
     },
     {
-      title: t("Opening Time"),
+      title: t("Opening time"),
       dataIndex: "openTime",
       key: "openTime",
       sorter: (a: IMarket, b: IMarket) => a.openTime.localeCompare(b.openTime)
     },
     {
-      title: t("Closing Time"),
+      title: t("Closing time"),
       dataIndex: "closeTime",
       key: "closeTime",
       sorter: (a: IMarket, b: IMarket) => a.closeTime.localeCompare(b.closeTime)

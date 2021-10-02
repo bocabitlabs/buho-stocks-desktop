@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { CurrenciesContext } from "contexts/currencies";
 import CountrySelector from "components/CountrySelector/CountrySelector";
 import ColorSelector from "components/ColorSelector/ColorSelector";
+import { useTranslation } from "react-i18next";
 
 interface AddEditFormProps {
   currencyId?: string;
@@ -20,7 +21,7 @@ function CurrencyAddEditForm({
   const history = useHistory();
   const [color, setColor] = useState("#607d8b");
   const [country, setCountry] = useState("");
-
+  const { t } = useTranslation();
   const {
     currency,
     create: addCurrency,
@@ -60,13 +61,13 @@ function CurrencyAddEditForm({
     if (changes.changes) {
       fetchCurrencies();
       if (!currencyId) {
-        message.success({ content: "Currency has been added", key });
+        message.success({ content: t("Currency has been added"), key });
       } else {
-        message.success({ content: "Currency has been updated", key });
+        message.success({ content: t("Currency has been updated"), key });
       }
       history.push("/currencies");
     } else {
-      message.success({ content: "Unable to add the currency", key });
+      message.success({ content: t("Unable to add the currency"), key });
     }
   };
 
@@ -97,23 +98,23 @@ function CurrencyAddEditForm({
     >
       <Form.Item
         name="name"
-        label="Currency Name"
+        label={t("Currency Name")}
         rules={[
-          { required: true, message: "Please input the name of the currency" }
+          { required: true, message: t("Please input the name of the currency") }
         ]}
       >
-        <Input type="text" placeholder="EURO, Dolar, Pound..." />
+        <Input type="text" placeholder={t("EURO, Dolar, Pound...")} />
       </Form.Item>
       <Form.Item
         name="abbreviation"
-        label="Abbreviation"
+        label={t("Abbreviation")}
         rules={[
-          { required: true, message: "Please input the currency abbreviation" }
+          { required: true, message: t("Please input the currency abbreviation") }
         ]}
       >
-        <Input type="text" placeholder="EUR, USD, GBP..." />
+        <Input type="text" placeholder={t("EUR, USD, GBP...")} />
       </Form.Item>
-      <Form.Item name="region" label="Country">
+      <Form.Item name="region" label={t("Country")}>
         <CountrySelector
           handleChange={handleCountryChange}
           initialValue={currency?.country}
@@ -122,7 +123,7 @@ function CurrencyAddEditForm({
       <Form.Item
         label={
           <div>
-            Color:{" "}
+            {t("Color")}:{" "}
             <svg
               width="35"
               height="35"
@@ -146,16 +147,16 @@ function CurrencyAddEditForm({
       </Form.Item>
       <Form.Item
         name="symbol"
-        label="Symbol"
+        label={t("Symbol")}
         rules={[
-          { required: true, message: "Please input the currency symbol" }
+          { required: true, message: t("Please input the currency symbol") }
         ]}
       >
         <Input type="text" placeholder="€, $, £..." />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          {currencyId ? "Edit Currency" : "Add Currency"}
+          {currencyId ? t("Edit currency") : t("Add currency")}
         </Button>
       </Form.Item>
     </Form>
