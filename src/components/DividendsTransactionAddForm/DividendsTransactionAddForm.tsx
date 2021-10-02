@@ -175,7 +175,7 @@ export default function DividendsTransactionAddForm({
     >
       <Form.Item
         name="count"
-        label="Number of Shares"
+        label="Number of shares"
         rules={[
           { required: true, message: "Please input the number of shares" }
         ]}

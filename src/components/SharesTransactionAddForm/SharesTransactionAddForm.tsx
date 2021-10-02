@@ -20,6 +20,7 @@ import { SharesTransactionFormProps } from "types/shares-transaction";
 import { SharesTransactionsContext } from "contexts/shares-transactions";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import ExchangeRatesAPIClient from "api/exchange-rates/exchange-rates-api-client";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   companyId: string;
@@ -47,6 +48,7 @@ export default function SharesTransactionAddForm({
   const [exchangeName, setExchangeName] = useState<string>("");
   const dateFormat = "DD/MM/YYYY";
   const key = "updatable";
+  const { t } = useTranslation();
 
   const [gettingExchangeRate, setGettingExchangeRate] = useState(false);
   const getExchangeRate = async () => {
@@ -117,16 +119,16 @@ export default function SharesTransactionAddForm({
     let updateMessage = "";
     if (transactionId) {
       changes = updateTransaction(transactionId, transaction);
-      updateMessage = "Shares transaction has been updated";
+      updateMessage = t("Shares transaction has been updated");
     } else {
       changes = addTransaction(transaction);
-      updateMessage = "Shares transaction has been added";
+      updateMessage = t("Shares transaction has been added");
     }
     if (changes.changes) {
       if (!transactionId) {
         TransactionLogService.create({
-          type: "Shares transaction",
-          message: `Added shares "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
+          type: t("Shares transaction"),
+          message: `${t("Added shares")} "${company.name} (${company.ticker})": ${count} - ${price} - ${transactionDate}`,
           portfolioId: +company.portfolioId
         });
       }
@@ -140,7 +142,7 @@ export default function SharesTransactionAddForm({
         key
       });
     } else {
-      message.error({ content: "Unable to add/edit the transaction", key });
+      message.error({ content: t("Unable to add/edit the transaction"), key });
     }
   };
 
@@ -198,18 +200,18 @@ export default function SharesTransactionAddForm({
     >
       <Form.Item
         name="count"
-        label="Number of Shares:"
+        label={t("Number of shares")}
         rules={[
-          { required: true, message: "Please input the number of shares" }
+          { required: true, message: t("Please input the number of shares") }
         ]}
       >
         <InputNumber min={0} step={1} style={{ width: "100%" }} />
       </Form.Item>
       <Form.Item
         name="price"
-        label="Price per share (Gross):"
+        label={t("Gross price per share")}
         rules={[
-          { required: true, message: "Please input the price per share" }
+          { required: true, message: t("Please input the price per share") }
         ]}
       >
         <InputNumber
@@ -222,21 +224,21 @@ export default function SharesTransactionAddForm({
       </Form.Item>
       <Form.Item
         name="type"
-        label="Operation's type:"
+        label={t("Operation's type")}
         rules={[
-          { required: true, message: "Please input the type of transaction" }
+          { required: true, message: t("Please input the type of transaction") }
         ]}
       >
-        <Select placeholder="Select a option">
-          <Select.Option value="BUY">Buy</Select.Option>
-          <Select.Option value="SELL">Sell</Select.Option>
+        <Select placeholder={t("Select an option")}>
+          <Select.Option value="BUY">{t("Buy")}</Select.Option>
+          <Select.Option value="SELL">{t("Sell")}</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item
         name="commission"
-        label="Total commission:"
+        label={t("Total commission")}
         rules={[
-          { required: true, message: "Please input the total commission" }
+          { required: true, message: t("Please input the total commission") }
         ]}
       >
         <InputNumber
@@ -249,9 +251,9 @@ export default function SharesTransactionAddForm({
       </Form.Item>
       <Form.Item
         name="transactionDate"
-        label="Operation's date:"
+        label={t("Transaction's date")}
         rules={[
-          { required: true, message: "Please input the date of the operation" }
+          { required: true, message: t("Please input the date of the operation") }
         ]}
       >
         <DatePicker format={dateFormat} onChange={transactionDateChange} />
@@ -263,9 +265,9 @@ export default function SharesTransactionAddForm({
           <Col span={12}>
             <Form.Item
               name="exchangeRate"
-              label="Exchange rate:"
+              label="Exchange rate"
               rules={[
-                { required: true, message: "Please input the exchange rate" }
+                { required: true, message: t("Please input the exchange rate") }
               ]}
             >
               <InputNumber
@@ -283,7 +285,7 @@ export default function SharesTransactionAddForm({
                 onClick={getExchangeRate}
                 loading={gettingExchangeRate}
               >
-                Get exchange rate ({exchangeName})
+                {t("Get exchange rate")} ({exchangeName})
               </Button>
             </Form.Item>
           </Col>
@@ -292,13 +294,12 @@ export default function SharesTransactionAddForm({
 
       {company.broker.toLowerCase().includes("ing") && (
         <div>
-          <Divider plain>Only ING</Divider>
+          <Divider plain>{t("ING only")}</Divider>
           <Typography.Text type="secondary">
-            ING doesn't include a commission field, so it needs to be
-            calculated. Commission and price will be recalculated from total.
+            {t(`ING doesn't include a commission field, so it needs to be calculated. Commission and price will be recalculated from total.`)}
           </Typography.Text>
 
-          <Form.Item name="total" label="Total (€):">
+          <Form.Item name="total" label={t("Total (€)")}>
             <InputNumber
               decimalSeparator="."
               formatter={(value) => `€ ${value}`}
@@ -313,20 +314,20 @@ export default function SharesTransactionAddForm({
               htmlType="button"
               onClick={updateFieldsForING}
             >
-              Update Values from total
+              {t("Obtain Values from total")}
             </Button>
           </Form.Item>
           <Divider plain />
         </div>
       )}
 
-      <Form.Item name="notes" label="Notes">
+      <Form.Item name="notes" label={t("Notes")}>
         <Input.TextArea rows={4} />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          {transactionId ? "Edit Transaction" : "Add Transaction"}
+          {transactionId ? t("Edit transaction") : t("Add transaction")}
         </Button>
       </Form.Item>
     </Form>

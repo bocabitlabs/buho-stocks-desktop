@@ -77,7 +77,7 @@ export default function DividendListTable({ portfolioId, companyId }: IProps) {
         moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
-      title: t("Number of Shares"),
+      title: t("Number of shares"),
       dataIndex: "count",
       key: "count",
       width: 70

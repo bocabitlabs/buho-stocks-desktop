@@ -94,7 +94,7 @@ export default function ShareListTable({ portfolioId, companyId }: IProps) {
         moment(new Date(record.transactionDate)).format("DD/MM/YYYY")
     },
     {
-      title: t("Number of Shares"),
+      title: t("Number of shares"),
       dataIndex: "sharesNumber",
       key: "sharesNumber",
       width: 70,
