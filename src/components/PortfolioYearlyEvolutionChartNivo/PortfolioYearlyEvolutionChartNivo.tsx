@@ -110,7 +110,7 @@ export default function PortfolioYearlyEvolutionChartNivo({
 
       setChartData(newData);
     }
-  }, [years, portfolio, data]);
+  }, [years, portfolio, data, t]);
 
   if (portfolio === null) {
     return <Spin />;

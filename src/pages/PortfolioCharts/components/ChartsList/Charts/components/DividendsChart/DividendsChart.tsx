@@ -32,7 +32,7 @@ export default function CurrenciesChart({
       };
     });
     setChartData(newGroups);
-  }, [data]);
+  }, [data, portfolio.dividends]);
 
   if (data.length > 0 && chartData.length > 0) {
     return (

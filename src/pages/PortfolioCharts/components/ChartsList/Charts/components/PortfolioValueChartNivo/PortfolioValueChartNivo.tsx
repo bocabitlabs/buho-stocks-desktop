@@ -56,7 +56,7 @@ export default function CurrenciesChart({
         };
       });
     setChartData(newGroups);
-  }, [data]);
+  }, [data, portfolio.value]);
 
   if (data.length > 0 && chartData.length > 0) {
     return (

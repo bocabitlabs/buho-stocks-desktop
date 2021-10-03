@@ -80,7 +80,7 @@ export default function PortfolioReturnChartNivo({
 
       setChartData(newData);
     }
-  }, [years, company]);
+  }, [years, company, t]);
 
   if(company === null){
     return <Spin/>

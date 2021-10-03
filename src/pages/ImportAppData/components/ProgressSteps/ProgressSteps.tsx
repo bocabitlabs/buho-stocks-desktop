@@ -1,5 +1,6 @@
 import { Steps } from "antd";
 import React, {
+  useCallback,
   useEffect,
   useRef,
   useState
@@ -21,6 +22,11 @@ export default function ProgressSteps({
   const myRef = useRef<HTMLDivElement>(null);
   const [importSteps, setImportSteps] = useState<any>([]);
   const { t } = useTranslation();
+
+  const getStepPositionById = useCallback(() => {
+    let foundIndex = importSteps.findIndex((x: any) => x.id === importStep);
+    return foundIndex;
+  }, [importStep, importSteps]);
 
   useEffect(() => {
     let steps = [
@@ -93,7 +99,7 @@ export default function ProgressSteps({
       return [...stepsNames, "start", "completed"].includes(element.name);
     });
     setImportSteps(newSteps);
-  }, [stepsNames]);
+  }, [stepsNames, getStepPositionById, t]);
 
   useEffect(() => {
     const setStepAsFinished = () => {
@@ -117,12 +123,7 @@ export default function ProgressSteps({
         block: "start"
       });
     }
-  }, [importText]);
-
-  const getStepPositionById = () => {
-    let foundIndex = importSteps.findIndex((x: any) => x.id === importStep);
-    return foundIndex;
-  };
+  }, [importText, getStepPositionById, importSteps]);
 
   return (
     <div>

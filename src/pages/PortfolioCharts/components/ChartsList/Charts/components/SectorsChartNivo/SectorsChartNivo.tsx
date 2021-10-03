@@ -41,7 +41,7 @@ export default function CurrenciesChart({
     });
 
     setChartData(newGroups);
-  }, [data]);
+  }, [data, t]);
 
   if (data.length > 0 && chartData.length > 0) {
     return (

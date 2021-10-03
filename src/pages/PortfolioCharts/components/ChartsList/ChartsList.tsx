@@ -6,7 +6,7 @@ import Charts from "./Charts/Charts";
 
 export default function ChartsList(): ReactElement | null {
   const { portfolio } = useContext(PortfoliosContext);
-  const [year, setYear] = useState("all");
+  const [year,] = useState("all");
   const [years, setYears] = useState<number[]>([]);
 
   useEffect(() => {

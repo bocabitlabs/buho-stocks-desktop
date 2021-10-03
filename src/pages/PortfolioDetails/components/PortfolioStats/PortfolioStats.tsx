@@ -3,7 +3,7 @@ import FetchStockPricesButton from "components/FetchStockPricesButton/FetchStock
 import PortfolioYearlyEvolutionChartNivo from "components/PortfolioYearlyEvolutionChartNivo/PortfolioYearlyEvolutionChartNivo";
 import { PortfoliosContext } from "contexts/portfolios";
 import moment from "moment";
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PortfolioService from "services/portfolios/portfolios-service";
 import { ICompany } from "types/company";
@@ -25,6 +25,27 @@ export default function PortfolioStats(): ReactElement | null {
   const [data, setData] = useState<any[]>([]);
   const { Option } = Select;
   const { t } = useTranslation();
+
+  const getValuesForAll = useCallback(() => {
+    if (portfolio !== null) {
+      console.debug("Get values for all");
+      let newDividendsPerYear = portfolio.dividends.getDividends(true);
+      let newDividendsPerMonth = 0;
+      let newTotalInvestedPerYear = portfolio.investments.getTotalInvested(
+        true
+      );
+      let newValue = portfolio.value.getPortfolioValue(true);
+      const newPortfolioReturnPercentage = portfolio.returns.getReturnWithDividendsPercentage(
+        true
+      );
+      setPortfolioReturnPercentage(newPortfolioReturnPercentage);
+
+      setDividendsPerYear(newDividendsPerYear);
+      setDividendsPerMonth(newDividendsPerMonth);
+      setInvestmentPerYear(newTotalInvestedPerYear);
+      setPortfolioValue(newValue);
+    }
+  }, [portfolio]);
 
   function onChange(value: any) {
     setYear(value);
@@ -52,7 +73,7 @@ export default function PortfolioStats(): ReactElement | null {
       setYears(newYears);
       getValuesForAll();
     }
-  }, [portfolio]);
+  }, [portfolio, getValuesForAll]);
 
   useEffect(() => {
     if (portfolio !== null) {
@@ -82,27 +103,6 @@ export default function PortfolioStats(): ReactElement | null {
       setData(tempData);
     }
   }, [portfolio]);
-
-  const getValuesForAll = () => {
-    if (portfolio !== null) {
-      console.debug("Get values for all");
-      let newDividendsPerYear = portfolio.dividends.getDividends(true);
-      let newDividendsPerMonth = 0;
-      let newTotalInvestedPerYear = portfolio.investments.getTotalInvested(
-        true
-      );
-      let newValue = portfolio.value.getPortfolioValue(true);
-      const newPortfolioReturnPercentage = portfolio.returns.getReturnWithDividendsPercentage(
-        true
-      );
-      setPortfolioReturnPercentage(newPortfolioReturnPercentage);
-
-      setDividendsPerYear(newDividendsPerYear);
-      setDividendsPerMonth(newDividendsPerMonth);
-      setInvestmentPerYear(newTotalInvestedPerYear);
-      setPortfolioValue(newValue);
-    }
-  };
 
   const getValuesForYear = (value: number) => {
     if (portfolio !== null) {

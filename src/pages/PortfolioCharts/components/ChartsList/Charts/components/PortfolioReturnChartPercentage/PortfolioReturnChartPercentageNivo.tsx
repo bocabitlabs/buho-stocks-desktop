@@ -67,7 +67,7 @@ export default function PortfolioReturnChartPercentageNivo({
       ];
       setChartData(newData);
     }
-  }, [years, portfolio]);
+  }, [years, portfolio, t]);
 
   if(portfolio === null){
     return <Spin/>
