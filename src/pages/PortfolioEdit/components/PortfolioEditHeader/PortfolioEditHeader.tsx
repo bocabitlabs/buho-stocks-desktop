@@ -2,6 +2,7 @@ import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import { PortfoliosContext } from "contexts/portfolios";
 import React, { ReactElement, useContext, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { breadcrumbItemRender } from "utils/headers-utils";
 
 interface Props {
@@ -14,6 +15,7 @@ export default function PortfolioEditHeader({
   const { portfolio, getById: getPortfolioById } = useContext(
     PortfoliosContext
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     getPortfolioById(portfolioId);
@@ -27,14 +29,14 @@ export default function PortfolioEditHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
     {
       path: "/portfolios",
       name: "portfolios",
-      breadcrumbName: "Portfolios"
+      breadcrumbName: t("Portfolios")
     },
     {
       path: `/portfolios/${portfolioId}`,
@@ -44,14 +46,14 @@ export default function PortfolioEditHeader({
     {
       path: `/portfolios/${portfolioId}/edit`,
       name: "edit",
-      breadcrumbName: "Edit"
+      breadcrumbName: t("Edit")
     }
   ];
 
   return (
     <PageHeader
       className="site-page-header"
-      title="Edit portfolio"
+      title={t("Edit portfolio")}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender

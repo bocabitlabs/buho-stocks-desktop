@@ -1,4 +1,5 @@
 {
+  "+ Add Dividends": "+ Añadir Dividendos",
   "+ Dividends": "+ Dividendos",
   "+ dividends": "+ dividendos",
   "+ dividends cumulative": "+ dividendos acumulados",
@@ -71,8 +72,10 @@
   "Dividends per month": "Dividendos mensuales",
   "Done": "Completado",
   "Edit": "Editar",
+  "Edit dividends transaction": "Editar transacción de dividendos",
   "Edit company": "Editar empresa",
   "Edit currency": "Editar divisa",
+  "Edit market": "Editar mercado",
   "Edit portfolio": "Editar cartera",
   "Edit sector": "Editar sector",
   "Edit transaction": "Editar transacción",

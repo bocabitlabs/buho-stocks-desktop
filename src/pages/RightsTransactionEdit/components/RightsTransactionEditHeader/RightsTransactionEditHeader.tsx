@@ -3,6 +3,7 @@ import React, { ReactElement, useContext, useEffect } from "react";
 import { CompaniesContext } from "contexts/companies";
 import { HomeOutlined } from "@ant-design/icons";
 import { breadcrumbItemRender } from "utils/headers-utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   companyId: string;
@@ -16,6 +17,7 @@ export default function RightsTransactionEditHeader({
   transactionId
 }: Props): ReactElement {
   const { company, getById: fetchCompany } = useContext(CompaniesContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchCompany(companyId);
@@ -25,7 +27,7 @@ export default function RightsTransactionEditHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
@@ -42,14 +44,14 @@ export default function RightsTransactionEditHeader({
     {
       path: `/portfolios/${portfolioId}/companies/${companyId}/rights/${transactionId}/edit`,
       name: "edit_rights",
-      breadcrumbName: "Edit rights transaction"
+      breadcrumbName: t("Edit rights transaction")
     }
   ];
 
   return (
     <PageHeader
       className="site-page-header"
-      title="Edit rights transaction"
+      title={t("Edit rights transaction")}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender

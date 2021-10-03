@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { CompaniesContext } from 'contexts/companies';
 import { HomeOutlined } from '@ant-design/icons';
 import { breadcrumbItemRender } from 'utils/headers-utils';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   companyId: string;
@@ -11,6 +12,7 @@ interface Props {
 
 export default function ShareAddHeader({companyId, portfolioId}: Props): React.ReactElement {
   const { company, getById: fetchCompany } = useContext(CompaniesContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchCompany(companyId);
@@ -20,7 +22,7 @@ export default function ShareAddHeader({companyId, portfolioId}: Props): React.R
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
@@ -37,19 +39,18 @@ export default function ShareAddHeader({companyId, portfolioId}: Props): React.R
     {
       path: `/portfolios/${portfolioId}/companies/${companyId}/add-shares`,
       name: "add_shares",
-      breadcrumbName: "+ Add Shares"
+      breadcrumbName: t("+ Add Shares")
     }
   ];
 
   return (
     <PageHeader
         className="site-page-header"
-        title="Add Shares"
+        title={t("Add Shares")}
         breadcrumb={{
           routes,
           itemRender: breadcrumbItemRender
         }}
-        subTitle="This is a subtitle"
       />
   )
 }

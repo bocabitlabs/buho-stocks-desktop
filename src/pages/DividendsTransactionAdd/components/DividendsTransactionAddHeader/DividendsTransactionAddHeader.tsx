@@ -3,6 +3,7 @@ import React, { ReactElement, useContext } from 'react'
 import { CompaniesContext } from 'contexts/companies';
 import { HomeOutlined } from '@ant-design/icons';
 import { breadcrumbItemRender } from 'utils/headers-utils';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   companyId: string;
@@ -11,12 +12,13 @@ interface Props {
 
 export default function DividendsTransactionAddHeader({companyId, portfolioId}: Props): ReactElement {
   const { company } = useContext(CompaniesContext);
+  const { t } = useTranslation();
 
   const routes = [
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
@@ -33,19 +35,18 @@ export default function DividendsTransactionAddHeader({companyId, portfolioId}: 
     {
       path: `/portfolios/${portfolioId}/companies/${companyId}/add-dividends`,
       name: "add_dividends",
-      breadcrumbName: "+ Add Dividends"
+      breadcrumbName: t("+ Add Dividends")
     }
   ];
 
   return (
     <PageHeader
         className="site-page-header"
-        title="Add dividends"
+        title={t("Add dividends")}
         breadcrumb={{
           routes,
           itemRender: breadcrumbItemRender
         }}
-        subTitle="This is a subtitle"
       />
   )
 }

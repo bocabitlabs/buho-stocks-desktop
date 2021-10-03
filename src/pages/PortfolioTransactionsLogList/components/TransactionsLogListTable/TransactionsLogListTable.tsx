@@ -1,6 +1,7 @@
 import { Table, Tag } from "antd";
 import moment from "moment";
 import React, { ReactElement, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import TransactionLogService from "services/transaction-log-service/transaction-log-service";
 import { ITransactionLogMessage } from "types/transaction-log";
 
@@ -12,27 +13,28 @@ export default function TransactionsLogListTable({
   portfolioId
 }: Props): ReactElement {
   const [logs, setLogs] = useState<ITransactionLogMessage[]>([]);
+  const { t } = useTranslation();
 
   const columns = [
     {
-      title: "Added Date",
+      title: t("Added Date"),
       dataIndex: "creationDate",
       key: "creationDate",
       render: (text: string) => moment(text).format("DD.MM.YYYY hh:mm")
     },
     {
-      title: "Type",
+      title: t("Type"),
       dataIndex: "type",
       key: "type",
       render: (text: string) => {
         let color = "";
-        if (text === "Shares transaction") {
+        if (text === t("Shares transaction")) {
           color = "volcano";
         }
-        if (text === "Stock price") {
+        if (text === t("Stock price")) {
           color = "yellow";
         }
-        if (text === "Dividends transaction") {
+        if (text === t("Dividends transaction")) {
           color = "green";
         }
         return (
@@ -43,7 +45,7 @@ export default function TransactionsLogListTable({
       }
     },
     {
-      title: "Message",
+      title: t("Message"),
       dataIndex: "message",
       key: "message",
       render: (text: string) => text

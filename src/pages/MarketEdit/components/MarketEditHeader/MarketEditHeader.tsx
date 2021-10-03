@@ -2,6 +2,7 @@ import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import { MarketsContext } from "contexts/markets";
 import React, { ReactElement, useContext, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { breadcrumbItemRender } from "utils/headers-utils";
 
 interface Props {
@@ -9,11 +10,9 @@ interface Props {
 }
 export default function MarketAddRouteHeader({
   marketId
-}: Props): ReactElement| null {
-
-  const { market, getById: getMarketById } = useContext(
-    MarketsContext
-  );
+}: Props): ReactElement | null {
+  const { market, getById: getMarketById } = useContext(MarketsContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getMarketById(marketId);
@@ -27,26 +26,26 @@ export default function MarketAddRouteHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
     {
       path: "/markets",
       name: "markets",
-      breadcrumbName: "Markets"
+      breadcrumbName: t("Markets")
     },
     {
       path: `/markets/${marketId}/edit`,
       name: "edit",
-      breadcrumbName: "Edit"
+      breadcrumbName: t("Edit")
     }
   ];
 
   return (
     <PageHeader
       className="site-page-header"
-      title="Edit market"
+      title={t("Edit market")}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender
@@ -54,4 +53,3 @@ export default function MarketAddRouteHeader({
     />
   );
 }
-

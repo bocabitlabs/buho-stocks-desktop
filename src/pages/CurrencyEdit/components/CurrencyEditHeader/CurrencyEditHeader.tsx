@@ -2,6 +2,7 @@ import { HomeOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import { CurrenciesContext } from "contexts/currencies";
 import React, { ReactElement, useContext, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { breadcrumbItemRender } from "utils/headers-utils";
 
 interface Props {
@@ -15,6 +16,8 @@ export default function CurrencyEditHeader({
   const { currency, getById: getCurrencyById } = useContext(
     CurrenciesContext
   );
+  const { t } = useTranslation();
+
 
   useEffect(() => {
     getCurrencyById(currencyId);
@@ -28,26 +31,26 @@ export default function CurrencyEditHeader({
     {
       path: "/home",
       name: "home",
-      breadcrumbName: "Home",
+      breadcrumbName: t("Home"),
       icon: <HomeOutlined />,
       iconOnly: true
     },
     {
       path: "/currencies",
       name: "currencies",
-      breadcrumbName: "Currencies"
+      breadcrumbName: t("Currencies")
     },
     {
       path: `/currencies/${currencyId}/edit`,
       name: "edit",
-      breadcrumbName: "Edit"
+      breadcrumbName: t("Edit")
     }
   ];
 
   return (
     <PageHeader
       className="site-page-header"
-      title="Edit"
+      title={t("Edit")}
       breadcrumb={{
         routes,
         itemRender: breadcrumbItemRender
